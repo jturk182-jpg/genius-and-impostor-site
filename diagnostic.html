@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Genius Diagnostic — GeniusAndImpostor.com</title>
+  <meta name="description" content="How much of your day is spent in Genius Mode? And how much is your Impostor squashing your potential? Let’s find out.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================================
+       SHARED FURNITURE — the reusable layer for all GI site tools.
+       Everything between here and "TOOL-SPECIFIC" is meant to be
+       lifted verbatim into ayumu-test.html and future tool pages.
+       ================================================================ */
+
+    /* ---------- SHARED: reset + tokens (identical to index.html) ---------- */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #fafaf8;
+      --ink: #1a1a1a;
+      --red: #c44b3a;
+      --muted: #666;
+      --rule: #e0dcd4;
+      --parchment: #f1ebde;
+      --parchment-line: #d6cfc2;
+      --parchment-margin: #c44b3a;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- SHARED: page shell ---------- */
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 600px) {
+      .shell { padding: 0 40px; }
+    }
+
+    .shell-main {
+      flex: 1;
+      padding: 48px 0 64px;
+    }
+
+    /* ---------- SHARED: tool masthead ---------- */
+    .tool-mast {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .tool-mast-home {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .tool-mast-home:hover { color: var(--red); }
+
+    .tool-mast-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- SHARED: type scale ---------- */
+    .t-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .t-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 7vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .t-headline {
+      font-family: var(--serif);
+      font-size: clamp(26px, 5.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .t-section {
+      font-family: var(--serif);
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .t-body {
+      font-family: var(--serif);
+      font-size: clamp(17px, 3.2vw, 19px);
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+
+    .t-body:last-child { margin-bottom: 0; }
+
+    .t-quiet {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+
+    .t-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .t-label.red { color: var(--red); }
+
+    /* ---------- SHARED: buttons ---------- */
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--red);
+      background: transparent;
+      border: 1.5px solid var(--red);
+      padding: 12px 24px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover, .btn:focus-visible {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn.primary {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn.primary:hover, .btn.primary:focus-visible {
+      background: #a83c2d;
+      border-color: #a83c2d;
+    }
+
+    .btn.ghost {
+      color: var(--muted);
+      border-color: var(--rule);
+    }
+
+    .btn.ghost:hover, .btn.ghost:focus-visible {
+      background: transparent;
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* ---------- SHARED: parchment inset card ---------- */
+    .parchment-card {
+      background: var(--parchment);
+      padding: 30px 28px 26px;
+      position: relative;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.07);
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          transparent,
+          transparent 27px,
+          var(--parchment-line) 27px,
+          var(--parchment-line) 28px
+        );
+      background-size: 100% 28px;
+      background-position: 0 20px;
+      margin: 28px 0;
+    }
+
+    .parchment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 1.5px;
+      background: var(--parchment-margin);
+      opacity: 0.3;
+    }
+
+    .parchment-card .card-header {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-stamp {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      padding: 2px 6px;
+      transform: rotate(-2deg);
+      opacity: 0.7;
+    }
+
+    /* ---------- SHARED: cross-tool footer (build-context §2b) ---------- */
+    .tool-footer {
+      border-top: 1px solid var(--rule);
+      padding: 36px 0 48px;
+      text-align: center;
+    }
+
+    .tool-footer-cover {
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+
+    .tool-footer-cover img {
+      width: 92px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+      transition: transform 0.2s;
+    }
+
+    .tool-footer-cover:hover img { transform: translateY(-2px); }
+
+    .tool-footer-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.7;
+      margin-bottom: 14px;
+    }
+
+    .tool-footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-footer-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .tool-footer-links a:hover { color: var(--red); }
+
+    .tool-footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.5;
+      margin-top: 18px;
+    }
+
+    /* ================================================================
+       TOOL-SPECIFIC — the Genius Diagnostic
+       ================================================================ */
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ---------- quiz ---------- */
+    .progress-wrap {
+      margin-bottom: 36px;
+    }
+
+    .progress-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: var(--rule);
+      position: relative;
+    }
+
+    .progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: var(--red);
+      transition: width 0.3s ease;
+    }
+
+    fieldset.q-fieldset {
+      border: 0;
+    }
+
+    .q-text {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4.5vw, 28px);
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 28px;
+    }
+
+    .opt {
+      display: block;
+      position: relative;
+      border: 1px solid var(--rule);
+      background: #fff;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      font-family: var(--serif);
+      font-size: clamp(16px, 3vw, 18px);
+      line-height: 1.5;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .opt:hover { border-color: var(--muted); }
+
+    .opt input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .opt.selected,
+    .opt:has(input:checked) {
+      border-color: var(--red);
+      background: var(--parchment);
+    }
+
+    .opt.selected::before,
+    .opt:has(input:checked)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 3px;
+      background: var(--red);
+    }
+
+    .opt:focus-within {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+      gap: 12px;
+    }
+
+    /* ---------- personalization ---------- */
+    .p-input {
+      display: block;
+      width: 100%;
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--rule);
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+
+    .p-input:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+
+    /* ---------- allocation visual ---------- */
+    .alloc {
+      margin: 8px 0 4px;
+    }
+
+    .alloc-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      max-width: 340px;
+    }
+
+    .alloc-cell {
+      aspect-ratio: 1;
+      border: 1px solid var(--ink);
+    }
+
+    .alloc-cell.genius {
+      background: var(--ink);
+    }
+
+    .alloc-cell.impostor {
+      border-color: var(--red);
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(196, 75, 58, 0.55) 3px,
+        rgba(196, 75, 58, 0.55) 5px
+      );
+    }
+
+    .alloc-legend {
+      display: flex;
+      gap: 24px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .alloc-key {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alloc-swatch {
+      width: 12px;
+      height: 12px;
+      flex: none;
+      border: 1px solid var(--ink);
+    }
+
+    .alloc-swatch.genius { background: var(--ink); }
+
+    .alloc-swatch.impostor {
+      border-color: var(--red);
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(196, 75, 58, 0.55) 3px,
+        rgba(196, 75, 58, 0.55) 5px
+      );
+    }
+
+    .alloc-caption {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    /* then vs now (delta screen) */
+    .alloc-pair .alloc-grid { max-width: 300px; }
+    .alloc-pair-row { margin-bottom: 24px; }
+    .alloc-pair-row:last-child { margin-bottom: 0; }
+
+    /* ---------- delta ---------- */
+    .delta-sub {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .moved-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--parchment-line);
+    }
+
+    .moved-item:last-child { border-bottom: 0; }
+
+    .moved-q {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .moved-then, .moved-now {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .moved-then { color: var(--muted); font-style: italic; }
+    .moved-now { color: var(--ink); }
+
+    .moved-then span, .moved-now span {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-right: 8px;
+    }
+
+    .moved-now span { color: var(--red); }
+
+    .trend-svg { width: 100%; height: auto; display: block; }
+
+    /* ---------- field manual ---------- */
+    .manual-section {
+      padding: 32px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .manual-section:first-of-type { border-top: 0; }
+
+    .manual-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    .systems-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 16px 0 4px;
+    }
+
+    .systems-table th {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 8px 12px 8px 0;
+      border-bottom: 1.5px solid var(--ink);
+    }
+
+    .systems-table th.genius-col { color: var(--ink); }
+    .systems-table th.impostor-col { color: var(--red); }
+
+    .systems-table td {
+      padding: 10px 12px 10px 0;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+
+    .systems-table td:first-child {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 13px;
+    }
+
+    .phrase-list {
+      list-style: none;
+      margin: 12px 0;
+    }
+
+    .phrase-list li {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.6;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--parchment-line);
+    }
+
+    .phrase-list li:last-child { border-bottom: 0; }
+
+    .swap-line {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 2.2;
+    }
+
+    .swap-line .p-input.inline {
+      display: inline-block;
+      width: auto;
+      min-width: 180px;
+      margin: 0 4px;
+      padding: 6px 10px;
+      font-size: 16px;
+    }
+
+    .manual-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    /* ---------- print: Field Manual one-pager ---------- */
+    @media print {
+      body { font-size: 11pt; background: #fff; }
+      .tool-mast, .tool-footer, .no-print, .btn, .btn-row { display: none !important; }
+      .view { display: none !important; }
+      #view-manual { display: block !important; }
+      .shell { max-width: none; padding: 0; min-height: 0; }
+      .shell-main { padding: 0; }
+      .manual-section { padding: 14px 0; page-break-inside: avoid; }
+      .parchment-card {
+        box-shadow: none;
+        border: 1px solid var(--parchment-line);
+        background-image: none;
+        margin: 12px 0;
+        padding: 16px 20px 14px;
+      }
+      .parchment-card::before { display: none; }
+      .t-title { font-size: 22pt; }
+      .t-section { font-size: 13pt; }
+      .t-body { font-size: 11pt; margin-bottom: 10px; }
+      .p-input { border: 0; border-bottom: 1px solid var(--rule); padding: 2px 4px; }
+      .alloc-grid { max-width: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="tool-mast">
+      <a class="tool-mast-home" href="index.html">GeniusAndImpostor.com</a>
+      <span class="tool-mast-name">The Genius Diagnostic</span>
+    </header>
+
+    <main class="shell-main" id="main">
+      <noscript>
+        <p class="t-body">The diagnostic needs JavaScript to run. Nothing here is tracked or sent anywhere; your answers stay on your device.</p>
+      </noscript>
+
+      <!-- ============ INTRO ============ -->
+      <section class="view" id="view-intro" aria-labelledby="intro-title">
+        <p class="t-eyebrow">A field instrument</p>
+        <h1 class="t-title" id="intro-title">The Genius Diagnostic</h1>
+        <p class="t-body">A few questions to find out how you&rsquo;ve been spending your time lately, and who&rsquo;s been running the show. It takes about three minutes.</p>
+        <div class="btn-row" style="margin-top: 32px;">
+          <button class="btn primary" id="btn-start">Let&rsquo;s go</button>
+        </div>
+        <p class="t-quiet" style="margin-top: 24px;">Your answers stay on this device. Nothing is sent anywhere.</p>
+      </section>
+
+      <!-- ============ RETURNING INTRO ============ -->
+      <section class="view" id="view-return" aria-labelledby="return-title">
+        <p class="t-eyebrow">A field instrument</p>
+        <h1 class="t-title" id="return-title">Welcome back</h1>
+        <p class="t-body" id="return-body"></p>
+        <div class="btn-row" style="margin-top: 32px;">
+          <button class="btn primary" id="btn-retake">Run it again</button>
+          <button class="btn" id="btn-open-manual">Open your Field Manual</button>
+        </div>
+        <p class="t-quiet" style="margin-top: 24px;">Retakes skip the personalization questions. Your Field Manual keeps what you wrote.</p>
+      </section>
+
+      <!-- ============ QUIZ ============ -->
+      <section class="view" id="view-quiz" aria-labelledby="quiz-live">
+        <div class="progress-wrap">
+          <div class="progress-text" id="progress-text" aria-live="polite"></div>
+          <div class="progress-bar" role="presentation"><div class="progress-fill" id="progress-fill"></div></div>
+        </div>
+        <div id="quiz-body"></div>
+        <div class="quiz-nav">
+          <button class="btn ghost" id="btn-back">Back</button>
+          <button class="btn primary" id="btn-next" disabled>Next</button>
+        </div>
+      </section>
+
+      <!-- ============ RESULT (first run) ============ -->
+      <section class="view" id="view-result" aria-labelledby="result-headline">
+        <div id="result-body"></div>
+      </section>
+
+      <!-- ============ DELTA (retake) ============ -->
+      <section class="view" id="view-delta" aria-labelledby="delta-headline">
+        <div id="delta-body"></div>
+      </section>
+
+      <!-- ============ FIELD MANUAL ============ -->
+      <section class="view" id="view-manual" aria-labelledby="manual-title">
+        <div id="manual-body"></div>
+      </section>
+    </main>
+
+    <!-- SHARED: cross-tool footer. Add each new tool's link here and on every
+         other tool page when it ships (build-context §2b). -->
+    <footer class="tool-footer">
+      <a class="tool-footer-cover" href="index.html" aria-label="The Genius and the Impostor, the book">
+        <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
+      </a>
+      <div class="tool-footer-label">While you're here</div>
+      <div class="tool-footer-links">
+        <a href="index.html">The Genius and the Impostor</a>
+        <a href="ayumu-test.html">The Ayumu Test</a>
+      </div>
+      <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
+    </footer>
+  </div>
+
+<script>
+'use strict';
+
+/* ================================================================
+   DATA — questions, tricks, band copy.
+   ALL user-facing strings are unreviewed placeholder pending JT's
+   voice pass (see gi-site-build-context.md §1).
+   ================================================================ */
+
+const TRICK = {
+  HT: 'The Hostile Takeover',
+  TJ: 'The Thief of Joy',
+  PM: 'The Productivity Myth',
+  GS: 'The Gold Star Trap',
+  SI: 'The Self-Illusion'
+};
+
+/* Tie-break priority, most specific counter-move first (spec: Scoring mechanics). */
+const TRICK_PRIORITY = ['HT', 'TJ', 'PM', 'GS', 'SI'];
+
+const QUESTIONS = [
+  {
+    short: 'Losing track of time',
+    text: 'When did you last get so absorbed in something that you lost track of time?',
+    options: [
+      { text: 'Sometime in the past day or two', g: 2 },
+      { text: 'Within the past few weeks', g: 1 },
+      { text: "Honestly, I can't remember", g: 0, tag: 'general' }
+    ]
+  },
+  {
+    short: 'The free twenty minutes',
+    text: 'When you have a free twenty minutes, what do you usually do with it?',
+    options: [
+      { text: "Pick up something I'm making, learning, or reading out of pure interest", g: 2 },
+      { text: 'Rest without a screen: walk, sit, stare out a window', g: 2 },
+      { text: 'Catch up on feeds, news, or messages', g: 0, tag: 'TJ' },
+      { text: 'Keep working. Free time makes me feel behind', g: 0, tag: 'PM' }
+    ]
+  },
+  {
+    short: 'The last new interest',
+    text: 'Think of the last skill or subject that grabbed your interest. What did you do about it?',
+    options: [
+      { text: 'Plunged in right away', g: 2 },
+      { text: 'Watched videos and read articles about it. Still am.', g: 1, tag: 'PM' },
+      { text: "Decided I'm not the kind of person who could do it", g: 0, tag: 'SI' }
+    ]
+  },
+  {
+    short: 'After a miss',
+    text: 'When you try something and it goes badly, what happens next?',
+    options: [
+      { text: 'I want to go again', g: 2 },
+      { text: 'I feel embarrassed and drift back to something safer', g: 0, tag: 'GS' },
+      { text: 'I replay it in my head for days', g: 0, tag: 'TJ' }
+    ]
+  },
+  {
+    short: 'How the day starts',
+    text: 'How does your day usually start?',
+    options: [
+      { text: 'With something of my own: reading, walking, making, thinking', g: 2 },
+      { text: "Straight into the day's obligations", g: 1 },
+      { text: "Phone first. Feeds, news, email before I'm fully awake", g: 0, tag: 'TJ' }
+    ]
+  },
+  {
+    short: 'Being put on the spot',
+    text: "Someone asks you to show them something you're good at, right now. What's the first thing you feel?",
+    options: [
+      { text: 'Happy to. Here you go', g: 2 },
+      { text: 'A jolt of dread, even though I know I can do it', g: 0, tag: 'HT' },
+      { text: 'I find a way out of it', g: 0, tag: 'HT' }
+    ]
+  },
+  {
+    short: 'The midday walk',
+    text: "You take a walk in the middle of a workday. No phone, no podcast. What's the voice in your head saying?",
+    options: [
+      { text: 'Nothing much. This is where my best ideas tend to show up', g: 2 },
+      { text: "It's telling me not to take too long since I’m not being productive", g: 1, tag: 'PM' },
+      { text: "There's no walk. I wouldn't take one", g: 0, tag: 'PM' }
+    ]
+  },
+  {
+    short: 'Why you learned it',
+    text: 'The last new thing you deliberately learned: why did you learn it?',
+    options: [
+      { text: "I couldn't stop wondering about it", g: 2 },
+      { text: 'It was useful for work, or looked good to know', g: 1, tag: 'GS' },
+      { text: "I can't think of anything recent", g: 0, tag: 'general' }
+    ]
+  },
+  {
+    short: 'The "not a ___ person" sentence',
+    text: 'Complete the sentence honestly: "I\'m just not a ___ person."',
+    options: [
+      { text: 'I could fill that blank instantly. Maybe with multiple things', g: 0, tag: 'SI' },
+      { text: "I used to say that about something. I'm less sure now", g: 1 },
+      { text: "I don't really believe in that sentence anymore", g: 2 }
+    ]
+  },
+  {
+    short: 'The challenge edge',
+    text: 'The things you spend most of your hours on: how hard are they for you?',
+    options: [
+      { text: "There's at least one thing that's hard in a way I'm getting better at", g: 2 },
+      { text: 'Comfortable. I could do most of it on autopilot', g: 1, tag: 'GS' },
+      { text: 'Overwhelming. More drowning than swimming', g: 0, tag: 'general' }
+    ]
+  },
+  {
+    short: 'After finishing something',
+    text: "You finish something you're proud of. What's the first impulse?",
+    options: [
+      { text: "Start on the next part. I'm mostly in it for the making", g: 2 },
+      { text: 'Show someone to see what they think', g: 1, tag: 'GS' },
+      { text: 'Point out its flaws before anyone else can', g: 0, tag: 'SI' }
+    ]
+  },
+  {
+    short: 'Where ideas arrive',
+    text: 'Where was your last genuinely good idea born?',
+    options: [
+      { text: 'In the shower, on a walk, driving, or half-asleep', g: 2 },
+      { text: 'At my desk, mid-grind', g: 1 },
+      { text: "I can't remember my last genuinely good idea", g: 0, tag: 'PM' }
+    ]
+  },
+  {
+    short: 'How rest gets in',
+    text: 'How does rest get into your week?',
+    options: [
+      { text: "It's scheduled. I protect it like an appointment", g: 2 },
+      { text: 'It shows up in whatever gaps are left over', g: 1, tag: 'PM' },
+      { text: "It mostly doesn't. Rest is what happens when I run out of steam", g: 0, tag: 'PM' }
+    ]
+  },
+  {
+    short: 'What downtime becomes',
+    text: 'When you do get a stretch of real downtime, what does it usually become?',
+    options: [
+      { text: 'Something with my hands or mind in it: an instrument, a project, a garden, a trail', g: 2 },
+      { text: 'Genuine nothing: a nap, a slow walk, sitting outside', g: 2 },
+      { text: 'A screen, until the time is gone', g: 0, tag: 'TJ' }
+    ]
+  }
+];
+
+const MAX_SCORE = 28;
+
+const P1_PHRASES = [
+  "You're not smart enough for this.",
+  'Who do you think you are?',
+  "You'll embarrass yourself.",
+  'Everyone else has it figured out.',
+  "If it can't be great, don't bother.",
+  'You should be further along by now.',
+  "Stick with what you're good at."
+];
+
+/* Per-trick copy: result-screen block + expanded counter + inferred feeding
+   grounds for the Starve and Feed section. PM block is from the spec draft;
+   the other four are placeholder in the same shape. */
+const TRICK_COPY = {
+  PM: {
+    block: 'He thinks work only counts when it looks like work. Sweaty and visible and preferably at a desk. So a walk in the middle of the day has to be earned, and rest turns up with guilt attached. But the greatest works of your mind arrive in a mind at rest. Ask anyone where they got their best idea. Nobody says "at my desk, on hour nine."',
+    counter: 'Once a day, go somewhere your brain can wander. A walk with nothing in your ears. A shower with no agenda. Ten minutes of staring out a window like a cat. You’re not slacking off. That’s the door to your most insightful bits, and it only opens when you stop pushing on it.',
+    counterLong: 'Once a day, go somewhere your brain can wander. A walk with nothing in your ears. A shower with no agenda. Ten minutes of staring out a window like a cat. Put it on the calendar if that helps you take it seriously, because it is serious. This is where the solving actually happens. You’re not slacking off. That’s the door to your most insightful bits, and it only opens when you stop pushing on it.',
+    feeding: 'nonstop grind, and rest that always turns up with guilt attached'
+  },
+  TJ: {
+    block: 'Comparison is his favorite trick, because it works every time. You hold your half-finished thing up next to somebody’s finished one, and of course yours looks worse. You’re comparing your rough draft to their final cut. Nobody wins that. So you stop making and start watching, and the hours quietly disappear.',
+    counter: 'Tomorrow, give the first twenty minutes to something of your own, before the phone gets a vote. The feed will keep. It’s extremely good at keeping. Your best attention goes to your own work for once.',
+    counterLong: 'Tomorrow, give the first twenty minutes to something of your own, before the phone gets a vote. Then do it again the next day. The feed will keep. It’s extremely good at keeping. All that changes is the order, and the first twenty minutes of your day are the best twenty minutes you’ve got.',
+    feeding: 'the feed, and everybody else’s highlight reel'
+  },
+  GS: {
+    block: 'He’s in it for the applause, not the making. So he nudges you toward the things you already do well and away from anything you might flub. Which is a shame, because everything you’re good at today, you were once terrible at. He’s steering you away from the only place anybody ever gets better.',
+    counter: 'Be bad at something on purpose this week, where nobody can see. No audience, nothing riding on it. Falling on your face in private is how you find out what to fix.',
+    counterLong: 'Be bad at something on purpose this week, where nobody can see. No audience, nothing riding on it. Pick the thing you keep circling and give it twenty scruffy minutes. Falling on your face in private is how you find out what to fix, and it teaches you far more than another round of something you’ve already mastered.',
+    feeding: 'safe bets, and work picked for how it will look'
+  },
+  SI: {
+    block: 'He hands you a tidy little story about what kind of person you are, and that story quietly decides what you’ll even try. Not a math person. Not the kind who could. But those sentences are only a report on the hours you’ve put in so far. Put in different hours and they go out of date.',
+    counter: 'Pick one "not a ___ person" sentence and spend twenty minutes this week proving it wrong. You’re not trying to win. You’re just seeing what happens.',
+    counterLong: 'Pick one "not a ___ person" sentence and spend twenty minutes this week proving it wrong. Twenty minutes, once. You’re not out to demolish the whole story in one sitting. You just want to see what actually happens when you try, because that story has never once been tested, and it tends to go quiet in a hurry when it is.',
+    feeding: 'the "not a ___ person" stories that decide what you attempt'
+  },
+  HT: {
+    block: 'He waits for the moments that count. The audition, the shot that matters. Then he grabs the wheel from a part of you that already knew exactly what to do, and it all comes out worse than it does in your kitchen. Here’s the good news: he can’t take the skill. It’s still in there, every bit of it. All he can take is the steering, and you can teach him to let go.',
+    counter: 'Do the thing in front of one person this week. One. Chosen by you, with nothing riding on it. You’re showing yourself that being watched and being fine can happen at the same time.',
+    counterLong: 'Do the thing in front of one person this week. One. Chosen by you, with nothing riding on it. Play the tune for a friend, or say the idea out loud in the small meeting where nobody’s keeping score. You’re showing yourself that being watched and being fine can happen at the same time, and that lesson sticks faster than you’d expect.',
+    feeding: 'the moments that count, and the detours built to avoid them'
+  }
+};
+
+/* Band definitions (spec: Scoring mechanics). */
+function bandFor(score) {
+  if (score >= 21) return 'high';
+  if (score >= 12) return 'mid';
+  return 'low';
+}
+
+const BAND_COPY = {
+  mid: {
+    name: 'The Genius and the Impostor are battling for the neural gears',
+    headline: 'This week, the Impostor got more of your hours than the Genius did.',
+    body: [
+      'Here’s the lowdown.',
+      'You’ve still got hours in the week where you lose track of time, chase a question just because it won’t let go, and make something with nobody watching. That’s the Genius, wide awake. The rest of your hours are going to the other guy: the one who keeps score against everybody else, guards your reputation like it’s under attack, and files his favorite habits under "being productive."',
+      'The good news is almost too simple. None of this is stuck. What you’re looking at is how one week happened to shake out, and the next one is yours to spend however you like.'
+    ]
+  },
+  low: {
+    name: 'The Impostor is hijacking the neural gears',
+    headline: 'Right now, the Impostor is hijacking the neural gears.',
+    body: [
+      'Here’s the lowdown.',
+      'If you can’t remember the last time an afternoon just vanished on you, that says nothing about what you’re capable of. It says something about what your weeks have looked like lately. The same machinery that taught you to walk and read and talk is still in there, humming along, waiting for something to do. It just hasn’t had much on the calendar. And a calendar is a very fixable thing.'
+    ]
+  },
+  high: {
+    name: 'The Genius is running the neural gears',
+    headline: 'The Genius is at the wheel. That’s rarer than you’d think.',
+    body: [
+      'For most people, most weeks, the hours run the other way. Yours are going where the good stuff actually comes from: getting lost in something, real rest, chasing a question just to see where it leads. Whatever you’re doing to keep those hours safe, it’s working. Worth knowing exactly what it is, so you can hang onto it on the weeks that come for it.'
+    ]
+  }
+};
+
+/* ================================================================
+   STORAGE
+   ================================================================ */
+
+const STORE_KEY = 'giDiagnostic.v1';
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (!s || !Array.isArray(s.runs)) return null;
+    return s;
+  } catch (e) {
+    return null;
+  }
+}
+
+function saveStore() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  } catch (e) { /* private mode etc.: the session still works, it just won't persist */ }
+}
+
+let store = loadStore() || {
+  runs: [],            // {date: ISO string, answers: [optionIndex x14]}
+  p1: { selected: [], custom: '' },
+  p2: ['', '', ''],
+  impostorName: '',
+  swap: { feed: '', starve: '' }
+};
+
+/* ================================================================
+   SCORING
+   ================================================================ */
+
+function scoreRun(answers) {
+  let score = 0;
+  const tags = {};
+  answers.forEach((optIdx, qi) => {
+    const opt = QUESTIONS[qi].options[optIdx];
+    if (!opt) return;
+    score += opt.g;
+    if (opt.tag && opt.tag !== 'general') {
+      tags[opt.tag] = (tags[opt.tag] || 0) + 1;
+    }
+  });
+  let trick = null;
+  let best = 0;
+  TRICK_PRIORITY.forEach(t => {
+    if ((tags[t] || 0) > best) { best = tags[t]; trick = t; }
+  });
+  return { score, band: bandFor(score), tags, trick };
+}
+
+function lowestQuestion(answers) {
+  let worstIdx = -1, worstG = 3;
+  answers.forEach((optIdx, qi) => {
+    const g = QUESTIONS[qi].options[optIdx] ? QUESTIONS[qi].options[optIdx].g : 3;
+    if (g < worstG) { worstG = g; worstIdx = qi; }
+  });
+  return worstIdx >= 0 && worstG < 2 ? QUESTIONS[worstIdx] : null;
+}
+
+/* ================================================================
+   DATES
+   ================================================================ */
+
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+function fmtDateShort(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function recheckDate(iso) {
+  const d = new Date(iso);
+  d.setDate(d.getDate() + 14);
+  return d;
+}
+
+function icsFor(dateObj) {
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//GeniusAndImpostor//Diagnostic//EN',
+    'BEGIN:VEVENT',
+    'UID:gi-diagnostic-recheck-' + y + m + day + '@geniusandimpostor.com',
+    'DTSTAMP:' + stamp,
+    'DTSTART;VALUE=DATE:' + y + m + day,
+    'SUMMARY:Re-run the Genius Diagnostic',
+    'DESCRIPTION:Two weeks of data beats one. Run it again: https://geniusandimpostor.com/diagnostic.html',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+}
+
+function downloadIcs(dateObj) {
+  const blob = new Blob([icsFor(dateObj)], { type: 'text/calendar' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'genius-diagnostic-recheck.ics';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ================================================================
+   VIEW MACHINERY
+   ================================================================ */
+
+function show(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function esc(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+/* Allocation visual: 28 blocks, one per available Genius point. */
+function allocHTML(score, caption) {
+  let cells = '';
+  for (let i = 0; i < MAX_SCORE; i++) {
+    cells += '<div class="alloc-cell ' + (i < score ? 'genius' : 'impostor') + '"></div>';
+  }
+  const label = 'Allocation readout: ' + score + ' of ' + MAX_SCORE + ' blocks with the Genius, ' + (MAX_SCORE - score) + ' with the Impostor.';
+  return '<div class="alloc" role="img" aria-label="' + esc(label) + '">' +
+    '<div class="alloc-grid">' + cells + '</div>' +
+    '<div class="alloc-legend" aria-hidden="true">' +
+      '<span class="alloc-key"><span class="alloc-swatch genius"></span>GENIUS ' + score + '</span>' +
+      '<span class="alloc-key"><span class="alloc-swatch impostor"></span>IMPOSTOR ' + (MAX_SCORE - score) + '</span>' +
+    '</div>' +
+    (caption ? '<div class="alloc-caption" aria-hidden="true">' + esc(caption) + '</div>' : '') +
+  '</div>';
+}
+
+/* ================================================================
+   QUIZ FLOW
+   ================================================================ */
+
+const P_STEPS = 2; // P1, P2
+let session = null; // {answers: [], step: 0, isRetake: bool}
+
+function totalSteps() {
+  return QUESTIONS.length + (session.isRetake ? 0 : P_STEPS);
+}
+
+function startQuiz(isRetake) {
+  session = { answers: new Array(QUESTIONS.length).fill(null), step: 0, isRetake };
+  show('view-quiz');
+  renderStep();
+}
+
+function renderStep() {
+  const body = document.getElementById('quiz-body');
+  const next = document.getElementById('btn-next');
+  const back = document.getElementById('btn-back');
+  const i = session.step;
+
+  back.style.visibility = i === 0 ? 'hidden' : 'visible';
+  document.getElementById('progress-fill').style.width = (i / totalSteps() * 100) + '%';
+
+  if (i < QUESTIONS.length) {
+    const q = QUESTIONS[i];
+    document.getElementById('progress-text').textContent =
+      'QUESTION ' + String(i + 1).padStart(2, '0') + ' / ' + QUESTIONS.length;
+    let opts = '';
+    q.options.forEach((o, oi) => {
+      const checked = session.answers[i] === oi;
+      opts += '<label class="opt' + (checked ? ' selected' : '') + '" data-oi="' + oi + '">' +
+        '<input type="radio" name="q' + i + '" value="' + oi + '"' + (checked ? ' checked' : '') + '>' +
+        '<span>' + esc(o.text) + '</span></label>';
+    });
+    body.innerHTML = '<fieldset class="q-fieldset"><legend class="q-text">' + esc(q.text) + '</legend>' + opts + '</fieldset>';
+    next.disabled = session.answers[i] === null;
+    next.textContent = 'Next';
+
+    body.querySelectorAll('.opt').forEach(labelEl => {
+      const input = labelEl.querySelector('input');
+      input.addEventListener('change', () => {
+        session.answers[i] = parseInt(labelEl.dataset.oi, 10);
+        body.querySelectorAll('.opt').forEach(l => l.classList.remove('selected'));
+        labelEl.classList.add('selected');
+        next.disabled = false;
+      });
+      // Pointer selection advances after a beat; keyboard users keep control.
+      labelEl.addEventListener('pointerup', () => {
+        setTimeout(() => {
+          if (session.answers[i] !== null && session.step === i) advance();
+        }, 220);
+      });
+    });
+  } else {
+    renderPersonalization(i - QUESTIONS.length);
+  }
+}
+
+function renderPersonalization(pIdx) {
+  const body = document.getElementById('quiz-body');
+  const next = document.getElementById('btn-next');
+  document.getElementById('progress-text').textContent =
+    'PERSONALIZATION ' + (pIdx + 1) + ' / ' + P_STEPS;
+  next.disabled = false;
+
+  if (pIdx === 0) {
+    let boxes = '';
+    P1_PHRASES.forEach((p, idx) => {
+      const checked = store.p1.selected.includes(idx);
+      boxes += '<label class="opt' + (checked ? ' selected' : '') + '" data-pi="' + idx + '">' +
+        '<input type="checkbox"' + (checked ? ' checked' : '') + '>' +
+        '<span>&ldquo;' + esc(p) + '&rdquo;</span></label>';
+    });
+    body.innerHTML =
+      '<fieldset class="q-fieldset"><legend class="q-text">Which of these does your inner voice actually say? Select all that apply.</legend>' +
+      boxes +
+      '<label class="t-label" for="p1-custom" style="display:block; margin-top: 20px;">None of these. Mine has different material (optional)</label>' +
+      '<input class="p-input" id="p1-custom" type="text" value="' + esc(store.p1.custom) + '" placeholder="What yours says">' +
+      '</fieldset>';
+    next.textContent = 'Next';
+
+    body.querySelectorAll('.opt').forEach(labelEl => {
+      labelEl.querySelector('input').addEventListener('change', (e) => {
+        const idx = parseInt(labelEl.dataset.pi, 10);
+        if (e.target.checked) {
+          if (!store.p1.selected.includes(idx)) store.p1.selected.push(idx);
+          labelEl.classList.add('selected');
+        } else {
+          store.p1.selected = store.p1.selected.filter(x => x !== idx);
+          labelEl.classList.remove('selected');
+        }
+      });
+    });
+    document.getElementById('p1-custom').addEventListener('input', (e) => {
+      store.p1.custom = e.target.value;
+    });
+  } else {
+    body.innerHTML =
+      '<fieldset class="q-fieldset"><legend class="q-text">Name up to three things that reliably make you lose track of time.</legend>' +
+      '<p class="t-body" style="color: var(--muted); font-size: 16px;">Instruments, projects, trails, problems, people. Whatever does it. Blank is a fine answer; the Field Manual adapts.</p>' +
+      [0, 1, 2].map(n =>
+        '<input class="p-input" id="p2-' + n + '" type="text" value="' + esc(store.p2[n] || '') + '" placeholder="Thing ' + (n + 1) + '" aria-label="Lose-track-of-time activity ' + (n + 1) + '">'
+      ).join('') +
+      '</fieldset>';
+    next.textContent = 'See your result';
+    [0, 1, 2].forEach(n => {
+      document.getElementById('p2-' + n).addEventListener('input', (e) => {
+        store.p2[n] = e.target.value;
+      });
+    });
+  }
+}
+
+function advance() {
+  if (session.step < totalSteps() - 1) {
+    session.step++;
+    renderStep();
+  } else {
+    finishRun();
+  }
+}
+
+document.getElementById('btn-next').addEventListener('click', advance);
+document.getElementById('btn-back').addEventListener('click', () => {
+  if (session.step > 0) { session.step--; renderStep(); }
+});
+
+function finishRun() {
+  const run = { date: new Date().toISOString(), answers: session.answers.slice() };
+  store.runs.push(run);
+  saveStore();
+  if (store.runs.length > 1) {
+    renderDelta();
+    show('view-delta');
+  } else {
+    renderResult();
+    show('view-result');
+  }
+}
+
+/* ================================================================
+   RESULT SCREEN (first run)
+   ================================================================ */
+
+function trickBlockHTML(trick, opts) {
+  if (!trick) return '';
+  const c = TRICK_COPY[trick];
+  const longForm = opts && opts.long;
+  return '<div class="parchment-card">' +
+    '<div class="card-header"><span>Field Note</span><span class="card-stamp">Dominant trick</span></div>' +
+    '<p class="t-body">Your Impostor’s favorite move right now is <strong>' + TRICK[trick] + '</strong>.</p>' +
+    '<p class="t-body">' + c.block + '</p>' +
+    '<p class="t-body"><strong>The counter-move:</strong> ' + (longForm ? c.counterLong : c.counter) + '</p>' +
+  '</div>';
+}
+
+function renderResult() {
+  const run = store.runs[store.runs.length - 1];
+  const r = scoreRun(run.answers);
+  const band = BAND_COPY[r.band];
+  const el = document.getElementById('result-body');
+
+  let html = '<p class="t-eyebrow">Diagnostic run: ' + esc(fmtDate(run.date)) + '</p>';
+  html += '<h1 class="t-headline" id="result-headline">' + band.headline + '</h1>';
+  band.body.forEach(p => { html += '<p class="t-body">' + p + '</p>'; });
+
+  html += '<div class="parchment-card">' +
+    '<div class="card-header"><span>How your week broke down</span></div>' +
+    allocHTML(r.score, 'Dark blocks are Genius, striped are Impostor. A picture of your week, not a verdict on you.') +
+    '</div>';
+
+  // High band: extend rather than diagnose. Point at the one place still paying a toll.
+  if (r.band === 'high') {
+    const lowQ = lowestQuestion(run.answers);
+    if (lowQ) {
+      html += '<p class="t-body">One spot where the Impostor is still collecting a toll: <strong>' +
+        esc(lowQ.short.toLowerCase()) + '</strong>. Your Field Manual digs in right there, guarding what you’ve already built and nudging the challenge up a notch.</p>';
+    }
+  }
+
+  html += trickBlockHTML(r.trick);
+
+  html += '<h2 class="t-section" style="margin-top: 36px;">Your Field Manual is ready.</h2>' +
+    '<p class="t-body">It’s built from what you just told us: the exact lines your Impostor uses on you, the things that put your Genius back at the wheel, and the one move that works on his favorite trick.</p>' +
+    '<div class="btn-row"><button class="btn primary" id="btn-manual-from-result">Open your Field Manual</button></div>' +
+    '<p class="t-quiet" style="margin-top: 20px;">Saved right here on your device. Come back in a couple of weeks and run it again. The manual has the date.</p>';
+
+  el.innerHTML = html;
+  document.getElementById('btn-manual-from-result').addEventListener('click', () => {
+    renderManual(); show('view-manual'); location.hash = 'manual';
+  });
+}
+
+/* ================================================================
+   DELTA SCREEN (retakes)
+   ================================================================ */
+
+function deltaCase(delta) {
+  if (delta >= 2) return 'up';
+  if (delta <= -2) return 'down';
+  return 'flat';
+}
+
+const DELTA_COPY = {
+  up: {
+    headline: 'You moved it.',
+    body: [
+      'Last time, the Impostor was getting more of your hours. Today he isn’t. Nothing about your brain changed in two weeks. What changed is where the hours went, and you’re the one who moved them.',
+      'Two weeks ago those hours were going somewhere else, and you sent them somewhere better. None of this was ever fixed in place. It was a schedule the whole time, and you’re the one who writes it.'
+    ]
+  },
+  flat: {
+    headline: 'About where you started. That happens.',
+    body: [
+      'A flat couple of weeks usually comes down to one of two things, and they need opposite fixes.',
+      'Either the swap never really happened. If that’s it, make it smaller. One twenty-minute block, one day, written on the calendar with an actual time next to it. A vague plan loses to a specific one every single time.',
+      'Or you did the swap and the week steamrolled it anyway. Some weeks are like that. Two weeks is a short window, and a rough patch will show up here without meaning anything about you.',
+      'Either way, you now know something about your own attention that most people never bother to find out.'
+    ]
+  },
+  down: {
+    headline: 'Down from last time. Here’s what that means, and what it doesn’t.',
+    body: [
+      'It means the last couple of weeks were harder on your attention than the two before them. That’s all it means. It doesn’t mean you’re sliding backwards, and it definitely doesn’t mean the first result was a fluke you’ve now been caught out on. That second thought is available to you, it will feel very convincing, and it is your Impostor doing the exact thing he does.',
+      'Most down weeks have a reason attached. A deadline. Being sick. Travel. Somebody needing you. Your hours move because life moves them, which is the same reason they move back.',
+      'And here’s the part worth sitting with: you can see this at all because you measured it. Two weeks ago you’d have had no idea anything shifted. Catching a rough patch while you’re still standing in it is exactly what lets you do something about it.'
+    ]
+  }
+};
+
+function trendHTML(runs) {
+  const w = 560, h = 180, padX = 40, padY = 24;
+  const n = runs.length;
+  const scores = runs.map(r => scoreRun(r.answers).score);
+  const x = i => padX + (w - 2 * padX) * (n === 1 ? 0.5 : i / (n - 1));
+  const y = s => h - padY - (h - 2 * padY) * (s / MAX_SCORE);
+  let pts = scores.map((s, i) => x(i) + ',' + y(s)).join(' ');
+  let dots = '', labels = '';
+  scores.forEach((s, i) => {
+    dots += '<circle cx="' + x(i) + '" cy="' + y(s) + '" r="4" fill="#1a1a1a"/>';
+    labels += '<text x="' + x(i) + '" y="' + (h - 6) + '" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#666">' + esc(fmtDateShort(runs[i].date)) + '</text>';
+    labels += '<text x="' + x(i) + '" y="' + (y(s) - 10) + '" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#1a1a1a">' + s + '</text>';
+  });
+  const desc = 'Trend across ' + n + ' runs: ' + scores.join(', ') + ' out of ' + MAX_SCORE + '.';
+  return '<svg class="trend-svg" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="' + esc(desc) + '">' +
+    '<line x1="' + padX + '" y1="' + (h - padY) + '" x2="' + (w - padX) + '" y2="' + (h - padY) + '" stroke="#e0dcd4" stroke-width="1"/>' +
+    '<polyline points="' + pts + '" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>' +
+    dots + labels + '</svg>';
+}
+
+function renderDelta() {
+  const runs = store.runs;
+  const curr = runs[runs.length - 1];
+  const prev = runs[runs.length - 2];
+  const rCurr = scoreRun(curr.answers);
+  const rPrev = scoreRun(prev.answers);
+  const delta = rCurr.score - rPrev.score;
+  const dCase = deltaCase(delta);
+  const copy = DELTA_COPY[dCase];
+  const el = document.getElementById('delta-body');
+
+  // 1. The delta as the headline; movement, not the number.
+  let movement;
+  if (delta > 0) movement = 'Up ' + delta + (delta === 1 ? ' notch' : ' notches') + ' since ' + fmtDate(prev.date) + '.';
+  else if (delta < 0) movement = 'Down ' + Math.abs(delta) + (delta === -1 ? ' notch' : ' notches') + ' since ' + fmtDate(prev.date) + '.';
+  else movement = 'Exactly where you were on ' + fmtDate(prev.date) + '.';
+
+  let html = '<p class="t-eyebrow">Re-check: ' + esc(fmtDate(curr.date)) + '</p>';
+  html += '<h1 class="t-headline" id="delta-headline">' + copy.headline + '</h1>';
+  html += '<p class="delta-sub">' + esc(movement) + '</p>';
+
+  // Trend for 3+ runs, otherwise then-vs-now allocation pair.
+  if (runs.length >= 3) {
+    html += '<div class="parchment-card"><div class="card-header"><span>Every run so far</span></div>' + trendHTML(runs) + '</div>';
+  } else {
+    html += '<div class="parchment-card alloc-pair"><div class="card-header"><span>Then and now</span></div>' +
+      '<div class="alloc-pair-row"><div class="t-label">' + esc(fmtDate(prev.date)) + '</div>' + allocHTML(rPrev.score) + '</div>' +
+      '<div class="alloc-pair-row"><div class="t-label red">' + esc(fmtDate(curr.date)) + '</div>' + allocHTML(rCurr.score) + '</div>' +
+      '</div>';
+  }
+
+  // 3. What moved, specifically.
+  const moved = [];
+  curr.answers.forEach((a, qi) => {
+    if (a !== prev.answers[qi]) {
+      moved.push({
+        q: QUESTIONS[qi].short,
+        then: QUESTIONS[qi].options[prev.answers[qi]].text,
+        now: QUESTIONS[qi].options[a].text
+      });
+    }
+  });
+  if (moved.length) {
+    html += '<div class="parchment-card"><div class="card-header"><span>What actually changed</span></div>';
+    moved.forEach(m => {
+      html += '<div class="moved-item">' +
+        '<div class="moved-q">' + esc(m.q) + '</div>' +
+        '<div class="moved-then"><span>Then</span>' + esc(m.then) + '</div>' +
+        '<div class="moved-now"><span>Now</span>' + esc(m.now) + '</div>' +
+        '</div>';
+    });
+    html += '</div>';
+  } else {
+    html += '<p class="t-body">Every single answer came out the same as last time. That’s its own kind of interesting.</p>';
+  }
+
+  // 4. Interpretation.
+  copy.body.forEach(p => { html += '<p class="t-body">' + p + '</p>'; });
+
+  if (dCase === 'up' && store.swap.feed && store.swap.starve) {
+    html += '<p class="t-body">Your swap was <strong>' + esc(store.swap.feed) + '</strong> instead of <strong>' + esc(store.swap.starve) + '</strong>. Looks like it worked. Keep it going, or make it a little harder in your Field Manual.</p>';
+  }
+  if (dCase === 'flat') {
+    html += '<p class="t-body">Your Field Manual has the swap builder in it. Shrink the swap there, and set a new date.</p>';
+  }
+  if (dCase === 'down') {
+    html += '<p class="t-body">Start impossibly small. One block, this week. And if you’d rather check again before another two weeks are up, do that. Nobody is timing you.</p>';
+  }
+
+  // 5. The next re-check date, and nothing else.
+  const next = recheckDate(curr.date);
+  html += '<div class="parchment-card"><div class="card-header"><span>When to check again</span></div>' +
+    '<p class="t-body" style="margin-bottom: 16px;"><strong>' + esc(next.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })) + '</strong></p>' +
+    '<div class="btn-row"><button class="btn" id="btn-ics-delta">Add it to your calendar</button>' +
+    '<button class="btn ghost" id="btn-manual-from-delta">Open your Field Manual</button></div></div>';
+
+  el.innerHTML = html;
+  document.getElementById('btn-ics-delta').addEventListener('click', () => downloadIcs(next));
+  document.getElementById('btn-manual-from-delta').addEventListener('click', () => {
+    renderManual(); show('view-manual'); location.hash = 'manual';
+  });
+}
+
+/* ================================================================
+   FIELD MANUAL
+   ================================================================ */
+
+/* Placeholder two-systems table. The spec calls for the book's comparison
+   table verbatim (Drive, Goal, Method, Reaction to Failure, Time
+   Orientation); swap these cells for the book text during the voice pass. */
+const SYSTEMS_ROWS = [
+  ['Drive', 'Curiosity. Pulled toward the interesting.', 'Fear of exposure. Pushed away from risk.'],
+  ['Goal', 'Growth. Make the thing, learn the thing.', 'Protection. Guard the image at all costs.'],
+  ['Method', 'Play, experiment, absorption.', 'Comparison, monitoring, performance.'],
+  ['Reaction to failure', 'Information. The miss tells you something.', 'Indictment. The miss tells on you.'],
+  ['Time orientation', 'Now. The work in front of you.', 'Past and future. The audience and the record.']
+];
+
+function renderManual() {
+  const el = document.getElementById('manual-body');
+  const hasRuns = store.runs.length > 0;
+  if (!hasRuns) {
+    el.innerHTML = '<h1 class="t-title" id="manual-title">No manual yet</h1>' +
+      '<p class="t-body">Your Field Manual gets built the moment you finish a run, and there isn’t one saved on this device yet.</p>' +
+      '<div class="btn-row"><button class="btn primary" id="btn-manual-start">Run the diagnostic</button></div>';
+    document.getElementById('btn-manual-start').addEventListener('click', () => startQuiz(false));
+    return;
+  }
+
+  const run = store.runs[store.runs.length - 1];
+  const r = scoreRun(run.answers);
+  const next = recheckDate(run.date);
+  const nextStr = next.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  let html = '<p class="t-eyebrow">Personal document</p>' +
+    '<h1 class="t-title" id="manual-title">Field Manual</h1>' +
+    '<p class="manual-meta">Diagnostic run: ' + esc(fmtDate(run.date)) + '<br>Next check: ' + esc(nextStr) + '</p>' +
+    '<div class="btn-row no-print" style="margin: 24px 0 8px;">' +
+    '<button class="btn ghost" id="btn-print">Print the one-pager</button></div>';
+
+  // 1. Readout
+  html += '<div class="manual-section"><div class="manual-num">01 / Your readout</div>' +
+    '<h2 class="t-section">' + BAND_COPY[r.band].name + '</h2>' +
+    allocHTML(r.score, 'A picture of two weeks, not of you.') + '</div>';
+
+  // 2. Know the two systems
+  html += '<div class="manual-section"><div class="manual-num">02 / Know the two systems</div>' +
+    '<table class="systems-table"><thead><tr><th></th><th class="genius-col">The Genius</th><th class="impostor-col">The Impostor</th></tr></thead><tbody>' +
+    SYSTEMS_ROWS.map(row => '<tr><td>' + esc(row[0]) + '</td><td>' + esc(row[1]) + '</td><td>' + esc(row[2]) + '</td></tr>').join('') +
+    '</tbody></table></div>';
+
+  // 3. Notice and Name
+  const phrases = store.p1.selected.map(i => P1_PHRASES[i]);
+  if (store.p1.custom.trim()) phrases.push(store.p1.custom.trim());
+  html += '<div class="manual-section"><div class="manual-num">03 / Notice and name</div>';
+  if (phrases.length) {
+    html += '<p class="t-body">The lines you told us your Impostor uses:</p>' +
+      '<div class="parchment-card"><ul class="phrase-list">' +
+      phrases.map(p => '<li>&ldquo;' + esc(p) + '&rdquo;</li>').join('') + '</ul></div>';
+  } else {
+    html += '<p class="t-body">You didn’t flag any lines this time. No problem. Your first job is to catch one in the act and jot it down here before your next run.</p>';
+  }
+  html += '<p class="t-body">Next time one of these pipes up, give the voice a name. Something small and a little ridiculous works best. It’s much harder to take orders from a voice once you’ve named it.</p>' +
+    '<label class="t-label" for="impostor-name">Your Impostor’s name</label>' +
+    '<input class="p-input" id="impostor-name" type="text" value="' + esc(store.impostorName) + '" placeholder="Nice try, Chad.">' +
+    '</div>';
+
+  // 4. Starve and Feed
+  const feeding = r.trick ? TRICK_COPY[r.trick].feeding : 'wherever the low-scoring hours went';
+  const activities = store.p2.filter(a => a && a.trim());
+  html += '<div class="manual-section"><div class="manual-num">04 / Starve and feed</div>';
+  if (activities.length) {
+    html += '<p class="t-body">Here’s what reliably hands the wheel back to your Genius: <strong>' +
+      activities.map(esc).join('</strong>, <strong>') + '</strong>.</p>';
+  } else {
+    html += '<p class="t-body">You drew a blank on what makes you lose track of time. That’s fine, it’s just your first assignment. This week, catch one thing that comes close and write it in here.</p>';
+  }
+  html += '<p class="t-body">Where your Impostor has been eating lately: ' + feeding + '.</p>' +
+    '<p class="t-body">Now the swap. One thing in, one thing out. Pick a real time this week and make it specific:</p>' +
+    '<div class="swap-line">This week, 30 minutes of' +
+    '<input class="p-input inline" id="swap-feed" type="text" value="' + esc(store.swap.feed) + '" placeholder="the Genius activity" aria-label="Activity to feed"> replaces ' +
+    '<input class="p-input inline" id="swap-starve" type="text" value="' + esc(store.swap.starve) + '" placeholder="the Impostor habit" aria-label="Habit to starve">.' +
+    '</div></div>';
+
+  // 5. The counter-move
+  if (r.trick) {
+    html += '<div class="manual-section"><div class="manual-num">05 / The counter-move</div>' +
+      trickBlockHTML(r.trick, { long: true }) + '</div>';
+  }
+
+  // 6. The re-check
+  html += '<div class="manual-section"><div class="manual-num">06 / The re-check</div>' +
+    '<p class="t-body">Run this again on <strong>' + esc(nextStr) + '</strong>. You’re not after a perfect week. You’re just looking for movement.</p>' +
+    '<div class="btn-row no-print">' +
+    '<button class="btn" id="btn-ics-manual">Add the date to your calendar</button>' +
+    '<button class="btn ghost" id="btn-retake-manual">Run it again now</button>' +
+    '</div></div>';
+
+  el.innerHTML = html;
+
+  document.getElementById('btn-print').addEventListener('click', () => window.print());
+  document.getElementById('btn-ics-manual').addEventListener('click', () => downloadIcs(next));
+  document.getElementById('btn-retake-manual').addEventListener('click', () => startQuiz(true));
+  document.getElementById('impostor-name').addEventListener('input', (e) => {
+    store.impostorName = e.target.value; saveStore();
+  });
+  document.getElementById('swap-feed').addEventListener('input', (e) => {
+    store.swap.feed = e.target.value; saveStore();
+  });
+  document.getElementById('swap-starve').addEventListener('input', (e) => {
+    store.swap.starve = e.target.value; saveStore();
+  });
+}
+
+/* ================================================================
+   ENTRY
+   ================================================================ */
+
+document.getElementById('btn-start').addEventListener('click', () => startQuiz(false));
+document.getElementById('btn-retake').addEventListener('click', () => startQuiz(true));
+document.getElementById('btn-open-manual').addEventListener('click', () => {
+  renderManual(); show('view-manual'); location.hash = 'manual';
+});
+
+function boot() {
+  if (location.hash === '#manual' && store.runs.length) {
+    renderManual();
+    show('view-manual');
+    return;
+  }
+  if (store.runs.length) {
+    const last = store.runs[store.runs.length - 1];
+    const next = recheckDate(last.date);
+    const overdue = new Date() >= next;
+    document.getElementById('return-body').innerHTML =
+      'Last run: <strong>' + esc(fmtDate(last.date)) + '</strong>. ' +
+      (store.runs.length === 1 ? 'One run on file. ' : store.runs.length + ' runs on file. ') +
+      (overdue
+        ? 'Time to check back in.'
+        : 'Your next check is suggested for ' + esc(next.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })) + ', but the instrument works whenever you do.');
+    show('view-return');
+  } else {
+    show('view-intro');
+  }
+}
+
+boot();
+</script>
+</body>
+</html>
