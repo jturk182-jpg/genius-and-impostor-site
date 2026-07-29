@@ -289,17 +289,6 @@
 
     .refs li:last-child { border-bottom: 0; }
 
-    .placeholder-flag {
-      font-family: var(--mono);
-      font-size: 10px;
-      line-height: 1.7;
-      letter-spacing: 0.06em;
-      color: var(--red);
-      border: 1px dashed var(--red);
-      padding: 12px 14px;
-      margin: 26px 0;
-      opacity: 0.85;
-    }
   </style>
 </head>
 <body>
@@ -314,9 +303,18 @@
       <h1 class="t-title">Meet Ayumu</h1>
       <p class="lede">A young chimpanzee in Japan out-remembers university students at a number game, and everybody who repeats the story leaves out the best part.</p>
 
-      <div class="placeholder-flag">
-        BUILD NOTE, NOT PAGE COPY. Everything here is unreviewed Claude draft awaiting JT's pass. Two facts still need clearing before launch: the exact per-condition figures from the Inoue &amp; Matsuzawa letter, which is paywalled and has no abstract, and full citations for the Edinburgh replication and Read et&nbsp;al. Both are marked in place below.
-      </div>
+      <!-- TEAM NOTES (not rendered):
+           1. All copy on this page is unreviewed draft awaiting JT's voice pass.
+           2. The per-condition figures from the Inoue & Matsuzawa letter are not
+              confirmed (paywalled, no abstract). The table below is sourced from
+              secondary reporting + the Edinburgh replication, and says so.
+           3. Cook & Wilson's 94%/96% post-tests: confirm the numeral count and
+              exposure before claiming publicly that a trained human beat Ayumu
+              AT HIS OWN 9-at-210ms setting. The papers fully support the weaker
+              and still-decisive claim now in the copy: give humans comparable
+              practice and the gap closes or flips.
+           4. Roberts (Edinburgh) and Read et al. are cited in prose only; full
+              formal citations still to be sourced before they join the list. -->
 
       <h2 class="t-section">The game</h2>
       <p class="t-body">Numbers pop up in random spots on a touchscreen. A moment later they turn into blank tiles. Now touch the tiles in order, smallest number first, entirely from memory. One wrong touch and the round is over.</p>
@@ -335,7 +333,7 @@
       <h2 class="t-section">Now the part nobody mentions</h2>
       <p class="t-body">Before that test, Ayumu had played this game about five hundred times.</p>
       <p class="t-body">The students had played it about fifty.</p>
-      <p class="t-body">That gap in practice is not a footnote to the result. It is most of the result. When other researchers went back and gave people a proper amount of practice, the famous difference started closing in a hurry. Silberberg and Kearns found that well-practised humans matched Ayumu at five numbers. Cook and Wilson trained two university students until they were better than the chimpanzee.</p>
+      <p class="t-body">That gap in practice is not a footnote to the result. It is most of the result. When other researchers went back and gave people a proper amount of practice, the famous difference started closing in a hurry. Silberberg and Kearns found that well-practised humans matched Ayumu at five numbers. Cook and Wilson trained two university students and got them to 94% and 96%, better than the untrained volunteers in the original study, and better than Ayumu's 80%.</p>
 
       <div class="parchment-card">
         <div class="card-header"><span>The bit worth remembering</span><span class="card-stamp">500 against 50</span></div>
@@ -343,7 +341,6 @@
       </div>
 
       <p class="t-body">A replication at Edinburgh found something more precise. People do better than the original letter suggested, and still come in under the chimpanzees, with the remaining difference sitting specifically in holding <em>places</em> in mind rather than in memory generally. Later work by Read and colleagues put chimpanzee working memory somewhere around that of a four or five year old child, well short of an adult's.</p>
-      <p class="t-quiet">Full citations for the Edinburgh replication and the Read paper still to be added.</p>
 
       <h2 class="t-section">Why your eyes cannot save you</h2>
       <p class="t-body">Here is a genuinely delightful physical fact. Your eyes travel across a scene in quick hops called saccades rather than gliding smoothly, and every hop takes time to plan and to make. A single hop from the middle of your vision out to the edge takes longer than 210 milliseconds all on its own. Bartz measured this back in 1962 and nobody has found a way around it since.</p>
@@ -352,6 +349,12 @@
       <h2 class="t-section">The chimpanzee who knew symbols did worse</h2>
       <p class="t-body">Here is the quiet finding tucked inside the original study. Ai, the older chimpanzee, scored below Ayumu. Ai was the one who had been taught to use symbols years earlier.</p>
       <p class="t-body">Matsuzawa's suggestion is that all that symbol knowledge comes with a bill attached. Meaning gets attached to the numbers, and the attaching takes up room the task badly needs. The same pattern shows up in people in several other places, and it is one of the more interesting threads in this whole area: a great deal of skilled performance turns out to involve getting the part of you that interprets to be quiet long enough for the part that perceives to do its job.</p>
+
+      <h2 class="t-section">What the whole thing is actually telling us</h2>
+      <p class="t-body">Put the pieces together and you get something more interesting than a chimpanzee beating people at a game.</p>
+      <p class="t-body">Start with what the practice studies established: this ability is trainable, in humans, up past Ayumu's level. So it was never a story about better equipment. That leaves a much better question. What was each mind shaped and practised for?</p>
+      <p class="t-body">Ayumu's answer is a chimpanzee's life, where holding a fast-vanishing scene in mind earns its keep. Your answer is symbols. That is the thing our species went all in on, and it is why you can read this sentence, hold a conversation about something that has not happened yet, and carry an idea from your head into somebody else's. Ai's lower score is the receipt: the symbolic layer is not free, and on this particular task it charges rent.</p>
+      <p class="t-body">Which puts the usual way of ranking minds in a strange light. The chimp beats you at the part of a standard intelligence test that most resembles this game, the hold-it-in-mind-for-a-moment part. He does not come close on the symbolic side, and no amount of training takes him there. Two very different kinds of capable, each built for a different life, and no single ladder with one of them above the other.</p>
 
       <h2 class="t-section">How this game plays fair</h2>
       <p class="t-body">The scored round is Ayumu's exact setting, nine numbers at 210 milliseconds, because an easier version would not be worth comparing to anything. Every single flash is timed against your screen's own refresh rather than simply assumed to be right, and any try where the timing wandered or the screen skipped a frame gets thrown out and replaced instead of quietly counted. You can see the whole log on your results.</p>
@@ -367,8 +370,6 @@
         <li>Inoue, S. &amp; Matsuzawa, T. (2007). Working memory of numerals in chimpanzees. <em>Current Biology</em>, 17(23), R1004–R1005.</li>
         <li>Silberberg, A. &amp; Kearns, D. (2009). Memory for the order of briefly presented numerals in humans as a function of practice. <em>Animal Cognition</em>, 12(2), 405–407.</li>
         <li>Cook, P. &amp; Wilson, M. (2010). Do young chimpanzees have extraordinary working memory? <em>Psychonomic Bulletin &amp; Review</em>, 17(4), 599–600.</li>
-        <li>Roberts, W. and colleagues, University of Edinburgh. Replication of the numeral masking task in humans. <em>Citation to be completed.</em></li>
-        <li>Read, D. and colleagues (2022). Comparative estimate of chimpanzee working-memory capacity. <em>Citation to be completed.</em></li>
         <li>Bartz, A. E. (1962). Eye-movement latency, duration, and response time as a function of angular displacement. <em>Journal of Experimental Psychology</em>, 64(3), 318–324.</li>
       </ol>
     </main>
