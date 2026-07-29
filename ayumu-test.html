@@ -2077,45 +2077,63 @@ function barsSVG(rec) {
 
    ⚠️ PLACEHOLDER. Words are JT's to write; structure and facts locked.
 
-   ARC REVISED 2026-07-28 (JT). The original six-beat kit in
-   ayumu-test-spec.md §4c ended on the practice gap plus the reading
-   mirror. Two beats were added because they are load-bearing rather
-   than decorative:
+   ARC REBUILT 2026-07-29 (JT). THE DESTINATION IS THE SYMBOLIC POINT,
+   NOT THE PRACTICE POINT. This is the correction that matters, so do
+   not let it drift back:
 
-   - The NICHE beat. Once the practice gap kills the "better hardware"
-     story, "what was each mind shaped and practised FOR" is the only
-     question left standing. Without it the reader is left thinking
-     Ayumu is just better, full stop.
-   - The AI beat (the language-trained chimp who scored WORSE). This is
-     the mechanism that makes the mirror land. The reading mirror used
-     to assert "Ayumu cannot do this"; now it EXPLAINS why the very
-     machinery that costs you the game is the machinery reading the
-     sentence. It closes the loop rather than changing the subject.
+   The practice finding is the more defensible claim and the easier one
+   to build a product around (a trainable game can literally demonstrate
+   it, which is what the dials and the Training Room are for). That
+   gravity pulled two earlier drafts into making practice the thesis.
+   It is not. Practice is SETUP. Its only job is to kill the "chimps
+   have better hardware" story in one move so the real argument has
+   somewhere to stand. Everyone already believes practice matters.
 
-   Deliberately NOT here: the IQ reframe. It is the most contentious
-   claim in the arc, it needs room to be argued properly, and a person
-   who just lost a game is not owed a lecture about intelligence
-   testing. It lives on the science page and in the essay.
+   The original claim, the one that reframes rather than debunks, is
+   direct vs symbolic cognition: you are "worse" at this because you
+   cannot stop turning the numbers into meaning, and that same tax is
+   what lets you read, speak, and put an idea inside someone else's
+   head. The Ai finding (the language-trained chimp who scored WORSE)
+   is the only hard evidence for it, so it is THE HINGE and gets its
+   own beat at full weight, never trimmed for length.
+
+   Beat order: concede -> practice clears the ground -> saccade opens
+   the real question -> Ai supplies the mechanism -> the mirror lands
+   the symbolic payoff -> the turn.
+
+   The NICHE idea survives only as a compressed clause in the final
+   beat ("superb at what a chimpanzee needs"). It was a bridge, and a
+   bridge does not need its own paragraph.
+
+   Deliberately NOT here: the IQ reframe. Most contentious claim in the
+   set, needs room to argue properly, and someone who just lost a game
+   is not owed a lecture on intelligence testing. It lives on the
+   science page under "What the whole thing is actually telling us",
+   and in the savant essay.
    ================================================================ */
 
 const REVEAL_BEATS = [
-  { t: 'Let us be straight about what just happened. Ayumu is better at this than you are. Not luckier. Better. He holds nine positions in his head, at a speed you cannot touch, and that is a genuine skill that genuinely belongs to him.' },
+  { t: 'Let us be straight about what just happened. Ayumu is better at this than you are. Not luckier. Better. He holds nine positions in his head, at a speed you cannot touch, and that is a real skill that genuinely belongs to him.' },
 
-  { t: 'Here is the part that hardly ever gets mentioned. Before anyone wrote a word about Ayumu, he had practised this game about five hundred times. You practised three times, and one of those was with three numbers. When researchers went back and gave people a fair amount of practice, they caught up fast, and two university students ended up scoring better than he does. The famous gap turned out to be, in large part, a practice gap.' },
+  /* Practice is SETUP, not thesis. Its whole job is to clear the "chimps
+     have better hardware" story out of the way in one move, so the
+     symbolic argument has somewhere to stand. Kept deliberately brisk. */
+  { t: 'Now, the part that almost never gets repeated. Before anybody wrote a word about Ayumu, he had played this game about five hundred times. You played it three times. When researchers went back and gave people a fair share of practice, they caught right up, and two university students finished up scoring better than he does. So this was never a story about better equipment.' },
 
-  { t: 'There is also a lovely physical reason your approach could never have worked. Your eyes travel in quick hops rather than gliding, and one hop from the middle of your vision out to the edge takes longer than 210 milliseconds all by itself. Hunting for the 1 and then looking for the 2 simply cannot happen at this speed, because the numbers are gone before your eyes could ever arrive.' },
+  { t: 'Which leaves a far better question. If the equipment is fine, what happened? Start with something delightful about your eyes. They travel in quick hops rather than gliding, and one hop from the middle of your vision out to the edge takes longer than 210 milliseconds all by itself. Hunting for the 1 and then looking for the 2 was never going to work. The numbers were gone before your eyes could arrive.' },
 
-  { t: 'So why is he better at it without even trying? Because holding a flash of the world in mind is genuinely useful if you are a chimpanzee, and evolution shaped him for the problems a chimpanzee has to solve. Yours shaped you for a different set. Every mind is good at what its life has asked of it.' },
+  /* THE HINGE. The Ai finding is the only hard evidence for the symbolic
+     thesis, so it gets its own beat and full weight. Everything before
+     this is clearing the ground; everything after is the payoff. */
+  { t: 'So something else has to be going on, and the study left us a beautiful clue. There was a second chimpanzee in it, an older one named Ai, who had been taught to use symbols years earlier. She did worse than Ayumu. Worse, for knowing more. It turns out symbols charge rent. When those numbers flash up you cannot help yourself, you turn them into meaning, and the meaning occupies exactly the room the task needed.' },
 
-  { t: 'And here is the loveliest clue of all. There was a second chimpanzee in that study, an older one called Ai, who had been taught to use symbols years before. She did worse than Ayumu. Symbols cost you something. When those numbers flash up, you cannot help turning them into meaning, and the meaning takes up exactly the room the task needed.' },
-
-  { t: 'Which brings us to the best bit. You are reading this. You are turning several hundred squiggles into meaning right now, at a speed you never have to think about, using the very machinery that just cost you the game. That trade is the whole human story. Ayumu cannot make it, and no amount of practice will get him there. Neither of you is smarter. There is only what each of you was built and practised to do.', mirror: true },
+  { t: 'And that is the trade your whole species made. You are reading this. You are turning several hundred little squiggles into meaning right now, at a speed you never have to think about, using the very machinery that just lost you the game. Nobody is handing you a consolation prize here. Turning squiggles into meaning is the most extraordinary thing any animal on this planet does, and you do it so effortlessly that it took a chimpanzee beating you at a memory game to make you notice.', mirror: true },
 
   /* The turn also carries the transfer beat: the "how many tries" question
-     generalises the practice gap off the screen, and the callback to three
-     hands straight over to the dials. Two jobs, one beat, so the mirror
-     stays the last big thing anyone reads. */
-  { t: 'So the next time somebody does something you cannot, it is worth asking how many tries they have had. And speaking of which. Fancy finding out what happens when you get more than three?' }
+     generalises the practice setup off the screen, and the callback to
+     three hands straight over to the dials. Two jobs, one beat, so the
+     mirror stays the last big thing anyone reads. */
+  { t: 'Ayumu is superb at what a chimpanzee needs. You are superb at what a human needs. Neither of you is smarter, and there is no single ladder with one of you above the other. There is only what each of you was built and practised to do. Speaking of which: fancy finding out what happens when you get more than three tries?' }
 ];
 
 function timingTableHTML(rec) {
