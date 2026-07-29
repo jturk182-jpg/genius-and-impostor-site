@@ -1424,17 +1424,24 @@ let field = { w: 0, h: 0, grid: null, dpr: 1 };
 let trial = null;
 let phase = 'idle';    /* idle | ready | numbers | respond | reveal */
 
+/* Every tile must keep room to wander inside its own cell. Without this
+   the tile grows until it fills the cell, jitter drops to zero, and the
+   board snaps to a visible lattice: it stops looking like the scattered
+   array in the experiment, and worse, a regular grid can be chunked
+   ("top row, three across") which is an easier and different task. */
+const MIN_JITTER = 18;
+
 function planGrid(w, h) {
   let best = null;
   for (let cols = 3; cols <= 7; cols++) {
     for (let rows = 3; rows <= 7; rows++) {
       const cells = cols * rows;
-      if (cells < 14) continue;
-      const raw = Math.min(w / cols, h / rows) - TILE_GAP;
+      if (cells < 12) continue;
+      const raw = Math.min(w / cols, h / rows) - TILE_GAP - MIN_JITTER;
       if (raw < MIN_TILE) continue;
       const tile = Math.min(raw, MAX_TILE);
       /* Big tiles matter most, but a sparse board matters too: nine numbers
-         in fourteen cells looks like a full grid and leaks positions. */
+         in a dozen cells looks like a full grid and leaks positions. */
       const score = tile + Math.min(cells, 30) * 1.2;
       if (!best || score > best.score) best = { cols, rows, tile, cells, score };
     }
@@ -1448,22 +1455,57 @@ function planGrid(w, h) {
   return best;
 }
 
+/* THE PLAY BOX (added 2026-07-29, JT).
+
+   The canvas fills the viewport, but the numerals are confined to a
+   centred box inside it. Reason: the tool's own argument is that at
+   210ms you get ONE fixation, so an array spread over a whole 375x812
+   phone forces the eye to travel and quietly adds a motor problem the
+   experiment never had. Ayumu worked on a compact touchscreen where the
+   whole array sat inside a single glance.
+
+   Constraining this makes the comparison MORE faithful, not easier.
+
+   Sizing: aim for a square, since a fixation is round rather than
+   letterboxed, capped so it cannot outgrow one comfortable glance and
+   floored so nine tiles still fit at a tappable size. The box is
+   centred, which also keeps the array near the fixation dot. */
+const PLAY_BOX_MAX = 420;   /* about one glance at arm's length */
+const PLAY_BOX_MIN = 260;   /* below this, 9 tiles stop being tappable */
+
 function layoutField() {
   const rect = document.getElementById('field').getBoundingClientRect();
   const dpr = Math.min(window.devicePixelRatio || 1, 3);
-  field.w = Math.max(180, rect.width);
-  field.h = Math.max(180, rect.height);
+  const availW = Math.max(180, rect.width);
+  const availH = Math.max(180, rect.height);
+
+  /* Square where there is room; never wider or taller than what's there. */
+  let box = Math.min(availW, availH, PLAY_BOX_MAX);
+  if (box < PLAY_BOX_MIN) box = Math.min(availW, availH, PLAY_BOX_MIN);
+
+  field.w = availW;
+  field.h = availH;
+  field.pw = Math.min(availW, box);
+  field.ph = Math.min(availH, box);
+  /* Centred horizontally; nudged slightly above centre vertically so the
+     board sits where the eye already is rather than behind the thumb. */
+  field.ox = (availW - field.pw) / 2;
+  field.oy = (availH - field.ph) * 0.42;
   field.dpr = dpr;
-  field.grid = planGrid(field.w, field.h);
-  board.width = Math.round(field.w * dpr);
-  board.height = Math.round(field.h * dpr);
+  field.grid = planGrid(field.pw, field.ph);
+  board.width = Math.round(availW * dpr);
+  board.height = Math.round(availH * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
 function makeTrial(n) {
   const g = field.grid;
-  const cellW = field.w / g.cols;
-  const cellH = field.h / g.rows;
+  /* Grid spans the PLAY BOX, not the whole canvas, and every tile is
+     offset into it. Non-overlap still comes from the cell confinement:
+     one numeral per cell, jittered only within its own cell inset by
+     half the gap, so the guarantee is unchanged by the inset. */
+  const cellW = field.pw / g.cols;
+  const cellH = field.ph / g.rows;
   const size = g.tile;
   const jx = Math.max(0, cellW - size - TILE_GAP);
   const jy = Math.max(0, cellH - size - TILE_GAP);
@@ -1472,8 +1514,8 @@ function makeTrial(n) {
     const cx = cell % g.cols, cy = Math.floor(cell / g.cols);
     return {
       value: i + 1,
-      x: cx * cellW + TILE_GAP / 2 + Math.random() * jx,
-      y: cy * cellH + TILE_GAP / 2 + Math.random() * jy,
+      x: field.ox + cx * cellW + TILE_GAP / 2 + Math.random() * jx,
+      y: field.oy + cy * cellH + TILE_GAP / 2 + Math.random() * jy,
       s: size,
       taken: false,
       wrong: false
@@ -1523,9 +1565,12 @@ function render() {
   ctx.clearRect(0, 0, field.w, field.h);
 
   if (phase === 'ready') {
+    /* Centre of the PLAY BOX, so the eye is already parked where the
+       numerals are about to appear. A dot somewhere else would cost the
+       player a saccade they do not have time for. */
     ctx.fillStyle = c.muted;
     ctx.beginPath();
-    ctx.arc(field.w / 2, field.h / 2, 4, 0, Math.PI * 2);
+    ctx.arc(field.ox + field.pw / 2, field.oy + field.ph / 2, 4, 0, Math.PI * 2);
     ctx.fill();
     return;
   }
