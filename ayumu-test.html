@@ -1549,7 +1549,7 @@ function drawTile(it, style) {
   }
   if (style.text != null) {
     ctx.fillStyle = style.textColor;
-    ctx.font = '700 ' + Math.round(it.s * 0.46) + 'px "Space Mono", "Courier New", monospace';
+    ctx.font = '700 ' + Math.round(it.s * (style.textScale || 0.46)) + 'px "Space Mono", "Courier New", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     /* Space Mono sits slightly high in its em box; nudge for optical centring. */
@@ -1586,10 +1586,16 @@ function render() {
       drawTile(it, { fill: null, stroke: c.rule, text: null, width: 1 });
       return;
     }
+    /* FAITHFUL TO THE EXPERIMENT (JT, 2026-07-29): during exposure the
+       numerals stand alone on the background, with no tile around them.
+       The tiles ARE the mask, and they only exist after the numerals
+       are taken away. Drawing a box during exposure would pre-segment
+       the locations for you, which is help the real task never gave,
+       and it would blunt the moment the mask lands. */
     if (phase === 'numbers') {
-      drawTile(it, { fill: c.parchment, stroke: c.line, text: it.value, textColor: c.ink });
+      drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.ink, textScale: 0.62 });
     } else if (phase === 'reveal') {
-      drawTile(it, { fill: c.parchment, stroke: c.line, text: it.value, textColor: c.muted });
+      drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.muted, textScale: 0.62 });
     } else {
       drawTile(it, { fill: c.parchment, stroke: c.line, text: null });
     }
@@ -2057,7 +2063,7 @@ async function runTheGame(resume) {
    ================================================================ */
 
 function barsSVG(rec) {
-  const W = 380, H = 210;
+  const W = 380, H = 150;   /* two rows: T + 2*rowH + gap + B */
   const L = 8, R = 14, T = 26, B = 22;
   const c = colors();
   const rowH = 44, gap = 14;
@@ -2066,53 +2072,43 @@ function barsSVG(rec) {
   const mono = ' font-family="Space Mono, monospace"';
   const you = rec.acc;
 
+  /* Two bars only (JT, 2026-07-29). The study's human range used to sit
+     between them, and it softened the moment: it invited "well, I did
+     about as badly as they did" when the whole point is the gap between
+     you and him. The range still lives on the science page, where it is
+     context rather than consolation. */
   const rows = [
-    { name: 'AYUMU', val: AYUMU_ACC, label: '80%', color: c.red, solid: true },
-    { name: 'THE STUDY’S', name2: 'HUMANS', lo: HUMAN_LOW, hi: HUMAN_HIGH, label: '20–40%', color: c.muted },
-    { name: 'YOU', val: you, label: pct(you) + '%', color: c.ink, solid: true }
+    { name: 'AYUMU', val: AYUMU_ACC, label: '80%', color: c.red },
+    { name: 'YOU', val: you, label: pct(you) + '%', color: c.ink }
   ];
 
   let g = '<text x="' + L + '" y="' + 12 + '"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted + '">HOW OFTEN NINE NUMBERS GET REMEMBERED, AT 210MS</text>';
 
   rows.forEach((r, i) => {
-    const y = T + i * (rowH + gap);
-    const mid = y + rowH / 2;
-    g += '<text x="' + L + '" y="' + (r.name2 ? mid - 2 : mid + 4) + '"' + mono +
+    const mid = T + i * (rowH + gap) + rowH / 2;
+    g += '<text x="' + L + '" y="' + (mid + 4) + '"' + mono +
          ' font-size="9" font-weight="700" fill="' + c.muted + '">' + r.name + '</text>';
-    if (r.name2) {
-      g += '<text x="' + L + '" y="' + (mid + 10) + '"' + mono +
-           ' font-size="9" font-weight="700" fill="' + c.muted + '">' + r.name2 + '</text>';
-    }
     /* the track */
     g += '<line x1="' + barX + '" y1="' + mid + '" x2="' + (barX + barW) + '" y2="' + mid +
          '" stroke="' + c.rule + '" stroke-width="1"/>';
 
-    if (r.solid) {
-      const w = Math.max(r.val > 0 ? 3 : 0, barW * r.val);
-      if (w > 0) {
-        g += '<rect x="' + barX + '" y="' + (mid - 11) + '" width="' + w + '" height="22" fill="' + r.color + '"/>';
-      }
-      const inside = w > 74;
-      g += '<text x="' + (inside ? barX + w - 8 : barX + w + 8) + '" y="' + (mid + 5) + '"' + mono +
-           ' font-size="13" font-weight="700" text-anchor="' + (inside ? 'end' : 'start') + '" fill="' +
-           (inside ? '#fff' : r.color) + '">' + r.label + '</text>';
-      /* Zero deserves saying out loud rather than leaving as an empty track. */
-      if (r.val === 0) {
-        g += '<text x="' + (barX + 56) + '" y="' + (mid + 5) + '"' + mono +
-             ' font-size="10" fill="' + c.muted + '">none of them</text>';
-      }
-    } else {
-      const x1 = barX + barW * r.lo, x2 = barX + barW * r.hi;
-      g += '<rect x="' + x1 + '" y="' + (mid - 9) + '" width="' + (x2 - x1) + '" height="18" fill="' + c.muted + '" opacity="0.34"/>';
-      g += '<line x1="' + x1 + '" y1="' + (mid - 11) + '" x2="' + x1 + '" y2="' + (mid + 11) + '" stroke="' + c.muted + '" stroke-width="1.5"/>';
-      g += '<line x1="' + x2 + '" y1="' + (mid - 11) + '" x2="' + x2 + '" y2="' + (mid + 11) + '" stroke="' + c.muted + '" stroke-width="1.5"/>';
-      g += '<text x="' + (x2 + 8) + '" y="' + (mid + 5) + '"' + mono +
-           ' font-size="11" fill="' + c.muted + '">' + r.label + '</text>';
+    const w = Math.max(r.val > 0 ? 3 : 0, barW * r.val);
+    if (w > 0) {
+      g += '<rect x="' + barX + '" y="' + (mid - 11) + '" width="' + w + '" height="22" fill="' + r.color + '"/>';
+    }
+    const inside = w > 74;
+    g += '<text x="' + (inside ? barX + w - 8 : barX + w + 8) + '" y="' + (mid + 5) + '"' + mono +
+         ' font-size="13" font-weight="700" text-anchor="' + (inside ? 'end' : 'start') + '" fill="' +
+         (inside ? '#fff' : r.color) + '">' + r.label + '</text>';
+    /* Zero deserves saying out loud rather than leaving as an empty track. */
+    if (r.val === 0) {
+      g += '<text x="' + (barX + 56) + '" y="' + (mid + 5) + '"' + mono +
+           ' font-size="10" fill="' + c.muted + '">none of them</text>';
     }
   });
 
   const label = 'Ayumu remembers nine numbers at 210 milliseconds about 80 percent of the time. ' +
-    'The nine human volunteers in the original study managed 20 to 40 percent. You managed ' + pct(you) + ' percent.';
+    'You managed ' + pct(you) + ' percent.';
 
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
@@ -2238,7 +2234,7 @@ function renderResults() {
   html += '<div class="t-label' + (beatAyumu ? ' red' : '') + '">The three-way comparison' +
     (beatAyumu ? ' · you went past him' : '') + '</div>' +
     '<div class="chart-panel">' + barsSVG(rec) + '</div>' +
-    '<p class="chart-note">Ayumu holds steady around 80% whether the numbers are up for 650 milliseconds, 430, or 210. He simply does not seem to mind. The nine people tested alongside him managed 20 to 40 percent at 210 milliseconds.</p>';
+    '<p class="chart-note">Ayumu holds steady around 80% whether the numbers are up for 650 milliseconds, 430, or 210. He simply does not seem to mind.</p>';
 
   if (beatAyumu) {
     html += '<p class="t-body"><strong>Hold on. You went past him.</strong> That is genuinely rare, and it does not undo a word of what follows. Read on, and then go and look at the Training Room, because you are exactly the sort of person it was built for.</p>';
