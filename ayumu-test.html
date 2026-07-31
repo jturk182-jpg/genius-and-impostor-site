@@ -587,7 +587,7 @@
 
     .overlay-inner .btn-row { margin-top: 24px; }
 
-    /* ---------- results: the three-way comparison ---------- */
+    /* ---------- results: you vs Ayumu ---------- */
     .chart-panel {
       border: 1px solid var(--rule);
       background: #fff;
@@ -1029,7 +1029,7 @@
         <ul class="spec-list">
           <li>Time needed <b>Two minutes</b></li>
           <li>Warm-up <b>3, then 4, then 5 numbers</b></li>
-          <li>Then <b>Ayumu's nine</b></li>
+          <li>Then <b>Ayumu's five, at 210ms</b></li>
           <li>Your tapping <b>Never timed</b></li>
           <li>Your results <b>Stay on this device</b></li>
         </ul>
@@ -2461,14 +2461,14 @@ function renderNine() {
    ================================================================ */
 
 const REVEAL_BEATS = [
-  { t: 'Let us be straight about what just happened. Ayumu is better at this than you are. Not luckier. Better. He holds nine positions in his head, at a speed you cannot touch, and that is a real skill that genuinely belongs to him.' },
+  { t: 'Let us be straight about what just happened. Ayumu is better at this than you are. Not luckier. Better. He takes in those five numbers in a fifth of a second and stays near eighty percent while he does it, which is a real skill that genuinely belongs to him.' },
 
   /* Practice is SETUP, not thesis. Its whole job is to clear the "chimps
      have better hardware" story out of the way in one move, so the
      symbolic argument has somewhere to stand. Kept deliberately brisk. */
-  { t: 'Now, the part that almost never gets repeated. Before anybody wrote a word about Ayumu, he had played this game about five hundred times. You played it three times. When researchers went back and gave people a fair share of practice, the gap between human and chimp shrank fast. So this was never really a story about better equipment.' },
+  { t: 'Now, the part that almost never gets repeated. Before anybody wrote a word about Ayumu, he had practised this game about five hundred times. The human volunteers he was measured against had about fifty. When researchers went back and gave people a fair share of practice, the gap between human and chimp shrank fast. So this was never really a story about better equipment.' },
 
-  { t: 'Which leaves a far better question. If the equipment is fine, what happened? Start with something delightful about your eyes. They travel in quick hops rather than gliding, and one hop from the middle of your vision out to the edge takes longer than 210 milliseconds all by itself. Hunting for the 1 and then looking for the 2 was never going to work. You get exactly one look. That is the whole game.' },
+  { t: 'Which leaves a far better question. If the equipment is fine, what happened? Start with something delightful about your eyes. They travel in quick hops rather than gliding, and one hop from the middle of your vision out to the edge takes longer than 210 milliseconds all by itself. Hunting for the smallest, then the next, then the next was never going to work. You get exactly one look. That is the whole game.' },
 
   /* Kills the "he out-remembers you" reading, which is the obvious wrong
      conclusion and the one the popular version of the study spreads. It
@@ -2488,7 +2488,7 @@ const REVEAL_BEATS = [
      generalises the practice setup off the screen, and the callback to
      three hands straight over to the dials. Two jobs, one beat, so the
      mirror stays the last big thing anyone reads. */
-  { t: 'Ayumu is superb at what a chimpanzee needs. You are superb at what a human needs. Neither of you is smarter, and there is no single ladder with one of you above the other. There is only what each of you was built and practised to do. Speaking of which: fancy finding out what happens when you get more than three tries?' }
+  { t: 'Ayumu is superb at what a chimpanzee needs. You are superb at what a human needs. Neither of you is smarter, and there is no single ladder with one of you above the other. There is only what each of you was built and practised to do. And Ayumu, as it happens, was built and practised for one more trick, and it is the one worth seeing.' }
 ];
 
 function timingTableHTML(rec) {
@@ -2538,7 +2538,7 @@ function renderResults() {
       : '<b>' + rec.hits + ' of ' + rec.trials + '</b> remembered') +
     ' · numbers on screen for <b>' + (rec.meanMeasured != null ? rec.meanMeasured + 'ms' : '—') + '</b></p>';
 
-  html += '<div class="t-label' + (beatAyumu ? ' red' : '') + '">The three-way comparison' +
+  html += '<div class="t-label' + (beatAyumu ? ' red' : '') + '">You and Ayumu' +
     (beatAyumu ? ' · you went past him' : '') + '</div>' +
     '<div class="chart-panel">' + barsSVG(rec) + '</div>' +
     '<p class="chart-note">Ayumu holds steady around 80% whether the numbers are up for 650 milliseconds, 430, or 210. He simply does not seem to mind.</p>';
