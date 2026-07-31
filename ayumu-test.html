@@ -1072,9 +1072,14 @@
         </div>
       </section>
 
-      <!-- ============ RESULTS + REVEAL ============ -->
+      <!-- ============ RESULTS + REVEAL (the Flash) ============ -->
       <section class="view" id="view-results" aria-labelledby="results-headline">
         <div id="results-body"></div>
+      </section>
+
+      <!-- ============ THE NINE: its own result ============ -->
+      <section class="view" id="view-nine" aria-labelledby="nine-headline">
+        <div id="nine-body"></div>
       </section>
 
       <!-- ============ THE DIALS (sandbox) ============ -->
@@ -2311,6 +2316,98 @@ function barsSVG(rec) {
 }
 
 /* ================================================================
+   11b. THE NINE: its own result screen
+
+   A commit time is a different animal from an accuracy percentage, so
+   this gets its own comparison rather than borrowing the Flash's bars:
+   two times side by side, yours and his, on a shared scale.
+   ================================================================ */
+
+function nineBarsSVG(rec) {
+  const W = 380, H = 150;
+  const L = 8, R = 14, T = 26, rowH = 44, gap = 14;
+  const barX = 92, barW = W - barX - R;
+  const c = colors();
+  const mono = ' font-family="Space Mono, monospace"';
+  const mine = rec.bestMs;
+  /* Scale to whichever is slower, so both bars always fit and the
+     comparison stays readable however far off the pace you are. */
+  const top = Math.max(AYUMU_COMMIT_MS, mine === null ? AYUMU_COMMIT_MS : mine) * 1.15;
+
+  const rows = [
+    { name: 'AYUMU', ms: AYUMU_COMMIT_MS, color: c.red },
+    { name: 'YOU', ms: mine, color: c.ink }
+  ];
+
+  let g = '<text x="' + L + '" y="12"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted +
+          '">TIME TAKEN BEFORE COMMITTING TO THE 1</text>';
+
+  rows.forEach((r, i) => {
+    const mid = T + i * (rowH + gap) + rowH / 2;
+    g += '<text x="' + L + '" y="' + (mid + 4) + '"' + mono +
+         ' font-size="9" font-weight="700" fill="' + c.muted + '">' + r.name + '</text>';
+    g += '<line x1="' + barX + '" y1="' + mid + '" x2="' + (barX + barW) + '" y2="' + mid +
+         '" stroke="' + c.rule + '" stroke-width="1"/>';
+    if (r.ms === null) {
+      g += '<text x="' + (barX + 4) + '" y="' + (mid + 5) + '"' + mono +
+           ' font-size="10" fill="' + c.muted + '">no clean run yet</text>';
+      return;
+    }
+    const w = Math.max(3, barW * (r.ms / top));
+    g += '<rect x="' + barX + '" y="' + (mid - 11) + '" width="' + w + '" height="22" fill="' + r.color + '"/>';
+    const inside = w > 74;
+    g += '<text x="' + (inside ? barX + w - 8 : barX + w + 8) + '" y="' + (mid + 5) + '"' + mono +
+         ' font-size="13" font-weight="700" text-anchor="' + (inside ? 'end' : 'start') + '" fill="' +
+         (inside ? '#fff' : r.color) + '">' + secs(r.ms) + '</text>';
+  });
+
+  const label = 'Ayumu commits to the first number in about ' + secs(AYUMU_COMMIT_MS) + '. ' +
+    (mine === null ? 'You have no clean run yet.' : 'Your fastest clean run is ' + secs(mine) + '.');
+  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
+}
+
+function renderNine() {
+  const rec = store.nine;
+  const el = document.getElementById('nine-body');
+  if (!rec) { boot(); return; }
+
+  const mine = rec.bestMs;
+  const beat = mine !== null && mine <= AYUMU_COMMIT_MS;
+  let html = '<p class="t-eyebrow">All nine · you set the clock</p>';
+
+  html += '<h1 class="t-headline" id="nine-headline">' + (mine === null
+    ? 'All nine is the first hurdle.'
+    : 'Ayumu: ' + secs(AYUMU_COMMIT_MS) + '.<br>You: ' + secs(mine) + '.') + '</h1>';
+
+  html += '<p class="score-line"><b>' + rec.perfects + ' of ' + rec.tries + '</b> clean runs</p>';
+
+  html += '<div class="t-label' + (beat ? ' red' : '') + '">Commit time' + (beat ? ' · you matched him' : '') + '</div>' +
+    '<div class="chart-panel">' + nineBarsSVG(rec) + '</div>' +
+    '<p class="chart-note">The numbers stay on screen until you touch the 1, so this is a time you chose rather than one imposed on you. Ayumu chose about two thirds of a second and still finished the sequence more than eight times out of ten.</p>';
+
+  html += '<p class="t-body">' + (mine === null
+    ? 'Getting all nine in the right order is the wall almost everybody hits first, and the clock has nothing to do with it. Take as long as you like, land one clean run, and only then start hurrying.'
+    : (beat
+      ? 'That is his mark, on the task he actually set it on. Worth sitting with for a second, because almost nobody gets here without working at it.'
+      : 'Now shave it down. Commit to the 1 a little sooner each go and find the point where it falls apart. That point is your edge, and it moves.')) + '</p>';
+
+  html += '<div class="btn-row" style="margin-top:28px;">' +
+    '<button class="btn primary" id="btn-nine-again">Go again</button>' +
+    (store.attempt
+      ? '<button class="btn" id="btn-nine-to-results">Your five-number score</button>'
+      : '<button class="btn" id="btn-nine-to-flash">Try the timed version</button>') +
+    '<a class="btn ghost" href="ayumu-science.html">Why he wins</a>' +
+    '</div>';
+
+  el.innerHTML = html;
+  document.getElementById('btn-nine-again').addEventListener('click', startNine);
+  const back = document.getElementById('btn-nine-to-results');
+  if (back) back.addEventListener('click', () => { renderResults(); showView('view-results'); });
+  const toFlash = document.getElementById('btn-nine-to-flash');
+  if (toFlash) toFlash.addEventListener('click', () => startGame(null));
+}
+
+/* ================================================================
    12. THE REVEAL
 
    ⚠️ PLACEHOLDER. Words are JT's to write; structure and facts locked.
@@ -3153,8 +3250,13 @@ function startFresh() {
 
 async function startNine() {
   await document.fonts.ready;
-  await runNineSession();
-  if (store.attempt) { renderResults(); showView('view-results'); } else { boot(); }
+  const rec = await runNineSession();
+  /* The Nine has its own result. It used to fall through to the Flash
+     screen, which showed people a five-number score they had not earned
+     if they played this one first. */
+  if (!rec) { boot(); return; }
+  renderNine();
+  showView('view-nine');
 }
 
 async function startTraining() {
