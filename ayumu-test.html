@@ -1552,10 +1552,18 @@ function makeTrial(n) {
   const jx = Math.max(0, cellW - size - TILE_GAP);
   const jy = Math.max(0, cellH - size - TILE_GAP);
   const cells = shuffled(Array.from({ length: g.cols * g.rows }, (_, i) => i)).slice(0, n);
+  /* Faithful to I&M: the numerals are a random subset of 1-9, not always
+     1..n. So a five-numeral trial might be {2,4,5,7,9}, and you must read
+     the actual numbers to touch them in ascending order rather than lean
+     on knowing they run 1 to five. `order` is that ascending sequence;
+     `step` walks it; `next` is the value expected right now. (At n=9 the
+     subset is the whole set, so the Nine is still 1 through 9.) */
+  const chosen = shuffled([1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, n);
+  const order = chosen.slice().sort((a, b) => a - b);
   const items = cells.map((cell, i) => {
     const cx = cell % g.cols, cy = Math.floor(cell / g.cols);
     return {
-      value: i + 1,
+      value: chosen[i],
       x: field.ox + cx * cellW + TILE_GAP / 2 + Math.random() * jx,
       y: field.oy + cy * cellH + TILE_GAP / 2 + Math.random() * jy,
       s: size,
@@ -1563,7 +1571,7 @@ function makeTrial(n) {
       wrong: false
     };
   });
-  return { items, next: 1, total: n, done: false, failed: false, errorAt: null };
+  return { items, order, step: 0, next: order[0], total: n, done: false, failed: false, errorAt: null };
 }
 
 function roundRect(x, y, w, h, r) {
@@ -1869,12 +1877,13 @@ async function runTrial(numerals, hold, opts) {
     const it = trial.items[i];
     if (it.value === trial.next) {
       it.taken = true;
-      trial.next++;
-      if (trial.next > trial.total) trial.done = true;
+      trial.step++;
+      if (trial.step >= trial.total) trial.done = true;
+      else trial.next = trial.order[trial.step];
       render();
     } else {
       trial.failed = true;
-      trial.errorAt = trial.next;
+      trial.errorAt = trial.step + 1;   /* ordinal position, not the value */
       it.wrong = true;
       render();
       await wait(420);
@@ -1882,7 +1891,7 @@ async function runTrial(numerals, hold, opts) {
   }
 
   const success = trial.done && !trial.failed;
-  setPrompt(success ? 'Got it.' : 'That one got away at ' + trial.errorAt + '.', !success);
+  setPrompt(success ? 'Got it.' : 'That one got away at number ' + trial.errorAt + '.', !success);
 
   if (showReveal) {
     phase = 'reveal';
@@ -1902,7 +1911,7 @@ async function runTrial(numerals, hold, opts) {
     hold: hold,
     success: success,
     errorAt: trial.errorAt,
-    reached: trial.next - 1,
+    reached: trial.step,
     measured: Math.round(timing.measured * 10) / 10,
     drift: Math.round(timing.drift * 10) / 10,
     maxDelta: Math.round(timing.maxDelta * 10) / 10,
@@ -1996,12 +2005,15 @@ async function runNineTrial() {
     const it = trial.items[i];
 
     if (commitMs === null) {
-      /* The first touch closes the study window, whatever it lands on. */
+      /* The first touch closes the study window, whatever it lands on.
+         The Nine is the full 1-9, so order[0] is the 1, but read it off
+         `order` rather than hard-coding in case that ever changes. */
       commitMs = performance.now() - onset;
       phase = 'respond';
-      if (it.value === 1) {
+      if (it.value === trial.order[0]) {
         it.taken = true;
-        trial.next = 2;
+        trial.step = 1;
+        trial.next = trial.order[1];
         render();
         setPrompt('Now the rest, in order. Take all the time you like.');
       } else {
@@ -2016,12 +2028,13 @@ async function runNineTrial() {
 
     if (it.value === trial.next) {
       it.taken = true;
-      trial.next++;
-      if (trial.next > trial.total) trial.done = true;
+      trial.step++;
+      if (trial.step >= trial.total) trial.done = true;
+      else trial.next = trial.order[trial.step];
       render();
     } else {
       trial.failed = true;
-      trial.errorAt = trial.next;
+      trial.errorAt = trial.step + 1;
       it.wrong = true;
       render();
       await wait(420);
@@ -2110,7 +2123,7 @@ const WARMUP_CARDS = {
   3: {
     label: 'Learning the rules',
     title: 'Three numbers, nice and slow',
-    body: '<p>Watch where the numbers land. They will turn into blank tiles. Then tap the tiles in order: 1, then 2, then 3.</p>' +
+    body: '<p>Watch where the numbers land. They will turn into blank tiles. Then tap them in order, smallest first. The numbers are random, so read them: you might get a 2, a 6 and a 9.</p>' +
           '<p>Tap a wrong one and the try ends, so take your time. Nothing is being scored yet.</p>'
   },
   4: {
@@ -2469,7 +2482,7 @@ const REVEAL_BEATS = [
      this is clearing the ground; everything after is the payoff. */
   { t: 'There was a second chimpanzee in that study, an older one named Ai, who had been taught to use symbols years earlier. She did worse than Ayumu. Worse, for knowing more. Symbols charge rent, you see. You cannot take a plain snapshot of that board, because on the way in you are already turning what you see into meaning. By the time a 7 reaches you, it has stopped being a shape in a place and turned into seven.' },
 
-  { t: 'And that is the trade your whole species made. You are reading this. You are turning several hundred little squiggles into meaning right now, at a speed you never have to think about, using the very machinery that just lost you the game. Nobody is handing you a consolation prize here. Turning squiggles into meaning is the most extraordinary thing any animal on this planet does, and you do it so effortlessly that it took a chimpanzee beating you at a memory game to make you notice.', mirror: true },
+  { t: 'And that is the trade your whole species made. You are reading this. You are turning several hundred little squiggles into meaning right now, at a speed you never have to think about, using the very machinery that just made a handful of flashing numbers feel so slippery. Nobody is handing you a consolation prize here. Turning squiggles into meaning is the most extraordinary thing any animal on this planet does, and you do it so effortlessly that it took a chimpanzee at a memory game to make you notice.', mirror: true },
 
   /* The turn also carries the transfer beat: the "how many tries" question
      generalises the practice setup off the screen, and the callback to
@@ -2530,11 +2543,27 @@ function renderResults() {
     '<div class="chart-panel">' + barsSVG(rec) + '</div>' +
     '<p class="chart-note">Ayumu holds steady around 80% whether the numbers are up for 650 milliseconds, 430, or 210. He simply does not seem to mind.</p>';
 
+  /* How you actually did, in words, before the reveal. Five numbers at
+     210ms is achievable, so scores now spread from zero into the sixties,
+     and telling a 70% player they were obliterated reads as broken. The
+     reveal that follows works at any score, because its point is about
+     symbols and practice, not about you having failed. */
+  const p = pct(rec.acc);
+  let openLine;
   if (beatAyumu) {
-    html += '<p class="t-body"><strong>Hold on. You went past him.</strong> That is genuinely rare, and it does not undo a word of what follows. Read on, and then go and look at the Training Room, because you are exactly the sort of person it was built for.</p>';
+    openLine = '<strong>Hold on. You went past him.</strong> Fewer than one person in a hundred does that cold, and it does not undo a word of what follows. Read on, then go and look at the Training Room, because you are exactly the sort of person it was built for.';
+  } else if (p >= 60) {
+    openLine = '<strong>That is a genuinely strong score.</strong> Most people do not get near it, and you are within touching distance of a chimpanzee who has practised this for years. You still trail him, and the reason you do is the interesting part.';
+  } else if (p >= 40) {
+    openLine = '<strong>That is a solid showing,</strong> right around the top of where the human volunteers in the original study landed. You are not being obliterated here. You are running into something specific, and it is worth understanding.';
+  } else if (p >= 20) {
+    openLine = 'That puts you squarely in the range the study’s human subjects managed, which is to say you did about as well as anybody does. The gap to Ayumu is real, and the reason for it is the good bit.';
   } else if (zero) {
-    html += '<p class="t-body">Zero. Not one. Before you take that personally, know that this is the ordinary human result, it is what very nearly everybody gets, and it is exactly why this game is worth playing. Something genuinely interesting is going on here. Keep reading.</p>';
+    openLine = 'Zero. Not one. Before you take that personally, know that this is the ordinary human result, it is what very nearly everybody gets, and it is exactly why this game is worth playing. Something genuinely interesting is going on here.';
+  } else {
+    openLine = 'A hard landing, and an ordinary one. Almost everybody scores down here at first, so you are in enormous company. The reason it is this hard, though, is not the reason you would guess.';
   }
+  html += '<p class="t-body">' + openLine + '</p>';
 
   html += '<div class="reveal-beats">' +
     REVEAL_BEATS.map(b => '<p' + (b.mirror ? ' class="beat-mirror"' : '') + '>' + esc(b.t) + '</p>').join('') +
