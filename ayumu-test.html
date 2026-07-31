@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Ayumu Test — GeniusAndImpostor.com</title>
-  <meta name="description" content="A chimpanzee named Ayumu can hold nine numbers in mind for a fifth of a second. Try it yourself, then find out why he wins.">
+  <meta name="description" content="A chimpanzee named Ayumu remembers five numbers flashed for a fifth of a second, and all nine in under a second. Try both, then find out why he wins.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1023,7 +1023,7 @@
         <h1 class="t-title" id="intro-title">The Ayumu Test</h1>
         <p class="t-body">Ayumu is a chimpanzee. He lives at a research institute in Japan, he is very good at puzzles on touchscreens, and he is about to beat you at one.</p>
         <p class="t-body">The game is simple. Numbers flash up on the screen. They vanish. You tap the spots where they were, smallest number first. That is the whole thing.</p>
-        <p class="t-body">Now the catch. Ayumu plays with <strong>nine numbers</strong>, and they are on the screen for <strong>210 milliseconds</strong>. That is about a fifth of a second, roughly one blink. He gets it right about four times out of five.</p>
+        <p class="t-body">Now the catch. In the version you are about to play, <strong>five numbers</strong> flash up for <strong>210 milliseconds</strong>. That is about a fifth of a second, roughly one blink. Ayumu gets it right about four times out of five. The nine human volunteers tested alongside him managed twenty to forty percent.</p>
         <p class="t-body">You will start with three numbers and all the time in the world, just to learn the rules. Then you will try it Ayumu's way. Take a breath first.</p>
 
         <ul class="spec-list">
@@ -1051,7 +1051,8 @@
         <h1 class="t-title" id="return-title">Welcome back</h1>
         <div id="return-body"></div>
         <div class="btn-row" style="margin-top: 30px;">
-          <button class="btn primary" id="btn-sandbox-from-return">Play with the dials</button>
+          <button class="btn primary" id="btn-nine-from-return">Try the nine</button>
+          <button class="btn" id="btn-sandbox-from-return">Play with the dials</button>
           <button class="btn" id="btn-training-from-return">Training Room</button>
           <button class="btn ghost" id="btn-results-from-return">Your Ayumu score</button>
         </div>
@@ -1149,21 +1150,54 @@
    1. CONSTANTS
    ================================================================ */
 
-const AYUMU_N = 9;
-const AYUMU_HOLD = 210;
+/* ────────────────────────────────────────────────────────────────
+   TWO TASKS, BOTH REAL (restructured 2026-07-29, JT).
+
+   Inoue & Matsuzawa 2007 ran two DIFFERENT paradigms, and earlier
+   builds of this tool merged them into one condition that nobody has
+   ever been measured on (nine numerals at a fixed 210ms). That was
+   harder than either real task and could not honestly be labelled
+   "Ayumu's condition". Both are now built separately and faithfully:
+
+   1. THE FLASH — five numerals, FIXED exposure (650/430/210ms), then
+      everything masks at once. Ayumu ~80% and flat across all three
+      durations; the nine human subjects 20-40% at 210ms. This is the
+      scored, comparable round and the spine of the reveal.
+
+   2. THE NINE — all nine numerals, SELF-PACED. They stay visible until
+      you touch the 1, and only then do the other eight mask. So the
+      player closes their own study window by committing to that first
+      tap. Ayumu: above 80% correct with a first-touch latency of about
+      0.67s. That is the target, and it is a TIME, not an exposure.
+
+   Do not re-merge these. "Nine at a fixed 210ms" is not a chimp
+   condition and must never be labelled as one.
+   ──────────────────────────────────────────────────────────────── */
+
+/* Task 1: the Flash */
+const FLASH_N = 5;
+const FLASH_HOLD = 210;
 const AYUMU_ACC = 0.80;      /* Inoue & Matsuzawa 2007, flat across holds */
 const HUMAN_LOW = 0.20;      /* the study's human range at 210ms */
 const HUMAN_HIGH = 0.40;
+
+/* Task 2: the Nine. Ayumu's first-touch latency, in milliseconds. */
+const NINE_N = 9;
+const AYUMU_COMMIT_MS = 670;
 
 /* Warm-up. Enough to learn the rules and nothing more. */
 const WARMUP = [3, 4, 5];
 const WARMUP_HOLD = 1500;
 
-/* The scored attempt at Ayumu's exact condition. Three goes, because one
-   miss can feel like a slip and three feels like a fact. Land any of them
-   and it opens out to ten so the score has a real denominator. */
+/* The scored attempt at the Flash, Ayumu's real 210ms condition. Three
+   goes, because one miss can feel like a slip and three feels like a
+   fact. Land any of them and it opens out to ten so the score has a
+   real denominator. */
 const ATTEMPT_TRIALS = 3;
 const ATTEMPT_EXTENDED = 10;
+
+/* The Nine: how many self-paced goes in one sitting. */
+const NINE_TRIES = 5;
 
 /* A flagged trial is replaced rather than scored (spec §7, timing honesty).
    Capped so a device that cannot hold a frame budget still finishes. */
@@ -1204,7 +1238,9 @@ const PENDING_TTL_DAYS = 7;
 
 function blankStore() {
   return {
-    attempt: null,     /* the scored go at 9 @ 210: {date, hits, trials, acc, log} */
+    /* Task 2: the self-paced Nine. {bestMs, bestDate, perfects, tries, log} */
+    nine: null,
+    attempt: null,     /* the scored Flash: {date, hits, trials, acc, log} */
     pending: null,     /* an attempt in progress */
     map: {},           /* "9x210" -> {tries, wins} from the dials and training */
     training: { rung: null, sessions: [] },
@@ -1223,6 +1259,7 @@ function loadStore() {
     if (!Array.isArray(s.training.sessions)) s.training.sessions = [];
     if (!s.prefs) s.prefs = { hc: false };
     if (s.attempt === undefined) s.attempt = null;
+    if (s.nine === undefined) s.nine = null;
     if (s.pending === undefined) s.pending = null;
     /* Don't greet someone with a resume prompt for something they walked
        away from months ago. */
@@ -1274,9 +1311,9 @@ function frontier() {
     else if (n === bestN && (bestHold === null || h < bestHold)) { bestHold = h; }
   });
   /* The scored attempt counts too, for anyone who landed one there. */
-  if (store.attempt && store.attempt.hits > 0 && AYUMU_N >= bestN) {
-    if (AYUMU_N > bestN || bestHold === null || AYUMU_HOLD < bestHold) {
-      bestN = AYUMU_N; bestHold = AYUMU_HOLD;
+  if (store.attempt && store.attempt.hits > 0 && FLASH_N >= bestN) {
+    if (FLASH_N > bestN || bestHold === null || FLASH_HOLD < bestHold) {
+      bestN = FLASH_N; bestHold = FLASH_HOLD;
     }
   }
   return bestN ? { n: bestN, hold: bestHold } : null;
@@ -1286,11 +1323,11 @@ function frontier() {
 function bestAtNine() {
   let best = null;
   HOLD_STEPS.forEach(h => {
-    const c = mapGet(AYUMU_N, h);
+    const c = mapGet(FLASH_N, h);
     if (c && c.wins && (best === null || h < best)) best = h;
   });
   if (store.attempt && store.attempt.hits > 0) {
-    if (best === null || AYUMU_HOLD < best) best = AYUMU_HOLD;
+    if (best === null || FLASH_HOLD < best) best = FLASH_HOLD;
   }
   return best;
 }
@@ -1592,14 +1629,14 @@ function render() {
        are taken away. Drawing a box during exposure would pre-segment
        the locations for you, which is help the real task never gave,
        and it would blunt the moment the mask lands. */
-    if (phase === 'numbers') {
+    if (phase === 'numbers' || phase === 'study') {
       drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.ink, textScale: 0.62 });
     } else if (phase === 'reveal') {
       drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.muted, textScale: 0.62 });
     } else {
       drawTile(it, { fill: c.parchment, stroke: c.line, text: null });
     }
-    if (usingKeyboard && phase === 'respond' && i === kbFocus) {
+    if (usingKeyboard && (phase === 'respond' || phase === 'study') && i === kbFocus) {
       ctx.strokeStyle = c.ink;
       ctx.lineWidth = 2.5;
       roundRect(it.x - 5, it.y - 5, it.s + 10, it.s + 10, 6);
@@ -1723,8 +1760,14 @@ function hitTest(px, py) {
   return best;
 }
 
+/* 'study' is the Nine's self-paced window: numerals are still on screen
+   and the first touch is what closes it, so taps must be live there too. */
+function acceptingTaps() {
+  return (phase === 'respond' || phase === 'study') && resolveTap;
+}
+
 board.addEventListener('pointerdown', e => {
-  if (phase !== 'respond' || !resolveTap) return;
+  if (!acceptingTaps()) return;
   usingKeyboard = false;
   const r = board.getBoundingClientRect();
   const i = hitTest(e.clientX - r.left, e.clientY - r.top);
@@ -1732,7 +1775,7 @@ board.addEventListener('pointerdown', e => {
 });
 
 board.addEventListener('keydown', e => {
-  if (phase !== 'respond' || !resolveTap) return;
+  if (!acceptingTaps()) return;
   const live = trial.items.map((it, i) => ({ it, i })).filter(o => !o.it.taken);
   if (!live.length) return;
 
@@ -1900,6 +1943,160 @@ function statsHTML(list) {
   ).join('') + '</div>';
 }
 
+function secs(ms) { return (ms / 1000).toFixed(2) + 's'; }
+
+/* ================================================================
+   9b. TASK 2: THE NINE (self-paced)
+
+   Ayumu's nine-numeral paradigm. All nine stay on screen until the
+   subject touches the 1; the other eight mask at that instant. So the
+   measured quantity is a COMMIT TIME, not an exposure: how long you
+   let yourself look before closing your own window. Ayumu committed in
+   about 0.67s and still finished the sequence above 80% of the time.
+
+   Timing note: the clock starts on the rAF timestamp of the frame that
+   presented the numerals and stops on the pointer event, so it measures
+   what the player actually experienced. This one does not need the
+   frame-accuracy machinery the Flash needs, because it is a reaction
+   window rather than a controlled exposure.
+   ================================================================ */
+
+async function runNineTrial() {
+  trial = makeTrial(NINE_N);
+  kbFocus = -1;
+
+  phase = 'ready';
+  render();
+  setPrompt('Ready.');
+  await wait(600 + Math.random() * 350);
+  if (aborted) return null;
+
+  /* Present, and start the clock on the frame that actually showed them. */
+  let onset = null;
+  await new Promise(res => requestAnimationFrame(ts => {
+    phase = 'study';
+    render();
+    onset = ts;
+    res();
+  }));
+  if (aborted) return null;
+
+  setPrompt('Touch the 1 as soon as you have it. The rest will hide.');
+
+  let commitMs = null;
+  while (!trial.done && !trial.failed) {
+    const i = await nextTap();
+    resolveTap = null;
+    if (aborted) return null;
+    const it = trial.items[i];
+
+    if (commitMs === null) {
+      /* The first touch closes the study window, whatever it lands on. */
+      commitMs = performance.now() - onset;
+      phase = 'respond';
+      if (it.value === 1) {
+        it.taken = true;
+        trial.next = 2;
+        render();
+        setPrompt('Now the rest, in order. Take all the time you like.');
+      } else {
+        trial.failed = true;
+        trial.errorAt = 1;
+        it.wrong = true;
+        render();
+        await wait(420);
+      }
+      continue;
+    }
+
+    if (it.value === trial.next) {
+      it.taken = true;
+      trial.next++;
+      if (trial.next > trial.total) trial.done = true;
+      render();
+    } else {
+      trial.failed = true;
+      trial.errorAt = trial.next;
+      it.wrong = true;
+      render();
+      await wait(420);
+    }
+  }
+
+  const success = trial.done && !trial.failed;
+  setPrompt(success ? 'All nine, in ' + secs(commitMs) + '.' : 'Lost it at ' + trial.errorAt + '.', !success);
+
+  /* Always show the board back: this task is meant to be learnable. */
+  phase = 'reveal';
+  trial.items.forEach(it => { it.wrong = false; it.taken = false; });
+  render();
+  await wait(1100);
+  if (aborted) return null;
+
+  phase = 'idle';
+  render();
+  return { success: success, commitMs: Math.round(commitMs), errorAt: trial.errorAt };
+}
+
+async function runNineSession() {
+  aborted = false;
+  showPlay();
+  layoutField();
+  await document.fonts.ready;
+
+  const prev = store.nine || { bestMs: null, bestDate: null, perfects: 0, tries: 0, log: [] };
+  const go = await card({
+    label: 'Ayumu’s other record',
+    title: 'All nine, as fast as you dare',
+    body: '<p>Every number stays on screen until you touch the <strong>1</strong>. The moment you do, the other eight vanish and you finish from memory.</p>' +
+          '<p>So you choose how long to look. Look for ages and it is easy. The trick is to commit early and still get all nine.</p>' +
+          '<p>Ayumu touches the 1 after about <strong>two thirds of a second</strong>, then finishes the other eight. That is the mark.</p>',
+    actions: [{ text: 'Go', value: 'go', primary: true }, { text: 'Not now', value: 'quit', ghost: true }]
+  });
+  if (aborted || go !== 'go') return null;
+
+  const results = [];
+  for (let i = 0; i < NINE_TRIES; i++) {
+    setHud('THE NINE', 'GO ' + (i + 1) + ' / ' + NINE_TRIES, 'BEAT ' + secs(AYUMU_COMMIT_MS));
+    const t = await runNineTrial();
+    if (aborted || !t) break;
+    results.push(t);
+  }
+  if (!results.length) return null;
+
+  const perfects = results.filter(r => r.success);
+  const bestNow = perfects.length ? Math.min.apply(null, perfects.map(r => r.commitMs)) : null;
+
+  const rec = {
+    bestMs: prev.bestMs === null ? bestNow : (bestNow === null ? prev.bestMs : Math.min(prev.bestMs, bestNow)),
+    bestDate: (bestNow !== null && (prev.bestMs === null || bestNow < prev.bestMs)) ? new Date().toISOString() : prev.bestDate,
+    perfects: prev.perfects + perfects.length,
+    tries: prev.tries + results.length,
+    log: prev.log.concat(results.map(r => ({ ok: r.success, ms: r.commitMs }))).slice(-60)
+  };
+  store.nine = rec;
+  saveStore();
+
+  const beat = rec.bestMs !== null && rec.bestMs <= AYUMU_COMMIT_MS;
+  await card({
+    label: beat ? 'You matched him' : (perfects.length ? 'On the board' : 'Not yet'),
+    title: perfects.length
+      ? perfects.length + ' of ' + results.length + ' clean, best ' + secs(bestNow)
+      : 'No clean runs this time.',
+    body: statsHTML([
+      { label: 'Your best', value: rec.bestMs !== null ? secs(rec.bestMs) : '—', red: beat },
+      { label: 'Ayumu', value: secs(AYUMU_COMMIT_MS) },
+      { label: 'Clean runs', value: rec.perfects + ' / ' + rec.tries }
+    ]) + '<p style="margin-top:16px;">' + (beat
+      ? 'That is Ayumu’s mark, on the task he actually set it on. Genuinely well done.'
+      : (perfects.length
+        ? 'Now shave it down. Commit to the 1 a little sooner each time and see where it breaks.'
+        : 'Getting all nine at any speed comes first. The clock can wait.')) + '</p>',
+    actions: [{ text: 'Done', value: 'go', primary: true }]
+  });
+  return rec;
+}
+
 /* ================================================================
    10. THE WARM-UP, THEN AYUMU
    ================================================================ */
@@ -1963,8 +2160,8 @@ async function runAttempt(resume) {
   const rec = resume || {
     date: new Date().toISOString(),
     frameDur: Math.round(frameDur * 100) / 100,
-    numerals: AYUMU_N,
-    hold: AYUMU_HOLD,
+    numerals: FLASH_N,
+    hold: FLASH_HOLD,
     log: []
   };
   if (resume) rec.frameDur = Math.round(frameDur * 100) / 100;
@@ -1977,7 +2174,7 @@ async function runAttempt(resume) {
   if (!resume) {
     const go = await card({
       label: 'Ayumu’s version',
-      title: 'Nine numbers. A fifth of a second.',
+      title: 'Five numbers. A fifth of a second.',
       body: '<p>This is exactly what Ayumu does, at exactly his speed. You get three tries.</p>' +
             '<p>Almost nobody gets one. If you miss all three you are in enormous and distinguished company, so do not be gentle with yourself about it.</p>' +
             '<p>Ready when you are.</p>',
@@ -1987,7 +2184,7 @@ async function runAttempt(resume) {
   } else {
     const go = await card({
       label: 'Picking up where you left off',
-      title: 'Nine numbers. A fifth of a second.',
+      title: 'Five numbers. A fifth of a second.',
       body: '<p>You had ' + valid + ' of ' + target + ' tries in the bank. Here are the rest.</p>',
       actions: [{ text: 'Carry on', value: 'go', primary: true }]
     });
@@ -1996,8 +2193,8 @@ async function runAttempt(resume) {
 
   while (valid < target && attempts < target + MAX_REPLACEMENTS) {
     attempts++;
-    setHud('AYUMU’S VERSION', 'TRY ' + (valid + 1) + ' / ' + target, AYUMU_N + ' · ' + AYUMU_HOLD + 'MS');
-    const t = await runTrial(AYUMU_N, AYUMU_HOLD, { reveal: false });
+    setHud('AYUMU’S VERSION', 'TRY ' + (valid + 1) + ' / ' + target, FLASH_N + ' · ' + FLASH_HOLD + 'MS');
+    const t = await runTrial(FLASH_N, FLASH_HOLD, { reveal: false });
     if (aborted || !t) return null;
     rec.log.push(t);
 
@@ -2041,7 +2238,7 @@ async function runAttempt(resume) {
      cannot lose a finished round. */
   store.attempt = rec;
   store.pending = null;
-  mapRecord(AYUMU_N, AYUMU_HOLD, rec.hits, rec.trials);
+  mapRecord(FLASH_N, FLASH_HOLD, rec.hits, rec.trials);
   if (store.training.rung === null) store.training.rung = entryRung();
   saveStore();
   return rec;
@@ -2082,7 +2279,7 @@ function barsSVG(rec) {
     { name: 'YOU', val: you, label: pct(you) + '%', color: c.ink }
   ];
 
-  let g = '<text x="' + L + '" y="' + 12 + '"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted + '">HOW OFTEN NINE NUMBERS GET REMEMBERED, AT 210MS</text>';
+  let g = '<text x="' + L + '" y="' + 12 + '"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted + '">HOW OFTEN FIVE NUMBERS GET REMEMBERED, AT 210MS</text>';
 
   rows.forEach((r, i) => {
     const mid = T + i * (rowH + gap) + rowH / 2;
@@ -2107,7 +2304,7 @@ function barsSVG(rec) {
     }
   });
 
-  const label = 'Ayumu remembers nine numbers at 210 milliseconds about 80 percent of the time. ' +
+  const label = 'Ayumu remembers five numbers at 210 milliseconds about 80 percent of the time. ' +
     'You managed ' + pct(you) + ' percent.';
 
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
@@ -2208,7 +2405,7 @@ function renderResults() {
   const beatAyumu = rec.acc >= AYUMU_ACC;
   const zero = rec.hits === 0;
 
-  let html = '<p class="t-eyebrow">Nine numbers · 210 milliseconds</p>';
+  let html = '<p class="t-eyebrow">Five numbers · 210 milliseconds</p>';
 
   if (rec.trials === 0) {
     /* Every try was thrown out on timing, so there is no score to give. */
@@ -2250,11 +2447,24 @@ function renderResults() {
      unreviewed placeholder wording built to the locked arc. JT writes the
      final version. See the REVEAL_BEATS comment block for the arc rationale. */
 
-  html += '<h2 class="t-section" style="margin-top:40px;">Now you get the dials</h2>' +
+  /* Task 2 is introduced here, after the reveal, because it is Ayumu's
+     OTHER measured record and the better thing to train toward. */
+  const nine = store.nine;
+  html += '<h2 class="t-section" style="margin-top:40px;">Ayumu has another record</h2>' +
+    '<p class="t-body">That was five numbers on a timer. He does something else too, and this one is arguably more astonishing. All nine numbers, one to nine, sitting on the screen. He touches the 1, and at that instant the other eight vanish. He finishes the sequence from memory, and he commits to that first touch in about <strong>two thirds of a second</strong>.</p>' +
+    '<p class="t-body">Nobody puts a clock on him. He sets it himself, by deciding when he has looked long enough. You get exactly the same deal: look as long as you like, and the moment you touch the 1 the rest disappear.</p>' +
+    (nine && nine.bestMs !== null
+      ? '<p class="t-body">Your best clean run so far: <strong>' + secs(nine.bestMs) + '</strong>.</p>'
+      : '') +
+    '<div class="btn-row">' +
+    '<button class="btn primary" id="btn-to-nine">Try the nine</button>' +
+    '</div>';
+
+  html += '<h2 class="t-section" style="margin-top:40px;">Or take the dials</h2>' +
     '<p class="t-body">Ayumu’s setting is one square in a much bigger grid. Fewer numbers, longer flashes, anything you like: somewhere in there is the hardest version you can actually do, and finding it tells you far more about yourself than one impossible round ever could.</p>' +
     '<div class="btn-row">' +
-    '<button class="btn primary" id="btn-to-sandbox">Find my edge</button>' +
-    '<button class="btn" id="btn-to-training">Train for Ayumu’s</button>' +
+    '<button class="btn" id="btn-to-sandbox">Find my edge</button>' +
+    '<button class="btn" id="btn-to-training">Training Room</button>' +
     '<button class="btn ghost" id="btn-to-share">Make a card to share</button>' +
     '</div>';
 
@@ -2269,6 +2479,7 @@ function renderResults() {
   html += '<p class="t-quiet">Kept on this device. Nothing is sent anywhere.</p>';
 
   el.innerHTML = html;
+  document.getElementById('btn-to-nine').addEventListener('click', startNine);
   document.getElementById('btn-to-sandbox').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
   document.getElementById('btn-to-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
   document.getElementById('btn-to-share').addEventListener('click', () => { renderShare(); showView('view-share'); });
@@ -2301,7 +2512,7 @@ function mapHTML() {
     html += '<div class="map-side">' + (h >= 1000 ? (h / 1000) + 's' : h + 'ms') + '</div>';
     NUMERAL_STEPS.forEach(n => {
       const cell = mapGet(n, h);
-      const isAyumu = (n === AYUMU_N && h === AYUMU_HOLD);
+      const isAyumu = (n === FLASH_N && h === FLASH_HOLD);
       const here = (NUMERAL_STEPS[dialN] === n && HOLD_STEPS[dialH] === h);
       let cls = 'map-cell';
       if (isAyumu) cls += ' ayumu';
@@ -2343,9 +2554,9 @@ function yourNumberHTML() {
   } else {
     html += '<div class="yournum-big">' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds.</div>' +
       '<div class="yournum-sub">The furthest you have got so far</div>';
-    if (nine !== null && nine > AYUMU_HOLD) {
+    if (nine !== null && nine > FLASH_HOLD) {
       html += '<div class="yournum-vs">Ayumu does nine in 210. You need ' + comma(nine) + '.</div>';
-    } else if (nine === AYUMU_HOLD) {
+    } else if (nine === FLASH_HOLD) {
       html += '<div class="yournum-vs">Which is Ayumu’s exact setting. Take a bow.</div>';
     } else {
       html += '<div class="yournum-vs">Ayumu does nine numbers in 210 milliseconds.</div>';
@@ -2360,7 +2571,7 @@ function renderSandbox() {
   const el = document.getElementById('sandbox-body');
   const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
   const cell = mapGet(n, h);
-  const isAyumu = (n === AYUMU_N && h === AYUMU_HOLD);
+  const isAyumu = (n === FLASH_N && h === FLASH_HOLD);
 
   let html = '<p class="t-eyebrow">Your dials</p>' +
     '<h1 class="t-title" id="sandbox-title">Find your edge</h1>' +
@@ -2591,7 +2802,7 @@ async function runTrainingSession() {
 function best210(session) {
   let best = null;
   session.blocks.forEach(b => {
-    if (b.numerals === AYUMU_N && b.hold === AYUMU_HOLD) best = best === null ? b.acc : Math.max(best, b.acc);
+    if (b.numerals === FLASH_N && b.hold === FLASH_HOLD) best = best === null ? b.acc : Math.max(best, b.acc);
   });
   return best;
 }
@@ -2655,7 +2866,7 @@ function renderTraining() {
   let html = '<p class="t-eyebrow">Five hundred tries</p>' +
     '<h1 class="t-title" id="training-title">The Training Room</h1>' +
     '<p class="t-body">Ayumu practised about five hundred times before anybody wrote a paper about him. You have had a handful. This is where you close that gap, and watch yourself closing it.</p>' +
-    '<p class="t-body">The idea is not to bash away at nine numbers in a fifth of a second until you feel terrible. It starts somewhere you can win, and nudges up whenever you hold your own. Hard enough to be interesting, easy enough to land.</p>';
+    '<p class="t-body">The idea is not to bash away at the hardest setting until you feel terrible. It starts somewhere you can win, and nudges up whenever you hold your own. Hard enough to be interesting, easy enough to land.</p>';
 
   html += '<div class="parchment-card">' +
     '<div class="card-header"><span>How anything gets built</span><span class="card-stamp">The method</span></div>' +
@@ -2755,14 +2966,14 @@ const SHARE_DARE = 'A chimpanzee beat me at this. You will lose too.';
 function shareLines() {
   const nine = bestAtNine();
   const f = frontier();
-  if (nine !== null && nine > AYUMU_HOLD) {
+  if (nine !== null && nine > FLASH_HOLD) {
     return { big: ['Ayumu: nine in 210ms.', 'Me: nine in ' + comma(nine) + 'ms.'], sub: 'THE AYUMU TEST' };
   }
-  if (f && f.n < AYUMU_N) {
+  if (f && f.n < FLASH_N) {
     return { big: ['Ayumu: nine numbers.', 'Me: ' + f.n + ', with ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TEST' };
   }
   const acc = store.attempt ? pct(store.attempt.acc) : 0;
-  return { big: ['Ayumu: 80%.', 'Me: ' + acc + '%.'], sub: 'NINE NUMBERS · 210 MILLISECONDS' };
+  return { big: ['Ayumu: 80%.', 'Me: ' + acc + '%.'], sub: 'FIVE NUMBERS · 210 MILLISECONDS' };
 }
 
 function wrapText(g, text, x, y, maxW, lineH) {
@@ -2829,7 +3040,7 @@ function drawShareCard(canvas, w, h) {
       const x = pad + ci * (cellW + gapPx);
       const yy = mapTop + ri * (cellH + gapPx);
       const cell = mapGet(n, hold);
-      const isAyumu = (n === AYUMU_N && hold === AYUMU_HOLD);
+      const isAyumu = (n === FLASH_N && hold === FLASH_HOLD);
       if (isAyumu) {
         g.strokeStyle = c.red;
         g.lineWidth = Math.max(2, w * 0.0035);
@@ -2940,6 +3151,12 @@ function startFresh() {
   startGame(null);
 }
 
+async function startNine() {
+  await document.fonts.ready;
+  await runNineSession();
+  if (store.attempt) { renderResults(); showView('view-results'); } else { boot(); }
+}
+
 async function startTraining() {
   await document.fonts.ready;
   await runTrainingSession();
@@ -2983,6 +3200,7 @@ document.getElementById('btn-quit').addEventListener('click', () => {
 document.getElementById('btn-start').addEventListener('click', () => startGame(null));
 document.getElementById('btn-resume').addEventListener('click', () => startGame(store.pending));
 document.getElementById('btn-resume-fresh').addEventListener('click', startFresh);
+document.getElementById('btn-nine-from-return').addEventListener('click', startNine);
 document.getElementById('btn-sandbox-from-return').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
 document.getElementById('btn-training-from-return').addEventListener('click', () => { renderTraining(); showView('view-training'); });
 document.getElementById('btn-results-from-return').addEventListener('click', () => {
@@ -3009,7 +3227,7 @@ function boot() {
     const banked = p.log.filter(t => t.valid).length;
     const target = p.log.some(t => t.valid && t.success) ? ATTEMPT_EXTENDED : ATTEMPT_TRIALS;
     document.getElementById('resume-body').innerHTML =
-      '<p class="t-body">You were in the middle of Ayumu’s round, nine numbers at 210 milliseconds, with <strong>' +
+      '<p class="t-body">You were in the middle of Ayumu’s round, five numbers at 210 milliseconds, with <strong>' +
       banked + ' of ' + target + '</strong> tries in the bank. They were all saved.</p>' +
       '<p class="t-body">Carry on and you will pick up right there. Start over and it clears, warm-up and all.</p>' +
       '<p class="t-quiet">Saved ' + esc(fmtDate(p.lastSaved)) + '.</p>';
@@ -3024,10 +3242,14 @@ function boot() {
   const sessions = store.training.sessions.length;
   const nine = bestAtNine();
 
-  let body = '<p class="t-body">Last time, you got <strong>' + pct(rec.acc) + '%</strong> at Ayumu’s setting: nine numbers, 210 milliseconds. He gets about 80%.</p>';
+  let body = '<p class="t-body">Last time, you got <strong>' + pct(rec.acc) + '%</strong> at Ayumu’s setting: five numbers, 210 milliseconds. He gets about 80%.</p>';
+  if (store.nine && store.nine.bestMs !== null) {
+    body += '<p class="t-body">On the nine, your fastest clean run is <strong>' + secs(store.nine.bestMs) +
+      '</strong>. Ayumu commits in about ' + secs(AYUMU_COMMIT_MS) + '.</p>';
+  }
   if (f) {
     body += '<p class="t-body">Your best so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>' +
-      (nine !== null && nine > AYUMU_HOLD ? ', and nine numbers if you give yourself ' + comma(nine) + '' : '') + '.</p>';
+      (nine !== null && nine > FLASH_HOLD ? ', and nine numbers if you give yourself ' + comma(nine) + '' : '') + '.</p>';
   }
   body += '<p class="t-body">' + (sessions
     ? 'You have trained ' + sessions + ' time' + (sessions === 1 ? '' : 's') + ', currently on step ' +
@@ -3081,11 +3303,13 @@ if (DEV) {
       return { cols: g.cols, rows: g.rows, cells: g.cells, tile: Math.round(g.tile * 10) / 10, minGap: Math.round(minGap * 10) / 10 };
     },
     solve: (missAt) => {
-      if (phase !== 'respond' || !trial) return 'no live trial';
+      /* 'study' is the Nine's self-paced window: the first tap lands there
+         and flips the phase to 'respond' for the remaining eight. */
+      if ((phase !== 'respond' && phase !== 'study') || !trial) return 'no live trial';
       const order = trial.items.slice().sort((a, b) => a.value - b.value);
       let step = 0;
       const tick = () => {
-        if (phase !== 'respond' || !resolveTap) return;
+        if ((phase !== 'respond' && phase !== 'study') || !resolveTap) return;
         if (step >= order.length) return;
         const it = order[step];
         if (missAt && step + 1 === missAt) {
