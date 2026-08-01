@@ -1268,6 +1268,7 @@ function loadStore() {
     if (!s.prefs) s.prefs = { hc: false };
     if (s.attempt === undefined) s.attempt = null;
     if (s.nine === undefined) s.nine = null;
+    if (s.nine && !Array.isArray(s.nine.sessions)) s.nine.sessions = [];
     if (s.pending === undefined) s.pending = null;
     /* Don't greet someone with a resume prompt for something they walked
        away from months ago. */
@@ -2093,7 +2094,13 @@ async function runNineSession() {
     bestDate: (bestNow !== null && (prev.bestMs === null || bestNow < prev.bestMs)) ? new Date().toISOString() : prev.bestDate,
     perfects: prev.perfects + perfects.length,
     tries: prev.tries + results.length,
-    log: prev.log.concat(results.map(r => ({ ok: r.success, ms: r.commitMs }))).slice(-60)
+    log: prev.log.concat(results.map(r => ({ ok: r.success, ms: r.commitMs }))).slice(-60),
+    /* One entry per sitting, for the commit-time curve. bestMs null if no
+       clean run that day, so the curve can skip it rather than plot a lie. */
+    sessions: (prev.sessions || []).concat([{
+      date: new Date().toISOString(), bestMs: bestNow,
+      perfects: perfects.length, tries: results.length
+    }]).slice(-40)
   };
   store.nine = rec;
   saveStore();
@@ -2382,6 +2389,55 @@ function nineBarsSVG(rec) {
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
 
+/* The commit-time curve: your best time each sitting, dropping toward
+   Ayumu's line. Sittings with no clean run are skipped rather than plotted
+   as a spike. Lower is better, so the axis runs fast at the top. */
+function nineCurveSVG() {
+  const pts = (store.nine.sessions || []).filter(s => s.bestMs !== null);
+  if (pts.length < 2) return '';
+  const c = colors();
+  const W = 380, H = 220, L = 46, R = 22, T = 26, B = 40;
+  const plotW = W - L - R, plotH = H - T - B;
+  const mono = ' font-family="Space Mono, monospace"';
+  const times = pts.map(p => p.bestMs).concat([AYUMU_COMMIT_MS]);
+  const hi = Math.max.apply(null, times) * 1.08;
+  const lo = Math.min(Math.min.apply(null, times), AYUMU_COMMIT_MS) * 0.9;
+  const n = pts.length;
+  const x = i => L + (n === 1 ? plotW / 2 : plotW * (i / (n - 1)));
+  const y = ms => T + plotH * ((ms - lo) / (hi - lo));   /* fast (small) at top */
+
+  let g = '';
+  /* Ayumu's line, and the crossing the first time you dip under it. */
+  g += '<line x1="' + L + '" y1="' + y(AYUMU_COMMIT_MS) + '" x2="' + (W - R) + '" y2="' + y(AYUMU_COMMIT_MS) +
+       '" stroke="' + c.red + '" stroke-width="2" stroke-dasharray="6 4"/>';
+  g += '<text x="' + (W - R) + '" y="' + (y(AYUMU_COMMIT_MS) - 7) + '" text-anchor="end"' + mono +
+       ' font-size="10" font-weight="700" fill="' + c.red + '">AYUMU ' + secs(AYUMU_COMMIT_MS) + '</text>';
+
+  const line = pts.map((p, i) => x(i) + ',' + y(p.bestMs)).join(' ');
+  g += '<polyline points="' + line + '" fill="none" stroke="' + c.ink + '" stroke-width="2.5"/>';
+  let crossed = false;
+  pts.forEach((p, i) => {
+    const isCross = !crossed && p.bestMs <= AYUMU_COMMIT_MS;
+    if (isCross) crossed = true;
+    g += '<circle cx="' + x(i) + '" cy="' + y(p.bestMs) + '" r="' + (isCross ? 6 : 4) + '" fill="' +
+         (isCross ? c.red : c.ink) + '" stroke="#fff" stroke-width="1.5"/>';
+    g += '<text x="' + x(i) + '" y="' + (H - B + 18) + '" text-anchor="middle"' + mono +
+         ' font-size="9" fill="' + c.muted + '">' + esc(fmtDateShort(p.date)) + '</text>';
+    if (isCross) {
+      g += '<text x="' + x(i) + '" y="' + (y(p.bestMs) - 12) + '" text-anchor="middle"' + mono +
+           ' font-size="9" font-weight="700" fill="' + c.red + '">CAUGHT HIM</text>';
+    }
+  });
+  /* newest best, labelled */
+  const last = pts[pts.length - 1];
+  g += '<text x="' + (x(n - 1) - 8) + '" y="' + (y(last.bestMs) + 4) + '" text-anchor="end"' + mono +
+       ' font-size="11" font-weight="700" fill="' + c.ink + '">' + secs(last.bestMs) + '</text>';
+
+  const label = 'Your fastest clean run each sitting, from ' + secs(pts[0].bestMs) + ' down to ' +
+    secs(last.bestMs) + ', against Ayumu at ' + secs(AYUMU_COMMIT_MS) + '.';
+  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
+}
+
 function renderNine() {
   const rec = store.nine;
   const el = document.getElementById('nine-body');
@@ -2406,6 +2462,15 @@ function renderNine() {
     : (beat
       ? 'That is his mark, on the task he actually set it on. Worth sitting with for a second, because almost nobody gets here without working at it.'
       : 'Now shave it down. Commit to the 1 a little sooner each go and find the point where it falls apart. That point is your edge, and it moves.')) + '</p>';
+
+  /* The commit-time curve, once there are two sittings to draw a line
+     between. This is the Nine's answer to the Flash's learning curve. */
+  const curve = nineCurveSVG();
+  if (curve) {
+    html += '<h2 class="t-section" style="margin-top:40px;">Your times, sitting by sitting</h2>' +
+      '<div class="chart-panel">' + curve + '</div>' +
+      '<p class="chart-note">Every sitting where you landed at least one clean nine, plotted by your fastest that day. The line you want goes down, toward his.</p>';
+  }
 
   html += '<div class="btn-row" style="margin-top:28px;">' +
     '<button class="btn primary" id="btn-nine-again">Go again</button>' +
@@ -3067,12 +3132,29 @@ function renderTraining() {
     html += '</tbody></table>';
   }
 
+  /* The Nine's track, in the same hub. It trains on the clock, not the
+     grid, so it gets its own section rather than a rung on the ladder. */
+  const nrec = store.nine;
+  html += '<h2 class="t-section" style="margin-top:48px;">And the nine</h2>' +
+    '<p class="t-body">Ayumu’s other record trains here too, but against the clock rather than the grid: all nine numbers, self-paced, the goal being to commit to the 1 a little sooner each time. He does it in ' + secs(AYUMU_COMMIT_MS) + '.</p>';
+  if (nrec && nrec.bestMs !== null) {
+    html += '<p class="score-line">Your fastest clean run · <b>' + secs(nrec.bestMs) + '</b></p>';
+    const ncurve = nineCurveSVG();
+    if (ncurve) {
+      html += '<div class="t-label">Your times, sitting by sitting</div>' +
+        '<div class="chart-panel">' + ncurve + '</div>';
+    }
+  }
+  html += '<div class="btn-row"><button class="btn primary" id="btn-train-nine">' +
+    (nrec && nrec.bestMs !== null ? 'Train the nine' : 'Try the nine') + '</button></div>';
+
   html += '<div class="btn-row" style="margin-top:40px;">' +
     '<button class="btn ghost" id="btn-train-sandbox">Back to the dials</button>' +
     '<a class="btn ghost" href="ayumu-science.html">The science</a></div>';
 
   el.innerHTML = html;
   document.getElementById('btn-train-start').addEventListener('click', startTraining);
+  document.getElementById('btn-train-nine').addEventListener('click', startNine);
   document.getElementById('btn-train-sandbox').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
 
   /* Re-render to update every marker, keeping the scroll position so the
@@ -3134,7 +3216,8 @@ function wrapText(g, text, x, y, maxW, lineH) {
   return yy;
 }
 
-function drawShareCard(canvas, w, h) {
+function drawShareCard(canvas, w, h, kind) {
+  kind = kind || 'flash';
   const c = { bg: '#fafaf8', ink: '#1a1a1a', red: '#c44b3a', muted: '#666', rule: '#e0dcd4' };
   const tall = h > w;
   const dpr = 2;
@@ -3148,7 +3231,7 @@ function drawShareCard(canvas, w, h) {
 
   const pad = tall ? w * 0.11 : w * 0.075;
   const cw = w - pad * 2;
-  const lines = shareLines();
+  const lines = kind === 'nine' ? nineShareLines() : flashShareLines();
 
   g.textAlign = 'left';
   g.textBaseline = 'alphabetic';
@@ -3168,45 +3251,76 @@ function drawShareCard(canvas, w, h) {
     y += bigSize * 1.16;
   });
 
-  /* The map, drawn small: the filled squares and the empty corner tell the
-     story without a word of explanation. */
-  const mapTop = y + (tall ? h * 0.035 : h * 0.03);
-  const cols = NUMERAL_STEPS.length, rows = HOLD_STEPS.length;
-  const gapPx = Math.max(2, w * 0.004);
-  const cellW = (cw - gapPx * (cols - 1)) / cols;
-  const cellH = Math.min(cellW, ((tall ? h * 0.30 : h * 0.34) - gapPx * (rows - 1)) / rows);
-
-  HOLD_STEPS.forEach((hold, ri) => {
-    NUMERAL_STEPS.forEach((n, ci) => {
-      const x = pad + ci * (cellW + gapPx);
-      const yy = mapTop + ri * (cellH + gapPx);
-      const cell = mapGet(n, hold);
-      const isAyumu = (n === FLASH_N && hold === FLASH_HOLD);
-      if (isAyumu) {
-        g.strokeStyle = c.red;
-        g.lineWidth = Math.max(2, w * 0.0035);
-        g.strokeRect(x, yy, cellW, cellH);
-      } else if (cell && cell.wins) {
-        g.fillStyle = c.ink;
-        g.fillRect(x, yy, cellW, cellH);
+  let vizBottom;
+  if (kind === 'nine') {
+    /* Two time bars, yours against his, scaled to the slower of the two. */
+    const mine = store.nine && store.nine.bestMs !== null ? store.nine.bestMs : null;
+    const top = Math.max(AYUMU_COMMIT_MS, mine || AYUMU_COMMIT_MS) * 1.15;
+    const vTop = y + (tall ? h * 0.05 : h * 0.045);
+    const barH = tall ? h * 0.05 : h * 0.06, rowGap = tall ? h * 0.055 : h * 0.07;
+    const barX = pad + cw * 0.14, barW = cw * 0.86;
+    [['AYUMU', AYUMU_COMMIT_MS, c.red], ['ME', mine, c.ink]].forEach((r, i) => {
+      const yy = vTop + i * rowGap;
+      g.fillStyle = c.muted;
+      g.font = '700 ' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
+      g.textAlign = 'left';
+      g.fillText(r[0], pad, yy + barH * 0.72);
+      if (r[1] === null) {
+        g.fillStyle = c.muted;
+        g.font = '' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
+        g.fillText('no clean run yet', barX, yy + barH * 0.72);
       } else {
-        g.strokeStyle = c.rule;
-        g.lineWidth = 1;
-        g.strokeRect(x, yy, cellW, cellH);
+        const bw = Math.max(w * 0.01, barW * (r[1] / top));
+        g.fillStyle = r[2];
+        g.fillRect(barX, yy, bw, barH);
+        g.font = '700 ' + Math.round(w * (tall ? 0.024 : 0.016)) + 'px "Space Mono", monospace';
+        g.fillText(secs(r[1]), barX + bw + w * 0.012, yy + barH * 0.72);
       }
     });
-  });
+    g.textAlign = 'left';
+    vizBottom = vTop + 2 * rowGap;
+  } else {
+    /* The map, drawn small: the filled squares and the empty corner tell the
+       story without a word of explanation. */
+    const mapTop = y + (tall ? h * 0.035 : h * 0.03);
+    const cols = NUMERAL_STEPS.length, rows = HOLD_STEPS.length;
+    const gapPx = Math.max(2, w * 0.004);
+    const cellW = (cw - gapPx * (cols - 1)) / cols;
+    const cellH = Math.min(cellW, ((tall ? h * 0.30 : h * 0.34) - gapPx * (rows - 1)) / rows);
 
-  const mapBottom = mapTop + rows * (cellH + gapPx);
-  g.fillStyle = c.muted;
-  g.font = '' + Math.round(w * (tall ? 0.019 : 0.013)) + 'px "Space Mono", monospace';
-  g.fillText('MORE NUMBERS →', pad, mapBottom + w * (tall ? 0.04 : 0.028));
-  g.textAlign = 'right';
-  g.fillStyle = c.red;
-  g.fillText('AYUMU', pad + cw, mapBottom + w * (tall ? 0.04 : 0.028));
-  g.textAlign = 'left';
+    HOLD_STEPS.forEach((hold, ri) => {
+      NUMERAL_STEPS.forEach((n, ci) => {
+        const x = pad + ci * (cellW + gapPx);
+        const yy = mapTop + ri * (cellH + gapPx);
+        const cell = mapGet(n, hold);
+        const isAyumu = (n === FLASH_N && hold === FLASH_HOLD);
+        if (isAyumu) {
+          g.strokeStyle = c.red;
+          g.lineWidth = Math.max(2, w * 0.0035);
+          g.strokeRect(x, yy, cellW, cellH);
+        } else if (cell && cell.wins) {
+          g.fillStyle = c.ink;
+          g.fillRect(x, yy, cellW, cellH);
+        } else {
+          g.strokeStyle = c.rule;
+          g.lineWidth = 1;
+          g.strokeRect(x, yy, cellW, cellH);
+        }
+      });
+    });
 
-  let dy = mapBottom + (tall ? h * 0.085 : h * 0.11);
+    const mapBottom = mapTop + rows * (cellH + gapPx);
+    g.fillStyle = c.muted;
+    g.font = '' + Math.round(w * (tall ? 0.019 : 0.013)) + 'px "Space Mono", monospace';
+    g.fillText('MORE NUMBERS →', pad, mapBottom + w * (tall ? 0.04 : 0.028));
+    g.textAlign = 'right';
+    g.fillStyle = c.red;
+    g.fillText('AYUMU', pad + cw, mapBottom + w * (tall ? 0.04 : 0.028));
+    g.textAlign = 'left';
+    vizBottom = mapBottom;
+  }
+
+  let dy = vizBottom + (tall ? h * 0.085 : h * 0.11);
   g.fillStyle = c.ink;
   const dSize = Math.round(w * (tall ? 0.042 : 0.026));
   g.font = '600 ' + dSize + 'px "Source Serif 4", Georgia, serif';
@@ -3219,12 +3333,25 @@ function drawShareCard(canvas, w, h) {
   g.textAlign = 'left';
 }
 
+let shareKind = 'flash';   /* which card is showing: 'flash' | 'nine' */
+
 function renderShare() {
   const el = document.getElementById('share-body');
+  /* Default to whichever the player has actually done. If they've matched
+     Ayumu on the nine, lead with that brag; otherwise lead with the Flash. */
+  if (store.nine && store.nine.bestMs !== null && !store.attempt) shareKind = 'nine';
+
+  const tab = (k, label) => '<button type="button" class="rung-row' + (shareKind === k ? ' current' : '') +
+    '" data-kind="' + k + '" style="grid-template-columns:1fr;justify-items:center;min-height:44px;" aria-pressed="' +
+    (shareKind === k) + '">' + label + '</button>';
 
   el.innerHTML = '<p class="t-eyebrow">Something to share</p>' +
     '<h1 class="t-title" id="share-title">Your card</h1>' +
-    '<p class="t-body">Your map, your number, and an invitation for somebody else to find out how this feels.</p>' +
+    '<p class="t-body">Two cards, one for each of Ayumu’s records. Pick the one you would rather put in front of somebody.</p>' +
+    '<div class="rung-list" role="group" aria-label="Choose a card" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border:0;margin:0 0 18px;">' +
+    tab('flash', 'The five-number score') +
+    tab('nine', 'The nine, on the clock') +
+    '</div>' +
     '<canvas class="share-preview" id="share-canvas" aria-label="Preview of your share card"></canvas>' +
     '<div class="btn-row">' +
     '<button class="btn primary" id="btn-dl-story">Download for stories</button>' +
@@ -3232,19 +3359,16 @@ function renderShare() {
     '<button class="btn ghost" id="btn-copy">Copy the link</button>' +
     '</div>' +
     '<p class="t-quiet" id="copy-status" style="margin-top:18px;">The tall one fits Instagram and X stories. The wide one is for link previews.</p>' +
-    /* Not rendered: SHARE_DARE is unreviewed placeholder. Spec §6 marks the
-       dare line as JT's to write. */
-    '' +
     '<div class="btn-row" style="margin-top:24px;">' +
     '<button class="btn ghost" id="btn-share-back">Back to the dials</button></div>';
 
   const preview = document.getElementById('share-canvas');
   preview.style.aspectRatio = '1080 / 1920';
-  drawShareCard(preview, 1080, 1920);
+  drawShareCard(preview, 1080, 1920, shareKind);
 
   function download(w, h, name) {
     const cv = document.createElement('canvas');
-    drawShareCard(cv, w, h);
+    drawShareCard(cv, w, h, shareKind);
     cv.toBlob(blob => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -3256,10 +3380,13 @@ function renderShare() {
     });
   }
 
-  document.getElementById('btn-dl-story').addEventListener('click', () => download(1080, 1920, 'ayumu-test-story.png'));
-  document.getElementById('btn-dl-link').addEventListener('click', () => download(1200, 630, 'ayumu-test-card.png'));
+  el.querySelectorAll('.rung-row[data-kind]').forEach(b => {
+    b.addEventListener('click', () => { shareKind = b.dataset.kind; renderShare(); });
+  });
+  document.getElementById('btn-dl-story').addEventListener('click', () => download(1080, 1920, 'ayumu-test-' + shareKind + '-story.png'));
+  document.getElementById('btn-dl-link').addEventListener('click', () => download(1200, 630, 'ayumu-test-' + shareKind + '-card.png'));
   document.getElementById('btn-copy').addEventListener('click', () => {
-    const l = shareLines();
+    const l = shareKind === 'nine' ? nineShareLines() : flashShareLines();
     const text = SHARE_DARE + ' ' + l.big.join(' ') + ' ' + location.origin + location.pathname;
     const status = document.getElementById('copy-status');
     if (navigator.clipboard && navigator.clipboard.writeText) {
