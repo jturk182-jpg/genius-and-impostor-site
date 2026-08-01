@@ -1213,14 +1213,17 @@ const NUMERAL_STEPS = [3, 4, 5, 6, 7, 8, 9];
 const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
 const SANDBOX_BLOCK = 3;     /* tries per go at a setting */
 
-/* The training ladder: numbers first, then speed. */
+/* The training ladder for the TIMED task. Numbers first, then speed, and
+   it passes through Ayumu's real fixed condition (five at 210) rather than
+   the old phantom nine-at-210. Everything past AYUMU_RUNG is genuinely
+   harder than anything Ayumu was measured on. */
 const LADDER = [
-  { n: 4, h: 1000 }, { n: 5, h: 1000 }, { n: 6, h: 1000 },
-  { n: 7, h: 1000 }, { n: 8, h: 1000 }, { n: 9, h: 1000 },
-  { n: 9, h: 800 },  { n: 9, h: 650 },  { n: 9, h: 520 },
-  { n: 9, h: 430 },  { n: 9, h: 350 },  { n: 9, h: 290 },
-  { n: 9, h: 240 },  { n: 9, h: 210 }
+  { n: 3, h: 1000 }, { n: 4, h: 1000 }, { n: 5, h: 1000 },  /* build to five  */
+  { n: 5, h: 650 },  { n: 5, h: 430 },  { n: 5, h: 290 },   /* take time away */
+  { n: 5, h: 210 },                                          /* MATCH AYUMU    */
+  { n: 6, h: 210 },  { n: 7, h: 210 },  { n: 8, h: 210 }, { n: 9, h: 210 }  /* beyond him */
 ];
+const AYUMU_RUNG = 6;   /* index of 5 numbers at 210ms in LADDER */
 
 const BLOCK_TRIALS = 6;
 const BLOCKS_PER_SESSION = 3;
@@ -2667,12 +2670,12 @@ function mapAria() {
   });
   return 'A grid of settings, numbers of digits across and flash lengths down. ' +
     (won.length ? 'You have managed: ' + won.join('; ') + '.' : 'Nothing filled in yet.') +
-    ' Ayumu sits at nine numbers and 210 milliseconds.';
+    ' Ayumu’s timed setting is five numbers at 210 milliseconds.';
 }
 
 function yourNumberHTML() {
   const f = frontier();
-  const nine = bestAtNine();
+  const ayumuDiff = difficulty(FLASH_N, FLASH_HOLD);   /* five at 210 */
   let html = '<div class="yournum">';
   if (!f) {
     html += '<div class="yournum-big">Nothing on the board yet.</div>' +
@@ -2680,12 +2683,12 @@ function yourNumberHTML() {
   } else {
     html += '<div class="yournum-big">' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds.</div>' +
       '<div class="yournum-sub">The furthest you have got so far</div>';
-    if (nine !== null && nine > FLASH_HOLD) {
-      html += '<div class="yournum-vs">Ayumu does nine in 210. You need ' + comma(nine) + '.</div>';
-    } else if (nine === FLASH_HOLD) {
-      html += '<div class="yournum-vs">Which is Ayumu’s exact setting. Take a bow.</div>';
+    if (f.n === FLASH_N && f.hold === FLASH_HOLD) {
+      html += '<div class="yournum-vs">That is Ayumu’s timed setting exactly. Take a bow.</div>';
+    } else if (difficulty(f.n, f.hold) > ayumuDiff) {
+      html += '<div class="yournum-vs">Past Ayumu’s timed setting of five at 210. You are into ground he was never even tested on.</div>';
     } else {
-      html += '<div class="yournum-vs">Ayumu does nine numbers in 210 milliseconds.</div>';
+      html += '<div class="yournum-vs">Ayumu’s timed setting is five numbers at 210 milliseconds. That is the corner to aim for.</div>';
     }
   }
   html += '</div>';
@@ -2706,7 +2709,7 @@ function renderSandbox() {
   html += yourNumberHTML();
 
   html += '<h2 class="t-section">Your map</h2>' +
-    '<p class="t-body">Numbers along the top, flash length down the side. Easiest corner is top left. Ayumu lives in the bottom right.</p>' +
+    '<p class="t-body">Numbers along the top, flash length down the side. Easiest corner is top left. Ayumu’s own setting, five numbers at 210, is the one marked in red; the bottom-right corner is harder than anything he was ever tested on.</p>' +
     mapHTML();
 
   html += '<h2 class="t-section" style="margin-top:40px;">Set it up</h2>' +
@@ -2958,7 +2961,9 @@ function curveSVG() {
   const mono = ' font-family="Space Mono, monospace"';
 
   let g = '';
-  [0, 5, 9, 13].forEach(r => {
+  /* Gridlines derived from the ladder length rather than hard-coded, so a
+     shorter ladder can never index a rung that does not exist. */
+  [0, 3, AYUMU_RUNG, LADDER.length - 1].forEach(r => {
     g += '<line x1="' + L + '" y1="' + y(r) + '" x2="' + (W - R) + '" y2="' + y(r) + '" stroke="' + c.rule + '" stroke-width="1"/>';
     g += '<text x="' + (L - 8) + '" y="' + (y(r) + 4) + '" text-anchor="end"' + mono +
          ' font-size="9" fill="' + c.muted + '">' + LADDER[r].n + '·' + LADDER[r].h + '</text>';
@@ -2996,7 +3001,7 @@ function renderTraining() {
 
   html += '<div class="parchment-card">' +
     '<div class="card-header"><span>How anything gets built</span><span class="card-stamp">The method</span></div>' +
-    '<p class="t-body">Get the pieces working at a speed where they work, then put them together, then take the time away. So the number of numbers climbs first, with a generous flash. Only once nine feels comfortable does the flash start getting shorter, and the last step is Ayumu’s setting exactly. Every skill you already have was built in roughly this order, including the one you are using to read this.</p>' +
+    '<p class="t-body">Get the pieces working at a speed where they work, then put them together, then take the time away. So the count of numbers climbs first, with a generous flash. Only once five feels comfortable does the flash start getting shorter, until you reach Ayumu’s own setting: five numbers at 210. The steps past that go harder than he was ever tested on. Every skill you already have was built in roughly this order, including the one you are using to read this.</p>' +
     '</div>';
 
   html += '<h2 class="t-section">Where you are</h2>';
@@ -3024,7 +3029,8 @@ function renderTraining() {
     if (i === rung) tags.push('You are here');
     if (i === suggested && i !== rung) tags.push('Suggested by your map');
     if (i === furthest && i !== rung && furthest > 0) tags.push('Furthest you have trained');
-    if (i === LADDER.length - 1 && i !== rung) tags.push('Ayumu’s setting');
+    if (i === AYUMU_RUNG && i !== rung) tags.push('Ayumu’s setting');
+    if (i === LADDER.length - 1 && i !== rung) tags.push('Beyond Ayumu');
     html += '<button type="button" class="rung-row' + (i === rung ? ' current' : '') +
       (furthest > 0 && i > furthest + 1 && i !== rung ? ' beyond' : '') + '" data-rung="' + i + '"' +
       ' aria-pressed="' + (i === rung) + '">' +
@@ -3044,9 +3050,9 @@ function renderTraining() {
       '<div class="chart-panel">' + curveSVG() + '</div>' +
       '<p class="chart-note">' +
       (cross.ayumu !== null
-        ? 'You matched Ayumu’s 80% at his own setting on ' + esc(fmtDate(sessions[cross.ayumu].date)) + '. Go and tell somebody.'
+        ? 'You matched Ayumu’s 80% at his own setting, five numbers at 210 milliseconds, on ' + esc(fmtDate(sessions[cross.ayumu].date)) + '. Go and tell somebody.'
         : (cross.human !== null
-          ? 'You went past the original study’s humans at nine numbers and 210 milliseconds on ' + esc(fmtDate(sessions[cross.human].date)) + '. Ayumu’s 80% is the next mark on the wall.'
+          ? 'You went past the original study’s humans at five numbers and 210 milliseconds on ' + esc(fmtDate(sessions[cross.human].date)) + '. Ayumu’s 80% is the next mark on the wall.'
           : 'Two moments get marked here when they arrive: the day you pass the people in the original study, and the day you pass Ayumu.')) +
       '</p>';
 
@@ -3089,18 +3095,27 @@ function renderTraining() {
 /* ⚠️ PLACEHOLDER. Spec §6 marks the dare line as JT's to write. */
 const SHARE_DARE = 'A chimpanzee beat me at this. You will lose too.';
 
-function shareLines() {
-  const nine = bestAtNine();
+/* The Flash card: your five-number score against Ayumu's 80%. */
+function flashShareLines() {
+  if (store.attempt) {
+    return { big: ['Ayumu: 80%.', 'Me: ' + pct(store.attempt.acc) + '%.'], sub: 'FIVE NUMBERS · 210 MILLISECONDS' };
+  }
   const f = frontier();
-  if (nine !== null && nine > FLASH_HOLD) {
-    return { big: ['Ayumu: nine in 210ms.', 'Me: nine in ' + comma(nine) + 'ms.'], sub: 'THE AYUMU TEST' };
-  }
-  if (f && f.n < FLASH_N) {
-    return { big: ['Ayumu: nine numbers.', 'Me: ' + f.n + ', with ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TEST' };
-  }
-  const acc = store.attempt ? pct(store.attempt.acc) : 0;
-  return { big: ['Ayumu: 80%.', 'Me: ' + acc + '%.'], sub: 'FIVE NUMBERS · 210 MILLISECONDS' };
+  if (f) return { big: ['Ayumu: five in 210ms.', 'My best: ' + f.n + ' in ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TEST' };
+  return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TEST' };
 }
+
+/* The Nine card: your fastest clean commit against Ayumu's 0.67s. */
+function nineShareLines() {
+  const n = store.nine;
+  if (n && n.bestMs !== null) {
+    return { big: ['Ayumu: ' + secs(AYUMU_COMMIT_MS) + '.', 'Me: ' + secs(n.bestMs) + '.'], sub: 'ALL NINE, FROM MEMORY' };
+  }
+  return { big: ['Ayumu: all nine in', secs(AYUMU_COMMIT_MS) + '.'], sub: 'ALL NINE, FROM MEMORY' };
+}
+
+/* Default card used where a single card is expected. */
+function shareLines() { return flashShareLines(); }
 
 function wrapText(g, text, x, y, maxW, lineH) {
   const words = text.split(' ');
@@ -3371,7 +3386,6 @@ function boot() {
 
   const f = frontier();
   const sessions = store.training.sessions.length;
-  const nine = bestAtNine();
 
   let body = '<p class="t-body">Last time, you got <strong>' + pct(rec.acc) + '%</strong> at Ayumu’s setting: five numbers, 210 milliseconds. He gets about 80%.</p>';
   if (store.nine && store.nine.bestMs !== null) {
@@ -3379,8 +3393,7 @@ function boot() {
       '</strong>. Ayumu commits in about ' + secs(AYUMU_COMMIT_MS) + '.</p>';
   }
   if (f) {
-    body += '<p class="t-body">Your best so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>' +
-      (nine !== null && nine > FLASH_HOLD ? ', and nine numbers if you give yourself ' + comma(nine) + '' : '') + '.</p>';
+    body += '<p class="t-body">Your furthest on the dials so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>.</p>';
   }
   body += '<p class="t-body">' + (sessions
     ? 'You have trained ' + sessions + ' time' + (sessions === 1 ? '' : 's') + ', currently on step ' +
