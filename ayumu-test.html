@@ -1235,7 +1235,15 @@ const MIN_TILE = 44;         /* never smaller than a comfortable touch target */
 const MAX_TILE = 78;
 const TILE_GAP = 12;         /* guaranteed minimum clearance between tiles */
 
-const DEV = new URLSearchParams(location.search).has('dev');
+/* Dev hooks are a cheat surface (window.__ayumu includes a solver), so ?dev=1
+   only does anything on a local host. On the live domain the flag is inert and
+   the hooks are never installed. */
+const LOCAL_HOST = (function () {
+  const h = location.hostname;
+  return h === '' || h === 'localhost' || h === '127.0.0.1' || h === '[::1]' ||
+         h === '::1' || h.endsWith('.local');
+})();
+const DEV = LOCAL_HOST && new URLSearchParams(location.search).has('dev');
 
 /* ================================================================
    2. STORAGE
@@ -2676,7 +2684,7 @@ function renderResults() {
   document.getElementById('btn-to-nine').addEventListener('click', startNine);
   document.getElementById('btn-to-sandbox').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
   document.getElementById('btn-to-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
-  document.getElementById('btn-to-share').addEventListener('click', () => { renderShare(); showView('view-share'); });
+  document.getElementById('btn-to-share').addEventListener('click', () => { pickDefaultShareKind(); renderShare(); showView('view-share'); });
 }
 
 /* ================================================================
@@ -3174,8 +3182,31 @@ function renderTraining() {
    15. SHARE CARD
    ================================================================ */
 
-/* ⚠️ PLACEHOLDER. Spec §6 marks the dare line as JT's to write. */
-const SHARE_DARE = 'A chimpanzee beat me at this. You will lose too.';
+/* ⚠️ PLACEHOLDER. Spec §6 marks these lines as JT's to write. All four.
+   The card carries a dare by default, but a dare that says a chimpanzee beat
+   you reads as a lie on the card of somebody who just went past him. So the
+   line flips to a brag, per card, whenever that card's own record is a win:
+   the Flash at Ayumu's 80%, the Nine at his 0.67s commit. Each card is judged
+   on its own task, so beating the Nine does not put a brag on the Flash card. */
+const SHARE_LINES = {
+  flash: {
+    dare: 'A chimpanzee beat me at this. You will lose too.',
+    brag: 'I went past Ayumu at five numbers in a fifth of a second. Your turn.'
+  },
+  nine: {
+    dare: 'A chimpanzee beat me at this. You will lose too.',
+    brag: 'I caught Ayumu on all nine numbers. Your turn.'
+  }
+};
+
+function beatFlash() { return !!(store.attempt && store.attempt.acc >= AYUMU_ACC); }
+function beatNine() { return !!(store.nine && store.nine.bestMs !== null && store.nine.bestMs <= AYUMU_COMMIT_MS); }
+
+function shareTagline(kind) {
+  const set = kind === 'nine' ? SHARE_LINES.nine : SHARE_LINES.flash;
+  const won = kind === 'nine' ? beatNine() : beatFlash();
+  return won ? set.brag : set.dare;
+}
 
 /* The Flash card: your five-number score against Ayumu's 80%. */
 function flashShareLines() {
@@ -3324,7 +3355,7 @@ function drawShareCard(canvas, w, h, kind) {
   g.fillStyle = c.ink;
   const dSize = Math.round(w * (tall ? 0.042 : 0.026));
   g.font = '600 ' + dSize + 'px "Source Serif 4", Georgia, serif';
-  wrapText(g, SHARE_DARE, pad, dy, cw, dSize * 1.3);
+  wrapText(g, shareTagline(kind), pad, dy, cw, dSize * 1.3);
 
   g.fillStyle = c.muted;
   g.font = '700 ' + Math.round(w * (tall ? 0.022 : 0.015)) + 'px "Space Mono", monospace';
@@ -3335,11 +3366,18 @@ function drawShareCard(canvas, w, h, kind) {
 
 let shareKind = 'flash';   /* which card is showing: 'flash' | 'nine' */
 
+/* Which card to open on. Called once on the way into the share view, never
+   from renderShare(), because renderShare() also runs on every toggle click
+   and would otherwise stomp the choice the player just made. Lead with the
+   Nine when catching Ayumu there is a genuine brag, or when the Nine is the
+   only task they have on the board. */
+function pickDefaultShareKind() {
+  shareKind = (beatNine() || (store.nine && store.nine.bestMs !== null && !store.attempt))
+    ? 'nine' : 'flash';
+}
+
 function renderShare() {
   const el = document.getElementById('share-body');
-  /* Default to whichever the player has actually done. If they've matched
-     Ayumu on the nine, lead with that brag; otherwise lead with the Flash. */
-  if (store.nine && store.nine.bestMs !== null && !store.attempt) shareKind = 'nine';
 
   const tab = (k, label) => '<button type="button" class="rung-row' + (shareKind === k ? ' current' : '') +
     '" data-kind="' + k + '" style="grid-template-columns:1fr;justify-items:center;min-height:44px;" aria-pressed="' +
@@ -3387,7 +3425,7 @@ function renderShare() {
   document.getElementById('btn-dl-link').addEventListener('click', () => download(1200, 630, 'ayumu-test-' + shareKind + '-card.png'));
   document.getElementById('btn-copy').addEventListener('click', () => {
     const l = shareKind === 'nine' ? nineShareLines() : flashShareLines();
-    const text = SHARE_DARE + ' ' + l.big.join(' ') + ' ' + location.origin + location.pathname;
+    const text = shareTagline(shareKind) + ' ' + l.big.join(' ') + ' ' + location.origin + location.pathname;
     const status = document.getElementById('copy-status');
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(
@@ -3531,9 +3569,10 @@ function boot() {
   showView('view-return');
 }
 
-/* Dev hooks, enabled only with ?dev=1. Used to drive the flow during
-   development and verification. Nothing here is reachable on a normal load,
-   but it is a cheat surface: consider removing before launch. */
+/* Dev hooks. Used to drive the flow during development and verification.
+   Gated by DEV, which requires BOTH a local hostname and ?dev=1, so this block
+   never installs on the live domain no matter what is in the query string.
+   Includes a solver: do not relax that gate. */
 if (DEV) {
   window.__ayumu = {
     state: () => ({
