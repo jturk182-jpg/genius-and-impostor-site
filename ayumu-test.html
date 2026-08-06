@@ -448,7 +448,7 @@
       flex: none;
       /* Tall enough for nine tiles, short enough that the dials and the go
          button stay on screen with it. */
-      height: clamp(280px, 42vh, 400px);
+      height: clamp(270px, 37vh, 380px);
       border: 1px solid var(--rule);
       border-radius: 3px;
     }
@@ -461,6 +461,45 @@
     /* While a round is live the dials stay visible but go untouchable, so a
        dial cannot move under you between the flash and your answer. */
     .dials.busy, .btn-row.busy { opacity: 0.4; pointer-events: none; }
+
+    /* COMPACT DIALS, for the inline board. Stacking each label above its own
+       buttons costs 226px, which is enough to push the dials off the bottom of
+       an 800px screen and hide the very control the page is named after. Label
+       beside the buttons instead, and the pair fits in about 120px. */
+    .dials.compact {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 10px 0 0;
+    }
+
+    .dials.compact .dial {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 12px;
+    }
+
+    .dials.compact .dial-label {
+      margin: 0;
+      flex: 1;
+      text-align: left;
+    }
+
+    .dials.compact .dial-row { flex: none; gap: 10px; }
+    .dials.compact .dial-btn { width: 44px; height: 40px; }
+    .dials.compact .dial-value { min-width: 96px; flex: none; }
+    .dials.compact .dial-value small { display: block; }
+
+    /* Side by side once there is room, which puts both dials, the board and
+       the go button on one screen without scrolling. */
+    @media (min-width: 560px) {
+      .dials.compact { grid-template-columns: 1fr 1fr; }
+      .dials.compact .dial { flex-direction: column; align-items: stretch; gap: 6px; padding: 8px 12px; }
+      .dials.compact .dial-label { text-align: center; }
+      .dials.compact .dial-value small { display: inline; margin-left: 5px; }
+      .dials.compact .dial-value { min-width: 0; flex: 1; }
+      .dials.compact .dial-row { flex: 1; }
+    }
 
     body.playing { overflow: hidden; }
 
@@ -2887,23 +2926,19 @@ function renderSandbox() {
      explanation sits underneath the loop rather than on top of it. On a
      375x812 phone this is the difference between the go button being on
      screen and being two scrolls away. */
+  /* No standfirst above the board. The prompt under it already says to set
+     the dials and press go, and the two together cost 42px of the height the
+     dials need to stay on screen. The longer explanation is below the loop. */
   let html = '<p class="t-eyebrow">Your dials</p>' +
-    '<h1 class="t-title" id="sandbox-title">Find your edge</h1>' +
-    '<p class="t-body">Two dials, one board, as many goes as you like.</p>';
+    '<h1 class="t-title" id="sandbox-title">Find your edge</h1>';
 
   /* The board is mounted into this slot once the HTML lands. */
   html += '<div id="sandbox-stage"></div>';
 
-  /* Go sits directly under the board because it is pressed far more often
-     than a dial is turned, and it has to be reachable without scrolling away
-     from the thing you were just looking at. The dials follow. */
-  html += '<div class="btn-row" id="sandbox-go-row" style="margin-top:14px;">' +
-    '<button class="btn primary" id="btn-sandbox-go">Go</button>' +
-    '</div>';
-
-  html += '<p class="t-quiet" id="sandbox-tally" style="margin-top:12px;"></p>';
-
-  html += '<div class="dials" id="sandbox-dials">' +
+  /* Dials first, then go. Both have to be on screen with the board, and the
+     dials are the reason anyone came to this page, so they get the position
+     directly under it. */
+  html += '<div class="dials compact" id="sandbox-dials">' +
     '<div class="dial"><div class="dial-label">How many numbers</div>' +
       '<div class="dial-row">' +
       '<button class="dial-btn" id="dial-n-down" aria-label="Fewer numbers">–</button>' +
@@ -2917,6 +2952,12 @@ function renderSandbox() {
       '<button class="dial-btn" id="dial-h-up" aria-label="Shorter flash">+</button>' +
       '</div></div>' +
     '</div>';
+
+  html += '<div class="btn-row" id="sandbox-go-row" style="margin-top:14px;">' +
+    '<button class="btn primary" id="btn-sandbox-go">Go</button>' +
+    '</div>';
+
+  html += '<p class="t-quiet" id="sandbox-tally" style="margin-top:12px;"></p>';
 
   html += '<p class="t-body" style="margin-top:26px;">Set the dials wherever you like and press go. The board stays right here, so you can move a dial and go again as often as you fancy, and every single round fills in your map a little further. After a few goes a line shows up between the settings you can do and the ones you cannot. That line is yours, it is real, and it moves.</p>';
 
