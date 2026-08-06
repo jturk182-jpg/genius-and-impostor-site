@@ -429,6 +429,39 @@
 
     .play-layer.active { display: flex; }
 
+    /* INLINE MODE. On the dials the board sits in the page rather than taking
+       over the screen, so the numbers, the dials and the map are all in one
+       place and a round never navigates anywhere. The play layer is physically
+       moved into #sandbox-stage and these rules undo the full-screen styling. */
+    .play-layer.inline {
+      position: static;
+      inset: auto;
+      z-index: auto;
+      padding: 0;
+      background: none;
+      margin: 4px 0 0;
+    }
+
+    .play-layer.inline .stage { max-width: none; }
+
+    .play-layer.inline .stage-field {
+      flex: none;
+      /* Tall enough for nine tiles, short enough that the dials and the go
+         button stay on screen with it. */
+      height: clamp(280px, 42vh, 400px);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+    }
+
+    .play-layer.inline .stage-hud { padding: 0 2px 8px; }
+    .play-layer.inline .stage-foot { padding: 10px 2px 0; }
+    /* Nothing to quit out of when the round is already in the page. */
+    .play-layer.inline .stage-quit { display: none; }
+
+    /* While a round is live the dials stay visible but go untouchable, so a
+       dial cannot move under you between the flash and your answer. */
+    .dials.busy, .btn-row.busy { opacity: 0.4; pointer-events: none; }
+
     body.playing { overflow: hidden; }
 
     .stage {
@@ -1211,7 +1244,7 @@ const MAX_REPLACEMENTS = 4;
 /* The dials, and the axes of the map. Ayumu sits in the bottom right corner. */
 const NUMERAL_STEPS = [3, 4, 5, 6, 7, 8, 9];
 const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
-const SANDBOX_BLOCK = 3;     /* tries per go at a setting */
+/* The dials run one try per press, so there is no block size any more. */
 
 /* The training ladder for the TIMED task. Numbers first, then speed, and
    it passes through Ayumu's real fixed condition (five at 210) rather than
@@ -1391,7 +1424,28 @@ function colors() {
   };
 }
 
+/* The play layer is one element used two ways. Normally it is a full-screen
+   takeover. On the dials it gets moved into the page so a round runs in place.
+   Both of these put it back where it belongs before doing anything else, so
+   the two modes can never be live at once. */
+function mountPlayInline(hostId) {
+  const layer = document.getElementById('view-play');
+  const host = document.getElementById(hostId);
+  if (!host) return;
+  if (layer.parentNode !== host) host.appendChild(layer);
+  layer.classList.add('inline', 'active');
+  document.body.classList.remove('playing');
+}
+
+function unmountPlayInline() {
+  const layer = document.getElementById('view-play');
+  if (!layer.classList.contains('inline')) return;
+  layer.classList.remove('inline', 'active');
+  document.body.appendChild(layer);
+}
+
 function showView(id) {
+  unmountPlayInline();
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById(id);
   if (el) el.classList.add('active');
@@ -1401,9 +1455,17 @@ function showView(id) {
 }
 
 function showPlay() {
+  unmountPlayInline();
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-play').classList.add('active');
   document.body.classList.add('playing');
+}
+
+/* Order matters: the view has to be showing before the board is mounted into
+   it and measured, so every entry point to the dials goes through here. */
+function openSandbox() {
+  showView('view-sandbox');
+  renderSandbox();
 }
 
 function applyPrefs() {
@@ -2682,7 +2744,7 @@ function renderResults() {
 
   el.innerHTML = html;
   document.getElementById('btn-to-nine').addEventListener('click', startNine);
-  document.getElementById('btn-to-sandbox').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
+  document.getElementById('btn-to-sandbox').addEventListener('click', () => { openSandbox(); });
   document.getElementById('btn-to-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
   document.getElementById('btn-to-share').addEventListener('click', () => { pickDefaultShareKind(); renderShare(); showView('view-share'); });
 }
@@ -2768,49 +2830,101 @@ function yourNumberHTML() {
   return html;
 }
 
+/* The per-setting tally, which replaced the old end-of-block results card.
+   It says more than that card did, because it accumulates every go you have
+   ever had at this square rather than just the last three. */
+function sandboxTallyHTML() {
+  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
+  const cell = mapGet(n, h);
+  if (n === FLASH_N && h === FLASH_HOLD) {
+    return 'That is Ayumu’s exact setting. Rounds here do not count towards your official score, which only ever comes from the real thing.';
+  }
+  if (cell && cell.tries) {
+    return 'This setting: ' + cell.wins + ' of ' + cell.tries + ' remembered.';
+  }
+  return 'You have not tried this one yet.';
+}
+
+/* Everything that changes when a dial moves or a round lands. Nothing here
+   touches #sandbox-stage, because rewriting that would tear the live board
+   out of the page. */
+function updateSandboxUI() {
+  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
+  const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+  set('dial-n-val', n + '<small>numbers</small>');
+  set('dial-h-val', comma(h) + '<small>milliseconds</small>');
+  document.getElementById('dial-n-down').disabled = (dialN === 0);
+  document.getElementById('dial-n-up').disabled = (dialN === NUMERAL_STEPS.length - 1);
+  document.getElementById('dial-h-down').disabled = (dialH === 0);
+  document.getElementById('dial-h-up').disabled = (dialH === HOLD_STEPS.length - 1);
+
+  set('sandbox-tally', sandboxTallyHTML());
+  set('sandbox-yournum', yourNumberHTML());
+  set('sandbox-map', mapHTML());
+
+  /* The strip above the board reads out what pressing go will actually do,
+     and tracks the dials as they move. */
+  setHud('', '', n + ' · ' + comma(h) + 'MS');
+}
+
+/* Locks the controls for the second the numbers are up, then hands them back.
+   The dials stay on screen throughout so the setting you are playing is
+   always readable. */
+function setSandboxBusy(busy) {
+  const dials = document.getElementById('sandbox-dials');
+  const row = document.getElementById('sandbox-go-row');
+  if (dials) dials.classList.toggle('busy', busy);
+  if (row) row.classList.toggle('busy', busy);
+}
+
 function renderSandbox() {
   if (dialN === null) { const d = defaultDials(); dialN = d.n; dialH = d.h; }
   const el = document.getElementById('sandbox-body');
-  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
-  const cell = mapGet(n, h);
-  const isAyumu = (n === FLASH_N && h === FLASH_HOLD);
 
+  /* LAYOUT ORDER MATTERS HERE. Board, dials and go all have to be reachable
+     together, so only a one-line setup goes above the board and the longer
+     explanation sits underneath the loop rather than on top of it. On a
+     375x812 phone this is the difference between the go button being on
+     screen and being two scrolls away. */
   let html = '<p class="t-eyebrow">Your dials</p>' +
     '<h1 class="t-title" id="sandbox-title">Find your edge</h1>' +
-    '<p class="t-body">Two dials: how many numbers, and how long they stay up. Turn them wherever you like and have a go. Every setting you try gets filled in on your map, and after a few rounds a line appears between the ones you can do and the ones you cannot. That line is yours, it is real, and it moves.</p>';
+    '<p class="t-body">Two dials, one board, as many goes as you like.</p>';
 
-  html += yourNumberHTML();
+  /* The board is mounted into this slot once the HTML lands. */
+  html += '<div id="sandbox-stage"></div>';
 
-  html += '<h2 class="t-section">Your map</h2>' +
-    '<p class="t-body">Numbers along the top, flash length down the side. Easiest corner is top left. Ayumu’s own setting, five numbers at 210, is the one marked in red; the bottom-right corner is harder than anything he was ever tested on.</p>' +
-    mapHTML();
+  /* Go sits directly under the board because it is pressed far more often
+     than a dial is turned, and it has to be reachable without scrolling away
+     from the thing you were just looking at. The dials follow. */
+  html += '<div class="btn-row" id="sandbox-go-row" style="margin-top:14px;">' +
+    '<button class="btn primary" id="btn-sandbox-go">Go</button>' +
+    '</div>';
 
-  html += '<h2 class="t-section" style="margin-top:40px;">Set it up</h2>' +
-    '<div class="dials">' +
+  html += '<p class="t-quiet" id="sandbox-tally" style="margin-top:12px;"></p>';
+
+  html += '<div class="dials" id="sandbox-dials">' +
     '<div class="dial"><div class="dial-label">How many numbers</div>' +
       '<div class="dial-row">' +
-      '<button class="dial-btn" id="dial-n-down" aria-label="Fewer numbers"' + (dialN === 0 ? ' disabled' : '') + '>–</button>' +
-      '<div class="dial-value" id="dial-n-val" aria-live="polite">' + n + '<small>numbers</small></div>' +
-      '<button class="dial-btn" id="dial-n-up" aria-label="More numbers"' + (dialN === NUMERAL_STEPS.length - 1 ? ' disabled' : '') + '>+</button>' +
+      '<button class="dial-btn" id="dial-n-down" aria-label="Fewer numbers">–</button>' +
+      '<div class="dial-value" id="dial-n-val" aria-live="polite"></div>' +
+      '<button class="dial-btn" id="dial-n-up" aria-label="More numbers">+</button>' +
       '</div></div>' +
     '<div class="dial"><div class="dial-label">How long they show</div>' +
       '<div class="dial-row">' +
-      '<button class="dial-btn" id="dial-h-down" aria-label="Longer flash"' + (dialH === 0 ? ' disabled' : '') + '>–</button>' +
-      '<div class="dial-value" id="dial-h-val" aria-live="polite">' + comma(h) + '<small>milliseconds</small></div>' +
-      '<button class="dial-btn" id="dial-h-up" aria-label="Shorter flash"' + (dialH === HOLD_STEPS.length - 1 ? ' disabled' : '') + '>+</button>' +
+      '<button class="dial-btn" id="dial-h-down" aria-label="Longer flash">–</button>' +
+      '<div class="dial-value" id="dial-h-val" aria-live="polite"></div>' +
+      '<button class="dial-btn" id="dial-h-up" aria-label="Shorter flash">+</button>' +
       '</div></div>' +
     '</div>';
 
-  html += '<p class="t-quiet">' + (isAyumu
-      ? 'That is Ayumu’s exact setting. Rounds here do not count towards your official score, which only ever comes from the real thing.'
-      : (cell && cell.tries
-        ? 'You have had ' + cell.tries + (cell.tries === 1 ? ' go' : ' goes') + ' at this one and landed ' +
-          (cell.wins === 0 ? 'none of them yet' : cell.wins === 1 ? 'one' : cell.wins + ' of them') + '.'
-        : 'You have not tried this one yet.')) + '</p>';
+  html += '<p class="t-body" style="margin-top:26px;">Set the dials wherever you like and press go. The board stays right here, so you can move a dial and go again as often as you fancy, and every single round fills in your map a little further. After a few goes a line shows up between the settings you can do and the ones you cannot. That line is yours, it is real, and it moves.</p>';
 
-  html += '<div class="btn-row" style="margin-top:20px;">' +
-    '<button class="btn primary" id="btn-sandbox-go">Have a go (' + SANDBOX_BLOCK + ' tries)</button>' +
-    '</div>';
+  html += '<div id="sandbox-yournum"></div>';
+
+  html += '<h2 class="t-section" style="margin-top:40px;">Your map</h2>' +
+    '<p class="t-body">Numbers along the top, flash length down the side. Easiest corner is top left. Ayumu’s own setting, five numbers at 210, is the one marked in red; the bottom-right corner is harder than anything he was ever tested on. The square you are on right now is outlined.</p>' +
+    '<div id="sandbox-map"></div>';
 
   html += '<h2 class="t-section" style="margin-top:44px;">Want a plan instead of a playground?</h2>' +
     '<p class="t-body">The Training Room walks the difficulty up for you, starting somewhere you can already win and nudging it along as you hold your own. It keeps your progress from one visit to the next, which is where this stops being a party trick.</p>' +
@@ -2821,66 +2935,74 @@ function renderSandbox() {
 
   el.innerHTML = html;
 
-  const rerender = () => { const y = window.scrollY; renderSandbox(); window.scrollTo(0, y); };
+  /* Board into the page, then measured, then painted empty and waiting. */
+  mountPlayInline('sandbox-stage');
+  setPrompt('Set the dials, then press go.');
+  phase = 'idle';
+  trial = null;
+  layoutField();
+  render();
+
+  updateSandboxUI();
+
   const bump = (which, dir) => {
+    if (sandboxBusy) return;
     if (which === 'n') dialN = Math.max(0, Math.min(NUMERAL_STEPS.length - 1, dialN + dir));
     else dialH = Math.max(0, Math.min(HOLD_STEPS.length - 1, dialH + dir));
-    rerender();
+    updateSandboxUI();
   };
   document.getElementById('dial-n-down').addEventListener('click', () => bump('n', -1));
   document.getElementById('dial-n-up').addEventListener('click', () => bump('n', 1));
   document.getElementById('dial-h-down').addEventListener('click', () => bump('h', -1));
   document.getElementById('dial-h-up').addEventListener('click', () => bump('h', 1));
-  document.getElementById('btn-sandbox-go').addEventListener('click', startSandbox);
+  document.getElementById('btn-sandbox-go').addEventListener('click', sandboxGo);
   document.getElementById('btn-sandbox-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
   document.getElementById('btn-sandbox-results').addEventListener('click', () => {
     if (store.attempt) { renderResults(); showView('view-results'); } else { boot(); }
   });
 }
 
-async function runSandboxBlock(n, h) {
+/* ONE ROUND, IN PLACE (rebuilt 2026-08-05 on JT's call). This used to be a
+   block of three wrapped in a confirmation card and a results card, with a
+   view change either side. A block needs a beginning and an end, which is
+   what those cards were, so the whole ceremony fell away with the block.
+   One press is now one try: press, watch, answer, adjust, press again.
+   The map is unaffected, because mapRecord only ever adds and frontier()
+   only asks whether a square has been won at all. */
+let sandboxBusy = false;
+
+async function sandboxGo() {
+  if (sandboxBusy) return;
+  sandboxBusy = true;
   aborted = false;
-  showPlay();
+  setSandboxBusy(true);
+
+  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
+
+  await document.fonts.ready;
   layoutField();
-  if (!await ensureTiming()) return null;
 
-  const go = await card({
-    label: 'Your setting',
-    title: n + ' numbers in ' + comma(h) + ' milliseconds',
-    body: '<p>' + SANDBOX_BLOCK + ' tries. Get any of them and this square goes on your map.</p>',
-    actions: [{ text: 'Go', value: 'go', primary: true }, { text: 'Change my mind', value: 'quit', ghost: true }]
-  });
-  if (aborted || go !== 'go') return null;
-
-  let valid = 0, attempts = 0, wins = 0;
-  while (valid < SANDBOX_BLOCK && attempts < SANDBOX_BLOCK + MAX_REPLACEMENTS) {
-    attempts++;
-    setHud('YOUR SETTING', 'TRY ' + (valid + 1) + ' / ' + SANDBOX_BLOCK, n + ' · ' + h + 'MS');
+  if (await ensureTiming()) {
     const t = await runTrial(n, h, { reveal: true });
-    if (aborted || !t) break;
-    if (t.valid) { valid++; if (t.success) wins++; }
-    else { setPrompt('Screen hiccup. That one does not count.', true); await wait(900); }
+    if (t && t.valid) {
+      const wasBest = frontier();
+      mapRecord(n, h, t.success ? 1 : 0, 1);
+      saveStore();
+      updateSandboxUI();
+      /* Only say the edge moved when it actually did. */
+      if (t.success) {
+        const f = frontier();
+        const moved = f && f.n === n && f.hold === h &&
+          !(wasBest && wasBest.n === f.n && wasBest.hold === f.hold);
+        if (moved) setPrompt('That is a new best. Your edge just moved.');
+      }
+    } else if (t && !t.valid) {
+      setPrompt('Screen hiccup. That one does not count.', true);
+    }
   }
 
-  if (valid) {
-    mapRecord(n, h, wins, valid);
-    saveStore();
-    const f = frontier();
-    await card({
-      label: wins ? 'On the map' : 'Not this time',
-      title: wins + ' of ' + valid + ' remembered.',
-      body: statsHTML([
-        { label: 'Setting', value: n + ' · ' + h + 'ms' },
-        { label: 'Got it', value: wins + ' / ' + valid, red: wins > 0 }
-      ]) + '<p style="margin-top:16px;">' + (wins
-        ? (f && f.n === n && f.hold === h
-          ? 'That is a new best. Your edge just moved.'
-          : 'Filled in. Try making it harder.')
-        : 'Nothing wrong with that. Give yourself a bit more time, or one fewer number, and come at it again.') + '</p>',
-      actions: [{ text: 'Back to the dials', value: 'go', primary: true }]
-    });
-  }
-  return { wins: wins, valid: valid };
+  setSandboxBusy(false);
+  sandboxBusy = false;
 }
 
 /* ================================================================
@@ -3163,7 +3285,7 @@ function renderTraining() {
   el.innerHTML = html;
   document.getElementById('btn-train-start').addEventListener('click', startTraining);
   document.getElementById('btn-train-nine').addEventListener('click', startNine);
-  document.getElementById('btn-train-sandbox').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
+  document.getElementById('btn-train-sandbox').addEventListener('click', () => { openSandbox(); });
 
   /* Re-render to update every marker, keeping the scroll position so the
      list does not jump out from under the finger that just tapped it. */
@@ -3436,7 +3558,7 @@ function renderShare() {
       status.textContent = 'Here it is: ' + text;
     }
   });
-  document.getElementById('btn-share-back').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
+  document.getElementById('btn-share-back').addEventListener('click', () => { openSandbox(); });
 }
 
 /* ================================================================
@@ -3475,14 +3597,6 @@ async function startTraining() {
   showView('view-training');
 }
 
-async function startSandbox() {
-  await document.fonts.ready;
-  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
-  await runSandboxBlock(n, h);
-  renderSandbox();
-  showView('view-sandbox');
-}
-
 document.getElementById('btn-quit').addEventListener('click', () => {
   aborted = true;
   /* Release whichever promise the run is parked on, so the flow unwinds
@@ -3512,7 +3626,7 @@ document.getElementById('btn-start').addEventListener('click', () => startGame(n
 document.getElementById('btn-resume').addEventListener('click', () => startGame(store.pending));
 document.getElementById('btn-resume-fresh').addEventListener('click', startFresh);
 document.getElementById('btn-nine-from-return').addEventListener('click', startNine);
-document.getElementById('btn-sandbox-from-return').addEventListener('click', () => { renderSandbox(); showView('view-sandbox'); });
+document.getElementById('btn-sandbox-from-return').addEventListener('click', () => { openSandbox(); });
 document.getElementById('btn-training-from-return').addEventListener('click', () => { renderTraining(); showView('view-training'); });
 document.getElementById('btn-results-from-return').addEventListener('click', () => {
   if (store.attempt) { renderResults(); showView('view-results'); } else { startGame(null); }
@@ -3527,6 +3641,19 @@ window.addEventListener('resize', () => {
     if (!document.getElementById('view-play').classList.contains('active')) return;
     if (phase === 'idle' || phase === 'ready') { layoutField(); render(); }
   }, 200);
+});
+
+/* On the dials, space or enter runs another round, so a run of goes never
+   needs the pointer. Held back while a round is live, and while the board
+   itself has focus, where those keys are already the answer keys. */
+window.addEventListener('keydown', e => {
+  if (e.key !== ' ' && e.key !== 'Enter') return;
+  if (sandboxBusy) return;
+  if (!document.getElementById('view-sandbox').classList.contains('active')) return;
+  const a = document.activeElement;
+  if (a && (a.id === 'board' || a.tagName === 'BUTTON' || a.tagName === 'A')) return;
+  e.preventDefault();
+  sandboxGo();
 });
 
 function boot() {
