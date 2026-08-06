@@ -2895,8 +2895,10 @@ function updateSandboxUI() {
   set('dial-h-val', comma(h) + '<small>milliseconds</small>');
   document.getElementById('dial-n-down').disabled = (dialN === 0);
   document.getElementById('dial-n-up').disabled = (dialN === NUMERAL_STEPS.length - 1);
-  document.getElementById('dial-h-down').disabled = (dialH === 0);
-  document.getElementById('dial-h-up').disabled = (dialH === HOLD_STEPS.length - 1);
+  /* HOLD_STEPS runs long to short, so the end of the array is the SMALLEST
+     number of milliseconds. Minus runs out there, plus runs out at the start. */
+  document.getElementById('dial-h-down').disabled = (dialH === HOLD_STEPS.length - 1);
+  document.getElementById('dial-h-up').disabled = (dialH === 0);
 
   set('sandbox-tally', sandboxTallyHTML());
   set('sandbox-yournum', yourNumberHTML());
@@ -2947,9 +2949,9 @@ function renderSandbox() {
       '</div></div>' +
     '<div class="dial"><div class="dial-label">How long they show</div>' +
       '<div class="dial-row">' +
-      '<button class="dial-btn" id="dial-h-down" aria-label="Longer flash">–</button>' +
+      '<button class="dial-btn" id="dial-h-down" aria-label="Shorter flash">–</button>' +
       '<div class="dial-value" id="dial-h-val" aria-live="polite"></div>' +
-      '<button class="dial-btn" id="dial-h-up" aria-label="Shorter flash">+</button>' +
+      '<button class="dial-btn" id="dial-h-up" aria-label="Longer flash">+</button>' +
       '</div></div>' +
     '</div>';
 
@@ -2986,10 +2988,15 @@ function renderSandbox() {
 
   updateSandboxUI();
 
+  /* dir is what the button does to the NUMBER ON SCREEN: +1 makes it bigger.
+     For the numbers dial that is also a step up the array. For the hold dial
+     it is a step DOWN it, because HOLD_STEPS runs long to short. Reading the
+     glyph as an instruction to the array rather than to the value is what had
+     plus shortening the flash. */
   const bump = (which, dir) => {
     if (sandboxBusy) return;
     if (which === 'n') dialN = Math.max(0, Math.min(NUMERAL_STEPS.length - 1, dialN + dir));
-    else dialH = Math.max(0, Math.min(HOLD_STEPS.length - 1, dialH + dir));
+    else dialH = Math.max(0, Math.min(HOLD_STEPS.length - 1, dialH - dir));
     updateSandboxUI();
   };
   document.getElementById('dial-n-down').addEventListener('click', () => bump('n', -1));
