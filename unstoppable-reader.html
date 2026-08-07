@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Unstoppable Reader — GeniusAndImpostor.com</title>
+  <meta name="description" content="Can you ignore what you read? A two minute experiment that proves you can't, and explains why that failure is the signature of mastery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================================
+       SHARED FURNITURE — lifted verbatim from diagnostic.html.
+       Keep the copies in sync by hand until there is a reason to
+       factor them into a real stylesheet (build-context §2: no build step).
+       ================================================================ */
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #fafaf8;
+      --ink: #1a1a1a;
+      --red: #c44b3a;
+      --muted: #666;
+      --rule: #e0dcd4;
+      --parchment: #f1ebde;
+      --parchment-line: #d6cfc2;
+      --parchment-margin: #c44b3a;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: var(--serif);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 600px) {
+      .shell { padding: 0 40px; }
+    }
+
+    .shell-main {
+      flex: 1;
+      padding: 48px 0 64px;
+    }
+
+    .tool-mast {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .tool-mast-home {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .tool-mast-home:hover { color: var(--red); }
+
+    .tool-mast-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .t-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .t-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 7vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .t-headline {
+      font-family: var(--serif);
+      font-size: clamp(26px, 5.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .t-section {
+      font-family: var(--serif);
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .t-body {
+      font-family: var(--serif);
+      font-size: clamp(17px, 3.2vw, 19px);
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+
+    .t-body:last-child { margin-bottom: 0; }
+
+    .t-quiet {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+
+    .t-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .t-label.red { color: var(--red); }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--red);
+      background: transparent;
+      border: 1.5px solid var(--red);
+      padding: 12px 24px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover, .btn:focus-visible {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn.primary {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn.primary:hover, .btn.primary:focus-visible {
+      background: #a83c2d;
+      border-color: #a83c2d;
+    }
+
+    .btn.ghost {
+      color: var(--muted);
+      border-color: var(--rule);
+    }
+
+    .btn.ghost:hover, .btn.ghost:focus-visible {
+      background: transparent;
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .parchment-card {
+      background: var(--parchment);
+      padding: 30px 28px 26px;
+      position: relative;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.07);
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          transparent,
+          transparent 27px,
+          var(--parchment-line) 27px,
+          var(--parchment-line) 28px
+        );
+      background-size: 100% 28px;
+      background-position: 0 20px;
+      margin: 28px 0;
+    }
+
+    .parchment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 1.5px;
+      background: var(--parchment-margin);
+      opacity: 0.3;
+    }
+
+    .parchment-card .card-header {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tool-footer {
+      border-top: 1px solid var(--rule);
+      padding: 36px 0 48px;
+      text-align: center;
+    }
+
+    .tool-footer-cover {
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+
+    .tool-footer-cover img {
+      width: 92px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+      transition: transform 0.2s;
+    }
+
+    .tool-footer-cover:hover img { transform: translateY(-2px); }
+
+    .tool-footer-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.7;
+      margin-bottom: 14px;
+    }
+
+    .tool-footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-footer-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .tool-footer-links a:hover { color: var(--red); }
+
+    .tool-footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.5;
+      margin-top: 18px;
+    }
+
+    /* ================================================================
+       TOOL-SPECIFIC — the Unstoppable Reader
+       ================================================================ */
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* inline prose links, same treatment as ayumu-test.html */
+    a.inline-link {
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    a.inline-link:hover { border-bottom-color: var(--red); }
+
+    /* The four response hues. Functional, not decorative (spec §6):
+       everything else on the page stays in the site palette. Chosen for
+       legibility on the cream background and separated luminance so the
+       set survives the common colorblindnesses. */
+    :root {
+      --c-red: #c2402f;
+      --c-blue: #1d63b8;
+      --c-green: #157a53;
+      --c-gold: #b8860b;
+    }
+
+    /* ---------- game stage ---------- */
+    /* While playing, the shell becomes a fixed one-viewport column:
+       footer gone, main flexes, stage fills what the mast leaves. */
+    body.playing .tool-footer { display: none; }
+
+    body.playing .shell-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      padding: 0;
+    }
+
+    body.playing .view.active {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .stage-status {
+      padding: 18px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .stage-arena {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 160px;
+    }
+
+    .stim-word {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(52px, 16vw, 92px);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 1;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .stim-swatch {
+      width: clamp(150px, 44vw, 220px);
+      height: clamp(80px, 22vw, 110px);
+      user-select: none;
+    }
+
+    .stage-arena.shake .stim-word,
+    .stage-arena.shake .stim-swatch {
+      animation: shake 0.22s linear;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-7px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+
+    .stage-hint {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      min-height: 16px;
+    }
+
+    .pad {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .pad-btn {
+      height: clamp(68px, 16vw, 84px);
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.05s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .pad-btn:active { transform: scale(0.985); }
+
+    .pad-btn:focus-visible {
+      outline: 2.5px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .pad-btn.dim { opacity: 0.35; }
+
+    /* ---------- breather ---------- */
+    .breather {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .breather-round {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .breather-line {
+      font-family: var(--serif);
+      font-size: clamp(22px, 5vw, 30px);
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+      max-width: 20ch;
+    }
+
+    /* ---------- reveal chart ---------- */
+    .chart {
+      margin: 34px 0 10px;
+    }
+
+    .chart-bars {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(10px, 3vw, 22px);
+      align-items: end;
+      height: 240px;
+      border-bottom: 1.5px solid var(--ink);
+      padding: 0 4px;
+    }
+
+    .chart-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+    }
+
+    .chart-val {
+      font-family: var(--mono);
+      font-size: clamp(11px, 2.6vw, 13px);
+      font-weight: 700;
+      margin-bottom: 6px;
+      white-space: nowrap;
+    }
+
+    .chart-val.red { color: var(--red); }
+
+    .chart-bar {
+      width: 100%;
+      max-width: 88px;
+      background: var(--ink);
+      height: 0;
+      transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .chart-bar.red { background: var(--red); }
+
+    .chart-labels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(10px, 3vw, 22px);
+      padding: 10px 4px 0;
+    }
+
+    .chart-label {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: clamp(9px, 2.2vw, 11px);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .chart-label .err { display: block; opacity: 0.75; }
+
+    .chart-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    /* ---------- reveal beats ---------- */
+    .beat {
+      margin: 44px 0 0;
+      padding-top: 34px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .beat .lede {
+      font-size: clamp(20px, 4.4vw, 26px);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .pull-quote {
+      font-family: var(--serif);
+      font-size: clamp(24px, 5.2vw, 32px);
+      font-weight: 700;
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .stat-strip {
+      display: flex;
+      gap: clamp(18px, 5vw, 40px);
+      flex-wrap: wrap;
+      margin: 26px 0 6px;
+    }
+
+    .stat-strip .stat-num {
+      font-family: var(--mono);
+      font-size: clamp(30px, 7vw, 42px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--red);
+    }
+
+    .stat-strip .stat-cap {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ---------- endless mode ---------- */
+    .endless-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 18px;
+    }
+
+    .endless-hud .avg {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .link-quiet {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .link-quiet:hover { color: var(--red); }
+
+    @media print {
+      .tool-mast, .tool-footer, .no-print, .btn, .btn-row { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="tool-mast">
+      <a class="tool-mast-home" href="index.html">GeniusAndImpostor.com</a>
+      <span class="tool-mast-name">The Unstoppable Reader</span>
+    </header>
+
+    <main class="shell-main" id="main">
+      <noscript>
+        <p class="t-body">This one needs JavaScript switched on, because the game has to time your taps down to the millisecond. Nothing is tracked or sent anywhere.</p>
+      </noscript>
+
+      <!-- ============ INTRO ============ -->
+      <section class="view active" id="view-intro" aria-labelledby="intro-title">
+        <p class="t-eyebrow">A two minute experiment</p>
+        <h1 class="t-title" id="intro-title">The Unstoppable Reader</h1>
+        <p class="t-body">Can you ignore what you read? Let&rsquo;s find out. Something appears on the screen, and all you have to do is tap the button that matches the <strong>color you see</strong>. Nothing else about it matters, just the color.</p>
+        <p class="t-body">There are four short rounds, and the whole thing takes about two minutes. Go as fast as you can without guessing.</p>
+        <div class="btn-row" style="margin-top: 32px;">
+          <button class="btn primary" id="btn-start">Start</button>
+        </div>
+        <p class="t-quiet" style="margin-top: 24px;">Everything runs on this device. Nothing is sent anywhere.</p>
+      </section>
+
+      <!-- ============ GAME ============ -->
+      <section class="view" id="view-game">
+        <div class="stage">
+          <div class="stage-status">
+            <span class="t-quiet" id="status-round"></span>
+            <span class="t-quiet" id="status-trial"></span>
+          </div>
+
+          <!-- breather between rounds -->
+          <div class="breather" id="breather" hidden>
+            <div class="breather-round" id="breather-round"></div>
+            <div class="breather-line" id="breather-line"></div>
+          </div>
+
+          <!-- live trial arena -->
+          <div class="stage-arena" id="arena">
+            <div class="stim-word" id="stim-word" hidden></div>
+            <div class="stim-swatch" id="stim-swatch" hidden></div>
+          </div>
+
+          <div class="stage-hint" id="stage-hint">Tap the color you see</div>
+
+          <div class="pad" id="pad" role="group" aria-label="Color response buttons">
+            <button class="pad-btn" data-color="red" aria-label="Red" style="background: var(--c-red);"></button>
+            <button class="pad-btn" data-color="blue" aria-label="Blue" style="background: var(--c-blue);"></button>
+            <button class="pad-btn" data-color="green" aria-label="Green" style="background: var(--c-green);"></button>
+            <button class="pad-btn" data-color="gold" aria-label="Gold" style="background: var(--c-gold);"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RESULTS ============
+           CENTRAL TAKEAWAY (JT, 2026-08-06) — every sentence below serves this:
+           Advanced non-conscious processing runs all the time in the background.
+           It is so good we can't stop it, and its impact is instantaneous. The
+           Stroop moment lets the reader appreciate something always present and
+           usually transparent, and it is just scratching the surface of what's
+           running. It feels like nothing only because it is non-conscious.
+           FRAME POSITIVELY: wonder and appreciation, never failure or cost. -->
+      <section class="view" id="view-results" aria-labelledby="results-headline">
+        <p class="t-eyebrow">The results</p>
+        <h2 class="t-headline" id="results-headline">Your brain read every word. Nothing could stop it.</h2>
+
+        <div class="chart" aria-label="Your average response time per round">
+          <div class="chart-bars" id="chart-bars"></div>
+          <div class="chart-labels" id="chart-labels"></div>
+          <p class="chart-note">Your average speed in each round, counting only correct taps.</p>
+        </div>
+
+        <div class="stat-strip" id="stat-strip"></div>
+
+        <div class="btn-row no-print" style="margin-bottom: 12px;">
+          <button class="btn ghost" id="btn-replay-top">Play again</button>
+        </div>
+
+        <div class="beat" id="beat-1">
+          <p class="t-label red">What happened</p>
+          <div id="beat-1-body"></div>
+        </div>
+
+        <div class="beat" id="beat-2">
+          <p class="t-label red">What it means</p>
+          <p class="t-body lede">So what did this game just show you? A very advanced system in your brain, working in the background. It reads every word you see, instantly, with zero effort, and you are never aware of it running. It is so good at its job that you can&rsquo;t switch it off, even when the game rewards switching it off.</p>
+          <p class="t-body">Normally that system is invisible. Its work is effortless and non-conscious, so we think nothing of it. You only noticed it today because the game made its output collide with your goal for a moment, and the collision showed up as a few extra milliseconds. In real life that collision almost never happens: the word is exactly what you want to read, and reading it instantly is part of what makes you fluent. A game like this is just a way to catch the system in the act, and to appreciate something that is always running and usually transparent.</p>
+        </div>
+
+        <div class="beat">
+          <p class="t-label">Why none of it feels impressive</p>
+          <p class="t-body">And notice how strange it is that reading feels like nothing. Reading feels like nothing precisely because reading runs outside of consciousness. We only register the work we can feel, so the most sophisticated things our brains do are the things we never think about. This blind spot has a name in <a class="inline-link" href="index.html"><em>The Genius and the Impostor</em></a>: the Effort Inversion. Michelangelo supposedly said that if people knew how hard he had worked for his mastery, it wouldn&rsquo;t seem so wonderful at all. Your reading is the same kind of mastery: so well practiced that the effort has become invisible, even to you.</p>
+          <p class="t-body">Sports make this blind spot easier to see, because in sports the training is visible. Nobody watches a beginner&rsquo;s wobbly tennis swing and calls it more athletic than a champion&rsquo;s smooth one. With mental skills, the skilled part runs invisibly, so the skilled part gets none of the credit. Your slowdown in round 3 came from being extremely good at reading.</p>
+        </div>
+
+        <div class="beat">
+          <p class="t-label">Scratching the surface</p>
+          <p class="t-body">And reading is just one of these systems. Right now your brain is also decoding speech the instant you hear it, recognizing every face you glance at, keeping your body balanced, and predicting the next words of every sentence you take in. A musician hears a chord and knows its flavor without trying. A touch typist&rsquo;s fingers find the keys on their own. Everything you&rsquo;ve mastered runs this way: built through practice, then handed off to machinery that runs by itself, outside of consciousness. This game made one of those systems visible for two minutes. There are many more running as you read this.</p>
+        </div>
+
+        <div class="beat">
+          <p class="t-label">Where this story comes from</p>
+          <p class="t-body">Everything in this game is one small piece of <em>The Genius and the Impostor</em>, a book about the two characters who share your head. The Genius is the vast non-conscious machinery that just read every word on this page for you. The Impostor is the conscious narrator, the part of you that was following the instructions and keeping score.</p>
+          <p class="t-body">In a color game, the Impostor only costs you a few milliseconds. But when something real is on the line, the Impostor can get loud enough to drown out the Genius entirely. You&rsquo;ve practiced, you&rsquo;ve prepared, and the part of you that knows what to do goes quiet at exactly the wrong moment. <strong>The book is about why that happens, and how to make sure it doesn&rsquo;t.</strong></p>
+          <div class="btn-row" style="margin-top: 18px;">
+            <a class="btn primary" href="https://www.amazon.com/Genius-Impostor-Neuroscience-Unlocking-Potential/dp/0593850998/" target="_blank" rel="noopener">Amazon</a>
+            <a class="btn" href="https://www.barnesandnoble.com/w/?ean=9780593850992" target="_blank" rel="noopener">Barnes &amp; Noble</a>
+            <a class="btn" href="https://bookshop.org/a/2186/9780593850992?prhc=PRHEFFDF5A7F1" target="_blank" rel="noopener">Bookshop.org</a>
+          </div>
+        </div>
+
+        <!-- ============ SHARE + REPLAY ============ -->
+        <div class="beat no-print">
+          <p class="t-label">Take it with you</p>
+          <div class="btn-row">
+            <button class="btn primary" id="btn-share">Save the share card</button>
+            <button class="btn ghost" id="btn-replay">Play again</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ENDLESS MODE ============ -->
+      <section class="view" id="view-endless">
+        <div class="stage">
+          <div class="endless-hud">
+            <span class="avg" id="endless-avg">avg: &mdash;</span>
+            <button class="link-quiet" id="btn-endless-stop">I&rsquo;m done</button>
+          </div>
+          <div class="stage-arena" id="arena-endless">
+            <div class="stim-word" id="stim-word-endless"></div>
+          </div>
+          <div class="stage-hint">Tap the color you see</div>
+          <div class="pad" id="pad-endless" role="group" aria-label="Color response buttons">
+            <button class="pad-btn" data-color="red" aria-label="Red" style="background: var(--c-red);"></button>
+            <button class="pad-btn" data-color="blue" aria-label="Blue" style="background: var(--c-blue);"></button>
+            <button class="pad-btn" data-color="green" aria-label="Green" style="background: var(--c-green);"></button>
+            <button class="pad-btn" data-color="gold" aria-label="Gold" style="background: var(--c-gold);"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- SHARED: cross-tool footer. Add each new tool's link here and on every
+         other tool page when it ships (build-context §2b). -->
+    <footer class="tool-footer">
+      <a class="tool-footer-cover" href="index.html" aria-label="The Genius and the Impostor, the book">
+        <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
+      </a>
+      <div class="tool-footer-label">While you're here</div>
+      <div class="tool-footer-links">
+        <a href="index.html">The Genius and the Impostor</a>
+        <a href="ayumu-test.html">The Ayumu Test</a>
+        <a href="diagnostic.html">The Genius Diagnostic</a>
+      </div>
+      <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
+    </footer>
+  </div>
+
+<script>
+'use strict';
+
+/* ================================================================
+   THE UNSTOPPABLE READER
+   Spec: gi-tools-specs-v2/unstoppable-reader-game-spec.md (v2)
+   All copy is placeholder pending JT's voice pass.
+   ================================================================ */
+
+/* ---------------- constants ---------------- */
+
+const COLORS = ['red', 'blue', 'green', 'gold'];
+const HUES = {
+  red: '#c2402f',
+  blue: '#1d63b8',
+  green: '#157a53',
+  gold: '#b8860b',
+};
+// re-read all four so CSS stays the single source of truth
+for (const c of COLORS) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--c-' + c).trim();
+  if (v) HUES[c] = v;
+}
+
+const PSEUDOWORDS = ['KXQ', 'ZVWF', 'XQBKZ', 'PVKQZ', 'WZXKQ', 'FKQZ', 'ZQV', 'XKVWZ'];
+
+const ACTS = [
+  { num: 1, type: 'swatch',      trials: 12 },
+  { num: 2, type: 'congruent',   trials: 12 },
+  { num: 3, type: 'incongruent', trials: 16 },
+  { num: 4, type: 'pseudo',      trials: 12 },
+];
+
+const ITI_MS = 380;             // blank gap before each stimulus
+const WRONG_FLASH_MS = 260;     // feedback pause after an error
+const BREATHER_MS = 2200;
+const RT_MIN = 150;             // data hygiene bounds (spec §3)
+const RT_MAX = 2000;
+
+/* ---------------- state ---------------- */
+
+let trialPlan = [];   // flat list of {act, type, ink, word}
+let trialLog = [];    // {act, type, ink, word, rt, correct}
+let cursor = 0;
+let stimOnset = 0;
+let accepting = false;
+let endless = { active: false, rts: [], onset: 0, current: null };
+
+/* ---------------- utilities ---------------- */
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Balanced ink sequence: shuffled blocks of the four colors,
+// patched so the same ink never appears twice in a row.
+function inkSequence(n) {
+  let seq = [];
+  while (seq.length < n) seq = seq.concat(shuffle(COLORS));
+  seq = seq.slice(0, n);
+  for (let i = 1; i < seq.length; i++) {
+    if (seq[i] === seq[i - 1]) {
+      const swap = seq.findIndex((c, k) => k > i && c !== seq[i - 1]);
+      if (swap > -1) [seq[i], seq[swap]] = [seq[swap], seq[i]];
+    }
+  }
+  return seq;
+}
+
+function buildPlan() {
+  const plan = [];
+  for (const act of ACTS) {
+    const inks = inkSequence(act.trials);
+    let pseudoBag = [];
+    for (let i = 0; i < act.trials; i++) {
+      const ink = inks[i];
+      let word = null;
+      if (act.type === 'congruent') word = ink;
+      else if (act.type === 'incongruent') {
+        const others = COLORS.filter(c => c !== ink);
+        word = others[Math.floor(Math.random() * others.length)];
+      } else if (act.type === 'pseudo') {
+        if (pseudoBag.length === 0) pseudoBag = shuffle(PSEUDOWORDS);
+        word = pseudoBag.pop();
+      }
+      plan.push({ act: act.num, type: act.type, ink, word });
+    }
+  }
+  return plan;
+}
+
+function mean(xs) {
+  if (!xs.length) return null;
+  return xs.reduce((a, b) => a + b, 0) / xs.length;
+}
+
+function actStats(actNum) {
+  const rows = trialLog.filter(t => t.act === actNum);
+  const clean = rows.filter(t => t.correct && t.rt >= RT_MIN && t.rt <= RT_MAX);
+  return {
+    meanRt: mean(clean.map(t => t.rt)),
+    errors: rows.filter(t => !t.correct).length,
+    n: rows.length,
+  };
+}
+
+/* ---------------- view switching ---------------- */
+
+const views = {
+  intro: document.getElementById('view-intro'),
+  game: document.getElementById('view-game'),
+  results: document.getElementById('view-results'),
+  endless: document.getElementById('view-endless'),
+};
+
+function show(name) {
+  for (const key of Object.keys(views)) views[key].classList.toggle('active', key === name);
+  document.body.classList.toggle('playing', name === 'game' || name === 'endless');
+  window.scrollTo(0, 0);
+}
+
+/* ---------------- game flow ---------------- */
+
+const el = {
+  statusRound: document.getElementById('status-round'),
+  statusTrial: document.getElementById('status-trial'),
+  breather: document.getElementById('breather'),
+  breatherRound: document.getElementById('breather-round'),
+  breatherLine: document.getElementById('breather-line'),
+  arena: document.getElementById('arena'),
+  stimWord: document.getElementById('stim-word'),
+  stimSwatch: document.getElementById('stim-swatch'),
+  hint: document.getElementById('stage-hint'),
+  pad: document.getElementById('pad'),
+};
+
+function startGame() {
+  trialPlan = buildPlan();
+  trialLog = [];
+  cursor = 0;
+  show('game');
+  startBreather(1);
+}
+
+function startBreather(actNum) {
+  accepting = false;
+  el.stimWord.hidden = true;
+  el.stimSwatch.hidden = true;
+  el.breather.hidden = false;
+  el.breatherRound.textContent = 'Round ' + actNum + ' of 4';
+  el.breatherLine.textContent = '';
+  el.statusRound.textContent = '';
+  el.statusTrial.textContent = '';
+  setTimeout(() => {
+    el.breather.hidden = true;
+    nextTrial();
+  }, BREATHER_MS);
+}
+
+function nextTrial() {
+  if (cursor >= trialPlan.length) { finishGame(); return; }
+  const t = trialPlan[cursor];
+  const actDef = ACTS.find(a => a.num === t.act);
+  const idxInAct = trialPlan.slice(0, cursor).filter(x => x.act === t.act).length;
+
+  el.statusRound.textContent = 'Round ' + t.act + ' of 4';
+  el.statusTrial.textContent = (idxInAct + 1) + ' / ' + actDef.trials;
+  el.hint.textContent = (t.act === 1 && idxInAct < 4) ? 'Tap the color you see' : '';
+
+  // blank gap, then stimulus
+  el.stimWord.hidden = true;
+  el.stimSwatch.hidden = true;
+  accepting = false;
+
+  setTimeout(() => {
+    if (t.type === 'swatch') {
+      el.stimSwatch.style.background = HUES[t.ink];
+      el.stimSwatch.hidden = false;
+    } else {
+      el.stimWord.textContent = t.word;
+      el.stimWord.style.color = HUES[t.ink];
+      el.stimWord.hidden = false;
+    }
+    stimOnset = performance.now();
+    accepting = true;
+  }, ITI_MS);
+}
+
+function handleTap(color, btn) {
+  if (!accepting) return;
+  accepting = false;
+  const rt = performance.now() - stimOnset;
+  const t = trialPlan[cursor];
+  const correct = color === t.ink;
+  trialLog.push({ act: t.act, type: t.type, ink: t.ink, word: t.word, rt, correct });
+  cursor++;
+
+  const boundary = cursor < trialPlan.length && trialPlan[cursor].act !== t.act;
+
+  const advance = () => {
+    if (cursor >= trialPlan.length) finishGame();
+    else if (boundary) startBreather(trialPlan[cursor].act);
+    else nextTrial();
+  };
+
+  if (correct) {
+    advance();
+  } else {
+    if (btn) btn.classList.add('dim');
+    el.arena.classList.add('shake');
+    setTimeout(() => {
+      if (btn) btn.classList.remove('dim');
+      el.arena.classList.remove('shake');
+      advance();
+    }, WRONG_FLASH_MS);
+  }
+}
+
+el.pad.addEventListener('click', (e) => {
+  const btn = e.target.closest('.pad-btn');
+  if (btn) handleTap(btn.dataset.color, btn);
+});
+
+// keyboard: 1-4 map to the buttons in reading order
+document.addEventListener('keydown', (e) => {
+  const i = ['1', '2', '3', '4'].indexOf(e.key);
+  if (i === -1) return;
+  if (views.game.classList.contains('active')) {
+    const btn = el.pad.querySelectorAll('.pad-btn')[i];
+    handleTap(btn.dataset.color, btn);
+  } else if (views.endless.classList.contains('active')) {
+    const btn = document.getElementById('pad-endless').querySelectorAll('.pad-btn')[i];
+    endlessTap(btn.dataset.color);
+  }
+});
+
+/* ---------------- results ---------------- */
+
+const ROUND_LABELS = ['Shapes', 'Words agree', 'Words fight', 'Fake words'];
+
+let lastStats = null;
+
+function finishGame() {
+  const s = [1, 2, 3, 4].map(actStats);
+  const interference = (s[2].meanRt != null && s[1].meanRt != null)
+    ? Math.round(s[2].meanRt - s[1].meanRt) : null;
+  lastStats = { acts: s, interference };
+  renderResults();
+  show('results');
+}
+
+function renderResults() {
+  const { acts, interference } = lastStats;
+  const conflictErrors = acts[2].errors;
+
+  // chart
+  const barsEl = document.getElementById('chart-bars');
+  const labelsEl = document.getElementById('chart-labels');
+  barsEl.innerHTML = '';
+  labelsEl.innerHTML = '';
+  const maxRt = Math.max(...acts.map(a => a.meanRt || 0), 1);
+
+  acts.forEach((a, i) => {
+    const col = document.createElement('div');
+    col.className = 'chart-col';
+    const val = document.createElement('div');
+    val.className = 'chart-val' + (i === 2 ? ' red' : '');
+    val.textContent = a.meanRt != null ? Math.round(a.meanRt) + 'ms' : '—';
+    if (i === 2 && interference != null && interference > 0) {
+      val.textContent = Math.round(a.meanRt) + 'ms (+' + interference + ')';
+    }
+    const bar = document.createElement('div');
+    bar.className = 'chart-bar' + (i === 2 ? ' red' : '');
+    bar.dataset.h = a.meanRt != null ? Math.round((a.meanRt / maxRt) * 220) : 0;
+    col.appendChild(val);
+    col.appendChild(bar);
+    barsEl.appendChild(col);
+
+    const lab = document.createElement('div');
+    lab.className = 'chart-label';
+    lab.innerHTML = ROUND_LABELS[i] +
+      '<span class="err">' + (a.errors === 1 ? '1 error' : a.errors + ' errors') + '</span>';
+    labelsEl.appendChild(lab);
+  });
+
+  // animate bars in
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    barsEl.querySelectorAll('.chart-bar').forEach(b => { b.style.height = b.dataset.h + 'px'; });
+  }));
+
+  // stat strip
+  const strip = document.getElementById('stat-strip');
+  strip.innerHTML = '';
+  if (interference != null) {
+    strip.appendChild(statBlock((interference >= 0 ? '+' : '') + interference + 'ms',
+      'slower per answer when the word disagreed'));
+  }
+  strip.appendChild(statBlock(String(conflictErrors),
+    conflictErrors === 1 ? 'mistake in the conflict round' : 'mistakes in the conflict round'));
+
+  // beat 1, personalized
+  const b1 = document.getElementById('beat-1-body');
+  const strong = interference != null && interference >= 20;
+  if (strong) {
+    b1.innerHTML =
+      '<p class="t-body lede">You were told to ignore the words, and your brain read every one of them anyway. When a word and its color disagreed, each answer took you about <strong>' + interference + ' milliseconds longer</strong>' +
+      (conflictErrors > 0 ? ', and ' + (conflictErrors === 1 ? 'one answer' : conflictErrors + ' answers') + ' came out wrong' : '') + '.</p>' +
+      '<p class="t-body">Those extra milliseconds are the interesting part. In round 4 the fake words caused no extra time at all, because there was nothing to read. So the extra time in round 3 came from reading itself: by the time you went to name the color, your brain had already read the word, and the word&rsquo;s meaning was already in your head. The reading finished before your answer even started. (Psychologists call this slowdown the Stroop effect.)</p>';
+  } else {
+    b1.innerHTML =
+      '<p class="t-body lede">You were told to ignore the words, and you came unusually close: when a word and its color disagreed, your answers slowed by only about ' + (interference != null ? interference + ' milliseconds' : 'zero milliseconds') + ', far less than most people&rsquo;s.</p>' +
+      '<p class="t-body">Your brain still read every word, though. Reading happens in essentially every literate brain ever tested. Round 4 shows the cause of the slowdown: fake words, nothing to read, no slowdown at all. Whatever slowdown you had came from reading itself, finished before your answer even started. (Psychologists call this slowdown the Stroop effect.)</p>';
+  }
+}
+
+function statBlock(num, cap) {
+  const d = document.createElement('div');
+  const n = document.createElement('div');
+  n.className = 'stat-num';
+  n.textContent = num;
+  const c = document.createElement('div');
+  c.className = 'stat-cap';
+  c.textContent = cap;
+  d.appendChild(n);
+  d.appendChild(c);
+  return d;
+}
+
+/* ---------------- share card ---------------- */
+
+async function makeShareCard() {
+  const { acts, interference } = lastStats;
+  await document.fonts.ready;
+
+  const W = 1080, H = 1350;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#fafaf8';
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = '#666';
+  ctx.font = '700 30px "Space Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('T H E   U N S T O P P A B L E   R E A D E R', W / 2, 120);
+
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = '700 84px "Source Serif 4", Georgia, serif';
+  ctx.fillText('My brain reads', W / 2, 260);
+  ctx.fillText('whether I like it or not.', W / 2, 360);
+
+  // bars
+  const names = ['SHAPES', 'AGREE', 'FIGHT', 'FAKE'];
+  const maxRt = Math.max(...acts.map(a => a.meanRt || 0), 1);
+  const chartTop = 470, chartH = 420, baseY = chartTop + chartH;
+  const barW = 150, gap = 60;
+  const totalW = 4 * barW + 3 * gap;
+  let x = (W - totalW) / 2;
+  acts.forEach((a, i) => {
+    const h = a.meanRt != null ? (a.meanRt / maxRt) * chartH : 0;
+    ctx.fillStyle = i === 2 ? '#c44b3a' : '#1a1a1a';
+    ctx.fillRect(x, baseY - h, barW, h);
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = '700 34px "Space Mono", monospace';
+    ctx.fillText(a.meanRt != null ? Math.round(a.meanRt) : '-', x + barW / 2, baseY - h - 18);
+    ctx.fillStyle = '#666';
+    ctx.font = '400 26px "Space Mono", monospace';
+    ctx.fillText(names[i], x + barW / 2, baseY + 44);
+    x += barW + gap;
+  });
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo((W - totalW) / 2 - 20, baseY);
+  ctx.lineTo((W + totalW) / 2 + 20, baseY);
+  ctx.stroke();
+
+  ctx.fillStyle = '#c44b3a';
+  ctx.font = '700 52px "Space Mono", monospace';
+  ctx.fillText('Ignoring words costs me ' + (interference != null ? '+' + interference + 'ms' : 'real time'), W / 2, 1070);
+
+  ctx.fillStyle = '#666';
+  ctx.font = 'italic 400 34px "Source Serif 4", Georgia, serif';
+  ctx.fillText('An experiment from The Genius and the Impostor', W / 2, 1180);
+  ctx.font = '700 34px "Space Mono", monospace';
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillText('GeniusAndImpostor.com', W / 2, 1240);
+
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+}
+
+async function shareCard() {
+  const blob = await makeShareCard();
+  const file = new File([blob], 'unstoppable-reader.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file] });
+      return;
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+      // fall through to download
+    }
+  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'unstoppable-reader.png';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+/* ---------------- endless mode ---------------- */
+
+const endlessEls = {
+  avg: document.getElementById('endless-avg'),
+  word: document.getElementById('stim-word-endless'),
+  pad: document.getElementById('pad-endless'),
+};
+
+function startEndless() {
+  endless = { active: true, rts: [], onset: 0, current: null };
+  endlessEls.avg.textContent = 'avg: —';
+  show('endless');
+  endlessNext();
+}
+
+function endlessNext() {
+  if (!endless.active) return;
+  endlessEls.word.hidden = true;
+  setTimeout(() => {
+    if (!endless.active) return;
+    const ink = COLORS[Math.floor(Math.random() * 4)];
+    const others = COLORS.filter(c => c !== ink);
+    const word = others[Math.floor(Math.random() * 3)];
+    endless.current = ink;
+    endlessEls.word.textContent = word;
+    endlessEls.word.style.color = HUES[ink];
+    endlessEls.word.hidden = false;
+    endless.onset = performance.now();
+  }, 320);
+}
+
+function endlessTap(color) {
+  if (!endless.active || endless.current == null || endlessEls.word.hidden) return;
+  const rt = performance.now() - endless.onset;
+  if (color === endless.current && rt >= RT_MIN && rt <= RT_MAX) {
+    endless.rts.push(rt);
+    const avg = Math.round(mean(endless.rts));
+    endlessEls.avg.textContent = 'avg: ' + avg + 'ms over ' + endless.rts.length;
+  }
+  endless.current = null;
+  endlessNext();
+}
+
+endlessEls.pad.addEventListener('click', (e) => {
+  const btn = e.target.closest('.pad-btn');
+  if (btn) endlessTap(btn.dataset.color);
+});
+
+document.getElementById('btn-endless-stop').addEventListener('click', () => {
+  endless.active = false;
+  show('results');
+});
+
+/* ---------------- wiring ---------------- */
+
+document.getElementById('btn-start').addEventListener('click', startGame);
+document.getElementById('btn-replay').addEventListener('click', startGame);
+document.getElementById('btn-replay-top').addEventListener('click', startGame);
+document.getElementById('btn-share').addEventListener('click', shareCard);
+
+/* ---------------- dev hooks (local hosts only, same pattern as
+   the Ayumu Test: lets a build session reach the reveal without
+   52 manual taps; stripped of any effect in production) ---------------- */
+
+if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+  window.__ur = {
+    // Jump straight to results with synthetic but realistic data.
+    synth(interference = 160, errors = 3) {
+      trialLog = [];
+      const base = { 1: 620, 2: 590, 4: 640 };
+      for (const act of ACTS) {
+        for (let i = 0; i < act.trials; i++) {
+          const m = act.num === 3 ? base[2] + interference : base[act.num];
+          const rt = m + (Math.random() - 0.5) * 160;
+          const isErr = act.num === 3 && i < errors;
+          trialLog.push({ act: act.num, type: act.type, ink: 'red', word: 'blue', rt, correct: !isErr });
+        }
+      }
+      finishGame();
+    },
+    // Drive the real engine: taps the correct button after a delay.
+    bot(delay = 420, errRate = 0.08) {
+      let scheduledFor = -1;
+      const tick = () => {
+        if (!views.game.classList.contains('active')) return;
+        if (accepting && cursor !== scheduledFor) {
+          scheduledFor = cursor;
+          const t = trialPlan[cursor];
+          const wrong = Math.random() < errRate && t.act === 3;
+          const color = wrong ? COLORS.find(c => c !== t.ink) : t.ink;
+          const extra = t.act === 3 ? 150 : 0;
+          setTimeout(() => handleTap(color, null), delay + extra + Math.random() * 120);
+        }
+        setTimeout(tick, 60);
+      };
+      startGame();
+      tick();
+    },
+  };
+}
+</script>
+</body>
+</html>
