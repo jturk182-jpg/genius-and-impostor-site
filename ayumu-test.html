@@ -2378,12 +2378,12 @@ async function runAttempt(resume) {
   return rec;
 }
 
-async function runTheGame(resume) {
+async function runTheGame(resume, skipWarmup) {
   aborted = false;
   showPlay();
   layoutField();
   if (!await ensureTiming()) return null;
-  if (!resume) {
+  if (!resume && !skipWarmup) {
     if (!await runWarmup()) return null;
   }
   return await runAttempt(resume || null);
@@ -3597,9 +3597,9 @@ function renderShare() {
    16. ENTRY POINTS
    ================================================================ */
 
-async function startGame(resume) {
+async function startGame(resume, skipWarmup) {
   await document.fonts.ready;
-  const rec = await runTheGame(resume || null);
+  const rec = await runTheGame(resume || null, skipWarmup);
   if (!rec) { boot(); return; }
   renderResults();
   showView('view-results');
@@ -3690,6 +3690,23 @@ window.addEventListener('keydown', e => {
 
 function boot() {
   applyPrefs();
+
+  /* Deep links from the science page: ?start=flash or ?start=nine drops
+     straight into that game. The param is stripped from the URL so a
+     refresh, or a quit back to boot(), lands on the normal home view. */
+  const jump = new URLSearchParams(location.search).get('start');
+  if (jump === 'flash' || jump === 'nine') {
+    history.replaceState(null, '', location.pathname);
+    if (jump === 'nine') { startNine(); return; }
+    /* A half-finished flash attempt still gets the resume screen below
+       rather than being silently discarded. Anyone arriving this way has
+       played before, so a finished prior attempt earns them a pass on
+       the 3-4-5 warm-up. */
+    if (!(store.pending && store.pending.log && store.pending.log.length)) {
+      startGame(null, !!store.attempt);
+      return;
+    }
+  }
 
   /* An interrupted attempt takes priority over everything else. */
   const p = store.pending;
