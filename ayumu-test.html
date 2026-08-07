@@ -1123,7 +1123,8 @@
         <h1 class="t-title" id="return-title">Welcome back</h1>
         <div id="return-body"></div>
         <div class="btn-row" style="margin-top: 30px;">
-          <button class="btn primary" id="btn-nine-from-return">Try the nine</button>
+          <button class="btn primary" id="btn-flash-from-return">Battle Ayumu again</button>
+          <button class="btn" id="btn-nine-from-return">Try the nine</button>
           <button class="btn" id="btn-sandbox-from-return">Play with the dials</button>
           <button class="btn" id="btn-training-from-return">Training Room</button>
           <button class="btn ghost" id="btn-results-from-return">Your Ayumu score</button>
@@ -3657,6 +3658,7 @@ document.getElementById('btn-quit').addEventListener('click', () => {
 document.getElementById('btn-start').addEventListener('click', () => startGame(null));
 document.getElementById('btn-resume').addEventListener('click', () => startGame(store.pending));
 document.getElementById('btn-resume-fresh').addEventListener('click', startFresh);
+document.getElementById('btn-flash-from-return').addEventListener('click', () => startGame(null, true));
 document.getElementById('btn-nine-from-return').addEventListener('click', startNine);
 document.getElementById('btn-sandbox-from-return').addEventListener('click', () => { openSandbox(); });
 document.getElementById('btn-training-from-return').addEventListener('click', () => { renderTraining(); showView('view-training'); });
