@@ -1111,6 +1111,12 @@
           <a class="btn ghost" href="ayumu-science.html">Meet Ayumu first</a>
         </div>
 
+        <p class="t-quiet" style="margin-top: 26px;">Played before, maybe on another device? Jump back in.</p>
+        <div class="btn-row" style="margin-top: 10px;">
+          <button class="btn ghost" id="btn-skip-flash">Skip the warm-up</button>
+          <button class="btn ghost" id="btn-skip-nine">Straight to the nine</button>
+        </div>
+
         <div class="pref-row">
           <label class="pref-toggle"><input type="checkbox" id="pref-hc"> Higher contrast</label>
           <span class="t-quiet">Works best on a screen you can hold still, turned up bright.</span>
@@ -3656,6 +3662,8 @@ document.getElementById('btn-quit').addEventListener('click', () => {
 });
 
 document.getElementById('btn-start').addEventListener('click', () => startGame(null));
+document.getElementById('btn-skip-flash').addEventListener('click', () => startGame(null, true));
+document.getElementById('btn-skip-nine').addEventListener('click', startNine);
 document.getElementById('btn-resume').addEventListener('click', () => startGame(store.pending));
 document.getElementById('btn-resume-fresh').addEventListener('click', startFresh);
 document.getElementById('btn-flash-from-return').addEventListener('click', () => startGame(null, true));
