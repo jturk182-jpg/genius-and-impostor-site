@@ -1188,6 +1188,7 @@
         <a href="index.html">The Genius and the Impostor</a>
         <a href="diagnostic.html">The Genius Diagnostic</a>
         <a href="unstoppable-reader.html">The Unstoppable Reader</a>
+        <a href="secret-grammar.html">The Secret Grammar</a>
         <a href="ayumu-science.html">The science behind this game</a>
       </div>
       <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
@@ -2300,6 +2301,7 @@ async function runWarmup() {
 }
 
 async function runAttempt(resume) {
+  fetchTeamToken();
   const rec = resume || {
     date: new Date().toISOString(),
     frameDur: Math.round(frameDur * 100) / 100,
@@ -2678,6 +2680,146 @@ function timingTableHTML(rec) {
   return html;
 }
 
+/* ================================================================
+   11a. TEAM HUMAN
+   One anonymous scoreboard for the species. Joining is opt-in: nothing
+   leaves the device until the button is pressed, and what leaves is the
+   score and its timing log, nothing else.
+   ================================================================ */
+
+const TEAM_API = '/.netlify/functions/';
+let teamToken = null;
+
+/* Fired when a scored round starts. The server uses the token timestamp to
+   ignore "rounds" that finish faster than a real round can. */
+function fetchTeamToken() {
+  fetch(TEAM_API + 'team-human-token')
+    .then(r => r.ok ? r.json() : null)
+    .then(j => { if (j && j.token) teamToken = j.token; })
+    .catch(() => {});
+}
+
+/* Stand-in numbers so the panel can be reviewed locally without a backend.
+   Only ever used behind the ?dev flag. */
+const TEAM_MOCK = {
+  count: 12481,
+  median: 0.2,
+  buckets: [4210, 3120, 1830, 1240, 860, 520, 290, 150, 190, 71]
+};
+
+function fetchTeamStats() {
+  return fetch(TEAM_API + 'team-human-stats')
+    .then(r => { if (!r.ok) throw new Error('down'); return r.json(); })
+    .catch(() => DEV ? TEAM_MOCK : null);
+}
+
+function teamHistSVG(stats, myAcc) {
+  const c = colors();
+  const W = 380, H = 210, L = 30, R = 14, T = 30, B = 40;
+  const plotW = W - L - R, plotH = H - T - B;
+  const max = Math.max.apply(null, stats.buckets.concat([1]));
+  const bw = plotW / 10;
+  const mono = ' font-family="Space Mono, monospace"';
+  const myBucket = myAcc != null ? Math.min(9, Math.floor(myAcc * 10)) : -1;
+  let g = '';
+
+  stats.buckets.forEach((n, i) => {
+    const h = Math.round(plotH * (n / max));
+    g += '<rect x="' + (L + i * bw + 2).toFixed(1) + '" y="' + (T + plotH - h) +
+         '" width="' + (bw - 4).toFixed(1) + '" height="' + h +
+         '" fill="' + (i === myBucket ? c.red : c.ink) + '" opacity="' + (i === myBucket ? '1' : '0.5') + '"/>';
+  });
+
+  /* Team Chimp holds this line whatever the rest of the chart does. */
+  const ax = L + plotW * 0.8;
+  g += '<line x1="' + ax + '" y1="' + (T - 6) + '" x2="' + ax + '" y2="' + (T + plotH) +
+       '" stroke="' + c.red + '" stroke-width="2" stroke-dasharray="4 3"/>';
+  g += '<text x="' + ax + '" y="' + (T - 12) + '" text-anchor="middle"' + mono +
+       ' font-size="9" font-weight="700" fill="' + c.red + '">TEAM CHIMP · 80%</text>';
+
+  if (myAcc != null) {
+    const mx = L + plotW * Math.min(1, myAcc);
+    const lx = Math.max(L + 34, Math.min(W - R - 34, mx));
+    g += '<path d="M ' + mx.toFixed(1) + ' ' + (T + plotH + 3) + ' l -5 9 l 10 0 z" fill="' + c.red + '"/>';
+    g += '<text x="' + lx.toFixed(1) + '" y="' + (T + plotH + 26) + '" text-anchor="middle"' + mono +
+         ' font-size="9" font-weight="700" fill="' + c.red + '">YOU · ' + pct(myAcc) + '%</text>';
+  }
+
+  g += '<line x1="' + L + '" y1="' + (T + plotH) + '" x2="' + (W - R) + '" y2="' + (T + plotH) +
+       '" stroke="' + c.ink + '" stroke-width="1.5"/>';
+  g += '<text x="' + L + '" y="' + (H - 2) + '"' + mono + ' font-size="9" fill="' + c.muted + '">0%</text>';
+  g += '<text x="' + (W - R) + '" y="' + (H - 2) + '" text-anchor="end"' + mono + ' font-size="9" fill="' + c.muted + '">100%</text>';
+
+  const label = 'Distribution of ' + stats.count + ' Team Human scores, with Team Chimp at 80 percent' +
+    (myAcc != null ? ' and you at ' + pct(myAcc) + ' percent' : '') + '.';
+  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
+}
+
+async function renderTeamHuman(rec, freshStats) {
+  const box = document.getElementById('team-human-body');
+  if (!box) return;
+  const stats = freshStats || await fetchTeamStats();
+  if (!stats) {
+    box.innerHTML = '<p class="chart-note">Team Human is not answering right now. Your score is safe on this device, and the button will be here next time.</p>';
+    return;
+  }
+
+  const joined = !!(rec.teamHuman && rec.teamHuman.joined);
+  const my = rec.trials > 0 ? rec.acc : null;
+  let h = '<p class="t-body">Team Chimp has <strong>one member</strong>. He scores about 80%.</p>';
+  h += stats.count
+    ? '<p class="t-body">Team Human has <strong>' + comma(stats.count) + ' member' + (stats.count === 1 ? '' : 's') +
+      '</strong> so far, and the middle of the pack sits at <strong>' + pct(stats.median) + '%</strong>.</p>'
+    : '<p class="t-body">Team Human has no members yet. You would be the first.</p>';
+
+  if (joined) {
+    h += '<div class="chart-panel">' + teamHistSVG(stats, my) + '</div>';
+    const ahead = rec.teamHuman.ahead;
+    h += '<p class="chart-note">' + (ahead != null
+      ? 'Your ' + pct(my) + '% sits ahead of ' + pct(ahead) + '% of Team Human.'
+      : 'You are on the board at ' + pct(my) + '%.') +
+      (my >= AYUMU_ACC ? ' And you are past Team Chimp, where almost nobody lives.' : '') + '</p>';
+  } else {
+    h += '<div class="btn-row"><button class="btn primary" id="btn-join-team">Add my score to Team Human</button></div>' +
+      '<p class="t-quiet" id="team-join-note">Sends your score and its timing log, nothing else. No name, no account.</p>';
+  }
+  box.innerHTML = h;
+  const btn = document.getElementById('btn-join-team');
+  if (btn) btn.addEventListener('click', () => joinTeamHuman(rec));
+}
+
+async function joinTeamHuman(rec) {
+  const btn = document.getElementById('btn-join-team');
+  if (btn) { btn.disabled = true; btn.textContent = 'Adding you…'; }
+  let res = null;
+  try {
+    const r = await fetch(TEAM_API + 'team-human-submit', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        token: teamToken,
+        attempt: {
+          acc: rec.acc, hits: rec.hits, trials: rec.trials,
+          meanMeasured: rec.meanMeasured, frameDur: rec.frameDur, log: rec.log
+        }
+      })
+    });
+    if (r.ok) res = await r.json();
+  } catch (e) {}
+  if (!res && DEV) res = { ok: true, ahead: 0.71, stats: TEAM_MOCK };
+  if (!res || !res.ok) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Add my score to Team Human'; }
+    const note = document.getElementById('team-join-note');
+    if (note) note.textContent = 'That did not go through. Your score is safe here; give it another try in a minute.';
+    return;
+  }
+  rec.teamHuman = { joined: true, ahead: res.ahead, joinedAt: new Date().toISOString() };
+  saveStore();
+  const priv = document.getElementById('results-privacy-note');
+  if (priv) priv.textContent = 'Your score went to Team Human. Everything else stays on this device.';
+  renderTeamHuman(rec, res.stats);
+}
+
 function renderResults() {
   const rec = store.attempt;
   if (!rec) { boot(); return; }
@@ -2743,6 +2885,11 @@ function renderResults() {
      unreviewed placeholder wording built to the locked arc. JT writes the
      final version. See the REVEAL_BEATS comment block for the arc rationale. */
 
+  /* Humanity's collective effort, joined by choice. Placed after the
+     reveal so the score has its context before anyone enlists it. */
+  html += '<h2 class="t-section" style="margin-top:40px;">Team Human vs. Team Chimp</h2>' +
+    '<div id="team-human-body"><p class="chart-note">Checking the standings…</p></div>';
+
   /* Task 2 is introduced here, after the reveal, because it is Ayumu’s
      OTHER measured record and the better thing to train toward. */
   const nine = store.nine;
@@ -2772,9 +2919,12 @@ function renderResults() {
       : 'Nothing had to be thrown out.') + '</p>' +
     timingTableHTML(rec) + '</details>';
 
-  html += '<p class="t-quiet">Kept on this device. Nothing is sent anywhere.</p>';
+  html += '<p class="t-quiet" id="results-privacy-note">' + (rec.teamHuman && rec.teamHuman.joined
+    ? 'Your score went to Team Human. Everything else stays on this device.'
+    : 'Kept on this device. Nothing is sent unless you add your score to Team Human.') + '</p>';
 
   el.innerHTML = html;
+  renderTeamHuman(rec);
   document.getElementById('btn-to-nine').addEventListener('click', startNine);
   document.getElementById('btn-to-sandbox').addEventListener('click', () => { openSandbox(); });
   document.getElementById('btn-to-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
