@@ -2682,9 +2682,10 @@ function timingTableHTML(rec) {
 
 /* ================================================================
    11a. TEAM HUMAN
-   One anonymous scoreboard for the species. Joining is opt-in: nothing
-   leaves the device until the button is pressed, and what leaves is the
-   score and its timing log, nothing else.
+   One anonymous scoreboard for the species. A finished round adds its
+   score automatically; what goes is the score and its timing log, no
+   name and no account. The panel showing your dot in the distribution
+   is the disclosure, so there is no separate privacy notice.
    ================================================================ */
 
 const TEAM_API = '/.netlify/functions/';
@@ -2755,43 +2756,9 @@ function teamHistSVG(stats, myAcc) {
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
 
-async function renderTeamHuman(rec, freshStats) {
-  const box = document.getElementById('team-human-body');
-  if (!box) return;
-  const stats = freshStats || await fetchTeamStats();
-  if (!stats) {
-    box.innerHTML = '<p class="chart-note">Team Human is not answering right now. Your score is safe on this device, and the button will be here next time.</p>';
-    return;
-  }
-
-  const joined = !!(rec.teamHuman && rec.teamHuman.joined);
-  const my = rec.trials > 0 ? rec.acc : null;
-  let h = '<p class="t-body">Team Chimp has <strong>one member</strong>. He scores about 80%.</p>';
-  h += stats.count
-    ? '<p class="t-body">Team Human has <strong>' + comma(stats.count) + ' member' + (stats.count === 1 ? '' : 's') +
-      '</strong> so far, and the middle of the pack sits at <strong>' + pct(stats.median) + '%</strong>.</p>'
-    : '<p class="t-body">Team Human has no members yet. You would be the first.</p>';
-
-  if (joined) {
-    h += '<div class="chart-panel">' + teamHistSVG(stats, my) + '</div>';
-    const ahead = rec.teamHuman.ahead;
-    h += '<p class="chart-note">' + (ahead != null
-      ? 'Your ' + pct(my) + '% sits ahead of ' + pct(ahead) + '% of Team Human.'
-      : 'You are on the board at ' + pct(my) + '%.') +
-      (my >= AYUMU_ACC ? ' And you are past Team Chimp, where almost nobody lives.' : '') + '</p>';
-  } else {
-    h += '<div class="btn-row"><button class="btn primary" id="btn-join-team">Add my score to Team Human</button></div>' +
-      '<p class="t-quiet" id="team-join-note">Sends your score and its timing log, nothing else. No name, no account.</p>';
-  }
-  box.innerHTML = h;
-  const btn = document.getElementById('btn-join-team');
-  if (btn) btn.addEventListener('click', () => joinTeamHuman(rec));
-}
-
-async function joinTeamHuman(rec) {
-  const btn = document.getElementById('btn-join-team');
-  if (btn) { btn.disabled = true; btn.textContent = 'Adding you…'; }
-  let res = null;
+/* Sends the finished round to the tally. Returns the server's response, or
+   a mock in local dev where the function host is not running. */
+async function submitTeamScore(rec) {
   try {
     const r = await fetch(TEAM_API + 'team-human-submit', {
       method: 'POST',
@@ -2804,20 +2771,59 @@ async function joinTeamHuman(rec) {
         }
       })
     });
-    if (r.ok) res = await r.json();
+    if (r.ok) return await r.json();
   } catch (e) {}
-  if (!res && DEV) res = { ok: true, ahead: 0.71, stats: TEAM_MOCK };
-  if (!res || !res.ok) {
-    if (btn) { btn.disabled = false; btn.textContent = 'Add my score to Team Human'; }
-    const note = document.getElementById('team-join-note');
-    if (note) note.textContent = 'That did not go through. Your score is safe here; give it another try in a minute.';
+  if (DEV) return { ok: true, ahead: 0.71, stats: TEAM_MOCK };
+  return null;
+}
+
+async function renderTeamHuman(rec, freshStats) {
+  const box = document.getElementById('team-human-body');
+  if (!box) return;
+  const my = rec.trials > 0 ? rec.acc : null;
+
+  /* A freshly finished round joins the tally on its own the first time
+     these results render. Once joined, the flag is saved so re-viewing
+     the same results never submits twice. */
+  if (!(rec.teamHuman && rec.teamHuman.joined) && my != null && (teamToken || DEV)) {
+    box.innerHTML = '<p class="chart-note">Adding you to the tally…</p>';
+    const res = await submitTeamScore(rec);
+    if (res && res.ok) {
+      rec.teamHuman = { joined: true, ahead: res.ahead };
+      saveStore();
+      paintTeamHuman(box, rec, res.stats, my);
+      return;
+    }
+    /* Submission did not land (offline, or an old attempt with no live
+       token). Fall through to the read-only standings below. */
+  }
+
+  const stats = freshStats || await fetchTeamStats();
+  const joined = !!(rec.teamHuman && rec.teamHuman.joined);
+  paintTeamHuman(box, rec, stats, joined ? my : null);
+}
+
+function paintTeamHuman(box, rec, stats, myAcc) {
+  if (!stats) {
+    box.innerHTML = '<p class="chart-note">Team Human is not answering right now. Everyone still shows up next time.</p>';
     return;
   }
-  rec.teamHuman = { joined: true, ahead: res.ahead, joinedAt: new Date().toISOString() };
-  saveStore();
-  const priv = document.getElementById('results-privacy-note');
-  if (priv) priv.textContent = 'Your score went to Team Human. Everything else stays on this device.';
-  renderTeamHuman(rec, res.stats);
+  let h = '<p class="t-body">Team Chimp has <strong>one member</strong>. He scores about 80%.</p>';
+  h += stats.count
+    ? '<p class="t-body">Team Human is up to <strong>' + comma(stats.count) + ' member' + (stats.count === 1 ? '' : 's') +
+      '</strong>, all anonymous, and the middle of the pack sits at <strong>' + pct(stats.median) + '%</strong>.</p>'
+    : '<p class="t-body">Team Human is empty. You are the first one on the board.</p>';
+
+  h += '<div class="chart-panel">' + teamHistSVG(stats, myAcc) + '</div>';
+
+  if (myAcc != null) {
+    const ahead = rec.teamHuman ? rec.teamHuman.ahead : null;
+    h += '<p class="chart-note">' + (ahead != null
+      ? 'Your ' + pct(myAcc) + '% sits ahead of ' + pct(ahead) + '% of Team Human.'
+      : 'You are on the board at ' + pct(myAcc) + '%.') +
+      (myAcc >= AYUMU_ACC ? ' And you are past Team Chimp, where almost nobody lives.' : '') + '</p>';
+  }
+  box.innerHTML = h;
 }
 
 function renderResults() {
@@ -2918,10 +2924,6 @@ function renderResults() {
       ? rec.excluded + (rec.excluded === 1 ? ' try was' : ' tries were') + ' thrown out and replaced.'
       : 'Nothing had to be thrown out.') + '</p>' +
     timingTableHTML(rec) + '</details>';
-
-  html += '<p class="t-quiet" id="results-privacy-note">' + (rec.teamHuman && rec.teamHuman.joined
-    ? 'Your score went to Team Human. Everything else stays on this device.'
-    : 'Kept on this device. Nothing is sent unless you add your score to Team Human.') + '</p>';
 
   el.innerHTML = html;
   renderTeamHuman(rec);
