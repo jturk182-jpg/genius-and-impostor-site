@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Name Your Impostor — GeniusAndImpostor.com</title>
+  <meta name="description" content="The anxious voice in your head runs on sounding like you. Give it a name that isn't yours and it turns into a character you can watch. Try it in about a minute.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================================
+       SHARED FURNITURE — lifted verbatim from secret-grammar.html /
+       diagnostic.html. Keep the copies in sync by hand (build-context
+       §2: no build step).
+       ================================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --ink: #1a1a1a;
+      --red: #c44b3a;
+      --red-dark: #a83c2d;
+      --muted: #666;
+      --rule: #e0dcd4;
+      --card: #ffffff;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: var(--serif);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (min-width: 600px) { .shell { padding: 0 40px; } }
+
+    .shell-main { flex: 1; padding: 40px 0 64px; }
+
+    .tool-mast {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .tool-mast-home, .tool-mast-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tool-mast-home { text-decoration: none; transition: color 0.2s; }
+    .tool-mast-home:hover { color: var(--red); }
+
+    .t-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .t-title {
+      font-family: var(--serif);
+      font-size: clamp(34px, 7vw, 50px);
+      font-weight: 700;
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+    .t-headline {
+      font-family: var(--serif);
+      font-size: clamp(26px, 5.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .t-section {
+      font-family: var(--serif);
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .t-body {
+      font-family: var(--serif);
+      font-size: clamp(17px, 3.2vw, 19px);
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+    .t-body:last-child { margin-bottom: 0; }
+    .t-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .t-label.red { color: var(--red); }
+
+    a.inline-link {
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    a.inline-link:hover { border-bottom-color: var(--red); }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--red);
+      background: transparent;
+      border: 1.5px solid var(--red);
+      padding: 12px 24px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn:hover, .btn:focus-visible { background: var(--red); color: #fff; }
+    .btn.primary { background: var(--red); color: #fff; }
+    .btn.primary:hover, .btn.primary:focus-visible { background: var(--red-dark); border-color: var(--red-dark); }
+    .btn.ghost { color: var(--muted); border-color: var(--rule); }
+    .btn.ghost:hover, .btn.ghost:focus-visible { background: transparent; color: var(--red); border-color: var(--red); }
+    .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn.primary:disabled:hover { background: var(--red); border-color: var(--red); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    .tool-footer { border-top: 1px solid var(--rule); padding: 36px 0 48px; text-align: center; }
+    .tool-footer-cover { display: inline-block; margin-bottom: 18px; }
+    .tool-footer-cover img {
+      width: 92px; height: auto; display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+      transition: transform 0.2s;
+    }
+    .tool-footer-cover:hover img { transform: translateY(-2px); }
+    .tool-footer-label {
+      font-family: var(--mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted);
+      opacity: 0.7; margin-bottom: 14px;
+    }
+    .tool-footer-links { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .tool-footer-links a {
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .tool-footer-links a:hover { color: var(--red); }
+    .tool-footer-copy { font-family: var(--mono); font-size: 11px; color: var(--muted); opacity: 0.5; margin-top: 18px; }
+
+    /* ================================================================
+       TOOL-SPECIFIC — the Impostor Namer
+       ================================================================ */
+    .intro-block { margin-bottom: 34px; }
+
+    .cat-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+    .cat-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 10px 16px;
+      border: 1.5px solid var(--rule);
+      border-radius: 100px;
+      background: var(--card);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 42px;
+    }
+    .cat-btn:hover { border-color: var(--red); color: var(--red); }
+    .cat-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+
+    .result-card {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 44px 28px;
+      text-align: center;
+      margin-bottom: 18px;
+      min-height: 168px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .result-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--red);
+    }
+    .impostor-name {
+      font-family: var(--serif);
+      font-size: clamp(34px, 8vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 12px;
+      transition: opacity 0.18s ease;
+    }
+    .flavor-text {
+      font-family: var(--serif);
+      font-size: clamp(16px, 3.4vw, 18px);
+      font-style: italic;
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.55;
+      transition: opacity 0.18s ease;
+    }
+    .gen-actions { display: flex; gap: 10px; margin-bottom: 8px; }
+    .gen-actions .btn { flex: 1; }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* the "what does it say" defusion beat */
+    .say-block { margin: 8px 0 30px; }
+    .say-input {
+      width: 100%;
+      font-family: var(--serif);
+      font-size: clamp(17px, 3.4vw, 19px);
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--card);
+      border: 1.5px solid var(--rule);
+      border-radius: 10px;
+      padding: 14px 16px;
+      resize: vertical;
+      min-height: 62px;
+      margin-bottom: 14px;
+    }
+    .say-input:focus { outline: none; border-color: var(--red); }
+
+    .quote-card {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-left: 4px solid var(--red);
+      border-radius: 10px;
+      padding: 24px 26px;
+      margin: 6px 0 22px;
+    }
+    .quote-who {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+    .quote-text {
+      font-family: var(--serif);
+      font-size: clamp(19px, 4vw, 23px);
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+
+    .beat { margin-bottom: 34px; }
+    .rule-soft { border: 0; border-top: 1px solid var(--rule); margin: 6px 0 34px; }
+
+    @media print {
+      .tool-mast, .tool-footer, .no-print, .btn, .btn-row, .gen-actions { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="tool-mast">
+      <a class="tool-mast-home" href="index.html">&larr; GeniusAndImpostor.com</a>
+      <span class="tool-mast-name">The Impostor Namer</span>
+    </header>
+
+    <main class="shell-main">
+
+      <!-- ================= STAGE 1: GENERATOR ================= -->
+      <section class="view active" id="view-generate">
+        <div class="intro-block">
+          <p class="t-eyebrow">Interactive</p>
+          <h1 class="t-title">Name your Impostor</h1>
+          <!-- CENTRAL TAKEAWAY (keep every section aimed here):
+               When the anxious voice sounds like "you," everything it says feels
+               like the truth. Give it a name that isn't yours and it becomes a
+               character you can watch instead of a fact you're stuck being. That
+               move has a name, cognitive defusion, and naming is the fastest way in. -->
+          <p class="t-body">There's a voice that shows up when the pressure is on. It tells you you're not ready, you're going to blow this, everyone's about to find out. Here's the thing about that voice: it runs on sounding like you. So let's take that away from it. Pick a flavor below and generate names until one makes you smile. That's the one.</p>
+        </div>
+
+        <div class="cat-row" id="cat-row"></div>
+
+        <div class="result-card">
+          <div class="impostor-name" id="impostor-name" hidden></div>
+          <div class="flavor-text" id="flavor-text">Pick a flavor to meet your Impostor.</div>
+        </div>
+
+        <div class="gen-actions">
+          <button class="btn" id="btn-another">Give me a name</button>
+          <button class="btn primary" id="btn-use" disabled>Use this name</button>
+        </div>
+        <p class="t-quiet" style="font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;">A real name, a silly name, whatever fits. You can change it later.</p>
+      </section>
+
+      <!-- ================= STAGE 2: MEET + DEFUSION + WHY ================= -->
+      <section class="view" id="view-meet">
+        <div class="beat">
+          <p class="t-label red">Meet your Impostor</p>
+          <h2 class="t-headline">Say hello to <span id="meet-name">Nigel</span>.</h2>
+          <p class="t-body">From now on, when that voice starts up, it isn't you talking. It's <span class="meet-name-inline">Nigel</span>. Let's see what that changes.</p>
+        </div>
+
+        <div class="beat say-block">
+          <p class="t-label">Try it</p>
+          <p class="t-body">In one line, what does the voice tell you right before something that matters?</p>
+          <textarea class="say-input" id="say-input" placeholder="You&rsquo;re going to forget everything and freeze up."></textarea>
+          <button class="btn primary" id="btn-say">Put its name on it</button>
+        </div>
+
+        <div class="beat" id="quote-wrap" hidden>
+          <div class="quote-card">
+            <div class="quote-who" id="quote-who">Nigel says:</div>
+            <div class="quote-text" id="quote-text">&ldquo;&rdquo;</div>
+          </div>
+          <p class="t-body">Read it back. The sentence didn't change. What changed is whose it is. A second ago that line was coming from inside your own head, so it felt like a fact about you. Now it's <span class="meet-name-inline">Nigel</span>, standing across the room, saying a thing. You can look at it. You can disagree with it. You can notice it's the same line it always says.</p>
+        </div>
+
+        <hr class="rule-soft">
+
+        <div class="beat">
+          <p class="t-label">Why a name works</p>
+          <p class="t-body">When the worried voice is &ldquo;you,&rdquo; every thought it hands you arrives stamped as true, because it's coming from the same place all your real thoughts come from. Give it a name and you pull it a step away from yourself, close enough to hear, far enough to study. Psychologists have a term for creating that little bit of distance from a thought: cognitive defusion. It's the same move behind talking to yourself in the third person before a big moment, which turns out to steady people more than a pep talk does.</p>
+          <p class="t-body">The sillier the name, the better it works, and that's not a gimmick. A voice called &ldquo;you&rdquo; carries the full weight of your identity. A voice called Professor Doom-Muffin carries the weight of a joke, and it is hard to be terrified of a joke. You're not trying to win an argument with it. You're just trying to remember, in the moment, that it's a character, not the truth.</p>
+          <p class="t-body">This voice is one of the two you'll meet in <a class="inline-link" href="index.html"><em>The Genius and the Impostor</em></a>. The Impostor is the nervous narrator that gets loud when the stakes go up and talks over the part of you that actually knows how to do the thing. Naming it is the first, smallest way to turn its volume down. The book is where that whole story goes, and where the turning-down gets real.</p>
+        </div>
+
+        <div class="beat no-print">
+          <p class="t-label">Take it with you</p>
+          <div class="btn-row">
+            <button class="btn primary" id="btn-share">Save the share card</button>
+            <button class="btn" id="btn-rename">Pick a different name</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- SHARED: cross-tool footer. Add each new tool's link here and on every
+         other tool page when it ships (build-context §2b). -->
+    <footer class="tool-footer">
+      <a class="tool-footer-cover" href="index.html" aria-label="The Genius and the Impostor, the book">
+        <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
+      </a>
+      <div class="tool-footer-label">While you're here</div>
+      <div class="tool-footer-links">
+        <a href="index.html">The Genius and the Impostor</a>
+        <a href="ayumu-test.html">The Ayumu Test</a>
+        <a href="diagnostic.html">The Genius Diagnostic</a>
+        <a href="unstoppable-reader.html">The Unstoppable Reader</a>
+      </div>
+      <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
+    </footer>
+  </div>
+
+<script>
+'use strict';
+
+/* ================================================================
+   NAME LIBRARY — ported verbatim from the Lose Yourself course
+   generator (Performance Neurology Website /course/name-generator).
+   NOTE for JT's voice pass: a handful of "stuffy & pretentious" flavor
+   lines are music-coded ("ruins your solo", "your intonation", "a more
+   respectable instrument"). Fine for a general reader as vivid detail;
+   generalize any that bug you.
+   ================================================================ */
+const library = {
+  "stuffy & pretentious": [
+    {n:"Nigel", f:"Sounds like it irons its socks and judges everyone at parties."},
+    {n:"Gerald", f:"Wears a cravat. Has opinions about your posture."},
+    {n:"Reginald", f:"Insists you call it 'sir' while it ruins your solo."},
+    {n:"Percival", f:"Corrects your grammar mid-performance."},
+    {n:"Cornelius", f:"Has a monocle. Adjusts it disapprovingly."},
+    {n:"Bartholomew", f:"Too many syllables for something so useless."},
+    {n:"Humphrey", f:"Sighs a lot. Disappointed in everything you do."},
+    {n:"Archibald", f:"Wishes you'd chosen a more respectable instrument."},
+    {n:"Mortimer", f:"Keeps a list of your mistakes in a leather-bound notebook."},
+    {n:"Clarence", f:"Clears its throat before telling you you're not good enough."},
+    {n:"Basil", f:"Pronounces it 'BAH-zil' and corrects you if you don't."},
+    {n:"Edmund", f:"Has a backup plan for your backup plan for your failure."},
+    {n:"Thaddeus", f:"Gasps audibly at every wrong note. Theatrically."},
+    {n:"Algernon", f:"Has a lot of thoughts about your breathing technique."},
+    {n:"Rupert", f:"Went to boarding school. Hasn't let anyone forget."},
+    {n:"Cedric", f:"Winces visibly when you miss. Every. Single. Time."},
+    {n:"Montgomery", f:"Goes by 'Monty' to seem approachable. It doesn't work."},
+    {n:"Cuthbert", f:"Brings a clipboard to your day off. Follows along with a pencil."},
+    {n:"Neville", f:"Deeply concerned that you haven't prepared enough. Always."},
+    {n:"Alistair", f:"Pronounces everything as if it's in italics."},
+    {n:"Norbert", f:"Keeps clearing his throat during your quiet moments."},
+    {n:"Bertram", f:"Adjusts his spectacles before delivering bad news. Slowly."},
+    {n:"Eustace", f:"Writes formal complaints about your work. In cursive."},
+    {n:"Wilfred", f:"Has never done any of this himself. Expert on all of it."},
+    {n:"Chester", f:"Sits in a wingback chair in your head and tuts."},
+    {n:"Horace", f:"Would like a word with you about your pacing."},
+    {n:"Lancelot", f:"Grand name. Accomplishes nothing. Complains constantly."},
+    {n:"Phineas", f:"Somehow makes you feel underdressed for your own life."},
+    {n:"Augustus", f:"Refers to himself in the third person. Augustus is not impressed."},
+    {n:"Ambrose", f:"Once heard a concert in Vienna and will not let you forget it."},
+  ],
+  "silly & absurd": [
+    {n:"Blorpo", f:"Sounds like a noise your stomach makes. About as useful."},
+    {n:"Señor Wobbles", f:"Takes itself very seriously despite the name."},
+    {n:"Captain Nope", f:"Vetoes everything from a tiny imaginary ship."},
+    {n:"The Blurbler", f:"Can't even articulate its own criticisms properly."},
+    {n:"Flapjack", f:"All talk, no syrup."},
+    {n:"Professor Doom-Muffin", f:"Catastrophizes in an academic voice."},
+    {n:"Squonk", f:"A creature that dissolves in its own tears. Fitting."},
+    {n:"Dinglebert", f:"Try saying this name with a straight face. Exactly."},
+    {n:"Pudding Brain", f:"The Impostor's IQ, summarized."},
+    {n:"Weasel McPanic", f:"Scurries around causing problems, accomplishes nothing."},
+    {n:"Lord Fluffington", f:"Grand title. Zero substance."},
+    {n:"Noodle", f:"Limp, floppy, and overcooked."},
+    {n:"Sir Trips-a-Lot", f:"Always stumbling over its own catastrophic predictions."},
+    {n:"Binky", f:"Sounds like something a toddler would name a stuffed animal."},
+    {n:"Clompers", f:"About as graceful as the name suggests."},
+    {n:"Tater Tot", f:"Small, round, and best served as a side dish."},
+    {n:"Blip McFrazzle", f:"A small electrical malfunction with delusions of grandeur."},
+    {n:"The Honking Goose", f:"Makes a lot of noise. Nobody asked it to."},
+    {n:"Fumbles", f:"Drops everything, including your confidence."},
+    {n:"Worrywart the Befuddled", f:"Can't even keep its anxieties straight."},
+    {n:"Spaghetti Brain", f:"A tangled mess that thinks it's being organized."},
+    {n:"Chairman Meow", f:"Thinks it's in charge. Knocks things off tables."},
+    {n:"The Ditherer", f:"Can't decide which of your flaws to focus on first."},
+    {n:"Bumblesnort", f:"Bumbles. Snorts. Contributes nothing useful."},
+    {n:"Sir Panics-a-Bunch", f:"Knighted by nobody for services to overreaction."},
+    {n:"Goblin Mode", f:"Chaotic, unhelpful, and shouldn't be driving."},
+    {n:"Flibbertigibbet", f:"An actual word for someone who talks too much nonsense."},
+    {n:"Butterfingers McGee", f:"Tries to grab the wheel. Drops it every time."},
+    {n:"Count Fluster", f:"Gets flustered by his own flustering."},
+    {n:"Snickerdoodle", f:"Sounds sweet. Isn't. Crumbles under pressure."},
+  ],
+  "tiny & pathetic": [
+    {n:"the gnat", f:"Annoying. Persistent. Weighs almost nothing."},
+    {n:"the drip", f:"Just a slow, steady leak of doubt. Easy to fix."},
+    {n:"pebble", f:"Thinks it's a boulder. It's a pebble."},
+    {n:"the smudge", f:"Barely there. Wipes right off."},
+    {n:"dust bunny", f:"Accumulates if you ignore it. Vanishes when you look."},
+    {n:"the hiccup", f:"Interrupts. Passes. Means nothing."},
+    {n:"lint", f:"Clings to everything. Contributes to nothing."},
+    {n:"the splinter", f:"Tiny. Irritating. Not actually dangerous."},
+    {n:"pip", f:"Small enough to fit in your pocket. Should stay there."},
+    {n:"the runt", f:"Smallest one in the litter. Barks the loudest."},
+    {n:"crumb", f:"A leftover fragment of something that used to matter."},
+    {n:"the flicker", f:"Barely a flame. Can't even keep itself lit."},
+    {n:"the blip", f:"Shows up on the radar, then gone. Insignificant."},
+    {n:"midge", f:"A bug so small you don't notice it until it bites."},
+    {n:"the squeak", f:"Wants to roar. Manages a squeak. That's it."},
+    {n:"the puddle", f:"Shallow. Evaporates in sunlight."},
+    {n:"peep", f:"The smallest possible sound. Barely registers."},
+    {n:"the draft", f:"A faint, annoying chill. Close the window and it's gone."},
+    {n:"the scuff", f:"A tiny mark that only you can see."},
+    {n:"grit", f:"Gets in your eye. Flush it out and forget about it."},
+    {n:"the itch", f:"Distracting for a moment. Then it passes."},
+    {n:"the static", f:"Background noise between stations. Not a real signal."},
+    {n:"the hangnail", f:"Irritating out of all proportion to its size."},
+    {n:"speck", f:"Visible only under a microscope. Thinks it's the whole slide."},
+    {n:"the whisper", f:"Has to lean in close because it has no real volume."},
+    {n:"the wobble", f:"A slight tremor. Not a real earthquake."},
+    {n:"the smear", f:"Leaves a mark. Paper towel fixes it."},
+    {n:"the moth", f:"Attracted to the spotlight. Accomplishes nothing in it."},
+    {n:"the drizzle", f:"Not even a real storm. Just damp and annoying."},
+    {n:"the twitch", f:"A minor involuntary spasm. Not a signal from the universe."},
+  ],
+  "cartoon villain": [
+    {n:"Dr. Doubt", f:"Has a PhD in making you second-guess everything."},
+    {n:"The Underminer", f:"Works underground. Weakens foundations. Gets caught."},
+    {n:"Baron von Choke", f:"Dramatic cape. Predictable moves."},
+    {n:"The Saboteur", f:"Sneaky. But you know all its tricks now."},
+    {n:"Professor Panic", f:"Teaches a masterclass in overreaction."},
+    {n:"The Critic", f:"All reviews, no performances. Ever."},
+    {n:"Agent Freeze", f:"Specializes in making you lock up at the worst moment."},
+    {n:"The Narrator", f:"Won't stop commentating on your performance. Uninvited."},
+    {n:"Count Spiral", f:"One mistake and it's a whole dramatic descent."},
+    {n:"The Gremlin", f:"Small. Destructive. Multiplies when you feed it attention."},
+    {n:"Shadow", f:"Follows you everywhere. Disappears when you turn on the light."},
+    {n:"The Warden", f:"Keeps you locked in a cell you built yourself."},
+    {n:"The Phantom", f:"Haunts your performances. Has never performed one."},
+    {n:"Captain Hindsight", f:"Only shows up after the moment has passed, to tell you what you should have done."},
+    {n:"The Glitch", f:"Corrupts the signal right when it matters most."},
+    {n:"Agent Shrink", f:"Makes everything feel smaller than it is. Including you."},
+    {n:"The Rewinder", f:"Replays your worst moments on a loop. Never the good ones."},
+    {n:"Dr. Nope", f:"Has a prescription for every dream: don't."},
+    {n:"The Editor", f:"Cuts all your best moments. Leaves in the mistakes."},
+    {n:"Commissioner Cringe", f:"Reviews the footage and finds something to wince at every time."},
+    {n:"The Deflator", f:"Lets the air out of every good feeling slowly."},
+    {n:"Madame Dread", f:"Arrives early. Sets the mood. Refuses to leave."},
+    {n:"The Archivist", f:"Has a filing cabinet of every mistake you've ever made. Alphabetized."},
+    {n:"General Alarm", f:"Sounds the siren for everything. Including success."},
+    {n:"The Projector", f:"Plays worst-case scenarios on a screen only you can see."},
+    {n:"Lord Overthink", f:"Turns a single moment into a 40-page analysis."},
+    {n:"The Heckler", f:"Shouts from the cheap seats of your own mind."},
+    {n:"Director Cut", f:"Edits your memories so the bad takes are all that remain."},
+    {n:"The Dampener", f:"Absorbs joy on contact. Professional grade."},
+    {n:"Agent Yesterday", f:"Specializes in reminding you of things that ended years ago."},
+  ],
+};
+
+const catKeys = Object.keys(library);
+let currentCat = catKeys[0];
+const usedIndices = {};
+let chosenName = 'Nigel';
+
+const nameEl = document.getElementById('impostor-name');
+const flavorEl = document.getElementById('flavor-text');
+const catRow = document.getElementById('cat-row');
+
+catKeys.forEach((cat) => {
+  const btn = document.createElement('button');
+  btn.className = 'cat-btn';
+  btn.textContent = cat;
+  btn.dataset.cat = cat;
+  btn.addEventListener('click', () => setCat(cat));
+  catRow.appendChild(btn);
+});
+const surpriseBtn = document.createElement('button');
+surpriseBtn.className = 'cat-btn';
+surpriseBtn.textContent = 'surprise me';
+surpriseBtn.dataset.cat = 'surprise';
+surpriseBtn.addEventListener('click', () => {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  surpriseBtn.classList.add('active');
+  currentCat = '__surprise__';
+  generate();
+});
+catRow.appendChild(surpriseBtn);
+
+function setCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = [...document.querySelectorAll('.cat-btn')].find(b => b.dataset.cat === cat);
+  if (activeBtn) activeBtn.classList.add('active');
+  generate();
+}
+
+function markActive(cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  const active = [...document.querySelectorAll('.cat-btn')].find(b => b.dataset.cat === cat);
+  if (active) active.classList.add('active');
+}
+
+function generate() {
+  let cat = currentCat;
+  if (cat === '__surprise__') {
+    cat = catKeys[Math.floor(Math.random() * catKeys.length)];
+  } else {
+    markActive(cat); // highlight the flavor a name came from (e.g. first "Give me a name")
+  }
+  const pool = library[cat];
+  if (!usedIndices[cat]) usedIndices[cat] = [];
+  if (usedIndices[cat].length >= pool.length) usedIndices[cat] = [];
+
+  let idx;
+  do { idx = Math.floor(Math.random() * pool.length); } while (usedIndices[cat].includes(idx));
+  usedIndices[cat].push(idx);
+
+  const pick = pool[idx];
+  nameEl.style.opacity = '0';
+  flavorEl.style.opacity = '0';
+  setTimeout(() => {
+    nameEl.textContent = pick.n;
+    flavorEl.textContent = pick.f;
+    nameEl.hidden = false;
+    nameEl.style.opacity = '1';
+    flavorEl.style.opacity = '1';
+    document.getElementById('btn-use').disabled = false;
+  }, 150);
+}
+
+/* ---------------- name helpers ---------------- */
+// Capitalize display forms of lowercase names ("the gnat" -> "The gnat")
+// at the start of a sentence.
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function setName(name) {
+  chosenName = name;
+  try { localStorage.setItem('giImpostorName.v1', name); } catch (e) {}
+  document.getElementById('meet-name').textContent = name;
+  document.querySelectorAll('.meet-name-inline').forEach(el => { el.textContent = name; });
+  document.getElementById('quote-who').textContent = cap(name) + ' says:';
+}
+
+/* ---------------- stage switching ---------------- */
+function show(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('btn-another').addEventListener('click', generate);
+
+document.getElementById('btn-use').addEventListener('click', () => {
+  if (nameEl.hidden || !nameEl.textContent.trim()) return;
+  setName(nameEl.textContent);
+  document.getElementById('quote-wrap').hidden = true;
+  document.getElementById('say-input').value = '';
+  show('view-meet');
+});
+
+document.getElementById('btn-say').addEventListener('click', () => {
+  const raw = document.getElementById('say-input').value.trim();
+  const line = raw || 'You&rsquo;re going to blow this.';
+  const wrap = document.getElementById('quote-wrap');
+  document.getElementById('quote-text').innerHTML = '&ldquo;' + escapeHtml(line) + '&rdquo;';
+  wrap.hidden = false;
+  wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+document.getElementById('btn-rename').addEventListener('click', () => show('view-generate'));
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------------- share card ---------------- */
+async function makeShareCard() {
+  await document.fonts.ready;
+  const W = 1080, H = 1350;
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#fafaf8';
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = '#c44b3a';
+  ctx.fillRect(0, 0, W, 8);
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#666';
+  ctx.font = '700 30px "Space Mono", monospace';
+  ctx.fillText('M Y   I M P O S T O R   H A S   A   N A M E', W / 2, 150);
+
+  // the name (big)
+  ctx.fillStyle = '#1a1a1a';
+  const display = cap(chosenName);
+  let size = 150;
+  ctx.font = '700 ' + size + 'px "Source Serif 4", Georgia, serif';
+  while (ctx.measureText(display).width > W - 200 && size > 60) {
+    size -= 6;
+    ctx.font = '700 ' + size + 'px "Source Serif 4", Georgia, serif';
+  }
+  ctx.fillText(display, W / 2, 560);
+
+  // reframe line
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = 'italic 400 52px "Source Serif 4", Georgia, serif';
+  ctx.fillText('Now it&rsquo;s just the thing that talks.'.replace('&rsquo;', '’'), W / 2, 760);
+
+  ctx.fillStyle = '#666';
+  ctx.font = '400 40px "Source Serif 4", Georgia, serif';
+  ctx.fillText('Not me.', W / 2, 840);
+
+  // footer attribution
+  ctx.fillStyle = '#666';
+  ctx.font = 'italic 400 34px "Source Serif 4", Georgia, serif';
+  ctx.fillText('Meet the other voice in your head.', W / 2, 1160);
+  ctx.fillStyle = '#1a1a1a';
+  ctx.font = '700 34px "Space Mono", monospace';
+  ctx.fillText('GeniusAndImpostor.com', W / 2, 1225);
+
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+}
+
+async function shareCard() {
+  const blob = await makeShareCard();
+  const file = new File([blob], 'my-impostor.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; }
+    catch (err) { if (err && err.name === 'AbortError') return; }
+  }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'my-impostor.png';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+document.getElementById('btn-share').addEventListener('click', shareCard);
+</script>
+</body>
+</html>
