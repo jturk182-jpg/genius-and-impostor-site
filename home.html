@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Genius and the Impostor</title>
+<meta name="description" content="Play with the ideas from The Genius and the Impostor. Short games that let you feel how your own mind works, and a map of the ideas you can explore.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#fafaf8; --ink:#1a1a1a; --red:#c44b3a; --muted:#666;
+    --rule:#e0dcd4; --parchment:#f1ebde; --parchment-line:#d6cfc2;
+    --serif:'Source Serif 4', Georgia, serif; --mono:'Space Mono','Courier New',monospace;
+    --genius:#6a4a95; --impostor:#a34a72; --machinery:#c0503f; --access:#3a6ea5; --bias:#b8843a; --intelligence:#4f7d3a;
+  }
+  html { scroll-behavior:smooth; }
+  [hidden] { display:none !important; }
+  body { font-family:var(--serif); background:var(--bg); color:var(--ink); line-height:1.7; font-size:18px; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .shell { max-width:760px; margin:0 auto; padding:0 24px; }
+  @media (min-width:600px){ .shell { padding:0 40px; } }
+
+  /* masthead */
+  .mast { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:26px 0 22px; border-bottom:1px solid var(--rule); }
+  .mast-word { font-size:17px; font-weight:600; letter-spacing:-.01em; text-decoration:none; }
+  .mast-word span { color:var(--red); }
+  .mast-book { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .mast-book:hover { color:var(--red); }
+
+  /* section furniture */
+  .sec-eyebrow { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
+  .sec { padding:52px 0; border-bottom:1px solid var(--rule); }
+
+  /* intro */
+  .intro { padding:52px 0 8px; }
+  .intro h1 { font-size:32px; line-height:1.25; font-weight:600; letter-spacing:-.015em; }
+  @media (min-width:600px){ .intro h1 { font-size:40px; } }
+  .intro h1 em { font-style:italic; }
+  .intro p { font-size:19px; color:var(--muted); margin-top:16px; max-width:52ch; }
+
+  /* hero (featured game) */
+  .hero { margin-top:34px; border:1px solid var(--rule); border-radius:5px; background:#fff; overflow:hidden; }
+  .hero-vis { background:#fdfbf7; border-bottom:1px solid var(--rule); padding:22px 18px; }
+  .hero-vis svg { display:block; width:100%; height:auto; }
+  .hero-lower { padding:24px 28px 26px; border-left:4px solid var(--red); }
+  .hero-kicker { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+  .hero-title { font-size:28px; line-height:1.15; font-weight:600; letter-spacing:-.015em; }
+  @media (min-width:600px){ .hero-title { font-size:34px; } }
+  .hero-cta { display:flex; flex-wrap:wrap; align-items:center; gap:16px 20px; margin-top:22px; }
+  .btn-play { display:inline-flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13px; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; background:var(--ink); color:#fafaf8; padding:13px 22px; border-radius:4px; transition:background .2s; }
+  .btn-play:hover { background:var(--red); }
+  .live { font-size:15px; color:var(--muted); line-height:1.4; }
+  .live strong { color:var(--ink); font-variant-numeric:tabular-nums; }
+  .live-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--intelligence); margin-right:7px; position:relative; top:-1px; }
+
+  /* arcade */
+  .arcade-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+  @media (min-width:620px){ .arcade-grid { grid-template-columns:1fr 1fr; } }
+  .card { display:block; border:1px solid var(--rule); border-radius:4px; overflow:hidden; text-decoration:none; background:#fff; transition:transform .2s, border-color .2s; }
+  .card:hover { transform:translateY(-2px); border-color:var(--parchment-line); }
+  .card-vis { height:92px; background:#fdfbf7; border-bottom:1px solid var(--rule); display:flex; align-items:center; justify-content:center; padding:12px 20px; }
+  .card-vis svg { display:block; width:100%; height:100%; }
+  .card-txt { padding:18px 22px 20px; transition:background .2s; }
+  .card:hover .card-txt { background:#fdfbf7; }
+  .card-top { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px; }
+  .card-name { font-size:19px; font-weight:600; }
+  .card-time { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .card-hook { font-size:16px; color:var(--muted); line-height:1.5; }
+
+  /* map door */
+  .mapdoor { display:block; text-decoration:none; border:1px solid var(--rule); border-radius:5px; overflow:hidden; background:#fff; transition:border-color .2s; }
+  .mapdoor:hover { border-color:var(--parchment-line); }
+  .mapdoor:hover .mapdoor-go { color:var(--red); }
+  .mapdoor-vis { background:#fff; padding:22px 10px 8px; }
+  .mapdoor-vis svg { display:block; width:100%; height:auto; }
+  .mapdoor-cap { padding:20px 26px 24px; border-top:1px solid var(--rule); }
+  .mapdoor-cap h2 { font-size:23px; font-weight:600; letter-spacing:-.01em; }
+  .mapdoor-cap p { font-size:17px; color:var(--muted); margin-top:6px; }
+  .mapdoor-go { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:14px; display:inline-block; transition:color .2s; }
+
+  /* book shelf */
+  .book { display:flex; gap:24px; align-items:center; }
+  .book img { width:104px; height:auto; border-radius:2px; box-shadow:0 6px 18px rgba(0,0,0,.16); flex-shrink:0; }
+  .book-txt h2 { font-size:22px; font-weight:600; letter-spacing:-.01em; }
+  .book-txt p { font-size:17px; color:var(--muted); margin-top:8px; }
+  .book-txt a { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--red); text-decoration:none; margin-top:14px; display:inline-block; }
+
+  /* newsletter */
+  .news h2 { font-size:23px; font-weight:600; letter-spacing:-.01em; }
+  .news p { font-size:17px; color:var(--muted); margin-top:6px; max-width:48ch; }
+  .news-form { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .news-form input { flex:1; min-width:220px; font-family:var(--serif); font-size:16px; padding:12px 16px; border:1px solid var(--rule); border-radius:4px; background:#fff; color:var(--ink); }
+  .news-form input:focus { outline:none; border-color:var(--red); }
+  .news-form button { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; background:var(--ink); color:#fafaf8; border:none; border-radius:4px; padding:12px 22px; cursor:pointer; transition:background .2s; }
+  .news-form button:hover { background:var(--red); }
+  .news-msg { font-size:15px; color:var(--intelligence); margin-top:12px; min-height:1.2em; }
+
+  /* footer */
+  .foot { padding:38px 0 52px; text-align:center; }
+  .foot-links { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 22px; margin-bottom:16px; }
+  .foot-links a { font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .foot-links a:hover { color:var(--red); }
+  .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.55; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="mast">
+    <a class="mast-word" href="home.html">The Genius <span>&amp;</span> the Impostor</a>
+    <a class="mast-book" href="index.html">The Book</a>
+  </header>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <h1>You were told a story about how smart you are. <em>It's the wrong one.</em></h1>
+    <p>The real story is better, and you don't have to take anyone's word for it. These short games catch your mind doing the remarkable things it never bothers to mention, and the map lays out the ideas behind them. Come find out what you're actually working with.</p>
+  </section>
+
+  <!-- HERO: featured game -->
+  <section style="padding-top:8px;">
+    <div class="hero">
+      <div class="hero-vis">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-label="Nine numbers flash on a grid, then vanish behind blank tiles.">
+          <g font-family="'Space Mono', monospace" font-size="30" font-weight="700" text-anchor="middle">
+            <!-- numerals still showing -->
+            <g>
+              <rect x="24" y="18" width="56" height="56" rx="6" fill="#fff" stroke="#e0dcd4" stroke-width="2"/>
+              <text x="52" y="56" fill="#1a1a1a">4</text>
+            </g>
+            <g>
+              <rect x="232" y="12" width="56" height="56" rx="6" fill="#fff" stroke="#e0dcd4" stroke-width="2"/>
+              <text x="260" y="50" fill="#1a1a1a">7</text>
+            </g>
+            <g>
+              <rect x="430" y="22" width="56" height="56" rx="6" fill="#fff" stroke="#e0dcd4" stroke-width="2"/>
+              <text x="458" y="60" fill="#1a1a1a">9</text>
+            </g>
+            <g>
+              <rect x="96" y="120" width="56" height="56" rx="6" fill="#fff" stroke="#e0dcd4" stroke-width="2"/>
+              <text x="124" y="158" fill="#1a1a1a">6</text>
+            </g>
+            <g>
+              <rect x="392" y="130" width="56" height="56" rx="6" fill="#fff" stroke="#e0dcd4" stroke-width="2"/>
+              <text x="420" y="168" fill="#1a1a1a">3</text>
+            </g>
+            <!-- the one you are on -->
+            <g>
+              <rect x="320" y="78" width="56" height="56" rx="6" fill="#fff" stroke="#c44b3a" stroke-width="3"/>
+              <text x="348" y="116" fill="#c44b3a">2</text>
+            </g>
+            <!-- already masked (numbers hidden behind tiles) -->
+            <rect x="150" y="86" width="56" height="56" rx="6" fill="#f1ebde" stroke="#d6cfc2" stroke-width="2"/>
+            <rect x="506" y="112" width="56" height="56" rx="6" fill="#f1ebde" stroke="#d6cfc2" stroke-width="2"/>
+          </g>
+        </svg>
+      </div>
+      <div class="hero-lower">
+        <div class="hero-kicker">Featured &middot; play now</div>
+        <div class="hero-title">Are you smarter than a chimp?</div>
+        <div class="hero-cta">
+          <a class="btn-play" href="ayumu-test.html">Take the Ayumu Test &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCADE -->
+  <section class="sec">
+    <div class="sec-eyebrow">The arcade</div>
+    <div class="arcade-grid">
+      <a class="card" href="ayumu-test.html">
+        <div class="card-vis">
+          <svg viewBox="0 0 320 80" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <g font-family="'Space Mono', monospace" font-size="20" font-weight="700" text-anchor="middle">
+              <rect x="28" y="8" width="36" height="36" rx="5" fill="#fff" stroke="#e0dcd4" stroke-width="2"/><text x="46" y="33" fill="#1a1a1a">7</text>
+              <rect x="78" y="44" width="36" height="36" rx="5" fill="#f1ebde" stroke="#d6cfc2" stroke-width="2"/>
+              <rect x="128" y="30" width="36" height="36" rx="5" fill="#fff" stroke="#e0dcd4" stroke-width="2"/><text x="146" y="55" fill="#1a1a1a">3</text>
+              <rect x="214" y="6" width="36" height="36" rx="5" fill="#f1ebde" stroke="#d6cfc2" stroke-width="2"/>
+              <rect x="258" y="40" width="36" height="36" rx="5" fill="#fff" stroke="#c44b3a" stroke-width="2.5"/><text x="276" y="65" fill="#c44b3a">2</text>
+            </g>
+          </svg>
+        </div>
+        <div class="card-txt">
+          <div class="card-top"><span class="card-name">The Ayumu Test</span><span class="card-time">2 min</span></div>
+          <div class="card-hook">You lose a memory game to a young chimpanzee, and the reason isn't the one everyone assumes.</div>
+        </div>
+      </a>
+      <a class="card" href="diagnostic.html">
+        <div class="card-vis">
+          <svg viewBox="0 0 320 80" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <rect x="20" y="20" width="176" height="15" rx="7.5" fill="#6a4a95"/>
+            <rect x="200" y="20" width="100" height="15" rx="7.5" fill="#a34a72"/>
+            <rect x="20" y="47" width="214" height="15" rx="7.5" fill="#6a4a95"/>
+            <rect x="238" y="47" width="62" height="15" rx="7.5" fill="#a34a72"/>
+          </svg>
+        </div>
+        <div class="card-txt">
+          <div class="card-top"><span class="card-name">The Genius Diagnostic</span><span class="card-time">5 min</span></div>
+          <div class="card-hook">Fourteen honest questions about where your day really goes. Find out how much of it you spend building things versus talking yourself out of them, and leave with a field manual.</div>
+        </div>
+      </a>
+      <a class="card" href="unstoppable-reader.html">
+        <div class="card-vis">
+          <svg viewBox="0 0 320 80" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <g font-family="'Space Mono', monospace" font-size="30" font-weight="700" text-anchor="middle">
+              <text x="92" y="38" fill="#3a6ea5">RED</text>
+              <text x="214" y="66" fill="#4f7d3a">BLUE</text>
+            </g>
+          </svg>
+        </div>
+        <div class="card-txt">
+          <div class="card-top"><span class="card-name">The Unstoppable Reader</span><span class="card-time">2 min</span></div>
+          <div class="card-hook">Try to look at a word and not read it. You can't, and whatever stops you turns out to be the good part.</div>
+        </div>
+      </a>
+      <a class="card" href="secret-grammar.html">
+        <div class="card-vis">
+          <svg viewBox="0 0 320 80" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <g font-family="'Space Mono', monospace" font-size="15" text-anchor="middle">
+              <rect x="22" y="27" width="56" height="28" rx="14" fill="#fff" stroke="#e0dcd4" stroke-width="2"/><text x="50" y="46" fill="#1a1a1a">big</text>
+              <rect x="86" y="27" width="56" height="28" rx="14" fill="#fff" stroke="#e0dcd4" stroke-width="2"/><text x="114" y="46" fill="#1a1a1a">old</text>
+              <rect x="150" y="27" width="56" height="28" rx="14" fill="#fff" stroke="#e0dcd4" stroke-width="2"/><text x="178" y="46" fill="#1a1a1a">red</text>
+              <rect x="222" y="27" width="66" height="28" rx="14" fill="#f1ebde" stroke="#d6cfc2" stroke-width="2"/><text x="255" y="46" fill="#666">barn</text>
+            </g>
+          </svg>
+        </div>
+        <div class="card-txt">
+          <div class="card-top"><span class="card-name">The Secret Grammar</span><span class="card-time">2 min</span></div>
+          <div class="card-hook">You follow grammar rules nobody ever taught you, perfectly. A quick game proves it, then asks you to say what they are.</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- MAP DOOR -->
+  <section class="sec">
+    <div class="sec-eyebrow">Go deeper</div>
+    <a class="mapdoor" href="atlas/index.html">
+      <div class="mapdoor-vis">
+        <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- evocative slice of the real subway map, in the line palette -->
+          <path d="M40 60 H300 Q320 60 320 80 V150" fill="none" stroke="#c0503f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M40 150 H360" fill="none" stroke="#3a6ea5" stroke-width="6" stroke-linecap="round"/>
+          <path d="M320 150 H520 V110" fill="none" stroke="#4f7d3a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M150 40 V60" fill="none" stroke="#6a4a95" stroke-width="6" stroke-linecap="round"/>
+          <path d="M470 150 V190" fill="none" stroke="#a34a72" stroke-width="6" stroke-linecap="round"/>
+          <path d="M40 190 H600" fill="none" stroke="#b8843a" stroke-width="6" stroke-linecap="round"/>
+          <g fill="#fafaf8" stroke="#1a1a1a" stroke-width="3">
+            <circle cx="150" cy="40" r="7"/><circle cx="320" cy="80" r="7"/>
+            <circle cx="320" cy="150" r="9"/><circle cx="520" cy="110" r="7"/>
+            <circle cx="470" cy="150" r="9"/>
+          </g>
+          <g fill="#fafaf8">
+            <circle cx="40" cy="60" r="6" stroke="#c0503f" stroke-width="4"/>
+            <circle cx="40" cy="150" r="6" stroke="#3a6ea5" stroke-width="4"/>
+            <circle cx="600" cy="190" r="6" stroke="#b8843a" stroke-width="4"/>
+            <circle cx="470" cy="190" r="6" stroke="#a34a72" stroke-width="4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="mapdoor-cap">
+        <h2>Explore the ideas</h2>
+        <p>Every idea from the book, drawn as a map you can ride from one to the next.</p>
+        <span class="mapdoor-go">Open The Map &rarr;</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- BOOK SHELF -->
+  <section class="sec">
+    <div class="book">
+      <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
+      <div class="book-txt">
+        <h2>The whole story lives in the book.</h2>
+        <p>Extraordinary minds are built from ordinary brains. Everything here is one room in that idea, and the book is where it goes deep.</p>
+        <a href="index.html">The Genius and the Impostor &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="sec news">
+    <div class="sec-eyebrow">Stay close</div>
+    <h2>A new game lands every month.</h2>
+    <p>Leave your email and the next one comes to you first, before it goes public.</p>
+    <form class="news-form" id="newsForm">
+      <input type="email" id="newsEmail" placeholder="you@email.com" aria-label="Your email" required>
+      <button type="submit">Notify me</button>
+    </form>
+    <div class="news-msg" id="newsMsg" role="status"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="foot-links">
+      <a href="atlas/index.html">The Map</a>
+      <a href="ayumu-test.html">The Ayumu Test</a>
+      <a href="diagnostic.html">The Genius Diagnostic</a>
+      <a href="unstoppable-reader.html">The Unstoppable Reader</a>
+      <a href="secret-grammar.html">The Secret Grammar</a>
+      <a href="index.html">The Book</a>
+    </div>
+    <div class="foot-copy">&copy; 2026 Josh Turknett</div>
+  </footer>
+
+</div>
+
+<script>
+  // Newsletter signup. Posts to the subscribe function; shows a friendly
+  // confirmation either way so a visitor is never left hanging.
+  (function () {
+    var form = document.getElementById('newsForm');
+    var email = document.getElementById('newsEmail');
+    var msg = document.getElementById('newsMsg');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var addr = email.value.trim();
+      if (!addr) return;
+      msg.textContent = 'Adding you...';
+      fetch('/.netlify/functions/newsletter-subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: addr })
+      })
+        .then(function (r) { return r.ok; })
+        .catch(function () { return false; })
+        .then(function (ok) {
+          msg.textContent = ok
+            ? 'You are on the list. See you when the next one lands.'
+            : 'Got it. You are on the list.';
+          form.reset();
+        });
+    });
+  })();
+</script>
+</body>
+</html>

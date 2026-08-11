@@ -1,0 +1,117 @@
+{
+  "lines": [
+    {
+      "id": "genius",
+      "name": "The Genius Line",
+      "subtitle": "the learning engine",
+      "color": "#6a4a95",
+      "stations": [
+        "the-genius",
+        "adult-learning",
+        "genius-led-learning",
+        "automaticity"
+      ]
+    },
+    {
+      "id": "impostor",
+      "name": "The Impostor Line",
+      "subtitle": "the inner narrator",
+      "color": "#a34a72",
+      "stations": [
+        "the-impostor",
+        "unreliable-narrator",
+        "special-brain-story"
+      ]
+    },
+    {
+      "id": "machinery",
+      "name": "The Machinery Line",
+      "subtitle": "how capability gets built",
+      "color": "#c0503f",
+      "stations": [
+        "goldilocks-zone",
+        "progressive-composition",
+        "implicit-learning",
+        "automaticity",
+        "bottleneck-chunking",
+        "everyday-genius",
+        "uncommon-genius",
+        "solution-space"
+      ]
+    },
+    {
+      "id": "access",
+      "name": "The Access Line",
+      "subtitle": "how capability gets reached",
+      "color": "#3a6ea5",
+      "stations": [
+        "routing-architecture",
+        "capability-accessibility-model",
+        "solution-space"
+      ]
+    },
+    {
+      "id": "bias",
+      "name": "The Bias Line",
+      "subtitle": "why we got it backwards",
+      "color": "#b8843a",
+      "stations": [
+        "automaticity-blindness",
+        "effort-inversion",
+        "competence-inversion",
+        "introspective-bias",
+        "trained-reasoning",
+        "special-brain-story"
+      ]
+    },
+    {
+      "id": "intelligence",
+      "name": "The Intelligence Line",
+      "subtitle": "what intelligence actually is",
+      "color": "#4f7d3a",
+      "stations": [
+        "everyday-genius",
+        "uncommon-genius",
+        "domain-specific-intelligence",
+        "prediction-engine"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "start-here",
+      "name": "Start here",
+      "blurb": "Five stops, from the everyday genius you already have to the practice that grows it.",
+      "stations": [
+        "everyday-genius",
+        "automaticity",
+        "effort-inversion",
+        "the-impostor",
+        "goldilocks-zone"
+      ]
+    },
+    {
+      "id": "the-iq-route",
+      "name": "The IQ route",
+      "blurb": "For the skeptic. The case against IQ, evidence first.",
+      "stations": [
+        "trained-reasoning",
+        "bottleneck-chunking",
+        "domain-specific-intelligence",
+        "special-brain-story"
+      ]
+    },
+    {
+      "id": "the-performance-route",
+      "name": "The performance route",
+      "blurb": "For the practitioner. Why you choke under pressure, and how to get the access back.",
+      "stations": [
+        "routing-architecture",
+        "capability-accessibility-model",
+        "solution-space",
+        "the-impostor",
+        "goldilocks-zone"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Capability-Accessibility Model &mdash; The Map</title>
+<meta name="description" content="What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let y">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#fafaf8; --ink:#1a1a1a; --red:#c44b3a; --muted:#666;
+    --rule:#e0dcd4; --parchment:#f1ebde; --parchment-line:#d6cfc2;
+    --serif:'Source Serif 4', Georgia, serif; --mono:'Space Mono','Courier New',monospace;
+    --genius:#6a4a95; --impostor:#a34a72; --machinery:#c0503f; --access:#3a6ea5; --bias:#b8843a; --intelligence:#4f7d3a;
+  }
+  html { scroll-behavior:smooth; }
+  [hidden] { display:none !important; }
+  body { font-family:var(--serif); background:var(--bg); color:var(--ink); line-height:1.75; font-size:18px; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .shell { max-width:720px; margin:0 auto; padding:0 24px; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+  @media (min-width:600px){ .shell { padding:0 40px; } }
+  .shell-main { flex:1; padding:40px 0 56px; }
+  /* mast */
+  .mast { padding:26px 0 18px; border-bottom:1px solid var(--rule); display:flex; align-items:baseline; justify-content:space-between; gap:16px; }
+  .mast-home { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .mast-home:hover { color:var(--red); }
+  .mast-kicker { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+  /* line chips */
+  .linechips { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 8px; }
+  .linechip { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#fff; padding:3px 10px; border-radius:2px; text-decoration:none; }
+  /* headings */
+  h1.station { font-size:38px; line-height:1.15; font-weight:600; letter-spacing:-.01em; margin:14px 0 22px; }
+  @media (min-width:600px){ h1.station { font-size:46px; } }
+  .lead { font-size:22px; line-height:1.5; color:var(--ink); margin-bottom:8px; }
+  @media (min-width:600px){ .lead { font-size:24px; } }
+  .sec { margin-top:44px; }
+  .sec-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+  .sec p { margin-bottom:16px; }
+  .cite { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.02em; display:block; margin-top:-8px; margin-bottom:20px; }
+  /* claims block */
+  .claims { display:grid; grid-template-columns:1fr; gap:0; border:1px solid var(--parchment-line); background:var(--parchment); border-radius:3px; overflow:hidden; margin-top:36px; }
+  @media (min-width:640px){ .claims { grid-template-columns:1fr 1fr; } }
+  .claims-cell { padding:22px 24px; }
+  .claims-cell + .claims-cell { border-top:1px solid var(--parchment-line); }
+  @media (min-width:640px){ .claims-cell + .claims-cell { border-top:none; border-left:1px solid var(--parchment-line); } }
+  .claims-head { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; }
+  .claims-believe .claims-head { color:var(--muted); }
+  .claims-evidence .claims-head { color:var(--red); }
+  .claims-cell p { font-size:17px; line-height:1.55; margin:0; }
+  /* walk me through it (opens the learn-flow modal) */
+  .walk-btn { display:inline-block; font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:var(--ink); color:var(--bg); border:none; border-radius:4px; padding:14px 26px; margin-top:6px; cursor:pointer; transition:background .2s; }
+  .walk-btn:hover, .walk-btn:focus-visible { background:var(--red); outline:none; }
+  /* feel it (games) */
+  .feelit { display:block; border:1px solid var(--rule); border-left:3px solid var(--red); border-radius:3px; padding:20px 22px; text-decoration:none; margin-bottom:14px; transition:background .2s, transform .2s; background:#fff; }
+  .feelit:hover { background:#fdfbf7; transform:translateY(-1px); }
+  .feelit-name { font-weight:600; font-size:19px; margin-bottom:4px; }
+  .feelit-blurb { font-size:16px; color:var(--muted); line-height:1.5; }
+  .feelit-cue { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); margin-top:10px; }
+  /* map fragment */
+  .frag { border-top:1px solid var(--rule); }
+  .frag-edge { padding:14px 0; border-bottom:1px solid var(--rule); }
+  .frag-edge summary { list-style:none; cursor:pointer; display:flex; align-items:baseline; gap:10px; justify-content:space-between; }
+  .frag-edge summary::-webkit-details-marker { display:none; }
+  .frag-rel { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .frag-target { font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; flex:1; }
+  .frag-target:hover { color:var(--red); }
+  .frag-why { font-size:15px; color:var(--muted); line-height:1.5; padding-top:10px; }
+  .frag-open { font-family:var(--mono); font-size:16px; color:var(--rule); }
+  /* next */
+  .next { display:block; margin-top:44px; border:1px solid var(--rule); border-radius:3px; padding:24px; text-decoration:none; background:#fff; transition:background .2s; }
+  .next:hover { background:#fdfbf7; }
+  .next-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .next-name { font-size:24px; font-weight:600; color:var(--red); margin-bottom:6px; }
+  .next-reason { font-size:16px; color:var(--muted); line-height:1.5; }
+  /* book */
+  .book { margin-top:40px; padding:22px 0 0; border-top:1px solid var(--rule); font-size:17px; color:var(--muted); font-style:italic; line-height:1.6; }
+  /* footer */
+  .foot { border-top:1px solid var(--rule); padding:34px 0 46px; text-align:center; margin-top:12px; }
+  .foot-label { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); opacity:.7; margin-bottom:14px; }
+  .foot-links { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .foot-links a { font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .foot-links a:hover { color:var(--red); }
+  .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="mast">
+    <a class="mast-home" href="index.html">&larr; The Map</a>
+    <span class="mast-kicker">Genius &amp; Impostor</span>
+  </header>
+  <main class="shell-main">
+    <div class="linechips"><a class="linechip" style="background:#3a6ea5" href="index.html#line-access">The Access Line</a></div>
+    <h1 class="station">The Capability-Accessibility Model</h1>
+    <p class="lead">What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let you reach, and when the access drops to zero, the performance does too, no matter how much skill is sitting there.</p>
+    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    
+    
+    <div class="sec">
+      <div class="sec-label">On the map</div>
+      <div class="frag">
+        <details class="frag-edge"><summary><span class="frag-rel">built on</span><a class="frag-target" href="routing-architecture.html">Routing Architecture</a><span class="frag-open">+</span></summary><div class="frag-why">Routing is the R in the equation. It is the part that decides what you can currently reach.</div></details><details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">The set of problems you can solve right now is capability and access taken together.</div></details><details class="frag-edge"><summary><span class="frag-rel">hijacked by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">The Impostor works by changing your brain state under pressure, which is how a story in your head reaches down and lowers your access.</div></details>
+      </div>
+    </div>
+    <div class="book">This equation is the backbone of The Genius and the Impostor. The book is where the full case for it gets made, patient by patient.</div>
+    <a class="next" href="routing-architecture.html"><div class="next-label">Next station</div><div class="next-name">Routing Architecture &rarr;</div><div class="next-reason">The equation stands on one idea more than any other. Go see what routing actually is.</div></a>
+  </main>
+  
+  <footer class="foot">
+    <div class="foot-label">While you're here</div>
+    <div class="foot-links">
+      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="index.html">The Map</a>
+      <a href="../ayumu-test.html">The Ayumu Test</a>
+      <a href="../diagnostic.html">The Genius Diagnostic</a>
+      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a href="../secret-grammar.html">The Secret Grammar</a>
+    </div>
+    <div class="foot-copy">&copy; 2026 Josh Turknett</div>
+  </footer>
+</div>
+<script src="../learn-flow.js"></script>
+<script>
+(function () {
+  var steps = [{"ask":"A lot of people would say: “If you have a skill, you have it. Being good at something means you can do it when it counts.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>Having a skill and being able to reach it in the moment are separate things. Performance is capability times access. Block the access and performance falls to zero while the skill stays completely intact.</p>"},{"chunk":"<p>There is a patient in the book, Dennis, who can write a sentence but then cannot read the sentence he just wrote. The machinery that recognizes words is fine, which you can prove by testing it a different way. What is broken is the wiring that carries what his eyes see over to the part of the brain that reads. The skill is there. The route to it is cut.</p><p class=\"lf-cite\">Alexia without agraphia (disconnection syndrome)</p>"},{"chunk":"<p>A rehearsed speaker steps up to the podium and their mind goes blank. Five minutes later, back in their seat, all of it comes flooding back. Nothing was lost. The stress of the moment changed which parts of the brain were talking to each other, and the words the speaker owned completely were, for a minute, out of reach.</p><p class=\"lf-cite\">The universal mind-blank; choking under pressure (Beilock &amp; Carr, 2001)</p>"},{"chunk":"<p>Researchers taught people a number puzzle that had a hidden shortcut nobody was told about. The people who then slept found the shortcut far more often than the people who stayed awake, with the same training behind both groups. Same skill, a different brain state, and a solution that was reachable from one state and not the other.</p><p class=\"lf-cite\">Wagner et al., 2004 (sleep and insight)</p>"},{"chunk":"<p>The subway map is the picture to keep. During the day one set of stations and tracks is open. At night a different set opens and closes. Same city, same rails, but where you can actually get to depends on which schedule is running right now.</p>"}];
+  var btn = document.getElementById('walk-btn');
+  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+})();
+</script>
+</body>
+</html>

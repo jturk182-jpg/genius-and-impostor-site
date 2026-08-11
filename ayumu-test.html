@@ -659,6 +659,35 @@
 
     .overlay-inner .btn-row { margin-top: 24px; }
 
+    /* ---------- reveal: multiple-choice answer rows ---------- */
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .choice {
+      text-align: left;
+      font-family: var(--serif);
+      font-size: clamp(15px, 3.2vw, 17px);
+      line-height: 1.4;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid var(--rule);
+      border-radius: 6px;
+      padding: 15px 18px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+
+    .choice:hover, .choice:focus-visible {
+      border-color: var(--red);
+      background: #fdfbf7;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
     /* ---------- results: you vs Ayumu ---------- */
     .chart-panel {
       border: 1px solid var(--rule);
@@ -1095,26 +1124,11 @@
         <h1 class="t-title" id="intro-title">The Ayumu Test</h1>
         <p class="t-body">Ayumu is a chimpanzee. He lives at a research institute in Japan, he is very good at puzzles on touchscreens, including the one he’s about to beat you at.</p>
         <p class="t-body">The game is simple. Numbers flash up on the screen and then vanish. You tap the spots where they were, in order from smallest to largest. That’s it.</p>
-        <p class="t-body">In the version you are about to play, <strong>five numbers</strong> flash up for <strong>210 milliseconds</strong>. That’s a literal blink of an eye. Ayumu gets it right about four times out of five.</p>
-        <p class="t-body">You will start with three numbers and all the time you need, just to learn how the game works. Then you will try it Ayumu’s way.</p>
-
-        <ul class="spec-list">
-          <li>Time needed <b>Two minutes</b></li>
-          <li>Warm-up <b>3, then 4, then 5 numbers</b></li>
-          <li>Then <b>try to beat Ayumu</b></li>
-          <li>Your tapping <b>Never timed</b></li>
-          <li>Your results <b>Stay on this device</b></li>
-        </ul>
 
         <div class="btn-row">
           <button class="btn primary" id="btn-start">Play</button>
-          <a class="btn ghost" href="ayumu-science.html">Meet Ayumu first</a>
-        </div>
-
-        <p class="t-quiet" style="margin-top: 26px;">Played before, maybe on another device? Jump back in.</p>
-        <div class="btn-row" style="margin-top: 10px;">
           <button class="btn ghost" id="btn-skip-flash">Skip the warm-up</button>
-          <button class="btn ghost" id="btn-skip-nine">Straight to the nine</button>
+          <a class="btn ghost" href="ayumu-science.html">About the Ayumu Test</a>
         </div>
 
         <div class="pref-row">
@@ -1222,13 +1236,14 @@
     </div>
   </div>
 
+<script src="learn-flow.js"></script>
 <script>
 'use strict';
 
 /* ================================================================
    ⚠️  ALL USER-FACING COPY IN THIS FILE IS UNREVIEWED CLAUDE DRAFT.
    Placeholder of the correct shape and voice, pending JT’s pass.
-   See gi-site-build-context.md §1. The reveal (REVEAL_BEATS) and the
+   See gi-site-build-context.md §1. The reveal (REVEAL_FLOW) and the
    share-card dare line are explicitly JT’s to write.
    ================================================================ */
 
@@ -1275,11 +1290,9 @@ const AYUMU_COMMIT_MS = 670;
 const WARMUP = [3, 4, 5];
 const WARMUP_HOLD = 1500;
 
-/* The scored attempt at the Flash, Ayumu’s real 210ms condition. Three
-   goes, because one miss can feel like a slip and three feels like a
-   fact. Land any of them and it opens out to ten so the score has a
-   real denominator. */
-const ATTEMPT_TRIALS = 3;
+/* The scored attempt at the Flash, Ayumu’s real 210ms condition. Ten goes
+   for everyone (JT, 2026-08-09): one flat denominator, no mid-round
+   extension, so the try counter never changes shape. */
 const ATTEMPT_EXTENDED = 10;
 
 /* The Nine: how many self-paced goes in one sitting. */
@@ -1798,7 +1811,8 @@ function render() {
 
 function expose(holdMs) {
   return new Promise(resolve => {
-    let onset = null, prev = 0, maxDelta = 0, hiddenDuring = false, settled = false;
+    let onset = null, shown = null, prev = 0, maxDelta = 0, hiddenDuring = false, settled = false;
+    const deltas = [];
     const onVis = () => { if (document.hidden) hiddenDuring = true; };
     document.addEventListener('visibilitychange', onVis);
 
@@ -1817,6 +1831,32 @@ function expose(holdMs) {
       finish({ measured: -1, drift: 0, maxDelta: -1, valid: false, reason: 'frames stalled' });
     }, holdMs + 2000);
 
+    /* WHAT GETS MEASURED (reworked 2026-08-09, after the try counter kept
+       stalling on replaced trials):
+
+       The numerals do not reach the glass in the callback that draws them;
+       they are presented one vsync later, at roughly the timestamp of the
+       NEXT callback. So the clock starts at that next callback ("shown"),
+       not at the draw. The old code started at the draw, which meant a slow
+       first frame (fonts and canvas warming up on the first few trials of a
+       session) inflated the measurement and tripped the skipped-frame flag,
+       and several tries in a row got thrown out and replaced while the
+       counter sat still.
+
+       Two consequences of measuring from presentation:
+       1. The flash is timed by what the eye could actually see: mask-issue
+          plus one cadence, minus numeral presentation. Within one frame of
+          210ms counts; anything else is flagged, same doctrine as before.
+       2. A late frame in the middle of the flash is NOT flagged: the
+          numerals are a static image, and a skipped compositor frame of a
+          static image changes nothing on the glass. What a mid-flash stall
+          CAN do is push the mask late, and the drift check catches exactly
+          that. maxDelta is still recorded in the log for transparency.
+
+       Cadence is the median frame delta observed during this trial, because
+       adaptive displays (ProMotion) shift between 120Hz and 60Hz at will and
+       the startup calibration goes stale; a steady 60Hz flash within a frame
+       of target is exactly as legitimate as a 120Hz one. */
     function step(ts) {
       if (onset === null) {
         phase = 'numbers';
@@ -1826,24 +1866,34 @@ function expose(holdMs) {
         requestAnimationFrame(step);
         return;
       }
+      if (shown === null) {
+        shown = ts;   /* the numerals' frame has just been presented */
+        prev = ts;
+        requestAnimationFrame(step);
+        return;
+      }
       const d = ts - prev;
       if (d > maxDelta) maxDelta = d;
+      deltas.push(d);
       prev = ts;
-      const elapsed = ts - onset;
+      const sorted = deltas.slice().sort((a, b) => a - b);
+      const cadence = sorted[Math.floor(sorted.length / 2)] || frameDur;
+      const visible = ts - shown;
 
-      /* Blank them on the frame whose midpoint is nearest the target, which
-         is the best a display can do: at 60Hz, 210ms lands on 13 frames. */
-      if (elapsed + frameDur * 0.5 >= holdMs) {
+      /* Issue the mask on the frame that lands the presented duration
+         nearest the target: masking now presents at roughly one more
+         cadence, so compare that outcome against waiting one more frame. */
+      if (visible + cadence * 1.5 >= holdMs) {
         phase = 'respond';
         render();
-        const drift = Math.abs(elapsed - holdMs);
-        const dropped = maxDelta > frameDur * 1.6;
+        const measured = visible + cadence;
+        const drift = measured - holdMs;
         finish({
-          measured: elapsed,
-          drift: elapsed - holdMs,
+          measured: measured,
+          drift: drift,
           maxDelta: maxDelta,
-          valid: !hiddenDuring && !dropped && drift <= frameDur + 1,
-          reason: hiddenDuring ? 'screen went away' : (dropped ? 'skipped frame' : (drift > frameDur + 1 ? 'off target' : null))
+          valid: !hiddenDuring && Math.abs(drift) <= cadence + 1,
+          reason: hiddenDuring ? 'screen went away' : (Math.abs(drift) > cadence + 1 ? 'off target' : null)
         });
         return;
       }
@@ -2056,17 +2106,35 @@ function card(spec) {
     document.getElementById('ov-body').innerHTML = spec.body || '';
     const actions = document.getElementById('ov-actions');
     actions.innerHTML = '';
-    (spec.actions || [{ text: 'Carry on', value: 'go', primary: true }]).forEach(a => {
-      const b = document.createElement('button');
-      b.className = 'btn' + (a.primary ? ' primary' : (a.ghost ? ' ghost' : ''));
-      b.textContent = a.text;
-      b.addEventListener('click', () => {
-        document.getElementById('overlay').classList.remove('active');
-        resolveCard = null;
-        resolve(a.value);
+    if (spec.choices) {
+      /* Multiple-choice: stacked, full-width, sentence-case option rows.
+         Resolves with the chosen index. */
+      actions.className = 'choices';
+      spec.choices.forEach((text, i) => {
+        const b = document.createElement('button');
+        b.className = 'choice';
+        b.textContent = text;
+        b.addEventListener('click', () => {
+          document.getElementById('overlay').classList.remove('active');
+          resolveCard = null;
+          resolve(i);
+        });
+        actions.appendChild(b);
       });
-      actions.appendChild(b);
-    });
+    } else {
+      actions.className = 'btn-row';
+      (spec.actions || [{ text: 'Carry on', value: 'go', primary: true }]).forEach(a => {
+        const b = document.createElement('button');
+        b.className = 'btn' + (a.primary ? ' primary' : (a.ghost ? ' ghost' : ''));
+        b.textContent = a.text;
+        b.addEventListener('click', () => {
+          document.getElementById('overlay').classList.remove('active');
+          resolveCard = null;
+          resolve(a.value);
+        });
+        actions.appendChild(b);
+      });
+    }
     document.getElementById('overlay').classList.add('active');
     const first = actions.querySelector('button');
     if (first) first.focus();
@@ -2117,7 +2185,7 @@ async function runNineTrial() {
   }));
   if (aborted) return null;
 
-  setPrompt('Touch the 1 as soon as you have it. The rest will hide.');
+  setPrompt('Tap the 1 when you are ready. The rest will hide.');
 
   let commitMs = null;
   while (!trial.done && !trial.failed) {
@@ -2186,11 +2254,12 @@ async function runNineSession() {
 
   const prev = store.nine || { bestMs: null, bestDate: null, perfects: 0, tries: 0, log: [] };
   const go = await card({
-    label: 'Ayumu’s other record',
-    title: 'All nine, as fast as you dare',
-    body: '<p>Every number stays on screen until you touch the <strong>1</strong>. The moment you do, the other eight vanish and you finish from memory. So you choose how long to look, and hit the 1 when you think you’ve got it locked in.</p>' +
-          '<p>Ayumu touches the 1 after about <strong>two thirds of a second</strong>, then finishes the other eight. That’s what it’ll take to match the chimp.</p>',
-    actions: [{ text: 'Go', value: 'go', primary: true }, { text: 'Not now', value: 'quit', ghost: true }]
+    label: 'Ayumu’s second game',
+    title: 'One through nine, from memory',
+    body: '<p>In this version, the numbers 1 through 9 appear on the screen and stay there. Take as long as you like to look at them.</p>' +
+          '<p>When you’re ready, tap the <strong>1</strong>. The moment you do, the other eight turn blank. Then tap the rest in order from memory: 2, then 3, all the way up to 9.</p>' +
+          '<p>Ayumu taps the 1 after about <strong>two thirds of a second</strong>, then finishes all eight almost every time. See how close you can get.</p>',
+    actions: [{ text: 'Start', value: 'go', primary: true }, { text: 'Not now', value: 'quit', ghost: true }]
   });
   if (aborted || go !== 'go') return null;
 
@@ -2314,13 +2383,16 @@ async function runAttempt(resume) {
   let valid = rec.log.filter(t => t.valid).length;
   let hits = rec.log.filter(t => t.valid && t.success).length;
   let attempts = rec.log.length;
-  let target = hits > 0 ? ATTEMPT_EXTENDED : ATTEMPT_TRIALS;
+  /* Ten tries for everyone (JT, 2026-08-09). The old three-tries-then-extend
+     mechanic made the counter jump from /3 to /10 mid-round, which read as a
+     glitch no matter how it was explained. */
+  let target = ATTEMPT_EXTENDED;
 
   if (!resume) {
     const go = await card({
       label: 'Ayumu’s version',
       title: 'Five numbers. A fifth of a second.',
-      body: '<p>This is exactly what Ayumu does, at exactly his speed. You get three tries. If you miss all three you are in enormous and distinguished company, so don’t be too hard on yourself. Ready when you are.</p>',
+      body: '<p>This is exactly what Ayumu does, at exactly his speed. You get ten tries. Most people land almost none of them, so don’t be too hard on yourself. Ready when you are.</p>',
       actions: [{ text: 'Go', value: 'go', primary: true }]
     });
     if (aborted || go !== 'go') return null;
@@ -2345,11 +2417,9 @@ async function runAttempt(resume) {
       valid++;
       if (t.success) {
         hits++;
-        /* Landed one. Open it out so the number means something. */
-        if (target === ATTEMPT_TRIALS) {
-          target = ATTEMPT_EXTENDED;
-          setPrompt('You got one. Let us make this count: ten tries.', false);
-          await wait(1400);
+        if (valid < target) {
+          setPrompt('You got one. Keep going.', false);
+          await wait(950);
         }
       } else if (valid < target) {
         const lines = [
@@ -2643,24 +2713,44 @@ function renderNine() {
    and in the savant essay.
    ================================================================ */
 
-const REVEAL_BEATS = [
-  { t: 'First things first, Ayumu wins. He’s a lot better at this, almost impossibly so. He takes in those five numbers in a fifth of a second and stays near eighty percent while he does it. And it looks like he’s not even trying.' },
+/* The reveal is now a walk, not a wall: tap-through cards, and three of the
+   steps are multiple-choice questions (JT, 2026-08-09). Each question surfaces
+   an assumption most people carry about this test, so the reader commits to a
+   guess before the answer overturns it. Any choice advances; the point is the
+   commitment, not a grade, so nobody is ever told they were wrong. The answer
+   names the common assumption and then corrects it. All wording is placeholder
+   for JT's voice pass. `beat` = plain card; `ask`/`choices`/`answer` = a
+   question card followed by its answer card. */
+const REVEAL_FLOW = [
+  { beat: 'First, the plain part: Ayumu wins, and it is not close. He takes in five numbers in a fifth of a second, stays near eighty percent, and looks like he is barely trying.' },
 
-  { t: 'But there’s another important piece of this story, which is that Ayumu has had practice. When the original study was done, Ayumu had practised this game about five hundred times. The initial human volunteers he was measured against had about fifty reps. And when researchers went back and gave people a fair share of practice, the gap between human and chimp shrank.' },
+  { ask: 'So why is he so much better at this than you? Take a guess.',
+    choices: [
+      'His brain is simply built for it',
+      'He has had far more practice than you',
+      'Humans are just bad with numbers'
+    ],
+    answer: '<p>The honest headline is practice, and it counts for more than almost anyone guesses. When this was first tested, Ayumu had played the game around five hundred times. The humans he beat had about fifty. When researchers went back and gave people a fair share of practice, the gap shrank.</p><p>So he is not a different kind of creature with a better brain. He is a practised one. But practice is not the whole story, and the rest is where it gets good.</p>' },
 
-  { t: 'So what explains the giant chasm between Ayumu and most humans? What makes him so good?' },
+  { ask: 'The numbers are on screen for only 210 milliseconds, which is less time than it takes your eyes to jump from one spot to another. So to catch all five, what do you have to do?',
+    choices: [
+      'Move your eyes very quickly',
+      'Take the whole screen in with a single glance',
+      'Read them one at a time'
+    ],
+    answer: '<p>You take it all in with a single glance. There is no time for anything else, because one eye movement on its own lasts longer than the whole flash. Which means this was never really a memory test. It is a test of how much you can pull from a single look.</p>' },
 
-  { t: 'Part of it has to do with how your eyes work. Your eyes typically hop from one point to another rather than gliding smoothly. And just one hop takes longer than 210 milliseconds. So if you rely on eye hopping to take in all the numbers, you’re toast!' },
+  { beat: 'Now the strange part. A second chimp in that study, named Ai, was older than Ayumu and had been taught years earlier what the number symbols actually mean. And she was worse at this game than he was.' },
 
-  { t: 'To beat Ayumu, you have to take in all the numbers in a single glance. So this isn’t just about memory. It’s also about how much you get from a single glance. Ayumu gets more out of his than you do, but why?' },
+  { ask: 'Ai knew what the numbers meant. Early on, Ayumu mostly saw shapes. Why would knowing what they mean make you slower?',
+    choices: [
+      'Understanding a symbol takes an extra step',
+      'She was simply less clever than Ayumu',
+      'Older brains hold less in memory'
+    ],
+    answer: '<p>Turning a shape into a meaning is an extra step, and the step costs time. Ayumu took the screen exactly as it was. Ai turned each mark into a number first.</p><p>And here is where it lands close to home: your brain does the very same thing Ai did. You cannot look at a 7 and not see “seven.” The machinery that lets you read this sentence is the same machinery that puts you a step behind Ayumu.</p>' },
 
-  { t: 'The answer to that question may come from a second chimpanzee in that study named Ai. She was a good bit older than Ayumu, and had been taught how to use symbols years earlier.' },
-
-  { t: 'Ai wasn’t nearly as good as Ayumu at this game. To Ayumu, the numbers were just a shape. To Ai, they were a symbol. So while Ayumu was taking in the screen as it was, Ai was turning those numbers into meaning.' },
-
-  { t: 'And that’s what your brain does, too. It’s the whole reason you can read this writing. You are turning several hundred little squiggles into meaning right now, at a speed you never have to think about. But that extra processing step that you’re computing is a handicap against Ayumu.', mirror: true },
-
-  { t: 'All of which reveals something fundamental about different brains and minds. Ayumu is superb at what a chimpanzee needs. You are superb at what a human needs. Neither of you is smarter, and there is no single ladder with one of you above the other. There is only what each of you was built and practised to do.' }
+  { beat: 'So neither of you is smarter. Ayumu is superb at what a chimpanzee’s world asks of him. You are superb at what a human’s world asks of you. There is no single ladder with one of you above the other. There is only what each of you was built for and has practised.' }
 ];
 
 function timingTableHTML(rec) {
@@ -2883,34 +2973,41 @@ function renderResults() {
   }
   html += '<p class="t-body">' + openLine + '</p>';
 
-  html += '<div class="reveal-beats">' +
-    REVEAL_BEATS.map(b => '<p' + (b.mirror ? ' class="beat-mirror"' : '') + '>' + esc(b.t) + '</p>').join('') +
-    '</div>';
+  /* Replay the explanation any time, popped as a focused modal flow. */
+  html += '<div class="btn-row" style="margin-top:20px;"><button class="btn" id="btn-walk-reveal">Walk me through what just happened</button></div>';
 
-  /* NOTE FOR THE TEAM (deliberately not rendered): the reveal beats above are
-     unreviewed placeholder wording built to the locked arc. JT writes the
-     final version. See the REVEAL_BEATS comment block for the arc rationale. */
+  /* The reveal itself no longer lives on this page: it runs as tap-through
+     cards between the Nine and these results (runReveal), one beat per tap.
+     REVEAL_FLOW wording is still placeholder for JT's voice pass. */
 
   /* Humanity's collective effort, joined by choice. Placed after the
      reveal so the score has its context before anyone enlists it. */
   html += '<h2 class="t-section" style="margin-top:40px;">Team Human vs. Team Chimp</h2>' +
     '<div id="team-human-body"><p class="chart-note">Checking the standings…</p></div>';
 
-  /* Task 2 is introduced here, after the reveal, because it is Ayumu’s
-     OTHER measured record and the better thing to train toward. */
+  /* Task 2: usually already played by now (the main flow escorts you
+     through it), so this section is a scoreboard with a rematch button.
+     The full pitch only shows for someone who declined it on the way. */
   const nine = store.nine;
-  html += '<h2 class="t-section" style="margin-top:40px;">Ayumu has another record</h2>' +
-    '<p class="t-body">The good news: you have a chance to beat Ayumu at another task. The bad news: he’s even better at this one. In this game, the numbers one through nine appear on the screen. Once you touch the 1, the others vanish, and the rest of the sequence must be pressed from memory. Ayumu starts that first touch in about <strong>two thirds of a second</strong>, and rarely ever makes a mistake.</p>' +
-    '<p class="t-body">So it’s your turn to give this one a try. Look at the numbers. When you think you’ve got them locked in memory, hit the 1 and see if you can punch in the rest in order.</p>' +
-    (nine && nine.bestMs !== null
-      ? '<p class="t-body">Your best clean run so far: <strong>' + secs(nine.bestMs) + '</strong>.</p>'
-      : '') +
-    '<div class="btn-row">' +
-    '<button class="btn primary" id="btn-to-nine">Try the nine</button>' +
-    '</div>';
+  if (nine && nine.tries) {
+    html += '<h2 class="t-section" style="margin-top:40px;">The Nine</h2>' +
+      '<p class="t-body">Ayumu’s other record: all nine numbers, and he commits to the 1 in about <strong>two thirds of a second</strong>.' +
+      (nine.bestMs !== null
+        ? ' Your best clean run: <strong>' + secs(nine.bestMs) + '</strong>.'
+        : ' You don’t have a clean run on the board yet.') + '</p>' +
+      '<div class="btn-row">' +
+      '<button class="btn primary" id="btn-to-nine">Play the nine again</button>' +
+      '</div>';
+  } else {
+    html += '<h2 class="t-section" style="margin-top:40px;">Ayumu has another record</h2>' +
+      '<p class="t-body">Ayumu has a second record, and this is the one where you can actually take him on. He commits to the 1 in about <strong>two thirds of a second</strong> and hardly ever misses.</p>' +
+      '<div class="btn-row">' +
+      '<button class="btn primary" id="btn-to-nine">Try the nine</button>' +
+      '</div>';
+  }
 
   html += '<h2 class="t-section" style="margin-top:40px;">Or take the dials</h2>' +
-    '<p class="t-body">Time to build up some confidence before you battle Ayumu again. Here you can adjust how many numbers you see and how long they flash. Find a spot that’s comfortable, and then work your way up.</p>' +
+    '<p class="t-body">Adjust how many numbers appear and how long they flash. Find a setting that feels comfortable, then work your way up.</p>' +
     '<div class="btn-row">' +
     '<button class="btn" id="btn-to-sandbox">Find my edge</button>' +
     '<button class="btn" id="btn-to-training">Training Room</button>' +
@@ -2927,6 +3024,11 @@ function renderResults() {
 
   el.innerHTML = html;
   renderTeamHuman(rec);
+  document.getElementById('btn-walk-reveal').addEventListener('click', function () {
+    LearnFlow.open(REVEAL_FLOW.map(function (s) {
+      return s.beat ? { chunk: '<p>' + s.beat + '</p>' } : s;
+    }), { doneLabel: 'Done' });
+  });
   document.getElementById('btn-to-nine').addEventListener('click', startNine);
   document.getElementById('btn-to-sandbox').addEventListener('click', () => { openSandbox(); });
   document.getElementById('btn-to-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
@@ -3111,7 +3213,7 @@ function renderSandbox() {
   html += '<div id="sandbox-yournum"></div>';
 
   html += '<h2 class="t-section" style="margin-top:40px;">Your map</h2>' +
-    '<p class="t-body">Numbers along the top, flash length down the side. Easiest corner is top left. Ayumu’s own setting, five numbers at 210, is the one marked in red; the bottom-right corner is harder than anything he was ever tested on. The square you are on right now is outlined.</p>' +
+    '<p class="t-body">Numbers across the top, flash length down the side. Easiest at the top left, hardest at the bottom right. Ayumu’s setting, five at 210, is marked in red, and the square you are on is outlined.</p>' +
     '<div id="sandbox-map"></div>';
 
   html += '<h2 class="t-section" style="margin-top:44px;">Want a plan instead of a playground?</h2>' +
@@ -3389,7 +3491,7 @@ function renderTraining() {
 
   html += '<div class="parchment-card">' +
     '<div class="card-header"><span>How anything gets built</span><span class="card-stamp">The method</span></div>' +
-    '<p class="t-body">Get the pieces working at a speed where they work, then put them together, then take the time away. So the count of numbers climbs first, with a longer flash. Only once five feels comfortable does the flash start getting shorter, until you reach Ayumu’s own setting: five numbers at 210. The steps past that go harder than he was ever tested on. Every skill you already have was built in roughly this order, including the one you are using to read this.</p>' +
+    '<p class="t-body">Get the pieces working at a speed where they work, then combine them, then take the time away. The number count climbs first at a longer flash, and only once five feels easy does the flash start to shorten, down to Ayumu’s five at 210. Every skill you have was built in that order, including the reading you are doing right now.</p>' +
     '</div>';
 
   html += '<h2 class="t-section">Where you are</h2>';
@@ -3756,10 +3858,69 @@ function renderShare() {
    16. ENTRY POINTS
    ================================================================ */
 
+/* The reveal, one thought per tap (JT, 2026-08-09): a wall of paragraphs
+   gets skimmed, so each beat stands alone on a card and the reader clicks
+   through at their own pace. */
+async function runReveal() {
+  const total = REVEAL_FLOW.length;
+  for (let i = 0; i < total; i++) {
+    const step = REVEAL_FLOW[i];
+    const last = i === total - 1;
+    if (step.ask) {
+      /* Pose the question, let them commit to a guess (any choice advances),
+         then reveal the answer on the next card. */
+      const pick = await card({
+        label: 'What just happened · ' + (i + 1) + ' of ' + total,
+        title: '',
+        body: '<p>' + step.ask + '</p>',
+        choices: step.choices
+      });
+      if (aborted || pick == null) return false;
+      const go = await card({
+        label: 'The answer',
+        title: '',
+        body: step.answer,
+        actions: [{ text: last ? 'See your results' : 'Next', value: 'go', primary: true }]
+      });
+      if (aborted || go !== 'go') return false;
+    } else {
+      const go = await card({
+        label: 'What just happened · ' + (i + 1) + ' of ' + total,
+        title: '',
+        body: '<p>' + step.beat + '</p>',
+        actions: [{ text: last ? 'See your results' : 'Next', value: 'go', primary: true }]
+      });
+      if (aborted || go !== 'go') return false;
+    }
+  }
+  return true;
+}
+
 async function startGame(resume, skipWarmup) {
   await document.fonts.ready;
   const rec = await runTheGame(resume || null, skipWarmup);
   if (!rec) { boot(); return; }
+
+  /* First full play-through runs the whole arc: flash round, straight into
+     the Nine ("one more shot"), THEN the explanation, then results. Return
+     visits skip the escort and land on results like they always did. */
+  if (rec.trials > 0 && !store.revealSeen) {
+    const on = await card({
+      label: 'Round one done',
+      title: 'Ayumu: 80%. You: ' + pct(rec.acc) + '%.',
+      body: '<p>But wait. You get one more shot: Ayumu has a second game, and at this one you can actually take him on.</p>',
+      actions: [{ text: 'Next game', value: 'go', primary: true }]
+    });
+    if (!aborted && on === 'go') {
+      await runNineSession();
+    }
+    if (!aborted) {
+      await runReveal();
+      store.revealSeen = true;
+      saveStore();
+    }
+  }
+
   renderResults();
   showView('view-results');
 }
@@ -3815,7 +3976,6 @@ document.getElementById('btn-quit').addEventListener('click', () => {
 
 document.getElementById('btn-start').addEventListener('click', () => startGame(null));
 document.getElementById('btn-skip-flash').addEventListener('click', () => startGame(null, true));
-document.getElementById('btn-skip-nine').addEventListener('click', startNine);
 document.getElementById('btn-resume').addEventListener('click', () => startGame(store.pending));
 document.getElementById('btn-resume-fresh').addEventListener('click', startFresh);
 document.getElementById('btn-flash-from-return').addEventListener('click', () => startGame(null, true));
@@ -3874,7 +4034,7 @@ function boot() {
   const p = store.pending;
   if (p && p.log && p.log.length) {
     const banked = p.log.filter(t => t.valid).length;
-    const target = p.log.some(t => t.valid && t.success) ? ATTEMPT_EXTENDED : ATTEMPT_TRIALS;
+    const target = ATTEMPT_EXTENDED;
     document.getElementById('resume-body').innerHTML =
       '<p class="t-body">You were in the middle of Ayumu’s round, five numbers at 210 milliseconds, with <strong>' +
       banked + ' of ' + target + '</strong> tries in the bank. They were all saved.</p>' +

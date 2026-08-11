@@ -1,0 +1,1308 @@
+{
+  "stations": [
+    {
+      "id": "capability-accessibility-model",
+      "name": "The Capability-Accessibility Model",
+      "aliases": [
+        "CAM",
+        "P = C x R",
+        "performance equation"
+      ],
+      "x": 490,
+      "y": 320,
+      "lines": [
+        "access"
+      ],
+      "oneBreath": "What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let you reach, and when the access drops to zero, the performance does too, no matter how much skill is sitting there.",
+      "claimsBlock": {
+        "believe": "If you have a skill, you have it. Being good at something means you can do it when it counts.",
+        "evidence": "Having a skill and being able to reach it in the moment are separate things. Performance is capability times access. Block the access and performance falls to zero while the skill stays completely intact."
+      },
+      "evidence": [
+        {
+          "text": "There is a patient in the book, Dennis, who can write a sentence but then cannot read the sentence he just wrote. The machinery that recognizes words is fine, which you can prove by testing it a different way. What is broken is the wiring that carries what his eyes see over to the part of the brain that reads. The skill is there. The route to it is cut.",
+          "cite": "Alexia without agraphia (disconnection syndrome)"
+        },
+        {
+          "text": "A rehearsed speaker steps up to the podium and their mind goes blank. Five minutes later, back in their seat, all of it comes flooding back. Nothing was lost. The stress of the moment changed which parts of the brain were talking to each other, and the words the speaker owned completely were, for a minute, out of reach.",
+          "cite": "The universal mind-blank; choking under pressure (Beilock & Carr, 2001)"
+        },
+        {
+          "text": "Researchers taught people a number puzzle that had a hidden shortcut nobody was told about. The people who then slept found the shortcut far more often than the people who stayed awake, with the same training behind both groups. Same skill, a different brain state, and a solution that was reachable from one state and not the other.",
+          "cite": "Wagner et al., 2004 (sleep and insight)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "The subway map is the picture to keep. During the day one set of stations and tracks is open. At night a different set opens and closes. Same city, same rails, but where you can actually get to depends on which schedule is running right now."
+        }
+      ],
+      "relations": [
+        {
+          "target": "routing-architecture",
+          "type": "built on",
+          "justification": "Routing is the R in the equation. It is the part that decides what you can currently reach."
+        },
+        {
+          "target": "solution-space",
+          "type": "explains",
+          "justification": "The set of problems you can solve right now is capability and access taken together."
+        },
+        {
+          "target": "the-impostor",
+          "type": "hijacked by",
+          "justification": "The Impostor works by changing your brain state under pressure, which is how a story in your head reaches down and lowers your access."
+        }
+      ],
+      "games": [],
+      "bookRef": "This equation is the backbone of The Genius and the Impostor. The book is where the full case for it gets made, patient by patient.",
+      "transmissions": [],
+      "next": {
+        "target": "routing-architecture",
+        "reason": "The equation stands on one idea more than any other. Go see what routing actually is."
+      }
+    },
+    {
+      "id": "automaticity",
+      "name": "Automaticity",
+      "aliases": [
+        "automatic processing",
+        "the engine of intelligence",
+        "effortlessness"
+      ],
+      "x": 640,
+      "y": 170,
+      "lines": [
+        "machinery",
+        "genius"
+      ],
+      "oneBreath": "When you practice something enough, it stops needing you. It runs on its own, fast and in the background, while your attention is free to be somewhere else. That handing-off is not a shortcut around thinking. It is the thing that makes real thinking possible.",
+      "claimsBlock": {
+        "believe": "Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing.",
+        "evidence": "Automaticity is not the absence of intelligence. It is the machinery that intelligence is built out of. There is no complex thought without it, because the slow effortful channel is far too small to run a mind on its own."
+      },
+      "evidence": [
+        {
+          "text": "The part of your mind you can pay attention with holds about four things at once and works through them one at a time. Walking coordinates dozens of muscles at the same moment. Reading runs sound, spelling, and meaning all at once. None of that could happen one slow step at a time. It only works because the brain moved it off the small conscious channel and onto automatic machinery that runs in parallel.",
+          "cite": "Working memory limits (Cowan, 2001)"
+        },
+        {
+          "text": "You can drive through traffic and hold a real conversation at the same time, tracking cars and turns and stop signs while you decode speech and answer back. Our best computers still cannot do this. And there was a time you could not either. Every bit of it got built by practice into something that now runs without you.",
+          "cite": "Driving while talking (from the book)"
+        },
+        {
+          "text": "Learning curves look the same whether you are training face recognition, a tennis serve, or algebra. They rise fast and then level off, the exact same shape in every domain. When one signature shows up everywhere, it is pointing at one shared mechanism underneath, and this is it.",
+          "cite": "Power-law learning across domains (Newell & Rosenbloom, 1981)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Picasso draws a quick sketch and names a high price. The buyer protests that it only took a minute. Picasso answers that it took fifty years. The buyer is looking at a minute of output. Picasso is looking at fifty years of training folded up inside the ease of it."
+        },
+        {
+          "text": "A bat solves echolocation the way you solve reading, with machinery that runs on its own. That the bat was born with it and you built yours makes no difference to what it is. Automatic problem-solving is intelligence, whichever way the machinery got there."
+        }
+      ],
+      "relations": [
+        {
+          "target": "effort-inversion",
+          "type": "explains",
+          "justification": "Because automatic skill feels like nothing, we read the effortlessness as simplicity. That misreading is Effort Inversion."
+        },
+        {
+          "target": "automaticity-blindness",
+          "type": "explains",
+          "justification": "Once a skill goes automatic you can no longer feel it working, which is what makes its complexity invisible."
+        },
+        {
+          "target": "progressive-composition",
+          "type": "works with",
+          "justification": "Composition stacks skills into bigger skills, and automaticity is what makes each layer solid enough to build on."
+        },
+        {
+          "target": "the-genius",
+          "type": "run by",
+          "justification": "The Genius is the unconscious engine, and automaticity is the main thing it does."
+        }
+      ],
+      "games": [
+        {
+          "name": "The Unstoppable Reader",
+          "url": "../unstoppable-reader.html",
+          "blurb": "Try to look at a word and not read it. You will find that you cannot, because reading now starts on its own."
+        }
+      ],
+      "bookRef": "The book calls automaticity the engine of intelligence and spends real time on why. This page is the short version of that argument.",
+      "transmissions": [],
+      "next": {
+        "target": "effort-inversion",
+        "reason": "If effortless skill is the real machinery, then everything we assume about effort is upside down. See how."
+      }
+    },
+    {
+      "id": "effort-inversion",
+      "name": "Effort Inversion",
+      "aliases": [
+        "effort bias",
+        "struggle equals skill"
+      ],
+      "x": 296,
+      "y": 590,
+      "lines": [
+        "bias"
+      ],
+      "oneBreath": "We watch someone struggle and decide the task must be hard. We watch someone breeze through it and decide it must be easy. Reality runs the other way. The struggle is what beginning looks like, and the ease is what mastery looks like.",
+      "claimsBlock": {
+        "believe": "If something looks effortful, it must be complex. If it looks easy, it must be simple.",
+        "evidence": "Effortlessness is the signature of mastery, not of simplicity. The person making it look easy is doing the harder thing. We have the sign exactly reversed."
+      },
+      "evidence": [
+        {
+          "text": "Nobody looks at an expert juggling eight balls without a wobble and concludes juggling must be easy. Everyone can see the beginner dropping two is the one doing worse. We get it right for juggling and then apply the opposite logic to thinking, where we cannot watch the machinery and so we trust the struggle instead.",
+          "cite": "The juggling comparison (from the book)"
+        },
+        {
+          "text": "A medical student sweating through a procedure looks like they are working harder than the surgeon who does it calmly, and in a way they are. But the calm is not less skill. The calm is what a few thousand more repetitions look like from the outside.",
+          "cite": "Novice effort versus expert fluency"
+        }
+      ],
+      "stories": [
+        {
+          "text": "A locksmith who opens a lock in seconds gets treated as less skilled than one who sweats and fumbles for ten minutes, and customers will argue the fast one deserves less pay. The fast one is more expert, not less. We are paying for visible strain and calling it work."
+        }
+      ],
+      "relations": [
+        {
+          "target": "automaticity",
+          "type": "explained by",
+          "justification": "Skill becomes effortless because it becomes automatic, so the ease we misread is automaticity doing its job."
+        },
+        {
+          "target": "automaticity-blindness",
+          "type": "built on",
+          "justification": "We misjudge effort partly because we literally cannot feel the automatic machinery running."
+        },
+        {
+          "target": "competence-inversion",
+          "type": "sibling of",
+          "justification": "Both take the beginner's experience as the standard for real thinking and then misjudge the expert."
+        }
+      ],
+      "games": [
+        {
+          "name": "The Unstoppable Reader",
+          "url": "../unstoppable-reader.html",
+          "blurb": "The part of the task that felt like nothing was the sophisticated part. This game makes you feel that directly."
+        }
+      ],
+      "bookRef": "Effort Inversion is one of the named biases in the book, and it does a lot of the work of explaining how we got intelligence wrong.",
+      "transmissions": [],
+      "next": {
+        "target": "competence-inversion",
+        "reason": "There is a deeper version of this same mistake, aimed at the whole idea of expertise. See Competence Inversion."
+      }
+    },
+    {
+      "id": "automaticity-blindness",
+      "name": "Automaticity Blindness",
+      "aliases": [
+        "the invisible machinery",
+        "expertise you cannot feel"
+      ],
+      "x": 130,
+      "y": 590,
+      "lines": [
+        "bias"
+      ],
+      "oneBreath": "Once a skill runs on its own, you cannot feel it working anymore. You can only notice the effortful parts of your own mind, so the automatic parts go silent and start to look like nothing at all, even when they are the most complex thing you do.",
+      "evidence": [
+        {
+          "text": "Read this sentence and the meaning simply arrives. You cannot feel the sound of the words being assembled, the letters being recognized, the grammar being parsed, all of it happening at once. The work is real and enormous. You just have no window onto it, because introspection only reaches the effortful stuff.",
+          "cite": "Reading comprehension as invisible processing"
+        },
+        {
+          "text": "You spot a friend's face in a crowd instantly and cannot say how. The pattern-matching that pulled one face out of hundreds is some of the hardest computation your brain performs, and you experience none of it. You get the answer with no sense of the work.",
+          "cite": "Face recognition"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Walking across a cluttered room feels like nothing, which is exactly the problem. Dozens of systems are coordinating balance, vision, and dozens of muscles in real time, and our best robots still struggle to do it. The feeling of nothing is the machinery being too good to notice."
+        }
+      ],
+      "relations": [
+        {
+          "target": "effort-inversion",
+          "type": "causes",
+          "justification": "Because we cannot feel automatic skill, we misread its ease as simplicity. That misreading is Effort Inversion."
+        },
+        {
+          "target": "everyday-genius",
+          "type": "hides",
+          "justification": "This blindness is exactly why we fail to see the everyday feats as the genius they are."
+        },
+        {
+          "target": "introspective-bias",
+          "type": "part of",
+          "justification": "It is one specific case of the larger trap of modeling the mind only from what we can feel."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book treats this blindness as the root of a whole family of errors about intelligence. This is the mechanism underneath the biases.",
+      "transmissions": [],
+      "next": {
+        "target": "everyday-genius",
+        "reason": "Now that you know what hides the machinery, go see the machinery. This is what you have been missing."
+      }
+    },
+    {
+      "id": "introspective-bias",
+      "name": "Introspective Bias",
+      "aliases": [
+        "the phenomenological trap",
+        "modeling the mind from the inside"
+      ],
+      "x": 628,
+      "y": 590,
+      "lines": [
+        "bias"
+      ],
+      "oneBreath": "We build our whole picture of thinking out of the only thing we can watch, which is effortful conscious deliberation. Everything the mind does automatically is invisible to that view, so we left it out of the theory and mistook the small lit corner for the whole room.",
+      "evidence": [
+        {
+          "text": "This is why IQ tests measure what they measure. They test the kind of conscious, effortful problem-solving you can feel yourself doing, because that is the part of the mind that was visible to the people building the tests. The far larger automatic part was never on the table, because it cannot be introspected on.",
+          "cite": "Psychometrics built from conscious problem-solving"
+        },
+        {
+          "text": "Watch a room try to explain away a chimpanzee beating them at a memory task. The scramble to reframe the result, to find a reason it does not count, is the bias happening live. People are protecting a model of intelligence built from their own inside view.",
+          "cite": "The chimp working-memory result (Inoue & Matsuzawa, 2007)"
+        }
+      ],
+      "stories": [],
+      "relations": [
+        {
+          "target": "effort-inversion",
+          "type": "causes",
+          "justification": "Reading effort as complexity is one product of modeling the mind only from what we can feel."
+        },
+        {
+          "target": "competence-inversion",
+          "type": "causes",
+          "justification": "Taking novice deliberation as the template for real thinking is the same bias applied to expertise."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "feeds",
+          "justification": "A theory of intelligence built from the wrong vantage point is what made the Special Brain Story sound reasonable."
+        }
+      ],
+      "games": [],
+      "bookRef": "In the book this is the umbrella that most of the other biases sit under. It is the deep reason we got the mind backwards.",
+      "transmissions": [],
+      "next": {
+        "target": "trained-reasoning",
+        "reason": "The bias reaches its target when it dresses up as pure logic. See what reasoning really is."
+      }
+    },
+    {
+      "id": "competence-inversion",
+      "name": "Competence Inversion",
+      "aliases": [
+        "novice phenomenology on expert architecture"
+      ],
+      "x": 462,
+      "y": 590,
+      "lines": [
+        "bias"
+      ],
+      "oneBreath": "When you are learning, thinking is slow and effortful, so that is what we decided real thinking is. Then we look at an expert whose thinking has gone fast and smooth and say that is not really thinking, it is just instinct. We took the beginner's experience as the standard and judged mastery against it.",
+      "evidence": [
+        {
+          "text": "The effort you feel while learning is scaffolding. It holds the building up while it goes up, and then it comes down. Expert fluidity is not a lesser version of thinking, it is thinking that finished being built. We keep pointing at the scaffolding and calling it the building.",
+          "cite": "Effort as scaffolding, fluency as the finished structure"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Einstein's relativity, the finished insight, feels less like hard thinking than the visible struggle with equations that came before it. So we credit the struggle and treat the breakthrough as something that just arrived. We have it backwards. The arrival was the thinking working."
+        }
+      ],
+      "relations": [
+        {
+          "target": "automaticity",
+          "type": "explains",
+          "justification": "This is the philosophical core of why automaticity is the engine and not a shortcut."
+        },
+        {
+          "target": "introspective-bias",
+          "type": "part of",
+          "justification": "It is a specific form of building the theory of mind from the inside view only."
+        },
+        {
+          "target": "effort-inversion",
+          "type": "sibling of",
+          "justification": "Both mistakes read effort as the mark of real cognition."
+        }
+      ],
+      "games": [],
+      "bookRef": "The Picasso and locksmith moments in the book are this idea in a single exchange. Effort is not the measure of the thinking.",
+      "transmissions": [],
+      "next": {
+        "target": "introspective-bias",
+        "reason": "Step back and see the whole trap these smaller biases belong to."
+      }
+    },
+    {
+      "id": "special-brain-story",
+      "name": "The Special Brain Story",
+      "aliases": [
+        "fixed potential",
+        "some people are just born smart",
+        "the talent myth"
+      ],
+      "x": 960,
+      "y": 590,
+      "lines": [
+        "bias",
+        "impostor"
+      ],
+      "oneBreath": "The story says we are each born with a certain kind of brain, better or worse, and the job of a life is to find out which one you got and stay in your lane. It is everywhere, it feels like common sense, and the neuroscience does not support it.",
+      "claimsBlock": {
+        "believe": "Some people are born with better brains. Your job is to figure out what kind you got.",
+        "evidence": "The machinery that produces skill is standard equipment in every intact brain. What differs is not the hardware but the training path it has been put through. The story feels true because believing it keeps you from ever running the test."
+      },
+      "evidence": [
+        {
+          "text": "Einstein's brain was studied about as thoroughly as any brain in history, and it was slightly below average in weight with no special structure anyone could find. He said it plainly himself, that he had no special talents and was only passionately curious. The most famous mind of the century sat in a boringly ordinary brain.",
+          "cite": "Einstein's brain at autopsy; his own words"
+        },
+        {
+          "text": "The story is self-fulfilling, which is the dangerous part. If you believe the ability is fixed and you do not have it, you never do the training that would build it, and then the missing ability confirms the story. The belief arranges its own proof.",
+          "cite": "Fixed-mindset avoidance (Dweck)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "IQ testing and ability tracking take this story and give it a number and a lane. A child gets sorted early, the sorting shapes what they are offered and what they attempt, and years later the outcome gets read as proof the sorting was right."
+        }
+      ],
+      "relations": [
+        {
+          "target": "the-impostor",
+          "type": "authored by",
+          "justification": "This is the Impostor's masterpiece, the story he tells that does the most to shrink a life."
+        },
+        {
+          "target": "uncommon-genius",
+          "type": "opposes",
+          "justification": "The story is the main reason uncommon genius stays rare, because it stops people before they start the training."
+        },
+        {
+          "target": "introspective-bias",
+          "type": "grows from",
+          "justification": "A theory of intelligence built from the wrong vantage point is the soil this story grew in."
+        }
+      ],
+      "games": [],
+      "bookRef": "This is the story the whole book is written against. Everything else is here to take it apart.",
+      "transmissions": [],
+      "next": {
+        "target": "the-genius",
+        "reason": "You have seen the story that shrinks people. Now meet the engine it hides."
+      }
+    },
+    {
+      "id": "the-impostor",
+      "name": "The Impostor",
+      "aliases": [
+        "the interpreter",
+        "the inner narrator",
+        "reputation management"
+      ],
+      "x": 960,
+      "y": 380,
+      "lines": [
+        "impostor"
+      ],
+      "oneBreath": "There is a part of your brain whose job is to narrate you, to keep a running story of who you are and what you are capable of. It is very good at sounding certain and it is not built for accuracy. Its masterpiece is the lie that your potential is fixed.",
+      "claimsBlock": {
+        "believe": "The voice in my head that tells me what I am good at is just honest self-knowledge.",
+        "evidence": "That voice is a specific brain system built for managing your reputation to others, not for telling you the truth about yourself. It narrates confidently and it confabulates freely, and its story about your limits is the most costly thing it does."
+      },
+      "evidence": [
+        {
+          "text": "In split-brain patients, when one half of the brain acts for a reason the talking half cannot know, the talking half never says “I have no idea.” It instantly makes up a confident reason. This is the narrator caught in the act, inventing an explanation and fully believing it.",
+          "cite": "Split-brain confabulation (Gazzaniga)"
+        },
+        {
+          "text": "The narrator does not only explain the past, it shapes the future. Tell a child once that they are not a math person and the story can install itself and then run the next twenty years of choices, steering them away from numbers until the avoidance looks like proof.",
+          "cite": "Self-verification and identity (Swann; Dweck)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Sarah gets a 64 on a math quiz at seven. Her mother tells her she is not a math person, more of a creative type. By thirty-four Sarah has not touched anything with numbers in twenty years. The quiz is long forgotten. The story it started is still running her life."
+        }
+      ],
+      "relations": [
+        {
+          "target": "special-brain-story",
+          "type": "authors",
+          "justification": "The Special Brain Story is the Impostor's central and most damaging piece of narration."
+        },
+        {
+          "target": "capability-accessibility-model",
+          "type": "hijacks",
+          "justification": "The Impostor reaches performance by changing your brain state under pressure, which lowers your access."
+        },
+        {
+          "target": "the-genius",
+          "type": "opposes",
+          "justification": "The Genius is the engine that builds, and the Impostor is the narrator that constrains. They are the two forces the book is named for."
+        },
+        {
+          "target": "unreliable-narrator",
+          "type": "works through",
+          "justification": "The way the Impostor lies about the past is a whole mechanism of its own, memory as reconstruction."
+        }
+      ],
+      "games": [
+        {
+          "name": "The Genius Diagnostic",
+          "url": "../diagnostic.html",
+          "blurb": "See how your hours actually split between the engine and the narrator, and get a field manual for the narrator's favorite tricks."
+        }
+      ],
+      "bookRef": "The Impostor is one of the two title characters. The book is where you meet him in full and learn how he works.",
+      "transmissions": [],
+      "next": {
+        "target": "unreliable-narrator",
+        "reason": "The narrator's most useful trick is editing your memory. See how the archive gets rewritten."
+      }
+    },
+    {
+      "id": "the-genius",
+      "name": "The Genius",
+      "aliases": [
+        "the learning engine",
+        "the unconscious builder"
+      ],
+      "x": 340,
+      "y": 70,
+      "lines": [
+        "genius"
+      ],
+      "oneBreath": "There is an engine in you that built every skill you have without ever asking your permission. It learned to walk and talk and recognize faces while you were busy being a child. It runs on curiosity, it does not care about status, and it is still here.",
+      "evidence": [
+        {
+          "text": "A two-year-old learns language with no lessons, no grammar drills, no one explaining the rules. The engine simply extracts the pattern from the flood of speech around it and builds a working grammar. Nobody taught it. It taught itself, the way it teaches you everything before you are old enough to take credit.",
+          "cite": "First language acquisition"
+        }
+      ],
+      "stories": [
+        {
+          "text": "The answer that shows up in the shower, the problem that solves itself overnight, the name that surfaces the moment you stop reaching for it. That is the engine working while the narrator is out of the way. It never needed you to be trying."
+        }
+      ],
+      "relations": [
+        {
+          "target": "the-impostor",
+          "type": "opposes",
+          "justification": "The two title characters. The Genius builds capability, the Impostor constrains it with stories."
+        },
+        {
+          "target": "automaticity",
+          "type": "runs on",
+          "justification": "The engine's main move is turning practiced skill into automatic machinery."
+        },
+        {
+          "target": "progressive-composition",
+          "type": "runs on",
+          "justification": "It builds in a fixed order, simple skills first, then combinations, the way it always has."
+        },
+        {
+          "target": "adult-learning",
+          "type": "still runs",
+          "justification": "The Genius does not retire. Adult learning is the same engine, still building."
+        }
+      ],
+      "games": [
+        {
+          "name": "The Genius Diagnostic",
+          "url": "../diagnostic.html",
+          "blurb": "Find out how much of your day is already Genius-led, and where the engine is getting crowded out."
+        }
+      ],
+      "bookRef": "The Genius is the other title character, the hero of the book. This is the engine the whole argument is trying to hand back to you.",
+      "transmissions": [],
+      "next": {
+        "target": "adult-learning",
+        "reason": "The engine built every skill you have while you were a child. Here is the news that it never left."
+      }
+    },
+    {
+      "id": "adult-learning",
+      "name": "Adult Learning",
+      "aliases": [
+        "it's never too late",
+        "neuroplasticity",
+        "the old dog was the dogma",
+        "the four illusions"
+      ],
+      "x": 490,
+      "y": 70,
+      "lines": [
+        "genius"
+      ],
+      "oneBreath": "Your brain does not lose the ability to change when you grow up. It changes less because less needs changing, and we read that as the door closing. It has not closed. Start learning something hard again and the machinery that builds skill comes back.",
+      "claimsBlock": {
+        "believe": "You cannot teach an old dog new tricks. The time for learning was childhood.",
+        "evidence": "Adults change less because less needs changing, not because the ability is gone. The learning machinery stays available your whole life, and it gets easier again the more you use it."
+      },
+      "evidence": [
+        {
+          "text": "Adults do rewire less, and every reason for it is something other than a lost ability. Most of what you need is already built, so there is less to redo. Reworking a rich, working network is riskier than shaping a blank one. And an old habit is always sitting there as the easy shortcut. None of that is a closed door.",
+          "cite": "Why adult change slows (the four illusions)"
+        },
+        {
+          "text": "The learning machinery itself responds to use. Keep learning and it stays in tune and new things come easier. Go years without and it stiffens, which then feels like proof you have aged out of it. Pick it back up and it returns, at any age.",
+          "cite": "Plasticity is itself plastic (Merzenich; Pascual-Leone)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "The old teaching was that the adult brain sets like concrete. That was the dogma, and it was wrong. The brain that learned everything you already know is the same brain sitting in your head right now."
+        }
+      ],
+      "relations": [
+        {
+          "target": "the-genius",
+          "type": "run by",
+          "justification": "This is the Genius still on the clock. The engine that built you as a child never left."
+        },
+        {
+          "target": "goldilocks-zone",
+          "type": "requires",
+          "justification": "Adult learning obeys the same rule as any learning, built at the right level of challenge."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "opposes",
+          "justification": "It is too late is a close cousin of the Special Brain Story, a fixed-potential tale that prevents the very training that would disprove it."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book gives a full stretch of the argument to why the adult brain never stopped being able to learn.",
+      "transmissions": [],
+      "next": {
+        "target": "genius-led-learning",
+        "reason": "The engine is still yours. Now see how it actually wants to be used."
+      }
+    },
+    {
+      "id": "genius-led-learning",
+      "name": "Genius-Led Learning",
+      "aliases": [
+        "genius-led vs impostor-led",
+        "how to actually learn",
+        "the three ingredients",
+        "why school forgets"
+      ],
+      "x": 640,
+      "y": 70,
+      "lines": [
+        "genius"
+      ],
+      "oneBreath": "There are two ways to learn and they are not equally good. One runs on curiosity, builds as it goes, and lives on feedback, which is how the Genius works. The other runs on grades and approval, takes facts in passively, and tests only to score. School mostly runs the second one.",
+      "claimsBlock": {
+        "believe": "Learning is what happens in school. You take the class, you pass the test, you know it.",
+        "evidence": "Real learning needs three things a classroom rarely gives: your own curiosity, active building, and steady feedback. Without them you get facts that fade, which is why you kept almost nothing from school and nearly everything you taught yourself."
+      },
+      "evidence": [
+        {
+          "text": "Learning that lasts has three parts. The drive has to be yours, so you actually want it. You have to build the knowledge, not just receive it. And you need feedback often enough to correct as you go. A lecture followed by one exam supplies almost none of that.",
+          "cite": "The three ingredients of learning"
+        },
+        {
+          "text": "Look at what you actually kept. Little from the classes you sat through, and a great deal from whatever you chased on your own. Same brain, two modes. What differed was whether the Genius or the Impostor was running the session.",
+          "cite": "Curiosity-driven versus status-driven learning"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Da Vinci said it five centuries ago: study without desire spoils the memory, and it keeps nothing it takes in. Desire is not a bonus laid on top of learning. It is part of the machine."
+        }
+      ],
+      "relations": [
+        {
+          "target": "the-genius",
+          "type": "run by",
+          "justification": "Genius-led learning is just the Genius doing what it does when it is given room."
+        },
+        {
+          "target": "goldilocks-zone",
+          "type": "works with",
+          "justification": "The steady feedback this kind of learning needs is the Goldilocks Zone, difficulty tuned so every attempt teaches something."
+        },
+        {
+          "target": "the-impostor",
+          "type": "opposed by",
+          "justification": "Impostor-led learning chases grades and approval, which is the Impostor running the classroom."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book draws the line between the two modes of learning and shows how schooling trades the good one for the other.",
+      "transmissions": [],
+      "next": {
+        "target": "goldilocks-zone",
+        "reason": "The feedback this learning runs on has a name and a number. Meet the zone."
+      }
+    },
+    {
+      "id": "progressive-composition",
+      "name": "Progressive Composition",
+      "aliases": [
+        "building in layers",
+        "the universal learning sequence"
+      ],
+      "x": 300,
+      "y": 170,
+      "lines": [
+        "machinery"
+      ],
+      "oneBreath": "Every skill gets built the same way. You learn simple pieces, you practice them until they run on their own, and then you combine them into bigger pieces and do it again. It is layers, and each layer stands on the one below it, which is why the order never changes.",
+      "evidence": [
+        {
+          "text": "Babies reach the motor milestones in the same order everywhere, head control, then sitting, then crawling, then walking, because each one is the platform the next is built on. You cannot walk before you can balance sitting up. The sequence is fixed because the dependencies are fixed.",
+          "cite": "Motor development milestones"
+        },
+        {
+          "text": "The same shape shows up in language. Cooing, then babbling sounds, then words, then sentences. And it shows up again in music, chess, math, and sport. When the same building logic appears in every domain, it is telling you the learning mechanism is one thing wearing many outfits.",
+          "cite": "Developmental sequences across domains"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Think of a skyscraper. You cannot pour the penthouse before the lobby. Each floor depends on the stability of everything under it. Skill is the same, which is also why trying to skip the lower floors guarantees the upper ones never hold."
+        }
+      ],
+      "relations": [
+        {
+          "target": "automaticity",
+          "type": "works with",
+          "justification": "Each layer has to become automatic before it is solid enough to build the next layer on."
+        },
+        {
+          "target": "goldilocks-zone",
+          "type": "requires",
+          "justification": "Every layer gets built at the right level of challenge, or it does not get built well."
+        },
+        {
+          "target": "the-genius",
+          "type": "run by",
+          "justification": "This is the sequence the Genius follows to build anything."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book uses progressive composition to show that the process that taught you to walk is the same process that can teach you calculus.",
+      "transmissions": [],
+      "next": {
+        "target": "goldilocks-zone",
+        "reason": "Layers only get built at the right difficulty. Go find the zone where learning actually happens."
+      }
+    },
+    {
+      "id": "goldilocks-zone",
+      "name": "The Goldilocks Zone",
+      "aliases": [
+        "the sweet spot",
+        "desirable difficulty",
+        "the edge of failure"
+      ],
+      "x": 130,
+      "y": 170,
+      "lines": [
+        "machinery"
+      ],
+      "oneBreath": "Learning happens at a specific level of hard. Too easy and there is nothing to learn from. Too hard and there is no clear signal about what to fix. The zone in between, where you succeed most of the time but miss often enough to get corrected, is where the building actually happens.",
+      "claimsBlock": {
+        "believe": "The best practice is the practice that goes well. Getting things right means you are learning.",
+        "evidence": "If you are getting nearly everything right, you have stopped learning and started performing. The miss is not a failure of practice, it is the signal that practice runs on. Learning lives at the edge where you are missing about one try in six."
+      },
+      "evidence": [
+        {
+          "text": "The band that works sits around succeeding two times out of three up to about five times out of six. Below that, when almost everything is a struggle, there is too much going wrong to tell what to fix. Above it, when almost everything is easy, there is nothing to correct and the engine idles.",
+          "cite": "The 60 to 85 percent success band"
+        },
+        {
+          "text": "Your brain has a built-in response that fires the instant you make an error, a little signal that says that one was wrong. That signal is not the problem, it is the point. It is the thing learning is made of, which is why practice with no misses in it builds so little.",
+          "cite": "The error-related negativity as a learning signal"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Watch a toddler learning to walk. They are not practicing steps they have mastered and they are not attempting a marathon. They are working right at the edge of what they can do, falling often, adjusting every time. That edge is the zone, and they find it without being told."
+        }
+      ],
+      "relations": [
+        {
+          "target": "progressive-composition",
+          "type": "enables",
+          "justification": "Each layer of a skill gets built inside this zone, or it does not get built well."
+        },
+        {
+          "target": "the-genius",
+          "type": "where it works",
+          "justification": "This is the setting the learning engine runs best at."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book treats the Goldilocks Zone as the most directly usable idea in the framework, the one you can act on tomorrow.",
+      "transmissions": [],
+      "next": {
+        "target": "implicit-learning",
+        "reason": "The engine can build things in this zone that you never notice you are learning at all. See how."
+      }
+    },
+    {
+      "id": "implicit-learning",
+      "name": "Implicit Learning",
+      "aliases": [
+        "learning without knowing",
+        "the talent myth",
+        "hidden pattern learning"
+      ],
+      "x": 470,
+      "y": 170,
+      "lines": [
+        "machinery"
+      ],
+      "oneBreath": "A lot of what you know, you cannot say. Your brain picks up patterns from sheer exposure and puts them to work without ever handing you the rule. You obey grammar you were never taught and read situations you could not explain, because the knowledge went in below the level of words.",
+      "evidence": [
+        {
+          "text": "You say big red barn, never red big barn, and you have never once thought about why. English has a strict order for stacking adjectives and you follow it perfectly, yet almost nobody can state the rule. You learned it as a toddler from listening, and it works flawlessly while staying completely out of reach.",
+          "cite": "Adjective ordering; the royal order of adjectives"
+        },
+        {
+          "text": "What we call talent is often a record of this. A person who seems to just get music or just read people has usually had thousands of hours of exposure that built the pattern without either them or us noticing the training happened.",
+          "cite": "Talent as accumulated implicit exposure"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Tick-tock, never tock-tick. Ping-pong, never pong-ping. There is a rule about which vowel sound comes first in these pairs, you have followed it your whole life, and you almost certainly could not state it before now. That gap between using a rule and knowing it is the whole idea."
+        }
+      ],
+      "relations": [
+        {
+          "target": "automaticity",
+          "type": "sibling of",
+          "justification": "Both are the Genius building skill outside awareness. This one is about knowledge you cannot report."
+        },
+        {
+          "target": "the-genius",
+          "type": "run by",
+          "justification": "Implicit learning is the engine acquiring things you never consciously studied."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "opposes",
+          "justification": "It exposes the talent myth, because the ability that looks innate is a record of hidden training."
+        }
+      ],
+      "games": [
+        {
+          "name": "The Secret Grammar",
+          "url": "../secret-grammar.html",
+          "blurb": "Ace rounds of adjective ordering instantly, then try to state the rule you just used. You will not be able to."
+        }
+      ],
+      "bookRef": "The book uses implicit learning to dismantle the talent myth. What looks like a gift is usually a hidden training history.",
+      "transmissions": [],
+      "next": {
+        "target": "automaticity",
+        "reason": "You have seen the engine acquire hidden knowledge. Now see what it does with the skills you do practice."
+      }
+    },
+    {
+      "id": "bottleneck-chunking",
+      "name": "The Bottleneck and Chunking",
+      "aliases": [
+        "working memory",
+        "chunking",
+        "the SF study",
+        "expertise and memory"
+      ],
+      "x": 810,
+      "y": 170,
+      "lines": [
+        "machinery"
+      ],
+      "oneBreath": "The conscious mind can only hold a handful of things at once. That never changes. What changes with expertise is how much each thing holds. A master is not remembering more items than you, they have learned to pack far more meaning into each one.",
+      "evidence": [
+        {
+          "text": "Hold four seconds of random letters and you catch about seven. Hold four seconds of a sentence and you catch far more, maybe fifty. The exposure was identical and the raw capacity never moved. What changed is that the sentence arrives in meaningful chunks and the letters do not.",
+          "cite": "Chunking and exposure (from the book)"
+        },
+        {
+          "text": "A man known as SF trained his digit span from the ordinary seven up to seventy-nine by learning to hear strings of numbers as running times he already knew. And his memory for random letters stayed at six the whole time. The general capacity never grew. He built one specific, trained skill.",
+          "cite": "Ericsson & Chase, the SF study"
+        }
+      ],
+      "stories": [
+        {
+          "text": "This is the bridge to IQ. A span test measures how much you can hold before any training goes in. Expertise is defined by not needing that raw span, because the expert has learned to chunk. So the test measures the unlearned state and we have been calling it the ceiling."
+        }
+      ],
+      "relations": [
+        {
+          "target": "automaticity",
+          "type": "built on",
+          "justification": "Chunks form as patterns become automatic, so this is automaticity seen from the memory side."
+        },
+        {
+          "target": "domain-specific-intelligence",
+          "type": "explains",
+          "justification": "Chunking only works inside a domain you have trained, which is why memory expertise does not transfer."
+        },
+        {
+          "target": "trained-reasoning",
+          "type": "sibling of",
+          "justification": "Both are the IQ bridge, showing a measured ability is really trained pattern skill."
+        }
+      ],
+      "games": [
+        {
+          "name": "The Ayumu Test",
+          "url": "../ayumu-test.html",
+          "blurb": "Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains."
+        }
+      ],
+      "bookRef": "The book uses the bottleneck and chunking to walk from working memory straight into why IQ measures the wrong thing.",
+      "transmissions": [],
+      "next": {
+        "target": "everyday-genius",
+        "reason": "You have seen how much the machinery packs into a moment. Now see how much of it you do without noticing."
+      }
+    },
+    {
+      "id": "everyday-genius",
+      "name": "Everyday Genius",
+      "aliases": [
+        "hidden feats",
+        "Moravec's paradox",
+        "common genius"
+      ],
+      "x": 980,
+      "y": 170,
+      "lines": [
+        "machinery",
+        "intelligence"
+      ],
+      "oneBreath": "The things you do without thinking, walking, understanding speech, recognizing a face, reading this sentence, are some of the hardest problems any system has ever solved. They only feel like nothing because your brain solved them so completely that the work went invisible.",
+      "claimsBlock": {
+        "believe": "Real intelligence is rare. Walking and talking are just basic things everybody can do.",
+        "evidence": "The skills we find easiest are the most complex things the brain does. We know because they proved the hardest to build into computers. The ease is not evidence they are simple. It is evidence they are mastered."
+      },
+      "evidence": [
+        {
+          "text": "The things people find easiest turned out to be the hardest to program into a computer, and the things people find hard, like chess and arithmetic, turned out to be easy for a machine. That reversal has a lesson in it. Easy does not mean simple. Easy means massively practiced.",
+          "cite": "Moravec's Paradox"
+        },
+        {
+          "text": "Taking an IQ test requires understanding language, holding instructions, recognizing shapes, and controlling attention, and every one of those is more complex than anything the test then measures. The hard part is the part we hand out for free as the baseline.",
+          "cite": "The prerequisites of a cognitive test"
+        }
+      ],
+      "stories": [],
+      "relations": [
+        {
+          "target": "automaticity-blindness",
+          "type": "hidden by",
+          "justification": "We cannot see these feats as genius because the machinery that runs them is invisible to us."
+        },
+        {
+          "target": "uncommon-genius",
+          "type": "same machinery as",
+          "justification": "Celebrated genius runs on the exact same engine as walking and reading, just on an uncommon training path."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "opposes",
+          "justification": "Everyday genius is the standing proof that the machinery of genius is universal, not rare."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book leans on everyday genius to show that the equipment for extraordinary things is already standard issue, already running.",
+      "transmissions": [],
+      "next": {
+        "target": "domain-specific-intelligence",
+        "reason": "If everyone is already a genius at the everyday, what is intelligence even measuring? Follow the Intelligence Line."
+      }
+    },
+    {
+      "id": "uncommon-genius",
+      "name": "Uncommon Genius",
+      "aliases": [
+        "celebrated genius",
+        "the uncommon training path"
+      ],
+      "x": 980,
+      "y": 320,
+      "lines": [
+        "machinery",
+        "intelligence"
+      ],
+      "oneBreath": "The breakthroughs we celebrate come from the same engine that built your walking and your reading. The difference is the path. Someone spent years pointed at an unusual set of problems, which built an unusual set of skills, which reached an answer the rest of us could not.",
+      "claimsBlock": {
+        "believe": "Genius requires a special brain. Most people simply do not have what it takes.",
+        "evidence": "Genius is the ordinary machinery on an extraordinary training path. Uncommon interests build uncommon scaffolding, which produces solutions others cannot reach. The rarity is in the path, not the brain."
+      },
+      "evidence": [
+        {
+          "text": "Ten thousand hours pointed at chess builds a mind that sees the board in a way no untrained mind can, not because the hardware is special but because the practice was uncommon. The same is true of physics, music, and art. Unusual scaffolding produces unusual reach.",
+          "cite": "Expertise research (Ericsson et al., 1993)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "It stays rare for a sad reason. The Special Brain Story stops most people before they start, because if you believe genius is something you are born with, you never put in the training that would build it. The belief protects itself: believe it, and you never run the test that would prove it wrong."
+        }
+      ],
+      "relations": [
+        {
+          "target": "everyday-genius",
+          "type": "same machinery as",
+          "justification": "Both run on automaticity and progressive composition. The only difference is how common the training path was."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "blocked by",
+          "justification": "The Special Brain Story is the main reason uncommon genius stays rare, by stopping the training before it begins."
+        },
+        {
+          "target": "solution-space",
+          "type": "expands",
+          "justification": "An uncommon training path is exactly how you build an uncommon solution space."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book argues that what we call genius is a training path, not a birthright, and this station is where that lands.",
+      "transmissions": [],
+      "next": {
+        "target": "prediction-engine",
+        "reason": "There is one more capability the engine has that looks the most like magic. Meet the prediction engine."
+      }
+    },
+    {
+      "id": "domain-specific-intelligence",
+      "name": "Domain-Specific Intelligence",
+      "aliases": [
+        "the bat argument",
+        "intelligence is not general",
+        "transfer failure"
+      ],
+      "x": 1130,
+      "y": 320,
+      "lines": [
+        "intelligence"
+      ],
+      "oneBreath": "Intelligence is not one general thing you have more or less of. It is the ability to solve particular problems in particular places, built entirely by training in those places. A bat beats you at echolocation and you beat the bat at language, and neither of you is smarter in general, because there is no such thing as being smart in general.",
+      "claimsBlock": {
+        "believe": "Smart is smart. A genius in one field is generally a sharp person across the board.",
+        "evidence": "Intelligence is domain-specific and does not transfer. Being brilliant in one area buys you almost nothing in another, which is why we are perpetually surprised when brilliant people flounder outside their field."
+      },
+      "evidence": [
+        {
+          "text": "Training in one domain barely helps in another. Chess training does not raise your math. Brain-training games make you better at the games and almost nothing else. If intelligence were one general resource, training any hard skill would lift everything. It does not, and that is the whole case.",
+          "cite": "Transfer failure (Sala & Gobet, 2017)"
+        },
+        {
+          "text": "We keep getting surprised when a brilliant physicist is hopeless outside physics, or a chess champion cannot manage daily life. The surprise is the giveaway. Under a general-intelligence story these are baffling flukes. Under domain-specificity they are exactly what you would expect.",
+          "cite": "The recurring surprise; Fischer, Newton, and others"
+        }
+      ],
+      "stories": [
+        {
+          "text": "Put a world-class basketball player with no tennis experience against a well-trained fourth-grader and the child wins easily. Every physical advantage is real and none of it matters, because tennis is a trained skill and the athlete has not trained it. Hardware does not beat software."
+        }
+      ],
+      "relations": [
+        {
+          "target": "bottleneck-chunking",
+          "type": "explained by",
+          "justification": "Chunking only works in a trained domain, which is a clean mechanical reason intelligence stays domain-specific."
+        },
+        {
+          "target": "trained-reasoning",
+          "type": "sibling of",
+          "justification": "Even reasoning, the most general-seeming ability, turns out to be domain-specific pattern skill."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "opposes",
+          "justification": "If there is no general intelligence, the idea of a generally superior brain loses its meaning."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book calls this the bat argument, and uses it to show why reducing intelligence to a single score was a category mistake.",
+      "transmissions": [],
+      "next": {
+        "target": "uncommon-genius",
+        "reason": "If intelligence is a trained path, then so is genius. Go back to where the path pays off."
+      }
+    },
+    {
+      "id": "prediction-engine",
+      "name": "The Prediction Engine",
+      "aliases": [
+        "predictive processing",
+        "the generative brain",
+        "fluency as prediction"
+      ],
+      "x": 1130,
+      "y": 470,
+      "lines": [
+        "intelligence"
+      ],
+      "oneBreath": "Your brain is not sitting back and receiving the world. It is constantly guessing what comes next and checking the guess against what arrives. That constant prediction is why reading feels smooth, why you finish people's sentences, and why a wrong note makes you wince before you can think.",
+      "evidence": [
+        {
+          "text": "Give someone a sentence they have never seen and they can guess the next word fast and often right. That only works because the brain is running ahead of the words the whole time, generating what is likely and being ready for it. Comprehension is mostly successful prediction.",
+          "cite": "Next-word prediction in reading"
+        },
+        {
+          "text": "A language model built by Anthropic learned everything it can do from training alone, by predicting the next piece of text over and over until capability fell out of the practice. That makes it an odd kind of proof of the book's whole thesis, capability built from training, made out of silicon.",
+          "cite": "Large language models as trained prediction"
+        }
+      ],
+      "stories": [],
+      "relations": [
+        {
+          "target": "goldilocks-zone",
+          "type": "connects to",
+          "justification": "A wrong prediction is the error signal, which ties the prediction engine straight to how learning works."
+        },
+        {
+          "target": "domain-specific-intelligence",
+          "type": "part of",
+          "justification": "The predictions are only good inside a trained domain, which is domain-specificity again."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book uses prediction to explain fluency, and to make the surprising point that a trained machine is the thesis wearing a different body.",
+      "transmissions": [],
+      "next": {
+        "target": "capability-accessibility-model",
+        "reason": "You have toured the machinery. Now see the equation that governs when any of it actually shows up."
+      }
+    },
+    {
+      "id": "routing-architecture",
+      "name": "Routing Architecture",
+      "aliases": [
+        "brain states",
+        "the R in the equation",
+        "access patterns"
+      ],
+      "x": 220,
+      "y": 320,
+      "lines": [
+        "access"
+      ],
+      "oneBreath": "Your brain runs in different modes, and each mode connects a different set of your skills. Focused work, mind-wandering, sleep, panic, each one opens some routes and closes others. Change the mode and you change what you can reach, without changing a thing you know.",
+      "evidence": [
+        {
+          "text": "The answer that would not come at your desk arrives in the shower. Nothing new was learned in between. A different brain state simply opened a route to skills that the focused state kept closed. This is routing, felt from the inside.",
+          "cite": "Insight during rest and mind-wandering"
+        },
+        {
+          "text": "Under real pressure, an expert can lose access to skills they have owned for years. The knowledge is all still there, provably, the moment the pressure lifts. High arousal changed the routing and cut the line to the automatic machinery.",
+          "cite": "Choking under pressure (Beilock & Carr, 2001)"
+        }
+      ],
+      "stories": [
+        {
+          "text": "The subway map again. Day service and night service run on the same tracks with the same trains, but a different set of stations is reachable depending on which schedule is live. Your skills are the stations. Your brain state is the schedule."
+        }
+      ],
+      "relations": [
+        {
+          "target": "capability-accessibility-model",
+          "type": "half of",
+          "justification": "Routing is the R, the access half of the performance equation."
+        },
+        {
+          "target": "solution-space",
+          "type": "expands",
+          "justification": "Shifting your brain state is one of the two ways to reach more of what you can solve."
+        },
+        {
+          "target": "the-impostor",
+          "type": "hijacked by",
+          "justification": "The Impostor's main lever on performance is changing your routing through anxiety."
+        }
+      ],
+      "games": [],
+      "bookRef": "Routing is the idea that lets the book explain choking, insight, sleep, and savants with one mechanism instead of four.",
+      "transmissions": [],
+      "next": {
+        "target": "capability-accessibility-model",
+        "reason": "You have the access half. Now see the whole equation it lives in."
+      }
+    },
+    {
+      "id": "solution-space",
+      "name": "Solution Space",
+      "aliases": [
+        "what you can currently solve",
+        "the two doors"
+      ],
+      "x": 760,
+      "y": 320,
+      "lines": [
+        "access",
+        "machinery"
+      ],
+      "oneBreath": "This is the full set of problems you can solve right now. It has two doors. One is learning, which permanently adds new skills. The other is changing your brain state, which reaches different combinations of the skills you already have. Both doors make the space bigger.",
+      "evidence": [
+        {
+          "text": "Walking across your bedroom is inside your solution space. Playing a Rachmaninoff concerto is outside it, and only learning will bring it in. But an answer you could not reach at your desk might appear in the shower, which is the same skills reached through a different door.",
+          "cite": "The two paths to a larger solution space"
+        }
+      ],
+      "stories": [],
+      "relations": [
+        {
+          "target": "progressive-composition",
+          "type": "expanded by",
+          "justification": "Learning is the first door, and progressive composition is how learning adds to the space."
+        },
+        {
+          "target": "routing-architecture",
+          "type": "expanded by",
+          "justification": "Changing brain state is the second door, reaching new combinations of existing skill."
+        },
+        {
+          "target": "capability-accessibility-model",
+          "type": "explained by",
+          "justification": "The space is exactly capability and access taken together, the two sides of the equation."
+        }
+      ],
+      "games": [],
+      "bookRef": "Solution space is how the book holds learning and brain state in one picture, the two independent ways to reach more.",
+      "transmissions": [],
+      "next": {
+        "target": "the-genius",
+        "reason": "One of the two doors is the learning engine itself. Go meet it."
+      }
+    },
+    {
+      "id": "unreliable-narrator",
+      "name": "The Unreliable Narrator",
+      "aliases": [
+        "memory as reconstruction",
+        "confabulation",
+        "the rough draft"
+      ],
+      "x": 960,
+      "y": 485,
+      "lines": [
+        "impostor"
+      ],
+      "oneBreath": "Memory is not a recording you play back. It is a story your brain rebuilds each time, filling gaps with what should have been there. This is usually good enough, and it means you can remember things that never happened with complete confidence, including the story you tell about who you are.",
+      "evidence": [
+        {
+          "text": "Give people a themed list of words, say bed, rest, tired, dream, and later many will swear that sleep was on the list. It never was. Their brain reconstructed the theme so smoothly that it added the missing centerpiece and stamped it as a real memory, often with more confidence than the words that were actually there.",
+          "cite": "The DRM false-memory paradigm"
+        }
+      ],
+      "stories": [
+        {
+          "text": "The line I have always been bad at math runs on this exact machinery. It feels like a fact recalled from a lifetime of evidence. It is usually a story reconstructed from a few old moments, smoothed into a certainty that then goes looking for confirmation."
+        }
+      ],
+      "relations": [
+        {
+          "target": "the-impostor",
+          "type": "part of",
+          "justification": "Reconstructing a flattering or limiting past is one of the Impostor's core tools."
+        },
+        {
+          "target": "special-brain-story",
+          "type": "feeds",
+          "justification": "A rewritten memory of past failures is the raw material the Special Brain Story is built from."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book uses the unreliable narrator to show that confidence is not evidence, and that the archive you trust is being edited.",
+      "transmissions": [],
+      "next": {
+        "target": "special-brain-story",
+        "reason": "See what the narrator builds when it edits a whole life. This is its masterpiece."
+      }
+    },
+    {
+      "id": "trained-reasoning",
+      "name": "Trained Reasoning",
+      "aliases": [
+        "reasoning as pattern recognition",
+        "the Wason task",
+        "rationality is trainable"
+      ],
+      "x": 794,
+      "y": 590,
+      "lines": [
+        "bias"
+      ],
+      "oneBreath": "Reasoning feels like the most general power the mind has, a logic engine you can point at anything. The brain has no such engine. What we call reasoning is trained pattern recognition, built like any other skill, which is why the exact same logic problem is easy in a familiar setting and nearly impossible in an abstract one. And because it is built, it can be taught.",
+      "claimsBlock": {
+        "believe": "Reasoning is a general faculty. Either you are a logical person or you are not.",
+        "evidence": "Reasoning is trained pattern recognition, not a general faculty. The proof is that the same logical problem is easy in one costume and hard in another. And because it is trained, a few minutes of the right practice measurably improves it."
+      },
+      "evidence": [
+        {
+          "text": "You have probably heard that the mind runs in two gears: a fast, automatic one, and a slow, careful reasoner that does the real thinking. That second gear gets treated as a general logic engine everyone is born with, the seat of what makes us smart. There is no such engine. When a person reasons cleanly through a formal argument, they are running a skill they were taught and practised, built the same way as chess or arithmetic. Careful reasoning is not a birthright. It is one more thing a mind can be trained to do.",
+          "cite": "Reasoning as a built skill, not an innate faculty"
+        },
+        {
+          "text": "There is a famous logic puzzle that almost everyone fails when it is about letters and numbers on cards. Dress the identical puzzle up as a question about people breaking a rule, checking who is old enough to drink, and suddenly almost everyone gets it right. Same logic, different costume. The reasoning was never general.",
+          "cite": "The Wason selection task, abstract versus social versions"
+        },
+        {
+          "text": "The same problem is easy as a count of people and hard as a percentage, easy as a story and hard as a formula. If reasoning were one general faculty, the costume would not matter. It matters enormously, because what is really doing the work is pattern recognition trained in specific settings.",
+          "cite": "Framing and frequency effects in reasoning"
+        }
+      ],
+      "stories": [
+        {
+          "text": "The hopeful part is that this cuts both ways. Because reasoning is a trained skill and not a fixed trait, you can teach it in minutes. Show someone the two moves that turn the hard costume into the easy one and their score on the next round climbs on the spot. Nobody's hardware changed. They just learned the pattern."
+        }
+      ],
+      "relations": [
+        {
+          "target": "domain-specific-intelligence",
+          "type": "part of",
+          "justification": "Reasoning being domain-specific is the sharpest case of intelligence being domain-specific, because reasoning is the ability that most looks general."
+        },
+        {
+          "target": "bottleneck-chunking",
+          "type": "sibling of",
+          "justification": "Both are the IQ bridge, taking an ability we treat as raw brainpower and showing it is trained pattern skill."
+        },
+        {
+          "target": "introspective-bias",
+          "type": "exposes",
+          "justification": "We believed reasoning was a general faculty because deliberation is the part of the mind we can feel, which is the introspective bias exactly."
+        }
+      ],
+      "games": [],
+      "bookRef": "The book uses trained reasoning to take on the last stronghold of the general-intelligence story, the idea that logic itself is a raw gift.",
+      "transmissions": [],
+      "next": {
+        "target": "special-brain-story",
+        "reason": "You have watched every piece of the general-intelligence story come apart. Now face the story itself."
+      }
+    }
+  ]
+}

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Map &mdash; The Genius and the Impostor</title>
+<meta name="description" content="A map of the ideas from The Genius and the Impostor. Concepts are the stations, and each line is a route through them.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#fafaf8; --ink:#1a1a1a; --red:#c44b3a; --muted:#666;
+    --rule:#e0dcd4; --parchment:#f1ebde; --parchment-line:#d6cfc2;
+    --serif:'Source Serif 4', Georgia, serif; --mono:'Space Mono','Courier New',monospace;
+    --genius:#6a4a95; --impostor:#a34a72; --machinery:#c0503f; --access:#3a6ea5; --bias:#b8843a; --intelligence:#4f7d3a;
+  }
+  html { scroll-behavior:smooth; }
+  [hidden] { display:none !important; }
+  body { font-family:var(--serif); background:var(--bg); color:var(--ink); line-height:1.75; font-size:18px; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .shell { max-width:720px; margin:0 auto; padding:0 24px; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+  @media (min-width:600px){ .shell { padding:0 40px; } }
+  .shell-main { flex:1; padding:40px 0 56px; }
+  /* mast */
+  .mast { padding:26px 0 18px; border-bottom:1px solid var(--rule); display:flex; align-items:baseline; justify-content:space-between; gap:16px; }
+  .mast-home { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .mast-home:hover { color:var(--red); }
+  .mast-kicker { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+  /* line chips */
+  .linechips { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 8px; }
+  .linechip { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#fff; padding:3px 10px; border-radius:2px; text-decoration:none; }
+  /* headings */
+  h1.station { font-size:38px; line-height:1.15; font-weight:600; letter-spacing:-.01em; margin:14px 0 22px; }
+  @media (min-width:600px){ h1.station { font-size:46px; } }
+  .lead { font-size:22px; line-height:1.5; color:var(--ink); margin-bottom:8px; }
+  @media (min-width:600px){ .lead { font-size:24px; } }
+  .sec { margin-top:44px; }
+  .sec-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+  .sec p { margin-bottom:16px; }
+  .cite { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.02em; display:block; margin-top:-8px; margin-bottom:20px; }
+  /* claims block */
+  .claims { display:grid; grid-template-columns:1fr; gap:0; border:1px solid var(--parchment-line); background:var(--parchment); border-radius:3px; overflow:hidden; margin-top:36px; }
+  @media (min-width:640px){ .claims { grid-template-columns:1fr 1fr; } }
+  .claims-cell { padding:22px 24px; }
+  .claims-cell + .claims-cell { border-top:1px solid var(--parchment-line); }
+  @media (min-width:640px){ .claims-cell + .claims-cell { border-top:none; border-left:1px solid var(--parchment-line); } }
+  .claims-head { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; }
+  .claims-believe .claims-head { color:var(--muted); }
+  .claims-evidence .claims-head { color:var(--red); }
+  .claims-cell p { font-size:17px; line-height:1.55; margin:0; }
+  /* walk me through it (opens the learn-flow modal) */
+  .walk-btn { display:inline-block; font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:var(--ink); color:var(--bg); border:none; border-radius:4px; padding:14px 26px; margin-top:6px; cursor:pointer; transition:background .2s; }
+  .walk-btn:hover, .walk-btn:focus-visible { background:var(--red); outline:none; }
+  /* feel it (games) */
+  .feelit { display:block; border:1px solid var(--rule); border-left:3px solid var(--red); border-radius:3px; padding:20px 22px; text-decoration:none; margin-bottom:14px; transition:background .2s, transform .2s; background:#fff; }
+  .feelit:hover { background:#fdfbf7; transform:translateY(-1px); }
+  .feelit-name { font-weight:600; font-size:19px; margin-bottom:4px; }
+  .feelit-blurb { font-size:16px; color:var(--muted); line-height:1.5; }
+  .feelit-cue { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); margin-top:10px; }
+  /* map fragment */
+  .frag { border-top:1px solid var(--rule); }
+  .frag-edge { padding:14px 0; border-bottom:1px solid var(--rule); }
+  .frag-edge summary { list-style:none; cursor:pointer; display:flex; align-items:baseline; gap:10px; justify-content:space-between; }
+  .frag-edge summary::-webkit-details-marker { display:none; }
+  .frag-rel { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .frag-target { font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; flex:1; }
+  .frag-target:hover { color:var(--red); }
+  .frag-why { font-size:15px; color:var(--muted); line-height:1.5; padding-top:10px; }
+  .frag-open { font-family:var(--mono); font-size:16px; color:var(--rule); }
+  /* next */
+  .next { display:block; margin-top:44px; border:1px solid var(--rule); border-radius:3px; padding:24px; text-decoration:none; background:#fff; transition:background .2s; }
+  .next:hover { background:#fdfbf7; }
+  .next-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .next-name { font-size:24px; font-weight:600; color:var(--red); margin-bottom:6px; }
+  .next-reason { font-size:16px; color:var(--muted); line-height:1.5; }
+  /* book */
+  .book { margin-top:40px; padding:22px 0 0; border-top:1px solid var(--rule); font-size:17px; color:var(--muted); font-style:italic; line-height:1.6; }
+  /* footer */
+  .foot { border-top:1px solid var(--rule); padding:34px 0 46px; text-align:center; margin-top:12px; }
+  .foot-label { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); opacity:.7; margin-bottom:14px; }
+  .foot-links { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .foot-links a { font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .foot-links a:hover { color:var(--red); }
+  .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
+
+  .atlas-hero { padding:44px 0 8px; }
+  .atlas-title { font-size:40px; line-height:1.1; font-weight:600; letter-spacing:-.01em; margin-bottom:16px; }
+  @media (min-width:600px){ .atlas-title { font-size:52px; } }
+  .atlas-sub { font-size:20px; color:var(--muted); line-height:1.5; max-width:44ch; }
+  .viewtoggle { display:flex; gap:0; margin:30px 0 10px; border:1px solid var(--rule); border-radius:3px; width:max-content; overflow:hidden; }
+  .viewtoggle button { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; padding:9px 18px; background:#fff; border:none; color:var(--muted); cursor:pointer; }
+  .viewtoggle button.on { background:var(--ink); color:#fafaf8; }
+  .mapwrap { margin:8px 0 0; overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--rule); border-radius:4px; background:#fff; }
+  /* On desktop the map breaks out of the reading column and uses the screen. */
+  @media (min-width:760px){ .mapwrap { width:min(1300px,94vw); position:relative; left:50%; transform:translateX(-50%); } }
+  svg.map { display:block; width:1250px; max-width:none; height:auto; }
+  .station-label { font-family:var(--mono); font-size:12px; fill:#1a1a1a; letter-spacing:.01em; paint-order:stroke; stroke:#fafaf8; stroke-width:4px; }
+  .station { cursor:pointer; }
+  .station:hover .station-label, .station:focus .station-label { fill:var(--red); }
+  .station:focus { outline:none; }
+  .mapline { transition:opacity .2s; }
+  .map.dim .mapline { opacity:0.16; }
+  .map.dim .mapline.lit { opacity:0.95; }
+  .map.dim .station { opacity:0.35; }
+  .map.dim .station.lit { opacity:1; }
+  /* preview card */
+  .preview { position:sticky; bottom:0; margin-top:14px; border:1px solid var(--rule); border-radius:4px; background:var(--parchment); padding:20px 22px; display:none; }
+  .preview.on { display:block; }
+  .preview-name { font-size:22px; font-weight:600; margin-bottom:6px; }
+  .preview-breath { font-size:16px; color:var(--muted); line-height:1.5; margin-bottom:16px; }
+  .preview-actions { display:flex; flex-wrap:wrap; gap:10px; }
+  .preview-btn { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:9px 16px; border-radius:3px; }
+  .preview-enter { background:var(--ink); color:#fafaf8; }
+  .preview-play { background:var(--red); color:#fff; }
+  .preview-close { background:transparent; color:var(--muted); border:1px solid var(--rule); cursor:pointer; }
+  /* legend */
+  .legend { margin-top:34px; display:grid; grid-template-columns:1fr; gap:2px; }
+  @media (min-width:600px){ .legend { grid-template-columns:1fr 1fr; gap:2px 28px; } }
+  .leg { display:flex; align-items:baseline; gap:10px; padding:11px 0; text-decoration:none; border-bottom:1px solid var(--rule); }
+  .leg-swatch { width:22px; height:6px; border-radius:3px; flex-shrink:0; position:relative; top:-3px; }
+  .leg-name { font-weight:600; font-size:16px; }
+  .leg-sub { font-size:14px; color:var(--muted); }
+  .leg.on .leg-name { color:var(--red); }
+  /* routes */
+  .routes-head, .list-head { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin:44px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+  .route { border-bottom:1px solid var(--rule); padding:14px 0; }
+  .route summary { list-style:none; cursor:pointer; }
+  .route summary::-webkit-details-marker { display:none; }
+  .route-name { font-weight:600; font-size:18px; margin-right:10px; }
+  .route-blurb { font-size:15px; color:var(--muted); }
+  .route-stops { font-family:var(--mono); font-size:13px; color:var(--muted); line-height:1.7; margin:12px 0; }
+  .route-start { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--red); text-decoration:none; }
+  /* list view */
+  .lv-line { border:1px solid var(--rule); border-radius:4px; margin-bottom:12px; overflow:hidden; }
+  .lv-line summary { list-style:none; cursor:pointer; display:flex; align-items:baseline; gap:10px; padding:16px 18px; background:#fff; }
+  .lv-line summary::-webkit-details-marker { display:none; }
+  .lv-swatch { width:22px; height:6px; border-radius:3px; position:relative; top:-3px; }
+  .lv-name { font-weight:600; font-size:17px; }
+  .lv-sub { font-size:14px; color:var(--muted); }
+  .lv-stops { list-style:none; padding:6px 18px 16px; }
+  .lv-stops li { border-top:1px solid var(--rule); }
+  .lv-stops a { display:flex; align-items:center; justify-content:space-between; padding:12px 4px; text-decoration:none; }
+  .lv-stops a:hover .lv-stop-name { color:var(--red); }
+  .lv-stop-name { font-size:17px; }
+  .lv-tick { font-family:var(--mono); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); border:1px solid var(--red); border-radius:2px; padding:1px 6px; }
+  .note { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.7; margin-top:12px; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="mast">
+    <a class="mast-home" href="../index.html">&larr; The book</a>
+    <span class="mast-kicker">Genius &amp; Impostor</span>
+  </header>
+  <main class="shell-main">
+    <div class="atlas-hero">
+      <h1 class="atlas-title">The Map</h1>
+      <p class="atlas-sub">A map of the ideas from the book. Each station is a concept, and each line is a route you can ride from one idea to the next. Tap a station to look inside.</p>
+    </div>
+
+    <div class="viewtoggle" role="tablist">
+      <button id="tab-map" class="on" type="button">Map</button>
+      <button id="tab-list" type="button">List</button>
+    </div>
+
+    <div id="view-map">
+      <div class="mapwrap">
+        <svg class="map" viewBox="0 0 1250 680" role="img" aria-label="Subway map of the concepts">
+          <path d="M 340 70 L 624 70 Q 640 70 640 86 L 640 170" fill="none" stroke="#6a4a95" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" class="mapline" data-line="genius"/>
+<path d="M 960 380 L 960 590" fill="none" stroke="#a34a72" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" class="mapline" data-line="impostor"/>
+<path d="M 130 170 L 969.5 170 Q 985.5 170 985.5 186 L 985.5 304 Q 985.5 320 969.5 320 L 760 320" fill="none" stroke="#c0503f" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" class="mapline" data-line="machinery"/>
+<path d="M 220 320 L 760 320" fill="none" stroke="#3a6ea5" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" class="mapline" data-line="access"/>
+<path d="M 130 590 L 960 590" fill="none" stroke="#b8843a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" class="mapline" data-line="bias"/>
+<path d="M 974.5 170 L 974.5 304 Q 974.5 320 990.5 320 L 1114 320 Q 1130 320 1130 336 L 1130 470" fill="none" stroke="#4f7d3a" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity="0.9" class="mapline" data-line="intelligence"/>
+          <g class="station" tabindex="0" role="link" data-id="capability-accessibility-model" data-name="The Capability-Accessibility Model" data-breath="What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let you reach, and when the access drops to zero, the performance does too, no matter how much skill is sitting there." data-game="" data-gameurl="">
+      <circle cx="490" cy="320" r="26" fill="transparent"/>
+      <circle cx="490" cy="320" r="9" fill="#fafaf8" stroke="#3a6ea5" stroke-width="4"/>
+      <text class="station-label" x="490" y="351" text-anchor="middle">Capability &amp; Access</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="automaticity" data-name="Automaticity" data-breath="When you practice something enough, it stops needing you. It runs on its own, fast and in the background, while your attention is free to be somewhere else. That handing-off is not a shortcut around thinking. It is the thing that makes real thinking possible." data-game="The Unstoppable Reader" data-gameurl="../unstoppable-reader.html">
+      <circle cx="640" cy="170" r="26" fill="transparent"/>
+      <circle cx="640" cy="170" r="13" fill="#fafaf8" stroke="#1a1a1a" stroke-width="3"/><circle cx="640" cy="170" r="3" fill="var(--red)"/>
+      <text class="station-label" x="640" y="201" text-anchor="middle">Automaticity</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="effort-inversion" data-name="Effort Inversion" data-breath="We watch someone struggle and decide the task must be hard. We watch someone breeze through it and decide it must be easy. Reality runs the other way. The struggle is what beginning looks like, and the ease is what mastery looks like." data-game="The Unstoppable Reader" data-gameurl="../unstoppable-reader.html">
+      <circle cx="296" cy="590" r="26" fill="transparent"/>
+      <circle cx="296" cy="590" r="9" fill="#fafaf8" stroke="#b8843a" stroke-width="4"/><circle cx="296" cy="590" r="3" fill="var(--red)"/>
+      <text class="station-label" x="296" y="567" text-anchor="middle">Effort Inversion</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="automaticity-blindness" data-name="Automaticity Blindness" data-breath="Once a skill runs on its own, you cannot feel it working anymore. You can only notice the effortful parts of your own mind, so the automatic parts go silent and start to look like nothing at all, even when they are the most complex thing you do." data-game="" data-gameurl="">
+      <circle cx="130" cy="590" r="26" fill="transparent"/>
+      <circle cx="130" cy="590" r="9" fill="#fafaf8" stroke="#b8843a" stroke-width="4"/>
+      <text class="station-label" x="130" y="621" text-anchor="middle">Automaticity Blindness</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="introspective-bias" data-name="Introspective Bias" data-breath="We build our whole picture of thinking out of the only thing we can watch, which is effortful conscious deliberation. Everything the mind does automatically is invisible to that view, so we left it out of the theory and mistook the small lit corner for the whole room." data-game="" data-gameurl="">
+      <circle cx="628" cy="590" r="26" fill="transparent"/>
+      <circle cx="628" cy="590" r="9" fill="#fafaf8" stroke="#b8843a" stroke-width="4"/>
+      <text class="station-label" x="628" y="567" text-anchor="middle">Introspective Bias</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="competence-inversion" data-name="Competence Inversion" data-breath="When you are learning, thinking is slow and effortful, so that is what we decided real thinking is. Then we look at an expert whose thinking has gone fast and smooth and say that is not really thinking, it is just instinct. We took the beginner's experience as the standard and judged mastery against it." data-game="" data-gameurl="">
+      <circle cx="462" cy="590" r="26" fill="transparent"/>
+      <circle cx="462" cy="590" r="9" fill="#fafaf8" stroke="#b8843a" stroke-width="4"/>
+      <text class="station-label" x="462" y="621" text-anchor="middle">Competence Inversion</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="special-brain-story" data-name="The Special Brain Story" data-breath="The story says we are each born with a certain kind of brain, better or worse, and the job of a life is to find out which one you got and stay in your lane. It is everywhere, it feels like common sense, and the neuroscience does not support it." data-game="" data-gameurl="">
+      <circle cx="960" cy="590" r="26" fill="transparent"/>
+      <circle cx="960" cy="590" r="13" fill="#fafaf8" stroke="#1a1a1a" stroke-width="3"/>
+      <text class="station-label" x="960" y="621" text-anchor="middle">The Special Brain Story</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="the-impostor" data-name="The Impostor" data-breath="There is a part of your brain whose job is to narrate you, to keep a running story of who you are and what you are capable of. It is very good at sounding certain and it is not built for accuracy. Its masterpiece is the lie that your potential is fixed." data-game="The Genius Diagnostic" data-gameurl="../diagnostic.html">
+      <circle cx="960" cy="380" r="26" fill="transparent"/>
+      <circle cx="960" cy="380" r="9" fill="#fafaf8" stroke="#a34a72" stroke-width="4"/><circle cx="960" cy="380" r="3" fill="var(--red)"/>
+      <text class="station-label" x="934" y="384" text-anchor="end">The Impostor</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="the-genius" data-name="The Genius" data-breath="There is an engine in you that built every skill you have without ever asking your permission. It learned to walk and talk and recognize faces while you were busy being a child. It runs on curiosity, it does not care about status, and it is still here." data-game="The Genius Diagnostic" data-gameurl="../diagnostic.html">
+      <circle cx="340" cy="70" r="26" fill="transparent"/>
+      <circle cx="340" cy="70" r="9" fill="#fafaf8" stroke="#6a4a95" stroke-width="4"/><circle cx="340" cy="70" r="3" fill="var(--red)"/>
+      <text class="station-label" x="340" y="47" text-anchor="middle">The Genius</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="adult-learning" data-name="Adult Learning" data-breath="Your brain does not lose the ability to change when you grow up. It changes less because less needs changing, and we read that as the door closing. It has not closed. Start learning something hard again and the machinery that builds skill comes back." data-game="" data-gameurl="">
+      <circle cx="490" cy="70" r="26" fill="transparent"/>
+      <circle cx="490" cy="70" r="9" fill="#fafaf8" stroke="#6a4a95" stroke-width="4"/>
+      <text class="station-label" x="490" y="47" text-anchor="middle">Adult Learning</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="genius-led-learning" data-name="Genius-Led Learning" data-breath="There are two ways to learn and they are not equally good. One runs on curiosity, builds as it goes, and lives on feedback, which is how the Genius works. The other runs on grades and approval, takes facts in passively, and tests only to score. School mostly runs the second one." data-game="" data-gameurl="">
+      <circle cx="640" cy="70" r="26" fill="transparent"/>
+      <circle cx="640" cy="70" r="9" fill="#fafaf8" stroke="#6a4a95" stroke-width="4"/>
+      <text class="station-label" x="640" y="47" text-anchor="middle">Genius-Led Learning</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="progressive-composition" data-name="Progressive Composition" data-breath="Every skill gets built the same way. You learn simple pieces, you practice them until they run on their own, and then you combine them into bigger pieces and do it again. It is layers, and each layer stands on the one below it, which is why the order never changes." data-game="" data-gameurl="">
+      <circle cx="300" cy="170" r="26" fill="transparent"/>
+      <circle cx="300" cy="170" r="9" fill="#fafaf8" stroke="#c0503f" stroke-width="4"/>
+      <text class="station-label" x="300" y="147" text-anchor="middle">Progressive Composition</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="goldilocks-zone" data-name="The Goldilocks Zone" data-breath="Learning happens at a specific level of hard. Too easy and there is nothing to learn from. Too hard and there is no clear signal about what to fix. The zone in between, where you succeed most of the time but miss often enough to get corrected, is where the building actually happens." data-game="" data-gameurl="">
+      <circle cx="130" cy="170" r="26" fill="transparent"/>
+      <circle cx="130" cy="170" r="9" fill="#fafaf8" stroke="#c0503f" stroke-width="4"/>
+      <text class="station-label" x="130" y="201" text-anchor="middle">The Goldilocks Zone</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="implicit-learning" data-name="Implicit Learning" data-breath="A lot of what you know, you cannot say. Your brain picks up patterns from sheer exposure and puts them to work without ever handing you the rule. You obey grammar you were never taught and read situations you could not explain, because the knowledge went in below the level of words." data-game="The Secret Grammar" data-gameurl="../secret-grammar.html">
+      <circle cx="470" cy="170" r="26" fill="transparent"/>
+      <circle cx="470" cy="170" r="9" fill="#fafaf8" stroke="#c0503f" stroke-width="4"/><circle cx="470" cy="170" r="3" fill="var(--red)"/>
+      <text class="station-label" x="470" y="201" text-anchor="middle">Implicit Learning</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="bottleneck-chunking" data-name="The Bottleneck and Chunking" data-breath="The conscious mind can only hold a handful of things at once. That never changes. What changes with expertise is how much each thing holds. A master is not remembering more items than you, they have learned to pack far more meaning into each one." data-game="The Ayumu Test" data-gameurl="../ayumu-test.html">
+      <circle cx="810" cy="170" r="26" fill="transparent"/>
+      <circle cx="810" cy="170" r="9" fill="#fafaf8" stroke="#c0503f" stroke-width="4"/><circle cx="810" cy="170" r="3" fill="var(--red)"/>
+      <text class="station-label" x="810" y="147" text-anchor="middle">Bottleneck &amp; Chunking</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="everyday-genius" data-name="Everyday Genius" data-breath="The things you do without thinking, walking, understanding speech, recognizing a face, reading this sentence, are some of the hardest problems any system has ever solved. They only feel like nothing because your brain solved them so completely that the work went invisible." data-game="" data-gameurl="">
+      <circle cx="980" cy="170" r="26" fill="transparent"/>
+      <circle cx="980" cy="170" r="13" fill="#fafaf8" stroke="#1a1a1a" stroke-width="3"/>
+      <text class="station-label" x="980" y="147" text-anchor="middle">Everyday Genius</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="uncommon-genius" data-name="Uncommon Genius" data-breath="The breakthroughs we celebrate come from the same engine that built your walking and your reading. The difference is the path. Someone spent years pointed at an unusual set of problems, which built an unusual set of skills, which reached an answer the rest of us could not." data-game="" data-gameurl="">
+      <circle cx="980" cy="320" r="26" fill="transparent"/>
+      <circle cx="980" cy="320" r="13" fill="#fafaf8" stroke="#1a1a1a" stroke-width="3"/>
+      <text class="station-label" x="980" y="351" text-anchor="middle">Uncommon Genius</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="domain-specific-intelligence" data-name="Domain-Specific Intelligence" data-breath="Intelligence is not one general thing you have more or less of. It is the ability to solve particular problems in particular places, built entirely by training in those places. A bat beats you at echolocation and you beat the bat at language, and neither of you is smarter in general, because there is no such thing as being smart in general." data-game="" data-gameurl="">
+      <circle cx="1130" cy="320" r="26" fill="transparent"/>
+      <circle cx="1130" cy="320" r="9" fill="#fafaf8" stroke="#4f7d3a" stroke-width="4"/>
+      <text class="station-label" x="1130" y="297" text-anchor="middle">Domain-Specific</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="prediction-engine" data-name="The Prediction Engine" data-breath="Your brain is not sitting back and receiving the world. It is constantly guessing what comes next and checking the guess against what arrives. That constant prediction is why reading feels smooth, why you finish people's sentences, and why a wrong note makes you wince before you can think." data-game="" data-gameurl="">
+      <circle cx="1130" cy="470" r="26" fill="transparent"/>
+      <circle cx="1130" cy="470" r="9" fill="#fafaf8" stroke="#4f7d3a" stroke-width="4"/>
+      <text class="station-label" x="1130" y="501" text-anchor="middle">The Prediction Engine</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="routing-architecture" data-name="Routing Architecture" data-breath="Your brain runs in different modes, and each mode connects a different set of your skills. Focused work, mind-wandering, sleep, panic, each one opens some routes and closes others. Change the mode and you change what you can reach, without changing a thing you know." data-game="" data-gameurl="">
+      <circle cx="220" cy="320" r="26" fill="transparent"/>
+      <circle cx="220" cy="320" r="9" fill="#fafaf8" stroke="#3a6ea5" stroke-width="4"/>
+      <text class="station-label" x="220" y="351" text-anchor="middle">Routing Architecture</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="solution-space" data-name="Solution Space" data-breath="This is the full set of problems you can solve right now. It has two doors. One is learning, which permanently adds new skills. The other is changing your brain state, which reaches different combinations of the skills you already have. Both doors make the space bigger." data-game="" data-gameurl="">
+      <circle cx="760" cy="320" r="26" fill="transparent"/>
+      <circle cx="760" cy="320" r="13" fill="#fafaf8" stroke="#1a1a1a" stroke-width="3"/>
+      <text class="station-label" x="760" y="351" text-anchor="middle">Solution Space</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="unreliable-narrator" data-name="The Unreliable Narrator" data-breath="Memory is not a recording you play back. It is a story your brain rebuilds each time, filling gaps with what should have been there. This is usually good enough, and it means you can remember things that never happened with complete confidence, including the story you tell about who you are." data-game="" data-gameurl="">
+      <circle cx="960" cy="485" r="26" fill="transparent"/>
+      <circle cx="960" cy="485" r="9" fill="#fafaf8" stroke="#a34a72" stroke-width="4"/>
+      <text class="station-label" x="934" y="489" text-anchor="end">The Unreliable Narrator</text>
+    </g>
+<g class="station" tabindex="0" role="link" data-id="trained-reasoning" data-name="Trained Reasoning" data-breath="Reasoning feels like the most general power the mind has, a logic engine you can point at anything. The brain has no such engine. What we call reasoning is trained pattern recognition, built like any other skill, which is why the exact same logic problem is easy in a familiar setting and nearly impossible in an abstract one. And because it is built, it can be taught." data-game="" data-gameurl="">
+      <circle cx="794" cy="590" r="26" fill="transparent"/>
+      <circle cx="794" cy="590" r="9" fill="#fafaf8" stroke="#b8843a" stroke-width="4"/>
+      <text class="station-label" x="794" y="621" text-anchor="middle">Trained Reasoning</text>
+    </g>
+        </svg>
+      </div>
+      <div class="preview" id="preview">
+        <div class="preview-name" id="pv-name"></div>
+        <div class="preview-breath" id="pv-breath"></div>
+        <div class="preview-actions">
+          <a class="preview-btn preview-enter" id="pv-enter" href="#">Enter station &rarr;</a>
+          <a class="preview-btn preview-play" id="pv-play" href="#" hidden>Play the game</a>
+          <button class="preview-btn preview-close" id="pv-close" type="button">Close</button>
+        </div>
+      </div>
+      <p class="note">First-draft map. Every connection here is a claim about how the ideas relate, and the topology is still up for a vetting pass. The line re-routing toggle (focused service vs. rest service) is coming in a later version.</p>
+
+      <div class="legend"><a class="leg" id="line-genius" href="#" data-line="genius"><span class="leg-swatch" style="background:#6a4a95"></span><span class="leg-name">The Genius Line</span><span class="leg-sub">the learning engine</span></a><a class="leg" id="line-impostor" href="#" data-line="impostor"><span class="leg-swatch" style="background:#a34a72"></span><span class="leg-name">The Impostor Line</span><span class="leg-sub">the inner narrator</span></a><a class="leg" id="line-machinery" href="#" data-line="machinery"><span class="leg-swatch" style="background:#c0503f"></span><span class="leg-name">The Machinery Line</span><span class="leg-sub">how capability gets built</span></a><a class="leg" id="line-access" href="#" data-line="access"><span class="leg-swatch" style="background:#3a6ea5"></span><span class="leg-name">The Access Line</span><span class="leg-sub">how capability gets reached</span></a><a class="leg" id="line-bias" href="#" data-line="bias"><span class="leg-swatch" style="background:#b8843a"></span><span class="leg-name">The Bias Line</span><span class="leg-sub">why we got it backwards</span></a><a class="leg" id="line-intelligence" href="#" data-line="intelligence"><span class="leg-swatch" style="background:#4f7d3a"></span><span class="leg-name">The Intelligence Line</span><span class="leg-sub">what intelligence actually is</span></a></div>
+    </div>
+
+    <div id="view-list" hidden>
+      
+    <details class="lv-line" open>
+      <summary><span class="lv-swatch" style="background:#6a4a95"></span><span class="lv-name">The Genius Line</span><span class="lv-sub">the learning engine</span></summary>
+      <ol class="lv-stops">
+        <li><a href="the-genius.html"><span class="lv-stop-name">The Genius</span><span class="lv-tick">play</span></a></li><li><a href="adult-learning.html"><span class="lv-stop-name">Adult Learning</span></a></li><li><a href="genius-led-learning.html"><span class="lv-stop-name">Genius-Led Learning</span></a></li><li><a href="automaticity.html"><span class="lv-stop-name">Automaticity</span><span class="lv-tick">play</span></a></li>
+      </ol>
+    </details>
+    <details class="lv-line" open>
+      <summary><span class="lv-swatch" style="background:#a34a72"></span><span class="lv-name">The Impostor Line</span><span class="lv-sub">the inner narrator</span></summary>
+      <ol class="lv-stops">
+        <li><a href="the-impostor.html"><span class="lv-stop-name">The Impostor</span><span class="lv-tick">play</span></a></li><li><a href="unreliable-narrator.html"><span class="lv-stop-name">The Unreliable Narrator</span></a></li><li><a href="special-brain-story.html"><span class="lv-stop-name">The Special Brain Story</span></a></li>
+      </ol>
+    </details>
+    <details class="lv-line" open>
+      <summary><span class="lv-swatch" style="background:#c0503f"></span><span class="lv-name">The Machinery Line</span><span class="lv-sub">how capability gets built</span></summary>
+      <ol class="lv-stops">
+        <li><a href="goldilocks-zone.html"><span class="lv-stop-name">The Goldilocks Zone</span></a></li><li><a href="progressive-composition.html"><span class="lv-stop-name">Progressive Composition</span></a></li><li><a href="implicit-learning.html"><span class="lv-stop-name">Implicit Learning</span><span class="lv-tick">play</span></a></li><li><a href="automaticity.html"><span class="lv-stop-name">Automaticity</span><span class="lv-tick">play</span></a></li><li><a href="bottleneck-chunking.html"><span class="lv-stop-name">The Bottleneck and Chunking</span><span class="lv-tick">play</span></a></li><li><a href="everyday-genius.html"><span class="lv-stop-name">Everyday Genius</span></a></li><li><a href="uncommon-genius.html"><span class="lv-stop-name">Uncommon Genius</span></a></li><li><a href="solution-space.html"><span class="lv-stop-name">Solution Space</span></a></li>
+      </ol>
+    </details>
+    <details class="lv-line" open>
+      <summary><span class="lv-swatch" style="background:#3a6ea5"></span><span class="lv-name">The Access Line</span><span class="lv-sub">how capability gets reached</span></summary>
+      <ol class="lv-stops">
+        <li><a href="routing-architecture.html"><span class="lv-stop-name">Routing Architecture</span></a></li><li><a href="capability-accessibility-model.html"><span class="lv-stop-name">The Capability-Accessibility Model</span></a></li><li><a href="solution-space.html"><span class="lv-stop-name">Solution Space</span></a></li>
+      </ol>
+    </details>
+    <details class="lv-line" open>
+      <summary><span class="lv-swatch" style="background:#b8843a"></span><span class="lv-name">The Bias Line</span><span class="lv-sub">why we got it backwards</span></summary>
+      <ol class="lv-stops">
+        <li><a href="automaticity-blindness.html"><span class="lv-stop-name">Automaticity Blindness</span></a></li><li><a href="effort-inversion.html"><span class="lv-stop-name">Effort Inversion</span><span class="lv-tick">play</span></a></li><li><a href="competence-inversion.html"><span class="lv-stop-name">Competence Inversion</span></a></li><li><a href="introspective-bias.html"><span class="lv-stop-name">Introspective Bias</span></a></li><li><a href="trained-reasoning.html"><span class="lv-stop-name">Trained Reasoning</span></a></li><li><a href="special-brain-story.html"><span class="lv-stop-name">The Special Brain Story</span></a></li>
+      </ol>
+    </details>
+    <details class="lv-line" open>
+      <summary><span class="lv-swatch" style="background:#4f7d3a"></span><span class="lv-name">The Intelligence Line</span><span class="lv-sub">what intelligence actually is</span></summary>
+      <ol class="lv-stops">
+        <li><a href="everyday-genius.html"><span class="lv-stop-name">Everyday Genius</span></a></li><li><a href="uncommon-genius.html"><span class="lv-stop-name">Uncommon Genius</span></a></li><li><a href="domain-specific-intelligence.html"><span class="lv-stop-name">Domain-Specific Intelligence</span></a></li><li><a href="prediction-engine.html"><span class="lv-stop-name">The Prediction Engine</span></a></li>
+      </ol>
+    </details>
+    </div>
+
+    <div class="routes-head">Curated routes</div>
+    <details class="route"><summary><span class="route-name">Start here</span><span class="route-blurb">Five stops, from the everyday genius you already have to the practice that grows it.</span></summary><div class="route-stops">Everyday Genius &rarr; Automaticity &rarr; Effort Inversion &rarr; The Impostor &rarr; The Goldilocks Zone</div><a class="route-start" href="everyday-genius.html">Start riding &rarr;</a></details><details class="route"><summary><span class="route-name">The IQ route</span><span class="route-blurb">For the skeptic. The case against IQ, evidence first.</span></summary><div class="route-stops">Trained Reasoning &rarr; The Bottleneck and Chunking &rarr; Domain-Specific Intelligence &rarr; The Special Brain Story</div><a class="route-start" href="trained-reasoning.html">Start riding &rarr;</a></details><details class="route"><summary><span class="route-name">The performance route</span><span class="route-blurb">For the practitioner. Why you choke under pressure, and how to get the access back.</span></summary><div class="route-stops">Routing Architecture &rarr; The Capability-Accessibility Model &rarr; Solution Space &rarr; The Impostor &rarr; The Goldilocks Zone</div><a class="route-start" href="routing-architecture.html">Start riding &rarr;</a></details>
+  </main>
+  
+  <footer class="foot">
+    <div class="foot-label">While you're here</div>
+    <div class="foot-links">
+      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="index.html">The Map</a>
+      <a href="../ayumu-test.html">The Ayumu Test</a>
+      <a href="../diagnostic.html">The Genius Diagnostic</a>
+      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a href="../secret-grammar.html">The Secret Grammar</a>
+    </div>
+    <div class="foot-copy">&copy; 2026 Josh Turknett</div>
+  </footer>
+</div>
+<script>
+  var MAP = {"capability-accessibility-model":{"name":"The Capability-Accessibility Model","breath":"What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let you reach, and when the access drops to zero, the performance does too, no matter how much skill is sitting there.","game":null},"automaticity":{"name":"Automaticity","breath":"When you practice something enough, it stops needing you. It runs on its own, fast and in the background, while your attention is free to be somewhere else. That handing-off is not a shortcut around thinking. It is the thing that makes real thinking possible.","game":{"name":"The Unstoppable Reader","url":"../unstoppable-reader.html","blurb":"Try to look at a word and not read it. You will find that you cannot, because reading now starts on its own."}},"effort-inversion":{"name":"Effort Inversion","breath":"We watch someone struggle and decide the task must be hard. We watch someone breeze through it and decide it must be easy. Reality runs the other way. The struggle is what beginning looks like, and the ease is what mastery looks like.","game":{"name":"The Unstoppable Reader","url":"../unstoppable-reader.html","blurb":"The part of the task that felt like nothing was the sophisticated part. This game makes you feel that directly."}},"automaticity-blindness":{"name":"Automaticity Blindness","breath":"Once a skill runs on its own, you cannot feel it working anymore. You can only notice the effortful parts of your own mind, so the automatic parts go silent and start to look like nothing at all, even when they are the most complex thing you do.","game":null},"introspective-bias":{"name":"Introspective Bias","breath":"We build our whole picture of thinking out of the only thing we can watch, which is effortful conscious deliberation. Everything the mind does automatically is invisible to that view, so we left it out of the theory and mistook the small lit corner for the whole room.","game":null},"competence-inversion":{"name":"Competence Inversion","breath":"When you are learning, thinking is slow and effortful, so that is what we decided real thinking is. Then we look at an expert whose thinking has gone fast and smooth and say that is not really thinking, it is just instinct. We took the beginner's experience as the standard and judged mastery against it.","game":null},"special-brain-story":{"name":"The Special Brain Story","breath":"The story says we are each born with a certain kind of brain, better or worse, and the job of a life is to find out which one you got and stay in your lane. It is everywhere, it feels like common sense, and the neuroscience does not support it.","game":null},"the-impostor":{"name":"The Impostor","breath":"There is a part of your brain whose job is to narrate you, to keep a running story of who you are and what you are capable of. It is very good at sounding certain and it is not built for accuracy. Its masterpiece is the lie that your potential is fixed.","game":{"name":"The Genius Diagnostic","url":"../diagnostic.html","blurb":"See how your hours actually split between the engine and the narrator, and get a field manual for the narrator's favorite tricks."}},"the-genius":{"name":"The Genius","breath":"There is an engine in you that built every skill you have without ever asking your permission. It learned to walk and talk and recognize faces while you were busy being a child. It runs on curiosity, it does not care about status, and it is still here.","game":{"name":"The Genius Diagnostic","url":"../diagnostic.html","blurb":"Find out how much of your day is already Genius-led, and where the engine is getting crowded out."}},"adult-learning":{"name":"Adult Learning","breath":"Your brain does not lose the ability to change when you grow up. It changes less because less needs changing, and we read that as the door closing. It has not closed. Start learning something hard again and the machinery that builds skill comes back.","game":null},"genius-led-learning":{"name":"Genius-Led Learning","breath":"There are two ways to learn and they are not equally good. One runs on curiosity, builds as it goes, and lives on feedback, which is how the Genius works. The other runs on grades and approval, takes facts in passively, and tests only to score. School mostly runs the second one.","game":null},"progressive-composition":{"name":"Progressive Composition","breath":"Every skill gets built the same way. You learn simple pieces, you practice them until they run on their own, and then you combine them into bigger pieces and do it again. It is layers, and each layer stands on the one below it, which is why the order never changes.","game":null},"goldilocks-zone":{"name":"The Goldilocks Zone","breath":"Learning happens at a specific level of hard. Too easy and there is nothing to learn from. Too hard and there is no clear signal about what to fix. The zone in between, where you succeed most of the time but miss often enough to get corrected, is where the building actually happens.","game":null},"implicit-learning":{"name":"Implicit Learning","breath":"A lot of what you know, you cannot say. Your brain picks up patterns from sheer exposure and puts them to work without ever handing you the rule. You obey grammar you were never taught and read situations you could not explain, because the knowledge went in below the level of words.","game":{"name":"The Secret Grammar","url":"../secret-grammar.html","blurb":"Ace rounds of adjective ordering instantly, then try to state the rule you just used. You will not be able to."}},"bottleneck-chunking":{"name":"The Bottleneck and Chunking","breath":"The conscious mind can only hold a handful of things at once. That never changes. What changes with expertise is how much each thing holds. A master is not remembering more items than you, they have learned to pack far more meaning into each one.","game":{"name":"The Ayumu Test","url":"../ayumu-test.html","blurb":"Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains."}},"everyday-genius":{"name":"Everyday Genius","breath":"The things you do without thinking, walking, understanding speech, recognizing a face, reading this sentence, are some of the hardest problems any system has ever solved. They only feel like nothing because your brain solved them so completely that the work went invisible.","game":null},"uncommon-genius":{"name":"Uncommon Genius","breath":"The breakthroughs we celebrate come from the same engine that built your walking and your reading. The difference is the path. Someone spent years pointed at an unusual set of problems, which built an unusual set of skills, which reached an answer the rest of us could not.","game":null},"domain-specific-intelligence":{"name":"Domain-Specific Intelligence","breath":"Intelligence is not one general thing you have more or less of. It is the ability to solve particular problems in particular places, built entirely by training in those places. A bat beats you at echolocation and you beat the bat at language, and neither of you is smarter in general, because there is no such thing as being smart in general.","game":null},"prediction-engine":{"name":"The Prediction Engine","breath":"Your brain is not sitting back and receiving the world. It is constantly guessing what comes next and checking the guess against what arrives. That constant prediction is why reading feels smooth, why you finish people's sentences, and why a wrong note makes you wince before you can think.","game":null},"routing-architecture":{"name":"Routing Architecture","breath":"Your brain runs in different modes, and each mode connects a different set of your skills. Focused work, mind-wandering, sleep, panic, each one opens some routes and closes others. Change the mode and you change what you can reach, without changing a thing you know.","game":null},"solution-space":{"name":"Solution Space","breath":"This is the full set of problems you can solve right now. It has two doors. One is learning, which permanently adds new skills. The other is changing your brain state, which reaches different combinations of the skills you already have. Both doors make the space bigger.","game":null},"unreliable-narrator":{"name":"The Unreliable Narrator","breath":"Memory is not a recording you play back. It is a story your brain rebuilds each time, filling gaps with what should have been there. This is usually good enough, and it means you can remember things that never happened with complete confidence, including the story you tell about who you are.","game":null},"trained-reasoning":{"name":"Trained Reasoning","breath":"Reasoning feels like the most general power the mind has, a logic engine you can point at anything. The brain has no such engine. What we call reasoning is trained pattern recognition, built like any other skill, which is why the exact same logic problem is easy in a familiar setting and nearly impossible in an abstract one. And because it is built, it can be taught.","game":null}};
+  var LINES = [{"id":"genius","stations":["the-genius","adult-learning","genius-led-learning","automaticity"]},{"id":"impostor","stations":["the-impostor","unreliable-narrator","special-brain-story"]},{"id":"machinery","stations":["goldilocks-zone","progressive-composition","implicit-learning","automaticity","bottleneck-chunking","everyday-genius","uncommon-genius","solution-space"]},{"id":"access","stations":["routing-architecture","capability-accessibility-model","solution-space"]},{"id":"bias","stations":["automaticity-blindness","effort-inversion","competence-inversion","introspective-bias","trained-reasoning","special-brain-story"]},{"id":"intelligence","stations":["everyday-genius","uncommon-genius","domain-specific-intelligence","prediction-engine"]}];
+
+  // view toggle, default to list on narrow screens
+  var tabMap = document.getElementById('tab-map'), tabList = document.getElementById('tab-list');
+  var viewMap = document.getElementById('view-map'), viewList = document.getElementById('view-list');
+  function show(which){
+    var isMap = which === 'map';
+    tabMap.classList.toggle('on', isMap); tabList.classList.toggle('on', !isMap);
+    viewMap.hidden = !isMap; viewList.hidden = isMap;
+  }
+  tabMap.onclick = function(){ show('map'); };
+  tabList.onclick = function(){ show('list'); };
+  if (window.matchMedia('(max-width:600px)').matches) show('list');
+
+  // station preview
+  var preview = document.getElementById('preview');
+  var pvName = document.getElementById('pv-name'), pvBreath = document.getElementById('pv-breath');
+  var pvEnter = document.getElementById('pv-enter'), pvPlay = document.getElementById('pv-play');
+  function openStation(id){
+    var d = MAP[id]; if(!d) return;
+    pvName.textContent = d.name;
+    pvBreath.textContent = d.breath;
+    pvEnter.setAttribute('href', id + '.html');
+    if (d.game){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
+    else { pvPlay.hidden = true; }
+    preview.classList.add('on');
+    preview.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+  document.getElementById('pv-close').onclick = function(){ preview.classList.remove('on'); undim(); };
+  Array.prototype.forEach.call(document.querySelectorAll('.station'), function(g){
+    function act(){ openStation(g.getAttribute('data-id')); }
+    g.addEventListener('click', act);
+    g.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } });
+  });
+
+  // legend highlight a line
+  var svg = document.querySelector('svg.map');
+  function undim(){ svg.classList.remove('dim'); Array.prototype.forEach.call(svg.querySelectorAll('.lit'), function(el){ el.classList.remove('lit'); }); Array.prototype.forEach.call(document.querySelectorAll('.leg.on'), function(el){ el.classList.remove('on'); }); }
+  Array.prototype.forEach.call(document.querySelectorAll('.leg'), function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var lid = a.getAttribute('data-line');
+      var already = a.classList.contains('on');
+      undim();
+      if (already) return;
+      a.classList.add('on');
+      svg.classList.add('dim');
+      var line = LINES.filter(function(l){ return l.id===lid; })[0];
+      svg.querySelector('.mapline[data-line="'+lid+'"]').classList.add('lit');
+      line.stations.forEach(function(sid){ var st = svg.querySelector('.station[data-id="'+sid+'"]'); if(st) st.classList.add('lit'); });
+    });
+  });
+</script>
+</body>
+</html>

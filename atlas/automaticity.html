@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Automaticity &mdash; The Map</title>
+<meta name="description" content="When you practice something enough, it stops needing you. It runs on its own, fast and in the background, while your attention is free to be somewhere else">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg:#fafaf8; --ink:#1a1a1a; --red:#c44b3a; --muted:#666;
+    --rule:#e0dcd4; --parchment:#f1ebde; --parchment-line:#d6cfc2;
+    --serif:'Source Serif 4', Georgia, serif; --mono:'Space Mono','Courier New',monospace;
+    --genius:#6a4a95; --impostor:#a34a72; --machinery:#c0503f; --access:#3a6ea5; --bias:#b8843a; --intelligence:#4f7d3a;
+  }
+  html { scroll-behavior:smooth; }
+  [hidden] { display:none !important; }
+  body { font-family:var(--serif); background:var(--bg); color:var(--ink); line-height:1.75; font-size:18px; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .shell { max-width:720px; margin:0 auto; padding:0 24px; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+  @media (min-width:600px){ .shell { padding:0 40px; } }
+  .shell-main { flex:1; padding:40px 0 56px; }
+  /* mast */
+  .mast { padding:26px 0 18px; border-bottom:1px solid var(--rule); display:flex; align-items:baseline; justify-content:space-between; gap:16px; }
+  .mast-home { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .mast-home:hover { color:var(--red); }
+  .mast-kicker { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+  /* line chips */
+  .linechips { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 8px; }
+  .linechip { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#fff; padding:3px 10px; border-radius:2px; text-decoration:none; }
+  /* headings */
+  h1.station { font-size:38px; line-height:1.15; font-weight:600; letter-spacing:-.01em; margin:14px 0 22px; }
+  @media (min-width:600px){ h1.station { font-size:46px; } }
+  .lead { font-size:22px; line-height:1.5; color:var(--ink); margin-bottom:8px; }
+  @media (min-width:600px){ .lead { font-size:24px; } }
+  .sec { margin-top:44px; }
+  .sec-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+  .sec p { margin-bottom:16px; }
+  .cite { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.02em; display:block; margin-top:-8px; margin-bottom:20px; }
+  /* claims block */
+  .claims { display:grid; grid-template-columns:1fr; gap:0; border:1px solid var(--parchment-line); background:var(--parchment); border-radius:3px; overflow:hidden; margin-top:36px; }
+  @media (min-width:640px){ .claims { grid-template-columns:1fr 1fr; } }
+  .claims-cell { padding:22px 24px; }
+  .claims-cell + .claims-cell { border-top:1px solid var(--parchment-line); }
+  @media (min-width:640px){ .claims-cell + .claims-cell { border-top:none; border-left:1px solid var(--parchment-line); } }
+  .claims-head { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; }
+  .claims-believe .claims-head { color:var(--muted); }
+  .claims-evidence .claims-head { color:var(--red); }
+  .claims-cell p { font-size:17px; line-height:1.55; margin:0; }
+  /* walk me through it (opens the learn-flow modal) */
+  .walk-btn { display:inline-block; font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; background:var(--ink); color:var(--bg); border:none; border-radius:4px; padding:14px 26px; margin-top:6px; cursor:pointer; transition:background .2s; }
+  .walk-btn:hover, .walk-btn:focus-visible { background:var(--red); outline:none; }
+  /* feel it (games) */
+  .feelit { display:block; border:1px solid var(--rule); border-left:3px solid var(--red); border-radius:3px; padding:20px 22px; text-decoration:none; margin-bottom:14px; transition:background .2s, transform .2s; background:#fff; }
+  .feelit:hover { background:#fdfbf7; transform:translateY(-1px); }
+  .feelit-name { font-weight:600; font-size:19px; margin-bottom:4px; }
+  .feelit-blurb { font-size:16px; color:var(--muted); line-height:1.5; }
+  .feelit-cue { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); margin-top:10px; }
+  /* map fragment */
+  .frag { border-top:1px solid var(--rule); }
+  .frag-edge { padding:14px 0; border-bottom:1px solid var(--rule); }
+  .frag-edge summary { list-style:none; cursor:pointer; display:flex; align-items:baseline; gap:10px; justify-content:space-between; }
+  .frag-edge summary::-webkit-details-marker { display:none; }
+  .frag-rel { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .frag-target { font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; flex:1; }
+  .frag-target:hover { color:var(--red); }
+  .frag-why { font-size:15px; color:var(--muted); line-height:1.5; padding-top:10px; }
+  .frag-open { font-family:var(--mono); font-size:16px; color:var(--rule); }
+  /* next */
+  .next { display:block; margin-top:44px; border:1px solid var(--rule); border-radius:3px; padding:24px; text-decoration:none; background:#fff; transition:background .2s; }
+  .next:hover { background:#fdfbf7; }
+  .next-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .next-name { font-size:24px; font-weight:600; color:var(--red); margin-bottom:6px; }
+  .next-reason { font-size:16px; color:var(--muted); line-height:1.5; }
+  /* book */
+  .book { margin-top:40px; padding:22px 0 0; border-top:1px solid var(--rule); font-size:17px; color:var(--muted); font-style:italic; line-height:1.6; }
+  /* footer */
+  .foot { border-top:1px solid var(--rule); padding:34px 0 46px; text-align:center; margin-top:12px; }
+  .foot-label { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); opacity:.7; margin-bottom:14px; }
+  .foot-links { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .foot-links a { font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--muted); text-decoration:none; transition:color .2s; }
+  .foot-links a:hover { color:var(--red); }
+  .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="mast">
+    <a class="mast-home" href="index.html">&larr; The Map</a>
+    <span class="mast-kicker">Genius &amp; Impostor</span>
+  </header>
+  <main class="shell-main">
+    <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a><a class="linechip" style="background:#6a4a95" href="index.html#line-genius">The Genius Line</a></div>
+    <h1 class="station">Automaticity</h1>
+    <p class="lead">When you practice something enough, it stops needing you. It runs on its own, fast and in the background, while your attention is free to be somewhere else. That handing-off is not a shortcut around thinking. It is the thing that makes real thinking possible.</p>
+    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    
+    <div class="sec">
+      <div class="sec-label">Feel it</div>
+      <a class="feelit" href="../unstoppable-reader.html"><div class="feelit-name">The Unstoppable Reader</div><div class="feelit-blurb">Try to look at a word and not read it. You will find that you cannot, because reading now starts on its own.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
+    </div>
+    
+    <div class="sec">
+      <div class="sec-label">On the map</div>
+      <div class="frag">
+        <details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="effort-inversion.html">Effort Inversion</a><span class="frag-open">+</span></summary><div class="frag-why">Because automatic skill feels like nothing, we read the effortlessness as simplicity. That misreading is Effort Inversion.</div></details><details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="automaticity-blindness.html">Automaticity Blindness</a><span class="frag-open">+</span></summary><div class="frag-why">Once a skill goes automatic you can no longer feel it working, which is what makes its complexity invisible.</div></details><details class="frag-edge"><summary><span class="frag-rel">works with</span><a class="frag-target" href="progressive-composition.html">Progressive Composition</a><span class="frag-open">+</span></summary><div class="frag-why">Composition stacks skills into bigger skills, and automaticity is what makes each layer solid enough to build on.</div></details><details class="frag-edge"><summary><span class="frag-rel">run by</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">The Genius is the unconscious engine, and automaticity is the main thing it does.</div></details>
+      </div>
+    </div>
+    <div class="book">The book calls automaticity the engine of intelligence and spends real time on why. This page is the short version of that argument.</div>
+    <a class="next" href="effort-inversion.html"><div class="next-label">Next station</div><div class="next-name">Effort Inversion &rarr;</div><div class="next-reason">If effortless skill is the real machinery, then everything we assume about effort is upside down. See how.</div></a>
+  </main>
+  
+  <footer class="foot">
+    <div class="foot-label">While you're here</div>
+    <div class="foot-links">
+      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="index.html">The Map</a>
+      <a href="../ayumu-test.html">The Ayumu Test</a>
+      <a href="../diagnostic.html">The Genius Diagnostic</a>
+      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a href="../secret-grammar.html">The Secret Grammar</a>
+    </div>
+    <div class="foot-copy">&copy; 2026 Josh Turknett</div>
+  </footer>
+</div>
+<script src="../learn-flow.js"></script>
+<script>
+(function () {
+  var steps = [{"ask":"A lot of people would say: “Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>Automaticity is not the absence of intelligence. It is the machinery that intelligence is built out of. There is no complex thought without it, because the slow effortful channel is far too small to run a mind on its own.</p>"},{"chunk":"<p>The part of your mind you can pay attention with holds about four things at once and works through them one at a time. Walking coordinates dozens of muscles at the same moment. Reading runs sound, spelling, and meaning all at once. None of that could happen one slow step at a time. It only works because the brain moved it off the small conscious channel and onto automatic machinery that runs in parallel.</p><p class=\"lf-cite\">Working memory limits (Cowan, 2001)</p>"},{"chunk":"<p>You can drive through traffic and hold a real conversation at the same time, tracking cars and turns and stop signs while you decode speech and answer back. Our best computers still cannot do this. And there was a time you could not either. Every bit of it got built by practice into something that now runs without you.</p><p class=\"lf-cite\">Driving while talking (from the book)</p>"},{"chunk":"<p>Learning curves look the same whether you are training face recognition, a tennis serve, or algebra. They rise fast and then level off, the exact same shape in every domain. When one signature shows up everywhere, it is pointing at one shared mechanism underneath, and this is it.</p><p class=\"lf-cite\">Power-law learning across domains (Newell &amp; Rosenbloom, 1981)</p>"},{"chunk":"<p>Picasso draws a quick sketch and names a high price. The buyer protests that it only took a minute. Picasso answers that it took fifty years. The buyer is looking at a minute of output. Picasso is looking at fifty years of training folded up inside the ease of it.</p>"},{"chunk":"<p>A bat solves echolocation the way you solve reading, with machinery that runs on its own. That the bat was born with it and you built yours makes no difference to what it is. Automatic problem-solving is intelligence, whichever way the machinery got there.</p>"}];
+  var btn = document.getElementById('walk-btn');
+  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+})();
+</script>
+</body>
+</html>

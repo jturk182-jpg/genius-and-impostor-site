@@ -300,40 +300,19 @@
 
     <main class="shell-main">
       <p class="t-eyebrow">The story behind the game</p>
-      <h1 class="t-title">Meet Ayumu</h1>
-      <p class="lede">A young chimpanzee in a research lab in Japan can do something most humans can't. Numbers flash on a screen, vanish, and he taps where they were, in order, from memory. He has been doing this since he was five years old.</p>
+      <h1 class="t-title" style="margin-bottom:32px;">Meet Ayumu</h1>
 
-      <p class="t-body">You've experienced firsthand just how good he is. Now here is what it means.</p>
+      <!-- The story now plays as a reader-paced card flow (learn-flow.js),
+           chunked with questions woven in, per the standing rule that learning
+           content on this site is delivered the way people actually learn. The
+           steps live in the script at the bottom of the page. -->
+      <div id="flow"></div>
 
-      <h2 class="t-section">When this study came out, the headlines were about a chimp being more intelligent than humans.</h2>
-      <p class="t-body">A chimpanzee, beating university students at a memory test. Exactly the kind of thing that shows up on an IQ test.</p>
-      <p class="t-body">And if you believe that IQ tests measure intelligence, then the conclusion is hard to avoid. We humans may not be the smartest primates after all.</p>
-      <p class="t-body">Then again, maybe instead it reveals something fundamentally broken about what we think intelligence is. And maybe the very idea of being able to rank different minds, including those of different species, is fundamentally flawed.</p>
-
-      <h2 class="t-section">Here is what is actually happening when you play this game.</h2>
-      <p class="t-body">The numbers flash for 210 milliseconds. It's too short for you to scan across the screen. You have to get it all from a single glance. One mental snapshot.</p>
-      <p class="t-body">Ayumu takes that snapshot and sees it for what it is. You do not. And the reason is not that his memory is bigger or his eyes are faster. It is that your brain adds a step.</p>
-      <p class="t-body">When Ayumu sees a 7 he sees a shape. When you see a 7 you see a <em>symbol</em>, and your mind turns that shape into a concept: the number seven.</p>
-      <p class="t-body">A concept with meaning and associations and a place in a sequence. That conversion happens instantly, and you cannot stop it. By the time the number reaches you, it has stopped being a shape in a location and become an idea. That extra step takes time, and this game punishes time.</p>
-      <p class="t-body">In fact, there was an older chimpanzee in the same lab who had spent years learning to use symbols. Ai wasn't nearly as good as Ayumu. She'd built more of the symbolic machinery, and that extra step appeared to cost her on this task, too.</p>
-
-      <h2 class="t-section">But, of course, we humans get something amazing in return for that cost.</h2>
-      <p class="t-body">The thing that slows you down on this game is the same thing that lets you read this sentence. Plan something for next week. Explain an idea to someone who is not in the room. Hold a conversation about things that have not happened yet. Move a thought from inside your head into someone else's.</p>
-      <p class="t-body">That is what a human brain is built for. Not because it is a better brain, but because that is what human life demands.</p>
-      <p class="t-body">Your brain is built for language, abstraction, meaning. Every waking moment, your mind is converting raw experience into symbols you can store, combine, and share. It is the thing that makes everything distinctly human possible.</p>
-      <p class="t-body">Ayumu's brain is built for his life. Fast spatial capture, taking in a whole scene at a glance, earns its keep in the world a chimpanzee navigates. He is extraordinary at what he needs to be extraordinary at. So are you. Every species is good at solving the problems it needs to solve.</p>
-
-      <h2 class="t-section">Which means those headlines had it wrong.</h2>
-      <p class="t-body">Because those headlines were based on the idea that who is the smarter species was a question that even made sense. They were based on the idea that there was some general quantity of "smarts" in every brain.</p>
-      <p class="t-body">Turns out that's a dumb idea. Because "smarter" does not mean anything without asking at what and for what life.</p>
-      <p class="t-body">There is no single scale with one species above the other. There is no general quality called intelligence that one creature has more of. There are brains, built by the demands of the lives they serve, each remarkable at what those demands require.</p>
-      <p class="t-body">The game did not show who is smarter. It showed that the ranking does not exist.</p>
-      <p class="t-body">And you did not lose because something is wrong with your brain. You lost because your brain was busy doing the most important thing it does.</p>
-
-      <div class="btn-row" style="margin-top: 40px;">
-        <a class="btn primary" href="ayumu-test.html?start=flash">Play the flash again</a>
-        <a class="btn" href="ayumu-test.html?start=nine">Play the nine again</a>
-      </div>
+      <div id="after" hidden>
+        <div class="btn-row" style="margin-top: 8px;">
+          <a class="btn primary" href="ayumu-test.html?start=flash">Play the flash again</a>
+          <a class="btn" href="ayumu-test.html?start=nine">Play the nine again</a>
+        </div>
 
       <h2 class="t-section">Where all this comes from</h2>
       <ol class="refs">
@@ -344,6 +323,7 @@
         <li>Read, D. W., Manrique, H. M. &amp; Walker, M. J. (2022). On the working memory of humans and great apes: Strikingly similar or remarkably different? <em>Neuroscience &amp; Biobehavioral Reviews</em>, 134, 104496.</li>
         <li>Roberts, S. G. &amp; Quillinan, J. (2014). The Chimp Challenge: Visual working memory in chimps and humans. In <em>The Past, Present and Future of Language Evolution Research</em> (pp. 31–39). Tokyo: EvoLang9 Organising Committee.</li>
       </ol>
+      </div>
     </main>
 
     <footer class="tool-footer">
@@ -360,5 +340,60 @@
       <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
     </footer>
   </div>
+
+  <script src="learn-flow.js"></script>
+  <script>
+    /* The "Meet Ayumu" story as a reader-paced flow: chunks with three
+       questions woven in, each surfacing an assumption before overturning it.
+       Wording is placeholder for JT's voice pass. */
+    (function () {
+      var steps = [
+        { chunk: '<p>A young chimpanzee in a research lab in Japan can do something most humans can’t. Numbers flash on a screen, vanish, and he taps where they were, in order, from memory. He has been doing it since he was five years old.</p>' },
+
+        { chunk: '<p>When this study came out, the headlines were about a chimp being smarter than humans. A chimpanzee, beating university students at a memory test, the kind of thing that turns up on an IQ test.</p>' },
+
+        { ask: 'That headline only works if you take one thing for granted. What?',
+          choices: [
+            'That chimps are secretly geniuses',
+            'That one memory test can measure how smart a mind is',
+            'That the students weren’t really trying'
+          ],
+          answer: '<p>It assumes there is a single thing called intelligence, and that one test can rank it, even across species. Hold onto that assumption. The rest of this is about whether it holds up.</p>' },
+
+        { chunk: '<p>So here is what is actually happening. The numbers are on screen for 210 milliseconds. That is too short to scan across them. You have to take the whole thing in with one glance, a single mental snapshot.</p>' },
+
+        { ask: 'You and Ayumu both look at a 7. Handling it takes you a beat longer than it takes him. Why?',
+          choices: [
+            'Your memory holds fewer things',
+            'Your brain turns the shape into a meaning first',
+            'Your eyes move more slowly'
+          ],
+          answer: '<p>Your brain adds a step. Ayumu sees a shape. You see a <em>symbol</em>, and your mind turns that shape into a concept, the number seven, instantly, whether you want it to or not. That extra step costs time, and this game punishes time.</p><p>An older chimp named Ai, who had been taught what the symbols mean, was slower than Ayumu too.</p>' },
+
+        { chunk: '<p>But you get something extraordinary in return for that cost. The very thing that slows you down here is the thing that lets you read this sentence, plan next week, and explain an idea to someone who is not in the room.</p>' },
+
+        { ask: 'So your brain does something Ayumu’s does not, and it costs you this game. Is that a defect or a feature?',
+          choices: [
+            'A defect',
+            'A feature',
+            'A bit of both'
+          ],
+          answer: '<p>A feature, and the defining one. Every waking moment, your brain is turning raw experience into symbols you can store, combine, and share. It is what makes everything distinctly human possible. Ayumu’s brain is built for a chimpanzee’s life. Yours is built for yours.</p>' },
+
+        { chunk: '<p>Which means the headlines had it backwards. They assumed “who is smarter” was even a question that made sense, that there is some general quantity of smarts a brain has more or less of. There isn’t. There is no single ladder with one mind above another, only brains built for the lives they lead.</p>' },
+
+        { chunk: '<p>The game did not show who is smarter. It showed that the ranking does not exist. And you did not lose because something is wrong with your brain. You lost because your brain was busy doing the most important thing it does.</p>' }
+      ];
+
+      LearnFlow.render(document.getElementById('flow'), steps, {
+        doneLabel: 'Finish',
+        onComplete: function () {
+          var after = document.getElementById('after');
+          after.hidden = false;
+          after.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
