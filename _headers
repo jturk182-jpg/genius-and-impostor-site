@@ -1,0 +1,9 @@
+# STAGING BRANCH ONLY.
+# Keeps search engines out of the preview deploy so the staged site never
+# shows up in Google. Netlify also noindexes non-production deploys on its
+# own; this is belt-and-suspenders.
+#
+# DELETE THIS FILE when this work becomes the live site (the flip), or the
+# real site will tell Google not to index it.
+/*
+  X-Robots-Tag: noindex
