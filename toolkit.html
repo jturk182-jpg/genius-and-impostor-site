@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Genius Toolkit · Pre-Order Bonus · The Genius &amp; The Impostor</title>
+  <meta name="description" content="Pre-order The Genius and the Impostor and get the Genius Toolkit free: the tools Josh Turknett, MD actually uses to get into and stay in genius mode. Through launch day, August 25.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --ink: #1a1a1a;
+      --red: #c44b3a;
+      --muted: #666;
+      --rule: #e0dcd4;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 600px) { .container { padding: 0 40px; } }
+
+    .backlink {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-block;
+      padding: 24px 0 0;
+    }
+    .backlink:hover { color: var(--red); }
+
+    /* ===================== HEAD ===================== */
+    .head { text-align: center; padding: 40px 0 8px; }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+    .head h1 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 7vw, 56px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .head .lede {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3.4vw, 22px);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* ===================== LOOP VISUAL ===================== */
+    .loop { max-width: 480px; margin: 44px auto 8px; }
+    .loop svg { display: block; width: 100%; height: auto; }
+
+    /* ===================== PROSE ===================== */
+    .prose { padding: 32px 0 8px; }
+    .prose p {
+      font-size: clamp(17px, 3.2vw, 20px);
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose em { font-style: italic; }
+
+    /* ===================== HOW TO GET IT ===================== */
+    .claim { padding: 56px 0 90px; border-top: 1px solid var(--rule); margin-top: 56px; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .steps { max-width: 520px; margin: 0 auto 40px; }
+    .step { display: flex; gap: 18px; align-items: baseline; margin-bottom: 22px; }
+    .step-num {
+      flex: 0 0 auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .step-text { font-size: clamp(16px, 3vw, 19px); line-height: 1.6; }
+    .step-text a { color: var(--red); text-decoration: none; border-bottom: 1px solid rgba(196,75,58,0.35); }
+    .step-text a:hover { border-bottom-color: var(--red); }
+    .step-text .addr { font-family: var(--mono); font-size: 0.92em; }
+
+    .retailers-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 8px;
+    }
+    .retailers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      max-width: 420px;
+      margin: 16px auto 0;
+    }
+    .retailer-btn {
+      display: block;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      padding: 10px 8px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .retailer-btn:hover { background: var(--red); color: #fff; }
+
+    .deadline {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 28px;
+    }
+    .already {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+    .already a { color: var(--red); text-decoration: none; }
+    .already a:hover { text-decoration: underline; }
+
+    /* ===================== FOOTER ===================== */
+    .site-footer { border-top: 1px solid var(--rule); padding: 44px 0 60px; text-align: center; }
+    .footer-links { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .footer-links a {
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--red); }
+    .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--muted); opacity: 0.5; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a class="backlink" href="index.html">&larr; The Genius &amp; The Impostor</a>
+  </div>
+
+  <!-- ===================== HEAD ===================== -->
+  <header class="head">
+    <div class="container">
+      <div class="eyebrow">Pre-Order Bonus</div>
+      <h1>The Genius Toolkit</h1>
+      <p class="lede">The tools I actually use to get into and stay in genius mode. Yours free when you pre-order the book.</p>
+    </div>
+  </header>
+
+  <!-- ===================== LOOP VISUAL ===================== -->
+  <div class="loop">
+    <svg viewBox="0 0 720 690" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Genius Toolkit: a loop of Release, Feed, Create, and Rest, resting on a Sustain foundation.">
+      <defs>
+        <marker id="arrowT" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 L3.5,5 Z" fill="#c44b3a"/>
+        </marker>
+      </defs>
+
+      <text x="360" y="34" text-anchor="middle" font-family="'Space Mono',monospace" font-size="15" letter-spacing="4" fill="#c44b3a">THE GENIUS TOOLKIT</text>
+      <text x="360" y="62" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif" font-style="italic" font-size="16" fill="#8a857c">five moves, one loop, one foundation</text>
+
+      <g fill="none" stroke="#c44b3a" stroke-width="2.5">
+        <path d="M417.0,169.5 A175,175 0 0 1 525.5,278.0" marker-end="url(#arrowT)"/>
+        <path d="M525.5,392.0 A175,175 0 0 1 417.0,500.5" marker-end="url(#arrowT)"/>
+        <path d="M303.0,500.5 A175,175 0 0 1 194.5,392.0" marker-end="url(#arrowT)"/>
+        <path d="M194.5,278.0 A175,175 0 0 1 303.0,169.5" marker-end="url(#arrowT)"/>
+      </g>
+
+      <!-- Release (top) -->
+      <circle cx="360" cy="160" r="60" fill="#fafaf8" stroke="#1c1b19" stroke-width="2.5"/>
+      <text x="360" y="155" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="21" fill="#1c1b19">RELEASE</text>
+      <text x="360" y="178" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif" font-style="italic" font-size="12.5" fill="#8a857c">quiet the impostor</text>
+
+      <!-- Feed (right) -->
+      <circle cx="535" cy="335" r="60" fill="#fafaf8" stroke="#1c1b19" stroke-width="2.5"/>
+      <text x="535" y="330" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="21" fill="#1c1b19">FEED</text>
+      <text x="535" y="353" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif" font-style="italic" font-size="12.5" fill="#8a857c">fuel the genius</text>
+
+      <!-- Create (bottom) -->
+      <circle cx="360" cy="510" r="60" fill="#fafaf8" stroke="#1c1b19" stroke-width="2.5"/>
+      <text x="360" y="505" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="21" fill="#1c1b19">CREATE</text>
+      <text x="360" y="528" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif" font-style="italic" font-size="12.5" fill="#8a857c">drop in, immerse</text>
+
+      <!-- Rest (left) -->
+      <circle cx="185" cy="335" r="60" fill="#fafaf8" stroke="#1c1b19" stroke-width="2.5"/>
+      <text x="185" y="330" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="21" fill="#1c1b19">REST</text>
+      <text x="185" y="353" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif" font-style="italic" font-size="12.5" fill="#8a857c">let it route</text>
+
+      <!-- foundation -->
+      <rect x="120" y="612" width="480" height="66" rx="12" fill="#1c1b19"/>
+      <text x="360" y="645" text-anchor="middle" font-family="'Space Mono',monospace" font-weight="700" font-size="20" letter-spacing="3" fill="#fafaf8">SUSTAIN</text>
+      <text x="360" y="666" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif" font-style="italic" font-size="12.5" fill="#cfc9bd">keep the machine healthy</text>
+    </svg>
+  </div>
+
+  <!-- ===================== PROSE ===================== -->
+  <section class="prose">
+    <div class="container">
+      <p>Genius mode, that state where the work flows and the self-critic goes quiet, runs on a loop your brain already knows how to run. Once you can see the loop, you can set up your days to run it on purpose.</p>
+      <p>The Genius Toolkit is my own version of that loop. It's the actual tools, apps, and rituals I lean on to quiet the Impostor, fuel the Genius, drop into the work, and give my brain room to solve. Five moves, resting on one foundation that keeps the whole machine healthy.</p>
+      <p>The categories are the same for everyone. What you put in each one is yours to build, so the last page is a blank version for you to fill in with your own.</p>
+    </div>
+  </section>
+
+  <!-- ===================== HOW TO GET IT ===================== -->
+  <section class="claim">
+    <div class="container">
+      <div class="section-label">How to get it</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">Pre-order <em>The Genius and the Impostor</em> from any retailer below.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">Forward your order confirmation to <a href="mailto:geniustoolkit@gmail.com" class="addr">geniustoolkit@gmail.com</a>.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">The toolkit lands in your inbox right away.</div>
+        </div>
+      </div>
+
+      <div class="retailers-label">Pre-Order Now</div>
+      <div class="retailers-grid">
+        <a href="https://www.amazon.com/Genius-Impostor-Neuroscience-Unlocking-Potential/dp/0593850998/" class="retailer-btn" target="_blank" rel="noopener">Amazon</a>
+        <a href="https://www.barnesandnoble.com/w/?ean=9780593850992" class="retailer-btn" target="_blank" rel="noopener">Barnes &amp; Noble</a>
+        <a href="https://bookshop.org/a/2186/9780593850992?prhc=PRHEFFDF5A7F1" class="retailer-btn" target="_blank" rel="noopener">Bookshop.org</a>
+        <a href="https://www.tkqlhce.com/click-8373827-10747236?SID=PRHEFFDF5A7F1--9780593850992&url=https://www.booksamillion.com/p/9780593850992" class="retailer-btn" target="_blank" rel="noopener">Books-A-Million</a>
+        <a href="https://www.powells.com/book/-9780593850992?utm_source=randomhouse&utm_campaign=randomhouse&utm_content=PRHEFFDF5A7F1--9780593850992" class="retailer-btn" target="_blank" rel="noopener">Powell&rsquo;s</a>
+        <a href="https://goto.target.com/c/128773/81938/2092?subId1=PRHEFFDF5A7F1--9780593850992&u=https%3A%2F%2Fwww.target.com%2Fs%3FsearchTerm%3D9780593850992" class="retailer-btn" target="_blank" rel="noopener">Target</a>
+        <a href="https://goto.walmart.com/c/128773/565706/9383?subId1=PRHEFFDF5A7F1&veh=aff&sourceid=imp_000011112222333344&u=https%3A%2F%2Fwww.walmart.com%2Fsearch%3Fquery%3D9780593850992" class="retailer-btn" target="_blank" rel="noopener">Walmart</a>
+        <a href="https://www.hudsonbooksellers.com/book/9780593850992?utm_source=prh&utm_medium=affiliate&utm_term=301&utm_content=PRHEFFDF5A7F1--9780593850992&utm_campaign=9780593850992" class="retailer-btn" target="_blank" rel="noopener">Hudson</a>
+      </div>
+
+      <p class="deadline">Free through launch day, August 25, 2026.</p>
+      <p class="already">Already pre-ordered? Forward your receipt to <a href="mailto:geniustoolkit@gmail.com">geniustoolkit@gmail.com</a> and it's yours.</p>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="index.html">The Genius &amp; The Impostor</a>
+        <a href="https://performanceneurology.institute" target="_blank" rel="noopener">performanceneurology.institute</a>
+        <a href="https://instagram.com/brainjojosh" target="_blank" rel="noopener">@brainjojosh</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Josh Turknett</div>
+    </div>
+  </footer>
+
+</body>
+</html>
