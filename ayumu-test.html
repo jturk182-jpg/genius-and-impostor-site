@@ -2722,7 +2722,7 @@ function renderNine() {
    for JT's voice pass. `beat` = plain card; `ask`/`choices`/`answer` = a
    question card followed by its answer card. */
 const REVEAL_FLOW = [
-  { beat: 'First, the plain part: Ayumu wins, and it is not close. He takes in five numbers in a fifth of a second, stays near eighty percent, and looks like he is barely trying.' },
+  { beat: 'You have now played both of Ayumu’s games. So, the plain part first: he wins, and it is not close. He takes in five numbers in a fifth of a second, stays near eighty percent, and commits to all nine before you have decided where to look.' },
 
   { ask: 'So why is he so much better at this than you? Take a guess.',
     choices: [
@@ -2973,8 +2973,11 @@ function renderResults() {
   }
   html += '<p class="t-body">' + openLine + '</p>';
 
-  /* Replay the explanation any time, popped as a focused modal flow. */
-  html += '<div class="btn-row" style="margin-top:20px;"><button class="btn" id="btn-walk-reveal">Walk me through what just happened</button></div>';
+  /* Replay the explanation any time, popped as a focused modal flow.
+     A first-time player lands here seconds after tapping through the walk,
+     so once revealSeen is set the button says so instead of posing as new. */
+  html += '<div class="btn-row" style="margin-top:20px;"><button class="btn" id="btn-walk-reveal">' +
+    (store.revealSeen ? 'Walk me through it again' : 'Walk me through what just happened') + '</button></div>';
 
   /* The reveal itself no longer lives on this page: it runs as tap-through
      cards between the Nine and these results (runReveal), one beat per tap.
@@ -2995,6 +2998,7 @@ function renderResults() {
       (nine.bestMs !== null
         ? ' Your best clean run: <strong>' + secs(nine.bestMs) + '</strong>.'
         : ' You don’t have a clean run on the board yet.') + '</p>' +
+      '<div class="chart-panel">' + nineBarsSVG(nine) + '</div>' +
       '<div class="btn-row">' +
       '<button class="btn primary" id="btn-to-nine">Play the nine again</button>' +
       '</div>';
@@ -3005,6 +3009,16 @@ function renderResults() {
       '<button class="btn primary" id="btn-to-nine">Try the nine</button>' +
       '</div>';
   }
+
+  /* The hinge claim, offered as something to feel rather than believe.
+     First-play players get this offer inside the walk too; this section
+     is for the ones who skipped it and for return visits.
+     ⚠️ PLACEHOLDER copy, JT's pass. */
+  html += '<h2 class="t-section" style="margin-top:40px;">Feel the extra step</h2>' +
+    '<p class="t-body">The explanation claims you cannot look at a 7 and not see “seven.” You can test that claim on yourself. In the Unstoppable Reader, a word appears in a color and you tap the color you see, while the word itself spells a different one. Two minutes, and you get to watch your own brain read when you asked it not to.</p>' +
+    '<div class="btn-row">' +
+    '<a class="btn" href="unstoppable-reader.html?from=ayumu">Play the Unstoppable Reader</a>' +
+    '</div>';
 
   html += '<h2 class="t-section" style="margin-top:40px;">Or take the dials</h2>' +
     '<p class="t-body">Adjust how many numbers appear and how long they flash. Find a setting that feels comfortable, then work your way up.</p>' +
@@ -3862,6 +3876,10 @@ function renderShare() {
    gets skimmed, so each beat stands alone on a card and the reader clicks
    through at their own pace. */
 async function runReveal() {
+  /* The board behind these cards still carries the last game's HUD and
+     prompt; clear both so the walk stands on its own. */
+  setHud('THE AYUMU TEST', '', '');
+  setPrompt('');
   const total = REVEAL_FLOW.length;
   for (let i = 0; i < total; i++) {
     const step = REVEAL_FLOW[i];
@@ -3880,7 +3898,7 @@ async function runReveal() {
         label: 'The answer',
         title: '',
         body: step.answer,
-        actions: [{ text: last ? 'See your results' : 'Next', value: 'go', primary: true }]
+        actions: [{ text: 'Next', value: 'go', primary: true }]
       });
       if (aborted || go !== 'go') return false;
     } else {
@@ -3888,10 +3906,31 @@ async function runReveal() {
         label: 'What just happened · ' + (i + 1) + ' of ' + total,
         title: '',
         body: '<p>' + step.beat + '</p>',
-        actions: [{ text: last ? 'See your results' : 'Next', value: 'go', primary: true }]
+        actions: [{ text: last ? 'One more thing' : 'Next', value: 'go', primary: true }]
       });
       if (aborted || go !== 'go') return false;
     }
+  }
+
+  /* The hinge beat claims your brain turns every symbol into meaning
+     whether you want it to or not. The Unstoppable Reader lets a player
+     feel that claim come true, so the walk ends by offering it. Saving
+     revealSeen here, before any navigation, keeps the escort from
+     replaying if they take the detour. ⚠️ PLACEHOLDER copy, JT's pass. */
+  store.revealSeen = true;
+  saveStore();
+  const pick = await card({
+    label: 'Try it yourself',
+    title: '',
+    body: '<p>Want to catch that extra step in the act? We built a two minute game for exactly that. A word appears on the screen in a color, and all you do is tap the color you see. The catch: the word itself spells a <em>different</em> color, and your brain reads it every single time, whether you ask it to or not.</p><p>Your results here will be waiting when you get back.</p>',
+    actions: [
+      { text: 'Play it · two minutes', value: 'reader', primary: true },
+      { text: 'My results first', value: 'go', ghost: true }
+    ]
+  });
+  if (pick === 'reader') {
+    location.href = 'unstoppable-reader.html?from=ayumu';
+    return true;
   }
   return true;
 }
@@ -3915,9 +3954,9 @@ async function startGame(resume, skipWarmup) {
       await runNineSession();
     }
     if (!aborted) {
+      /* runReveal marks revealSeen itself, before its Unstoppable Reader
+         detour can navigate away. */
       await runReveal();
-      store.revealSeen = true;
-      saveStore();
     }
   }
 

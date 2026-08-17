@@ -641,6 +641,7 @@
         <p class="t-body">There are four short rounds, and the whole thing takes about two minutes. Go as fast as you can without guessing.</p>
         <div class="btn-row" style="margin-top: 32px;">
           <button class="btn primary" id="btn-start">Start</button>
+          <a class="btn ghost from-ayumu" style="display:none;" href="ayumu-test.html">Back to the Ayumu Test</a>
         </div>
         <p class="t-quiet" style="margin-top: 24px;">Everything runs on this device. Nothing is sent anywhere.</p>
       </section>
@@ -739,6 +740,7 @@
           <div class="btn-row">
             <button class="btn primary" id="btn-share">Save the share card</button>
             <button class="btn ghost" id="btn-replay">Play again</button>
+            <a class="btn ghost from-ayumu" style="display:none;" href="ayumu-test.html">Back to the Ayumu Test</a>
           </div>
         </div>
       </section>
@@ -775,6 +777,7 @@
         <a href="index.html">The Genius and the Impostor</a>
         <a href="ayumu-test.html">The Ayumu Test</a>
         <a href="diagnostic.html">The Genius Diagnostic</a>
+        <a href="secret-grammar.html">The Secret Grammar</a>
       </div>
       <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
     </footer>
@@ -1254,6 +1257,12 @@ document.getElementById('btn-endless-stop').addEventListener('click', () => {
 });
 
 /* ---------------- wiring ---------------- */
+
+/* Arrived from the Ayumu Test's explanation walk: show the way back, on
+   the intro and again beside the replay buttons at the end. */
+if (new URLSearchParams(location.search).get('from') === 'ayumu') {
+  document.querySelectorAll('.from-ayumu').forEach(a => { a.style.display = ''; });
+}
 
 document.getElementById('btn-start').addEventListener('click', startGame);
 document.getElementById('btn-replay').addEventListener('click', startGame);

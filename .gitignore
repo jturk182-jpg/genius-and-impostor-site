@@ -1,0 +1,3 @@
+# Local Netlify link state (points this folder at the geniusandimpostor.com
+# site). Machine-specific, not part of the site source.
+.netlify/
