@@ -32,6 +32,9 @@
    STEP SHAPES
      { chunk: html }                        a plain content card
      { ask, choices:[...], answer: html }   a question card, then its answer card
+     { ask, choices, correct: i, answer }   same, and the reader is told whether
+                                            their guess was right; the answer
+                                            card opens with the verdict
 
    Styling uses the site's CSS variables with fallbacks, so it inherits each
    page's palette. No dependencies, no build step.
@@ -56,6 +59,13 @@ window.LearnFlow = (function () {
       '.lf-choices{display:flex;flex-direction:column;gap:10px;margin-top:28px;}' +
       '.lf-choice{text-align:left;font-family:var(--serif,Georgia,serif);font-size:clamp(16px,3.4vw,18px);line-height:1.4;color:var(--ink,#1a1a1a);background:#fff;border:1.5px solid var(--rule,#e0dcd4);border-radius:6px;padding:16px 20px;cursor:pointer;transition:border-color .15s,background .15s,transform .15s;}' +
       '.lf-choice:hover,.lf-choice:focus-visible{border-color:var(--red,#c44b3a);background:#fdfbf7;transform:translateY(-1px);outline:none;}' +
+      '.lf-choice:disabled{cursor:default;transform:none;}' +
+      '.lf-choice.correct{border:2px solid var(--ink,#1a1a1a);font-weight:700;}' +
+      '.lf-choice.correct::before{content:"\\2713\\00a0";}' +
+      '.lf-choice.wrong{border-color:var(--red,#c44b3a);color:var(--red,#c44b3a);text-decoration:line-through;}' +
+      '.lf-choice.dim{opacity:.45;}' +
+      '.lf-verdict{font-family:var(--mono,"Courier New",monospace);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}' +
+      '.lf-verdict.ok{color:var(--ink,#1a1a1a);}.lf-verdict.miss{color:var(--red,#c44b3a);}' +
       '.lf-actions{display:flex;gap:10px;align-items:center;margin-top:auto;padding-top:34px;}' +
       '.lf-next{font-family:var(--mono,"Courier New",monospace);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--ink,#1a1a1a);color:var(--bg,#fafaf8);border:none;border-radius:4px;padding:13px 26px;cursor:pointer;transition:background .2s;}' +
       '.lf-next:hover,.lf-next:focus-visible{background:var(--red,#c44b3a);outline:none;}' +
@@ -83,6 +93,7 @@ window.LearnFlow = (function () {
     opts = opts || {};
     var idx = 0;         // which step
     var answered = false; // for question steps: has a choice been made
+    var picked = null;    // which choice was made, for the verdict
     var total = steps.length;
 
     function progress() {
@@ -114,8 +125,13 @@ window.LearnFlow = (function () {
         });
         h += '</div>';
       } else if (step.ask && answered) {
-        h += '<div class="lf-label">The answer</div>';
-        h += '<div class="lf-body">' + step.answer + '</div>';
+        var graded = typeof step.correct === 'number';
+        var ok = graded && picked === step.correct;
+        h += '<div class="lf-label">' + (graded ? (ok ? 'You got it' : 'Not quite') : 'The answer') + '</div>';
+        h += '<div class="lf-body">' +
+          (graded ? '<p class="lf-verdict ' + (ok ? 'ok' : 'miss') + '">' +
+            (ok ? 'Right, that is the one.' : 'The answer: ' + esc(step.choices[step.correct])) + '</p>' : '') +
+          step.answer + '</div>';
         h += actionsHTML();
       } else {
         h += '<div class="lf-label">' + esc(step.label || ((idx + 1) + ' of ' + total)) + '</div>';
@@ -129,12 +145,12 @@ window.LearnFlow = (function () {
 
     function advance() {
       if (idx === total - 1) { if (opts.onComplete) opts.onComplete(); return; }
-      idx++; answered = false; draw(); nudge();
+      idx++; answered = false; picked = null; draw(); nudge();
     }
 
     function back() {
-      if (steps[idx].ask && answered) { answered = false; draw(); nudge(); return; }
-      if (idx > 0) { idx--; answered = false; draw(); nudge(); }
+      if (steps[idx].ask && answered) { answered = false; picked = null; draw(); nudge(); return; }
+      if (idx > 0) { idx--; answered = false; picked = null; draw(); nudge(); }
     }
 
     function nudge() {
@@ -145,7 +161,18 @@ window.LearnFlow = (function () {
     function wire() {
       var choices = mount.querySelectorAll('.lf-choice');
       choices.forEach(function (b) {
-        b.addEventListener('click', function () { answered = true; draw(); nudge(); });
+        b.addEventListener('click', function () {
+          var step = steps[idx];
+          var i = parseInt(b.dataset.i, 10);
+          picked = i;
+          if (typeof step.correct !== 'number') { answered = true; draw(); nudge(); return; }
+          /* Mark the guess on the card for a beat, then show the answer. */
+          choices.forEach(function (el, j) {
+            el.disabled = true;
+            el.classList.add(j === step.correct ? 'correct' : (j === i ? 'wrong' : 'dim'));
+          });
+          setTimeout(function () { answered = true; draw(); nudge(); }, i === step.correct ? 900 : 1400);
+        });
       });
       var next = mount.querySelector('.lf-next');
       if (next) next.addEventListener('click', advance);
