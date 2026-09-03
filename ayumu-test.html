@@ -2283,18 +2283,18 @@ async function runNineSession() {
 
   const prev = store.nine || { bestMs: null, bestDate: null, perfects: 0, tries: 0, log: [] };
   const go = await card({
-    label: 'Ayumu’s second game',
+    label: 'Your shot at redemption',
     title: 'One through nine, from memory',
-    body: '<p>In this version, the numbers 1 through 9 appear on the screen and stay there. Take as long as you like to look at them.</p>' +
-          '<p>When you’re ready, tap the <strong>1</strong>. The moment you do, the other eight turn blank. Then tap the rest in order from memory: 2, then 3, all the way up to 9.</p>' +
-          '<p>Ayumu taps the 1 after about <strong>two thirds of a second</strong>, then finishes all eight almost every time. See how close you can get.</p>',
+    body: '<p>This time, all nine numbers appear on the screen at once, and they stay there. There is no flash to worry about, and you can look at them for as long as you like.</p>' +
+          '<p>When you feel ready, tap the <strong>1</strong>. The moment you do, the other eight numbers turn blank, and your job is to tap the rest of the tiles in order from memory: 2, then 3, and so on up to 9.</p>' +
+          '<p>We are timing how long you look before you tap the 1. So once you can get all nine, see how quickly you can commit. Ayumu has a time on this too, and you will find out what it is when you are done.</p>',
     actions: [{ text: 'Start', value: 'go', primary: true }, { text: 'Not now', value: 'quit', ghost: true }]
   });
   if (aborted || go !== 'go') return null;
 
   const results = [];
   for (let i = 0; i < NINE_TRIES; i++) {
-    setHud('THE NINE', 'GO ' + (i + 1) + ' / ' + NINE_TRIES, 'BEAT ' + secs(AYUMU_COMMIT_MS));
+    setHud('THE NINE', 'GO ' + (i + 1) + ' / ' + NINE_TRIES, 'ALL NINE');
     const t = await runNineTrial();
     if (aborted || !t) break;
     results.push(t);
@@ -2671,13 +2671,22 @@ function renderNine(opts) {
 
   html += '<div class="t-label' + (beat ? ' red' : '') + '">Commit time' + (beat ? ' · you matched him' : '') + '</div>' +
     '<div class="chart-panel">' + nineBarsSVG(rec) + '</div>' +
-    '<p class="chart-note">The numbers stay on screen until you touch the 1, so this is a time you chose rather than one imposed on you. Ayumu starts in less than a second and almost always nails all nine.</p>';
+    '<p class="chart-note">The numbers stay on the screen until you touch the 1, so this is a time you chose for yourself rather than one the game imposed on you. Ayumu starts in well under a second and almost always gets all nine.</p>';
 
-  html += '<p class="t-body">' + (mine === null
-    ? 'The first goal is to get all nine in the right order, no matter how long you look before you start. Take as long as you like, land one clean run, and then start working on your time.'
-    : (beat
-      ? 'Amazing! You matched Ayumu, which makes you a rare human specimen.'
-      : 'Excellent. Now see if you can bring your time down. Tap the 1 a little sooner on each go until you find the point where it falls apart. That point is your current edge, and it will move with practice.')) + '</p>';
+  let nineLine;
+  if (mine === null) {
+    nineLine = 'The first goal is to get all nine in the right order, no matter how long you look before you start. Take as long as you like, land one clean run, and then start working on your time. Once you have a time on the board, you will see how it compares with Ayumu’s.';
+  } else if (beat) {
+    nineLine = 'Amazing! Ayumu commits to the 1 in about two thirds of a second and almost never misses, and you matched him, which makes you a rare human specimen.';
+  } else {
+    const ratio = mine / AYUMU_COMMIT_MS;
+    const faster = ratio >= 1.95
+      ? (ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10) + ' times faster than your best'
+      : (ratio >= 1.15 ? Math.round((ratio - 1) * 100) + '% faster than your best' : 'just a little faster than your best');
+    nineLine = 'So here is the news. Ayumu commits to the 1 in about <strong>two thirds of a second</strong>, which is ' + faster +
+      ', and he still gets all nine almost every time. Now see if you can close that gap. Tap the 1 a little sooner on each go until you find the point where it falls apart. That point is your current edge, and it will move with practice.';
+  }
+  html += '<p class="t-body">' + nineLine + '</p>';
 
   /* The commit-time curve, once there are two sittings to draw a line
      between. This is the Nine’s answer to the Flash’s learning curve. */
@@ -2962,7 +2971,7 @@ function paintTeamHuman(box, rec, stats, myAcc) {
   let h = '<p class="t-body">Team Chimp has <strong>one member</strong>. He scores about 80%.</p>';
   h += stats.count
     ? '<p class="t-body">Team Human is up to <strong>' + comma(stats.count) + ' member' + (stats.count === 1 ? '' : 's') +
-      '</strong>, all anonymous, and the middle of the pack sits at <strong>' + pct(stats.median) + '%</strong>.</p>'
+      '</strong>, and the middle of the pack sits at <strong>' + pct(stats.median) + '%</strong>.</p>'
     : '<p class="t-body">Team Human is empty. You are the first one on the board.</p>';
 
   h += '<div class="chart-panel">' + teamHistSVG(stats, myAcc) + '</div>';
@@ -3035,17 +3044,17 @@ function renderResults(opts) {
   const p = pct(rec.acc);
   let openLine;
   if (beatAyumu) {
-    openLine = '<strong>Hold on, you went past him!</strong> Far fewer than one person in a hundred does that without practice, so you are in rare air.';
+    openLine = '<strong>Hold on, you went past him!</strong> Far fewer than one person in a hundred does that without practice, so you are in rare air. Keep reading, because what comes next explains why that is so unusual.';
   } else if (p >= 60) {
     openLine = '<strong>That is a genuinely strong score!</strong> Most people do not get near it, and you are within touching distance of a chimpanzee who has practised this for years.';
   } else if (p >= 40) {
-    openLine = '<strong>That is a solid showing!</strong> You are below Ayumu, but above where most people land on their first try.';
+    openLine = '<strong>That is a solid showing!</strong> You are below Ayumu, but well above where most people land on their first try, and ahead of the people who took this test in the original study.';
   } else if (p >= 20) {
-    openLine = 'Nice job. That result makes you a completely normal human, which also means you are well below Ayumu the chimp.';
+    openLine = 'Nice job. That result makes you a completely normal human, which also means you are well below Ayumu the chimp. The people who took this test in the original study landed right around where you did.';
   } else if (zero) {
-    openLine = 'Zero. Before you take that personally, you should know that this is the ordinary human result. It is what very nearly everybody gets on their first go.';
+    openLine = 'Zero. Before you take that personally, you should know that this is the ordinary human result, and it is what very nearly everybody gets on their first go. The numbers are on the screen for less time than it takes your eyes to move from one spot to another, and that turns out to be the whole point of the game.';
   } else {
-    openLine = 'Congratulations, you are a normal human! Like most people, you landed well below Ayumu the chimp.';
+    openLine = 'Congratulations, you are a normal human! Like most people, you landed well below Ayumu the chimp, and the reasons for that turn out to be a lot more interesting than they look.';
   }
   html += '<p class="t-body">' + openLine + '</p>';
 
@@ -3057,10 +3066,10 @@ function renderResults(opts) {
   if (resultsFlow) {
     /* First run: hand off to the Nine (or skip straight to the explanation),
        then the timing details. The full hub waits until the walk is done. */
-    html += '<h2 class="t-section" style="margin-top:40px;">Ayumu has another game</h2>' +
-      '<p class="t-body">Ayumu has a second record, and at this one you can actually take him on. All nine numbers stay on the screen until you tap the 1, and he taps it in about <strong>two thirds of a second</strong> and then hardly ever misses the rest.</p>' +
+    html += '<h2 class="t-section" style="margin-top:40px;">Your shot at redemption</h2>' +
+      '<p class="t-body">Ayumu has a second game, and this one is your chance to get back at him. All nine numbers appear on the screen and stay there for as long as you like, right up until you tap the first one. Take him on, and when you are done we will show you how your time stacks up against his.</p>' +
       '<div class="btn-row">' +
-      '<button class="btn primary" id="btn-flow-nine">Play Ayumu’s other game</button>' +
+      '<button class="btn primary" id="btn-flow-nine">Claim my shot at redemption</button>' +
       '<button class="btn ghost" id="btn-flow-skip">Skip ahead to what just happened</button>' +
       '</div>';
     html += timingDetailsHTML(rec);
@@ -3078,7 +3087,7 @@ function renderResults(opts) {
   const nine = store.nine;
   if (nine && nine.tries) {
     html += '<h2 class="t-section" style="margin-top:40px;">The Nine</h2>' +
-      '<p class="t-body">Ayumu’s other record: all nine numbers, and he commits to the 1 in about <strong>two thirds of a second</strong>.' +
+      '<p class="t-body">Ayumu’s other record is the nine: all nine numbers on the screen, and he commits to the 1 in about <strong>two thirds of a second</strong>.' +
       (nine.bestMs !== null
         ? ' Your best clean run: <strong>' + secs(nine.bestMs) + '</strong>.'
         : ' You don’t have a clean run on the board yet.') + '</p>' +
@@ -3087,10 +3096,10 @@ function renderResults(opts) {
       '<button class="btn primary" id="btn-to-nine">Play the nine again</button>' +
       '</div>';
   } else {
-    html += '<h2 class="t-section" style="margin-top:40px;">Ayumu has another record</h2>' +
-      '<p class="t-body">Ayumu has a second record, and this is the one where you can actually take him on. He commits to the 1 in about <strong>two thirds of a second</strong> and hardly ever misses.</p>' +
+    html += '<h2 class="t-section" style="margin-top:40px;">Your shot at redemption</h2>' +
+      '<p class="t-body">You have not taken your shot at redemption yet. Ayumu has a second game, where all nine numbers stay on the screen for as long as you like, right up until you tap the first one. It is your chance to get back at him, and when you are done we will show you how your time stacks up against his.</p>' +
       '<div class="btn-row">' +
-      '<button class="btn primary" id="btn-to-nine">Try the nine</button>' +
+      '<button class="btn primary" id="btn-to-nine">Claim my shot at redemption</button>' +
       '</div>';
   }
 
@@ -3307,7 +3316,7 @@ function renderSandbox() {
 
   html += '<p class="t-quiet" id="sandbox-tally" style="margin-top:12px;"></p>';
 
-  html += '<p class="t-body" style="margin-top:26px;">Here you can adjust how many numbers are shown and how long they stay up. Turn them wherever you like and have a go. Every setting you complete gets filled in on your map.</p>';
+  html += '<p class="t-body" style="margin-top:26px;">Here you can adjust how many numbers appear and how long they stay on the screen. Turn the dials wherever you like and have a go, and every setting you complete gets filled in on your map below, so you can see exactly where your edge is.</p>';
 
   html += '<div id="sandbox-yournum"></div>';
 
@@ -3658,7 +3667,9 @@ function renderTraining() {
      grid, so it gets its own section rather than a rung on the ladder. */
   const nrec = store.nine;
   html += '<h2 class="t-section" style="margin-top:48px;">And the nine</h2>' +
-    '<p class="t-body">Here you can train to match or exceed Ayumu’s other record. He starts pressing at two thirds of a second, and rarely gets it wrong. It’s an ambitious target, so it’ll take practice!</p>';
+    '<p class="t-body">' + (nrec && nrec.tries
+      ? 'Here you can train to match or even beat Ayumu’s other record. He starts pressing at two thirds of a second and rarely gets it wrong, so it is an ambitious target, and it will take practice!'
+      : 'Here you can train on Ayumu’s other game, where all nine numbers stay on the screen until you tap the first one. Once you have a time on the board, you will see how it compares with his.') + '</p>';
   if (nrec && nrec.bestMs !== null) {
     html += '<p class="score-line">Your fastest clean run · <b>' + secs(nrec.bestMs) + '</b></p>';
     const ncurve = nineCurveSVG();
@@ -4191,7 +4202,7 @@ function boot() {
   body += '<p class="t-body">' + (sessions
     ? 'You have trained ' + sessions + ' time' + (sessions === 1 ? '' : 's') + ', currently on step ' +
       (currentRung() + 1) + ' of ' + LADDER.length + ': ' + esc(rungLabel(currentRung())) + '. Keep going and keep adding to that line.'
-    : 'The dials and the Training Room are both still waiting, and they are the good part.') + '</p>';
+    : 'The dials and the Training Room are both still waiting for you, and they are where the real fun is, because that is where you get to watch your own score move.') + '</p>';
 
   document.getElementById('return-body').innerHTML = body;
   showView('view-return');
