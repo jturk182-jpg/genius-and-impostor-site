@@ -1142,7 +1142,7 @@
         <p class="t-eyebrow">A memory game</p>
         <h1 class="t-title" id="intro-title">The Ayumu Test</h1>
         <p class="t-body">Ayumu is a chimpanzee. He lives at a research institute in Japan, he is very good at puzzles on touchscreens, including the one he’s about to beat you at.</p>
-        <p class="t-body">The game is simple: numbers flash up on the screen and then vanish, and you tap the spots where they were, in order from smallest to largest. That’s the whole game.</p>
+        <p class="t-body">The game itself is simple. Numbers appear on the screen for a moment and then vanish, and your job is to tap the spots where they were, in order from smallest to largest. That’s all there is to it, and it is a lot harder than it sounds.</p>
 
         <div class="btn-row">
           <button class="btn primary" id="btn-start">Play</button>
@@ -2041,7 +2041,7 @@ async function runTrial(numerals, hold, opts) {
      flash cannot be anticipated. */
   phase = 'ready';
   render();
-  setPrompt('Watch the screen.');
+  setPrompt('Watch the screen. The numbers are about to appear.');
   await wait(600 + Math.random() * 350);
   if (aborted) return null;
 
@@ -2334,17 +2334,17 @@ const WARMUP_CARDS = {
   3: {
     label: 'Learning the rules',
     title: 'Three numbers, nice and slow',
-    body: '<p>Watch where the numbers land, because in a moment they will turn into blank tiles. Then tap the tiles in order, smallest number first. The numbers themselves are random, so read them as they come up: you might get a 2, a 6 and a 9. If you tap one out of order, that try ends and you get another go. Nothing is being scored yet.</p>'
+    body: '<p>In this game, numbers will briefly appear on the screen, each one sitting on its own little tile. Watch carefully where each number lands, because after a moment the numbers will disappear and the tiles will turn blank. Your job is then to tap the tiles in the order of the numbers that were on them, starting with the smallest and working your way up.</p><p>The numbers themselves are random, so pay attention to what they are: you might get a 2, a 6 and a 9. If you tap one out of order, that try ends and you simply get another go. We will start with just three numbers, and nothing is being scored yet.</p>'
   },
   4: {
     label: 'Warm-up',
     title: 'Now four',
-    body: '<p>Same idea as before, with one more number to keep track of.</p>'
+    body: '<p>This is the same idea as before, except now there are four numbers on the screen instead of three. Watch where they land, wait for the tiles to go blank, and then tap them in order from smallest to largest.</p>'
   },
   5: {
     label: 'Warm-up',
     title: 'Five, and then the real thing',
-    body: '<p>This is the last warm-up before you play it at Ayumu’s speed.</p>'
+    body: '<p>Now you will try five numbers, which is how many Ayumu sees. This is the last warm-up round, so take your time with it. Once you have the hang of five, we will speed things up to his pace.</p>'
   }
 };
 
@@ -2407,7 +2407,7 @@ async function runAttempt(resume) {
     const go = await card({
       label: 'Ayumu’s version',
       title: 'Five numbers, for a fifth of a second',
-      body: '<p>This is exactly what Ayumu does, at exactly his speed. You get ten tries, and most people land very few of them, so don’t be too hard on yourself. Go whenever you’re ready.</p>',
+      body: '<p>This round is exactly what Ayumu does, at exactly his speed. Five numbers will appear on the screen for 210 milliseconds, which is about a fifth of a second, and then they will turn blank. You get ten tries.</p><p>Most people land very few of them the first time through, so don’t be too hard on yourself if the numbers seem to vanish before you have even seen them. That is the whole point of the game. Go whenever you’re ready.</p>',
       actions: [{ text: 'Go', value: 'go', primary: true }]
     });
     if (aborted || go !== 'go') return null;
@@ -3459,7 +3459,7 @@ async function runTrainingSession() {
     const go = await card({
       label: 'Step ' + (rung + 1) + ' of ' + LADDER.length,
       title: cfg.n + ' numbers in ' + comma(cfg.h) + ' milliseconds',
-      body: '<p>You get ' + BLOCK_TRIALS + ' tries at this setting. Land most of them and the next step gets a little harder.</p>',
+      body: '<p>You will get ' + BLOCK_TRIALS + ' tries at this setting. If you land most of them, the next step will get a little harder, and if it turns out to be too much, the ladder will bring you back down a step.</p>',
       actions: [
         { text: blocks === 0 ? 'Go' : 'Next set', value: 'go', primary: true },
         { text: 'That is enough for today', value: 'stop', ghost: true }
