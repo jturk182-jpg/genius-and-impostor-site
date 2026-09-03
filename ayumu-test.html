@@ -2675,7 +2675,10 @@ function renderNine(opts) {
 
   let nineLine;
   if (mine === null) {
-    nineLine = 'The first goal is to get all nine in the right order, no matter how long you look before you start. Take as long as you like, land one clean run, and then start working on your time. Once you have a time on the board, you will see how it compares with Ayumu’s.';
+    nineLine = 'The first goal is to get all nine in the right order, no matter how long you look before you start. ' + (nineFlow
+      ? 'The next time you play, take as long as you like, land one clean run, and then start working on your time. '
+      : 'Take as long as you like, land one clean run, and then start working on your time. ') +
+      'Once you have a time on the board, you will see how it compares with Ayumu’s.';
   } else if (beat) {
     nineLine = 'Amazing! Ayumu commits to the 1 in about two thirds of a second and almost never misses, and you matched him, which makes you a rare human specimen.';
   } else {
@@ -2684,7 +2687,10 @@ function renderNine(opts) {
       ? (ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10) + ' times faster than your best'
       : (ratio >= 1.15 ? Math.round((ratio - 1) * 100) + '% faster than your best' : 'just a little faster than your best');
     nineLine = 'So here is the news. Ayumu commits to the 1 in about <strong>two thirds of a second</strong>, which is ' + faster +
-      ', and he still gets all nine almost every time. Now see if you can close that gap. Tap the 1 a little sooner on each go until you find the point where it falls apart. That point is your current edge, and it will move with practice.';
+      ', and he still gets all nine almost every time. ' + (nineFlow
+        ? 'The next time you play, try tapping the 1 a little sooner on each go until you find the point where it falls apart. '
+        : 'Now see if you can close that gap. Tap the 1 a little sooner on each go until you find the point where it falls apart. ') +
+      'That point is your current edge, and it will move with practice.';
   }
   html += '<p class="t-body">' + nineLine + '</p>';
 
