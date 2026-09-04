@@ -696,6 +696,20 @@
     .choice.wrong { border-color: var(--red); color: var(--red); text-decoration: line-through; background: #fff; }
     .choice.dim { opacity: 0.45; }
 
+    .choice-back {
+      align-self: flex-start;
+      background: none;
+      border: 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 10px 4px 0;
+    }
+    .choice-back:hover, .choice-back:focus-visible { color: var(--ink); outline: none; }
+
     .verdict {
       font-family: var(--mono);
       font-size: 11px;
@@ -2160,6 +2174,18 @@ function card(spec) {
         });
         actions.appendChild(b);
       });
+      if (spec.back) {
+        const bk = document.createElement('button');
+        bk.className = 'choice-back';
+        bk.textContent = 'Back';
+        bk.addEventListener('click', () => {
+          if (resolveCard !== resolve) return;
+          document.getElementById('overlay').classList.remove('active');
+          resolveCard = null;
+          resolve('back');
+        });
+        actions.appendChild(bk);
+      }
     } else {
       actions.className = 'btn-row';
       (spec.actions || [{ text: 'Carry on', value: 'go', primary: true }]).forEach(a => {
@@ -2861,7 +2887,7 @@ function revealSteps(playedNine) {
           ? 'So most people are behind Ayumu for two reasons: they have not practised his skill, and they have spent years practising a different skill that gets in the way of it. You managed it in spite of that extra step, which is what makes your score so unusual.</p>'
           : 'So you are behind Ayumu for two reasons: you have not practised his skill, and you have spent years practising a different skill that gets in the way of it.</p>') },
 
-    { beat: 'So does this test measure intelligence? It measures how good you are at one specific thing, holding a snapshot of shapes in mind for a moment, and that depends on what you have practised. Ayumu built years of it. You built something else: a brain that turns every symbol into meaning, which is the skill that lets you read this sentence. There is no single ladder with one of you above the other. There is only what each of you has built.' },
+    { beat: 'So does this test measure intelligence? It measures how good you are at one specific thing, holding a snapshot of shapes in mind for a moment, and that depends on what you have practised. Ayumu built years of it. You built something else: a brain that turns every symbol into meaning, which is the skill that lets you read this sentence. There is no single ladder of intelligence with one of you above the other. There is only what each of you has built.' },
 
     { beat: 'And what you have built can keep growing. ' +
         (wonAny
@@ -3173,8 +3199,8 @@ function renderResults(opts) {
      First-play players get this offer inside the walk too; this section
      is for the ones who skipped it and for return visits.
      ⚠️ PLACEHOLDER copy, JT's pass. */
-  html += '<h2 class="t-section" style="margin-top:40px;">Feel the extra step</h2>' +
-    '<p class="t-body">The explanation claims you cannot look at a 7 and not see “seven.” You can test that claim on yourself. In the Unstoppable Reader, a word appears in a color and you tap the color you see, while the word itself spells a different one. It takes two minutes, and you get to watch your own brain read a word when you asked it not to.</p>' +
+  html += '<h2 class="t-section" style="margin-top:40px;">See it happen in your own head</h2>' +
+    '<p class="t-body">The explanation claims your brain turns every symbol into meaning whether you ask it to or not. We built another game that shows that exact thing happening inside your own head, live, while you play. It takes about two minutes, and we think you will like it.</p>' +
     '<div class="btn-row">' +
     '<a class="btn" href="unstoppable-reader.html?from=ayumu">Play the Unstoppable Reader</a>' +
     '</div>';
@@ -4051,59 +4077,86 @@ async function runReveal(playedNine) {
   setPrompt('');
   const steps = revealSteps(playedNine);
   const total = steps.length;
-  for (let i = 0; i < total; i++) {
+  const back = { text: 'Back', value: 'back', ghost: true };
+
+  /* Every card can step backwards (JT, 2026-09-04). picks[] remembers each
+     answer, so going back onto a question lands on its answer card rather
+     than asking again. Index `total` is the closing handoff card. */
+  const picks = [];
+  let i = 0;
+  let onAnswer = false;
+  while (i <= total) {
+    if (i === total) {
+      /* The Ai beat claims your brain turns every symbol into meaning whether
+         you want it to or not. The Unstoppable Reader lets a player watch
+         that happen, so the walk ends by offering it, without giving the
+         game away. Saving revealSeen here, before any navigation, keeps the
+         escort from replaying if they take the detour. */
+      store.revealSeen = true;
+      saveStore();
+      const pick = await card({
+        label: 'One more thing',
+        title: '',
+        body: '<p>We built another game that shows this exact thing happening inside your own head, live, while you play. It takes about two minutes, and we think you will like it.</p><p>Your results here will be waiting when you get back.</p>',
+        actions: [
+          { text: 'Play it (two minutes)', value: 'reader', primary: true },
+          { text: 'Show me my results first', value: 'go', ghost: true },
+          back
+        ]
+      });
+      if (aborted || pick === 'quit') return false;
+      if (pick === 'back') { i = total - 1; onAnswer = !!steps[i].ask; continue; }
+      if (pick === 'reader') {
+        location.href = 'unstoppable-reader.html?from=ayumu';
+        return true;
+      }
+      return true;
+    }
+
     const step = steps[i];
     const last = i === total - 1;
-    if (step.ask) {
-      /* Pose the question, mark the guess right or wrong on the card, then
-         give the answer on the next card with the verdict at the top. */
+
+    if (step.ask && !onAnswer) {
       const pick = await card({
         label: 'What just happened · ' + (i + 1) + ' of ' + total,
         title: '',
         body: '<p>' + step.ask + '</p>',
         choices: step.choices,
-        correct: step.correct
+        correct: step.correct,
+        back: i > 0
       });
-      if (aborted || pick == null) return false;
-      const ok = pick === step.correct;
+      if (aborted || pick == null || pick === 'quit') return false;
+      if (pick === 'back') { i--; onAnswer = !!steps[i].ask; continue; }
+      picks[i] = pick;
+      onAnswer = true;
+      continue;
+    }
+
+    if (step.ask && onAnswer) {
+      const ok = picks[i] === step.correct;
       const go = await card({
         label: ok ? 'You got it' : 'Not quite',
         title: '',
         body: '<p class="verdict ' + (ok ? 'ok' : 'miss') + '">' +
           (ok ? 'Right, that is the one.' : 'The answer: ' + esc(step.choices[step.correct])) + '</p>' + step.answer,
-        actions: [{ text: 'Next', value: 'go', primary: true }]
+        actions: [{ text: last ? 'One more thing' : 'Next', value: 'go', primary: true }, back]
       });
-      if (aborted || go !== 'go') return false;
-    } else {
-      const go = await card({
-        label: 'What just happened · ' + (i + 1) + ' of ' + total,
-        title: '',
-        body: '<p>' + step.beat + '</p>',
-        actions: [{ text: last ? 'One more thing' : 'Next', value: 'go', primary: true }]
-      });
-      if (aborted || go !== 'go') return false;
+      if (aborted || go === 'quit') return false;
+      if (go === 'back') { i--; onAnswer = !!steps[i].ask; continue; }
+      onAnswer = false;
+      i++;
+      continue;
     }
-  }
 
-  /* The Ai beat claims your brain turns every symbol into meaning whether
-     you want it to or not. The Unstoppable Reader lets a player feel that
-     claim come true, so the walk ends by offering it. Saving revealSeen
-     here, before any navigation, keeps the escort from replaying if they
-     take the detour. */
-  store.revealSeen = true;
-  saveStore();
-  const pick = await card({
-    label: 'Try it yourself',
-    title: '',
-    body: '<p>Want to catch that extra step in the act? We built a two-minute game for exactly that. A word appears on the screen in a color, and all you have to do is tap the color you see. The catch is that the word itself spells a <em>different</em> color, and your brain reads it every single time, whether you asked it to or not.</p><p>Your results here will be waiting when you get back.</p>',
-    actions: [
-      { text: 'Play it (two minutes)', value: 'reader', primary: true },
-      { text: 'Show me my results first', value: 'go', ghost: true }
-    ]
-  });
-  if (pick === 'reader') {
-    location.href = 'unstoppable-reader.html?from=ayumu';
-    return true;
+    const go = await card({
+      label: 'What just happened · ' + (i + 1) + ' of ' + total,
+      title: '',
+      body: '<p>' + step.beat + '</p>',
+      actions: [{ text: last ? 'One more thing' : 'Next', value: 'go', primary: true }].concat(i > 0 ? [back] : [])
+    });
+    if (aborted || go === 'quit') return false;
+    if (go === 'back') { i--; onAnswer = !!steps[i].ask; continue; }
+    i++;
   }
   return true;
 }
