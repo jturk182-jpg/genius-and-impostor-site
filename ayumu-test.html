@@ -4321,6 +4321,15 @@ function boot() {
     }
   }
 
+  /* ?show=results lands straight on the results hub, for the way back from
+     the Unstoppable Reader detour ("your results here will be waiting"). */
+  if (new URLSearchParams(location.search).get('show') === 'results' && store.attempt) {
+    history.replaceState(null, '', location.pathname);
+    renderResults();
+    showView('view-results');
+    return;
+  }
+
   /* An interrupted attempt takes priority over everything else. */
   const p = store.pending;
   if (p && p.log && p.log.length) {
