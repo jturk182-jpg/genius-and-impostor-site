@@ -3988,8 +3988,15 @@ function renderShare() {
    gets skimmed, so each beat stands alone on a card and the reader clicks
    through at their own pace. */
 async function runReveal(playedNine) {
-  /* The board behind these cards still carries the last game's HUD and
-     prompt; clear both so the walk stands on its own. */
+  /* The cards live inside the play layer, and the walk now starts from a
+     results screen where that layer is hidden, so bring it back first.
+     Then clear the last game's HUD and prompt so the walk stands on its own. */
+  aborted = false;
+  showPlay();
+  layoutField();
+  phase = 'idle';
+  trial = null;
+  render();
   setHud('THE AYUMU TEST', '', '');
   setPrompt('');
   const steps = revealSteps(playedNine);
