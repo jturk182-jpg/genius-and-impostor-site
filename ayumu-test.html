@@ -1168,6 +1168,7 @@
           <button class="btn" id="btn-training-from-return">Training Room</button>
           <button class="btn ghost" id="btn-results-from-return">Your Ayumu score</button>
         </div>
+        <p class="t-quiet" style="margin-top:18px;">Want to start from the very beginning, as if you had never played? <button type="button" class="inline-link" id="btn-return-reset" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Clear my results and start over</button></p>
         <div class="pref-row">
           <label class="pref-toggle"><input type="checkbox" id="pref-hc-2"> Higher contrast</label>
         </div>
@@ -4141,6 +4142,19 @@ document.getElementById('btn-training-from-return').addEventListener('click', ()
 document.getElementById('btn-results-from-return').addEventListener('click', () => {
   if (store.attempt) { renderResults(); showView('view-results'); } else { startGame(null); }
 });
+document.getElementById('btn-return-reset').addEventListener('click', () => {
+  if (!confirm('This clears every score, map square, and training session saved on this device. Start over?')) return;
+  resetEverything();
+});
+
+/* Wipe everything this device remembers and go back to the first screen. */
+function resetEverything() {
+  store = blankStore();
+  dialN = null; dialH = null;
+  try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+  saveStore();
+  boot();
+}
 
 /* Relayout the board if the viewport changes between tries. Never mid-try:
    a resize during a try would move the tiles under somebody’s finger. */
@@ -4168,6 +4182,17 @@ window.addEventListener('keydown', e => {
 
 function boot() {
   applyPrefs();
+
+  /* ?reset=1 wipes everything saved on this device and starts from the
+     first screen. Handy when someone wants a clean first run (or when we
+     are checking a new build and the saved state hides it). */
+  if (new URLSearchParams(location.search).get('reset') === '1') {
+    history.replaceState(null, '', location.pathname);
+    store = blankStore();
+    dialN = null; dialH = null;
+    try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+    saveStore();
+  }
 
   /* Deep links from the science page: ?start=flash or ?start=nine drops
      straight into that game. The param is stripped from the URL so a
