@@ -2777,30 +2777,73 @@ function renderNine(opts) {
    `answer` = a question card, then its answer card with a verdict. The first
    beat depends on whether the player took the Nine on the way here. */
 function revealSteps(playedNine) {
-  return [
-    { beat: playedNine
-        ? 'You have now played both of Ayumu’s games, so let’s talk about what happened. First, the plain part: he wins, and it is not close. He takes in five numbers in a fifth of a second and gets about eighty percent of them right, and on the nine he commits in about two thirds of a second and almost never misses.'
-        : 'You have now played Ayumu’s game, so let’s talk about what happened. First, the plain part: he wins, and it is not close. He takes in five numbers in a fifth of a second and gets about eighty percent of them right, and he looks like he is barely trying.' },
+  /* The walk reads the player's real results, so a player who matched or
+     passed Ayumu is never told he won when they did. */
+  const flash = store.attempt;
+  const acc = flash && flash.trials ? flash.acc : null;
+  const wonFlash = acc !== null && acc >= AYUMU_ACC;
+  const tiedFlash = wonFlash && Math.abs(acc - AYUMU_ACC) < 0.005;
+  const nine = playedNine ? store.nine : null;
+  const nineBest = nine && nine.bestMs !== null ? nine.bestMs : null;
+  const wonNine = nineBest !== null && nineBest <= AYUMU_COMMIT_MS;
+  /* The IQ cards are about the flash (the working-memory item), so they key
+     off the flash alone; the closing card celebrates either win. */
+  const won = wonFlash;
+  const wonAny = wonFlash || wonNine;
 
-    { ask: 'So why is Ayumu so much better at this than you? Take a guess.',
+  const nineSlower = nineBest !== null && !wonNine
+    ? (nineBest / AYUMU_COMMIT_MS >= 1.95
+        ? Math.round(nineBest / AYUMU_COMMIT_MS * 10) / 10 + ' times faster than your best'
+        : 'a little faster than your best')
+    : null;
+
+  /* Card 1: the plain result, in whichever shape it actually took. */
+  let opening;
+  const lead = playedNine
+    ? 'You have now played both of Ayumu’s games, so let’s talk about what happened. '
+    : 'You have now played Ayumu’s game, so let’s talk about what happened. ';
+  if (wonFlash) {
+    opening = lead + 'First, the plain part: you ' + (tiedFlash ? 'matched' : 'went past') +
+      ' a chimpanzee at his own game, and almost nobody does that on a first try. Ayumu takes in five numbers in a fifth of a second and gets about eighty percent of them right, and you got ' + pct(acc) + ' percent.' +
+      (nineBest !== null
+        ? (wonNine
+          ? ' On the nine you matched his time as well, which puts you in very rare company.'
+          : ' On the nine, though, he still wins: he commits in about two thirds of a second, ' + nineSlower + '.')
+        : (playedNine ? ' On the nine, he still wins: he commits in about two thirds of a second and almost never misses.' : ''));
+  } else if (wonNine) {
+    opening = lead + 'First, the plain part: on the flash, he wins, and it is not close. He takes in five numbers in a fifth of a second and gets about eighty percent of them right, and you got ' + pct(acc) + ' percent. On the nine, though, you matched his time, and very few people manage that.';
+  } else {
+    opening = lead + 'First, the plain part: he wins, and it is not close. He takes in five numbers in a fifth of a second and gets about eighty percent of them right' +
+      (playedNine
+        ? ', and on the nine he commits in about two thirds of a second and almost never misses.'
+        : ', and he looks like he is barely trying.');
+  }
+
+  return [
+    { beat: opening },
+
+    { ask: won
+        ? 'So why is Ayumu so good at this, and why do almost all of the humans who try it lose to him? Take a guess.'
+        : 'So why is Ayumu so much better at this than you? Take a guess.',
       choices: [
         'His brain is built for it',
-        'He has practised it far more than you have',
+        'He has practised it far more than ' + (won ? 'they have' : 'you have'),
         'Humans are just bad with numbers'
       ],
       correct: 1,
       answer: '<p>The biggest reason is practice. By the time this study was published, Ayumu had played this game hundreds of times, and the people he was tested against had played it a handful of times. When other researchers later gave people a real chance to practise, their scores climbed toward his, and a couple of them caught him.</p><p>So Ayumu is good at this game because he has spent years getting good at it. That is most of the story, but the rest of it is where things get interesting.</p>' },
 
-    { beat: 'Holding a set of numbers in your head for a moment and giving them back in order is a standard task on IQ tests. It is one of the ways those tests measure working memory. So think about what just happened: a chimpanzee beat you at an item from an IQ test.' },
+    { beat: 'Holding a set of numbers in your head for a moment and giving them back in order is a standard task on IQ tests. It is one of the ways those tests measure working memory. So think about what just happened: a chimpanzee ' +
+        (won ? 'beats almost every human who tries an item from an IQ test, and you were the rare exception.' : 'beat you at an item from an IQ test.') },
 
     { ask: 'Many people believe two things about IQ tests: that they measure intelligence, and that intelligence is fixed at birth. If both of those beliefs were true, what would Ayumu’s score mean?',
       choices: [
         'That the test is broken',
-        'That a chimpanzee is more intelligent than you, and always will be',
+        'That a chimpanzee is more intelligent than ' + (won ? 'almost everyone you know' : 'you') + ', and always will be',
         'Nothing, because he is a chimpanzee'
       ],
       correct: 1,
-      answer: '<p>If both beliefs were true, you would have to accept that a chimpanzee is more intelligent than you, and that nothing could ever be done about it. Almost nobody is willing to accept that, which tells you something about the beliefs. So let’s check each one against what actually happened.</p>' },
+      answer: '<p>If both beliefs were true, you would have to accept that a chimpanzee is more intelligent than ' + (won ? 'almost everyone you know' : 'you') + ', and that nothing could ever be done about it. Almost nobody is willing to accept that, which tells you something about the beliefs. So let’s check each one against what actually happened.</p>' },
 
     { beat: 'Start with the belief that what the test measures is fixed. Ayumu’s score came from years of practice, and when people practised, their scores moved too. Whatever this test measures, it changes with what you have built. That is true of Ayumu, and it is true of you.' },
 
@@ -2813,11 +2856,18 @@ function revealSteps(playedNine) {
         'Older chimpanzees remember less'
       ],
       correct: 0,
-      answer: '<p>Turning a shape into a meaning is an extra step, and it takes time. Ayumu took the screen exactly as it was. Ai turned each mark into a number first, and by then the numbers were gone.</p><p>Your brain does the same thing Ai’s did. You cannot look at a 7 and not see “seven,” because you have practised reading symbols nearly every day of your life. So you are behind Ayumu for two reasons: you have not practised his skill, and you have spent years practising a different skill that gets in the way of it.</p>' },
+      answer: '<p>Turning a shape into a meaning is an extra step, and it takes time. Ayumu took the screen exactly as it was. Ai turned each mark into a number first, and by then the numbers were gone.</p><p>Your brain does the same thing Ai’s did. You cannot look at a 7 and not see “seven,” because you have practised reading symbols nearly every day of your life. ' +
+        (won
+          ? 'So most people are behind Ayumu for two reasons: they have not practised his skill, and they have spent years practising a different skill that gets in the way of it. You managed it in spite of that extra step, which is what makes your score so unusual.</p>'
+          : 'So you are behind Ayumu for two reasons: you have not practised his skill, and you have spent years practising a different skill that gets in the way of it.</p>') },
 
     { beat: 'So does this test measure intelligence? It measures how good you are at one specific thing, holding a snapshot of shapes in mind for a moment, and that depends on what you have practised. Ayumu built years of it. You built something else: a brain that turns every symbol into meaning, which is the skill that lets you read this sentence. There is no single ladder with one of you above the other. There is only what each of you has built.' },
 
-    { beat: 'And what you have built can keep growing. The people who practised this game got much closer to Ayumu, and some of them caught him. The Training Room here walks you up one step at a time, starting at a setting you can already win, so come back, play a few sets, and watch your score move. The book this site is built around, The Genius and the Impostor, is about exactly this: how every extraordinary ability gets built, Ayumu’s included.' }
+    { beat: 'And what you have built can keep growing. ' +
+        (wonAny
+          ? 'You are already level with a chimpanzee who has practised this for years, so the question now is how far past him you can get. The Training Room here keeps raising the difficulty one step at a time, into settings Ayumu was never even tested on, so come back, play a few sets, and watch your score move. '
+          : 'The people who practised this game got much closer to Ayumu, and some of them caught him. The Training Room here walks you up one step at a time, starting at a setting you can already win, so come back, play a few sets, and watch your score move. ') +
+        'The book this site is built around, The Genius and the Impostor, is about exactly this: how every extraordinary ability gets built, Ayumu’s included.' }
   ];
 }
 
