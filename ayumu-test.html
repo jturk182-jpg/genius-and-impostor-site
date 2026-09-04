@@ -1798,7 +1798,11 @@ function render() {
     if (phase === 'numbers' || phase === 'study') {
       drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.ink, textScale: 0.62 });
     } else if (phase === 'reveal') {
-      drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.muted, textScale: 0.62 });
+      if (trial.failed && trial.expected === it.value) {
+        drawTile(it, { fill: null, stroke: c.ink, width: 2.5, text: it.value, textColor: c.ink, textScale: 0.62 });
+      } else {
+        drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.muted, textScale: 0.62 });
+      }
     } else {
       drawTile(it, { fill: c.parchment, stroke: c.line, text: null });
     }
@@ -2074,6 +2078,7 @@ async function runTrial(numerals, hold, opts) {
     } else {
       trial.failed = true;
       trial.errorAt = trial.step + 1;   /* ordinal position, not the value */
+      trial.expected = trial.next;      /* the tile that should have been tapped */
       it.wrong = true;
       render();
       await wait(420);
@@ -2081,13 +2086,17 @@ async function runTrial(numerals, hold, opts) {
   }
 
   const success = trial.done && !trial.failed;
-  setPrompt(success ? 'You got it.' : 'That one got away from you at number ' + trial.errorAt + '.', !success);
+  setPrompt(success ? 'You got it.' : 'That one got away from you at number ' + trial.errorAt + '. Here is where they all were.', !success);
 
-  if (showReveal) {
+  if (showReveal || !success) {
+    /* Put the numbers back. After a miss the wrong tap stays red and the
+       tile that was actually next is outlined, so the player can see
+       exactly what happened and trust that the game is working (JT,
+       2026-09-03: confirm the mistake, reassure them the app is right). */
     phase = 'reveal';
-    trial.items.forEach(it => { it.wrong = false; it.taken = false; });
+    trial.items.forEach(it => { it.taken = false; if (success) it.wrong = false; });
     render();
-    await wait(1100);
+    await wait(success ? 1100 : 1500);
   } else {
     await wait(620);
   }
