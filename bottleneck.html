@@ -441,6 +441,20 @@
       min-height: 16px;
     }
 
+    .recall-count {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin: -8px 0 14px;
+      min-height: 18px;
+    }
+
+    .recall-count.full { color: var(--ink); }
+
     textarea.recall-in {
       width: 100%;
       min-height: 110px;
@@ -517,6 +531,23 @@
       color: var(--muted);
       margin-top: 6px;
     }
+
+    .score-rows {
+      border-collapse: collapse;
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .score-rows td {
+      padding: 4px 10px;
+      border-bottom: 1px solid var(--rule);
+      white-space: nowrap;
+    }
+
+    .score-rows td.got { color: var(--ink); font-weight: 700; text-align: right; }
+    .score-rows td.pct { text-align: right; }
 
     .score-card .btn-row { justify-content: center; margin-top: 26px; }
 
@@ -767,6 +798,7 @@
           <!-- recall: typing, both rounds -->
           <div class="recall" id="recall" hidden>
             <div class="recall-prompt" id="recall-prompt"></div>
+            <div class="recall-count" id="recall-count" aria-live="polite"></div>
             <textarea class="recall-in" id="recall-in" rows="3" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="What you remember"></textarea>
             <div class="verdict" id="verdict"></div>
             <div class="recall-actions">
@@ -781,6 +813,7 @@
             <div class="score-num" id="score-num"></div>
             <div class="score-unit">letters</div>
             <div class="score-sub" id="score-sub"></div>
+            <table class="score-rows" id="score-rows"></table>
             <div class="btn-row"><button class="btn primary" id="btn-score-next"></button></div>
           </div>
         </div>
@@ -940,19 +973,19 @@ const LADDER = [5, 10, 15, 20, 25];
 // Exact letter counts, verified. Concrete, plain, no famous lines
 // (those are pre-memorized).
 const BANK = {
-  5:  ['Go now.', 'Try me.', 'We won.', 'Eat it.', 'Sit up.'],
-  10: ['Wash the car.', 'Feed the cat.', 'Pack the bag.', 'Fold the map.', 'Cut the rope.'],
-  15: ['A cold wind blew in.', 'The baby is asleep.', 'The bus left early.', 'The milk went sour.', 'My boots are muddy.'],
-  20: ['The old man fed the ducks.', 'The kids built a snowman.', 'The train was late again.', 'A fox ran across the road.', 'My phone fell in the lake.'],
-  25: ['A brown dog chased the red ball.', 'Snow fell on the barn all night.', 'The wet dog shook mud on the rug.', 'Her red hat blew into the river.']
+  5:  ['Go now', 'Try me', 'We won', 'Eat it', 'Sit up'],
+  10: ['Wash the car', 'Feed the cat', 'Pack the bag', 'Fold the map', 'Cut the rope'],
+  15: ['A cold wind blew in', 'The baby is asleep', 'The bus left early', 'The milk went sour', 'My boots are muddy'],
+  20: ['The old man fed the ducks', 'The kids built a snowman', 'The train was late again', 'A fox ran across the road', 'My phone fell in the lake'],
+  25: ['A brown dog chased the red ball', 'Snow fell on the barn all night', 'The wet dog shook mud on the rug', 'Her red hat blew into the river']
 };
 
 // The bonus sentence after the ladder, to show the line keeps going.
 const BONUS = [
-  'The old man rowed his red boat across the lake before the storm hit.',
-  'A small brown dog chased the yellow ball down the steep muddy hill.',
-  'The tired nurse poured hot coffee into a chipped blue mug at dawn.',
-  'Two children built a tall sand castle while the gray waves rolled in.'
+  'The old man rowed his red boat across the lake before the storm hit',
+  'A small brown dog chased the yellow ball down the steep muddy hill',
+  'The tired nurse poured hot coffee into a chipped blue mug at dawn',
+  'Two children built a tall sand castle while the gray waves rolled in'
 ];
 
 // Accidental chunks inflate the round 1 baseline, so a shuffle is
@@ -1043,7 +1076,7 @@ const el = {
   statusRound: $('status-round'), statusTrial: $('status-trial'),
   breather: $('breather'), breatherRound: $('breather-round'), breatherLine: $('breather-line'), breatherSub: $('breather-sub'), btnBreather: $('btn-breather'),
   expose: $('expose'), exposeMaterial: $('expose-material'), exposeFill: $('expose-fill'),
-  recall: $('recall'), recallPrompt: $('recall-prompt'), recallIn: $('recall-in'), verdict: $('verdict'), btnDone: $('btn-done'),
+  recall: $('recall'), recallPrompt: $('recall-prompt'), recallCount: $('recall-count'), recallIn: $('recall-in'), verdict: $('verdict'), btnDone: $('btn-done'),
   scoreCard: $('score-card'), scoreRound: $('score-round'), scoreNum: $('score-num'), scoreSub: $('score-sub'), btnScoreNext: $('btn-score-next')
 };
 
@@ -1132,12 +1165,28 @@ async function runTrial() {
   el.recallIn.className = 'recall-in' + (isLetters ? ' letters' : '');
   el.recallIn.setAttribute('autocapitalize', isLetters ? 'characters' : 'sentences');
   el.recallIn.value = '';
+  updateCount();
   el.verdict.textContent = '';
   el.verdict.className = 'verdict';
   el.btnDone.disabled = false;
   showStagePanel('recall');
   el.recallIn.focus();
 }
+
+// The box takes exactly as many letters as were shown, no more, and
+// counts down as they go in. Spaces and punctuation never count.
+function updateCount() {
+  const c = state.current;
+  if (!c) return;
+  let v = el.recallIn.value;
+  while (lettersOf(v).length > c.n) v = v.slice(0, -1);
+  if (v !== el.recallIn.value) el.recallIn.value = v;
+  const left = c.n - lettersOf(v).length;
+  el.recallCount.textContent = left === 0 ? 'All ' + c.n + ' letters typed' : left + ' of ' + c.n + ' letters to go';
+  el.recallCount.classList.toggle('full', left === 0);
+}
+
+el.recallIn.addEventListener('input', updateCount);
 
 el.btnDone.addEventListener('click', async () => {
   const c = state.current;
@@ -1157,6 +1206,8 @@ el.btnDone.addEventListener('click', async () => {
   else runTrial();
 });
 
+function pct(a, b) { return b ? Math.round((a / b) * 100) + '%' : '0%'; }
+
 function roundTotals(r) {
   const trials = state.log.filter(t => t.round === r);
   return { got: trials.reduce((a, t) => a + t.got, 0), shown: trials.reduce((a, t) => a + t.n, 0), trials };
@@ -1166,7 +1217,10 @@ function showScoreCard(r) {
   const tot = roundTotals(r);
   el.scoreRound.textContent = r === 3 ? 'One more' : 'Round ' + r;
   el.scoreNum.textContent = tot.got;
-  el.scoreSub.textContent = 'of ' + tot.shown + ' shown';
+  el.scoreSub.textContent = 'of ' + tot.shown + ' shown \u00b7 ' + pct(tot.got, tot.shown);
+  $('score-rows').innerHTML = tot.trials.map(t =>
+    '<tr><td>' + t.n + ' shown</td><td class="got">' + t.got + ' of ' + t.n + '</td><td class="pct">' + pct(t.got, t.n) + '</td></tr>'
+  ).join('');
   el.btnScoreNext.textContent = r === 1 ? 'Round 2' : r === 2 ? 'One more' : 'See the whole picture';
   el.statusRound.textContent = '';
   el.statusTrial.textContent = '';
