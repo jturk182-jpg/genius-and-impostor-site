@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Bottleneck — GeniusAndImpostor.com</title>
-  <meta name="description" content="How much can you hold in your head at once? A two and a half minute experiment that measures it three times and gets three very different answers.">
+  <meta name="description" content="How many letters can you remember at once? A three minute experiment that measures it twice and gets two very different answers.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -822,7 +822,7 @@
         <p class="t-eyebrow">The results</p>
         <h2 class="t-headline" id="reveal-headline">What your brain did with the same letters in the same four seconds.</h2>
 
-        <div class="chart" aria-label="Letters you held back, by how many were shown, as random letters and as sentences">
+        <div class="chart" aria-label="Letters you remembered, by how many were shown, as shuffled letters and as sentences">
           <div id="chart-svg"></div>
           <p class="chart-note" id="chart-note"></p>
         </div>
@@ -859,7 +859,7 @@
       <!-- ============ THE FULL STORY ============ -->
       <section class="view" id="view-story" aria-labelledby="story-headline">
         <p class="t-eyebrow">The full story</p>
-        <h2 class="t-headline" id="story-headline">How you held 25 letters with a seven-letter memory</h2>
+        <h2 class="t-headline" id="story-headline">How you remembered 25 letters with a seven-letter memory</h2>
 
         <div class="stat-strip" id="story-stats"></div>
 
@@ -869,7 +869,7 @@
 
         <div class="beat">
           <p class="t-label red">What you were actually shown</p>
-          <p class="t-body">Every string in round 1 was one of the sentences from round 2 with its letters shuffled. Here they are side by side, with how many letters you held from each.</p>
+          <p class="t-body">Every string in round 1 was one of the sentences from round 2 with its letters shuffled. Here they are side by side, with how many letters you remembered from each.</p>
           <table class="pairs" id="pairs-table"></table>
           <p class="t-body">The letters were the same, the counts were the same, and the four seconds were the same. The only difference between the two columns is whether the letters came in an order your brain already knew.</p>
         </div>
@@ -881,7 +881,7 @@
         </div>
 
         <div class="beat">
-          <p class="t-label">The runner who could hold 79 digits</p>
+          <p class="t-label">The runner who could remember 79 digits</p>
           <p class="t-body">Working memory gets measured in the lab with a digit span test: someone reads you a list of numbers and you say the list back. Most adults manage about seven. In 1980, the psychologist Anders Ericsson and his colleagues paid a college student, called S.F. in the paper, to practice this test for an hour a day. He started at seven like everyone else. After about 230 hours of practice, he could hear 79 digits once and repeat every one of them back.</p>
           <p class="t-body">Had his memory grown? The researchers checked. They switched from digits to letters, and his span dropped straight back to six, exactly where it had started. His working memory hadn&rsquo;t changed at all. What he&rsquo;d built was a way to hear digits as something he already knew deeply. He ran cross-country, so a string like 3492 became &ldquo;three minutes, forty-nine point two, close to a record mile,&rdquo; and a list of 79 digits became a short list of race times. He&rsquo;d built big chunks for digits, and for nothing else. Your round 1 ceiling is S.F.&rsquo;s letter span. Practice never moved his, and it doesn&rsquo;t need to move yours, because practice builds bigger chunks instead.</p>
           <p class="cite">Ericsson, Chase &amp; Faloon (1980). Acquisition of a memory skill. <em>Science</em>, 208, 1181&ndash;1182.</p>
@@ -910,7 +910,7 @@
 
         <div class="beat">
           <p class="t-label">Where this story comes from</p>
-          <p class="t-body">Everything in this game is one small piece of <em>The Genius and the Impostor</em>, a book about the two characters who share your head. The Genius is the vast non-conscious machinery that turned letters into words and words into meaning for you today, without ever asking for your attention. The Impostor is the conscious narrator, the part of you that was straining to hold seven shuffled letters in round 1 and keeping score the whole time.</p>
+          <p class="t-body">Everything in this game is one small piece of <em>The Genius and the Impostor</em>, a book about the two characters who share your head. The Genius is the vast non-conscious machinery that turned letters into words and words into meaning for you today, without ever asking for your attention. The Impostor is the conscious narrator, the part of you that was straining to remember seven shuffled letters in round 1 and keeping score the whole time.</p>
           <p class="t-body">The book has a name for what you just felt: the Effort Inversion. How much effort you feel is not a measure of how much skill is involved. <strong>The book is about how the Genius gets built, and how to keep the Impostor out of its way when something real is on the line.</strong></p>
           <div class="btn-row" style="margin-top: 18px;">
             <a class="btn primary" href="https://www.amazon.com/Genius-Impostor-Neuroscience-Unlocking-Potential/dp/0593850998/" target="_blank" rel="noopener">Amazon</a>
@@ -1284,12 +1284,12 @@ function buildChart() {
   });
   // perfect-recall diagonal
   svg.appendChild(svgEl('line', { x1: X(0), y1: Y(0), x2: X(maxX), y2: Y(maxX), class: 'perfect' }));
-  svg.appendChild(svgEl('text', { x: X(maxX) - 4, y: Y(maxX) + 14, 'text-anchor': 'end', class: 'tick' }, 'held every letter'));
+  svg.appendChild(svgEl('text', { x: X(maxX) - 4, y: Y(maxX) + 14, 'text-anchor': 'end', class: 'tick' }, 'remembered every letter'));
   // axes
   svg.appendChild(svgEl('line', { x1: X(0), y1: Y(0), x2: X(maxX), y2: Y(0), class: 'axis' }));
   svg.appendChild(svgEl('line', { x1: X(0), y1: Y(0), x2: X(0), y2: Y(maxY), class: 'axis' }));
   svg.appendChild(svgEl('text', { x: X(maxX), y: H - 6, 'text-anchor': 'end', class: 'axis-label' }, 'letters shown'));
-  const yl = svgEl('text', { x: 12, y: Y(maxY / 2), 'text-anchor': 'middle', class: 'axis-label', transform: 'rotate(-90 12 ' + Y(maxY / 2) + ')' }, 'letters held');
+  const yl = svgEl('text', { x: 12, y: Y(maxY / 2), 'text-anchor': 'middle', class: 'axis-label', transform: 'rotate(-90 12 ' + Y(maxY / 2) + ')' }, 'letters remembered');
   svg.appendChild(yl);
 
   function series(points, cls, label) {
@@ -1335,7 +1335,7 @@ function showReveal() {
   else if (R.s25 > R.r25) head.textContent = 'More letters every step, from the same brain in the same four seconds.';
   else head.textContent = 'What your brain did with the same letters in the same four seconds.';
   buildChart();
-  $('chart-note').textContent = 'How many letters you held, against how many you were shown. Every try gave you exactly four seconds. At ' + R.top + ' letters you held ' + R.r25 + ' as shuffled letters and ' + R.s25 + ' as a sentence.';
+  $('chart-note').textContent = 'How many letters you remembered, against how many you were shown. Every try gave you exactly four seconds. At ' + R.top + ' letters you remembered ' + R.r25 + ' as shuffled letters and ' + R.s25 + ' as a sentence.';
 }
 
 $('btn-reveal-next').addEventListener('click', () => { beatIndex = 0; showBeat(); });
@@ -1353,7 +1353,7 @@ function beats() {
     {
       label: 'What just happened',
       html:
-        '<p class="t-body">Here’s the trick. Every string in round 1 was one of the sentences from round 2 with its letters shuffled. So you saw the same letters in both rounds, in the same amounts, for the same four seconds. As shuffled letters, you held about ' + ceiling + ' no matter how long the string got' + (about7 ? ', which is right where almost everyone lands' : '') + '. As sentences, you held nearly all of them, all the way up.</p>' +
+        '<p class="t-body">Here’s the trick. Every string in round 1 was one of the sentences from round 2 with its letters shuffled. So you saw the same letters in both rounds, in the same amounts, for the same four seconds. As shuffled letters, you remembered about ' + ceiling + ' no matter how long the string got' + (about7 ? ', which is right where almost everyone lands' : '') + '. As sentences, you remembered nearly all of them, all the way up.</p>' +
         '<p class="t-body">So did your memory grow between the rounds? No. The part of your memory that holds things for a few seconds is small, about seven pieces, and it stayed the same size the whole time. What changed was the size of each piece. Years of reading glued letters together into words for you, and the grammar you soaked up as a toddler glues words together into sentences. Psychologists call these bigger pieces chunks. In round 2 you were still holding about seven things. Each one was just a much bigger chunk.</p>'
     },
     {
@@ -1365,7 +1365,7 @@ function beats() {
     {
       label: 'The round that felt hardest',
       html:
-        '<p class="t-body">Think back to which round felt hardest. Round 1 took the most effort and held the fewest letters. Round 2 took almost no effort and held ' + timesLine + '. The harder your mind was working, the less it was actually getting done.</p>' +
+        '<p class="t-body">Think back to which round felt hardest. Round 1 took the most effort and produced the fewest letters. Round 2 took almost no effort and produced ' + timesLine + '. The harder your mind was working, the less it was actually getting done.</p>' +
         '<p class="t-body">We tend to call the effortful part of thinking intelligence, because the effortful part is the part we can feel. But that narrow, effortful memory is just the brain’s working space, and it starts out about the same size in everyone. What made you capable in round 2 was the chunking, built by years of learning, and chunking runs so smoothly that you never feel it happening. So the part that was straining gets the credit for being smart, while the part that did most of the work goes unnoticed. And the tests we call intelligence tests measure the straining part.</p>'
     }
   ];
@@ -1404,10 +1404,10 @@ function showStory() {
     const a = R.at(1, rung.n), b = R.at(2, rung.n);
     return '<tr><td class="str">' + rung.scramble + '</td><td class="n">' + a + '</td><td>' + escapeHtml(rung.sentence) + '</td><td class="n red">' + b + '</td></tr>';
   }).join('');
-  $('pairs-table').innerHTML = '<thead><tr><th>Round 1</th><th style="text-align:right">Held</th><th>Round 2</th><th style="text-align:right">Held</th></tr></thead><tbody>' + rows + '</tbody>';
+  $('pairs-table').innerHTML = '<thead><tr><th>Round 1</th><th style="text-align:right">Remembered</th><th>Round 2</th><th style="text-align:right">Remembered</th></tr></thead><tbody>' + rows + '</tbody>';
 
   $('iq-bridge').textContent =
-    'At ' + R.top + ' letters you held ' + R.r25 + ' as a shuffled string and ' + R.s25 + ' as a sentence, and your working memory didn’t change in between. ' +
+    'At ' + R.top + ' letters you remembered ' + R.r25 + ' as a shuffled string and ' + R.s25 + ' as a sentence, and your working memory didn’t change in between. ' +
     'Memory span tests, the same digit test S.F. practiced, are a standard part of IQ testing.';
 }
 
@@ -1433,7 +1433,7 @@ async function makeShareCard() {
 
   ctx.fillStyle = '#1a1a1a';
   ctx.font = '700 84px "Source Serif 4", Georgia, serif';
-  ctx.fillText('I held ' + R.r25 + ' letters shuffled', W / 2, 260);
+  ctx.fillText('I remembered ' + R.r25 + ' letters shuffled', W / 2, 260);
   ctx.fillText('and ' + R.s25 + ' as a sentence.', W / 2, 360);
 
   // chart
