@@ -318,7 +318,7 @@
       min-height: 36px;
     }
 
-    /* ---------- breather / round card ---------- */
+    /* ---------- round card ---------- */
     .breather {
       flex: 1;
       display: flex;
@@ -343,7 +343,15 @@
       font-size: clamp(22px, 5vw, 30px);
       font-weight: 600;
       line-height: 1.3;
-      max-width: 22ch;
+      max-width: 24ch;
+    }
+
+    .breather-sub {
+      font-family: var(--serif);
+      font-size: clamp(16px, 3.4vw, 19px);
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 34ch;
     }
 
     .breather .btn-row {
@@ -365,28 +373,32 @@
       text-align: center;
       font-family: var(--serif);
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.5;
       user-select: none;
       -webkit-user-select: none;
+      max-width: 100%;
     }
 
+    /* Random strings: spaced capitals, wrapping wherever the line ends.
+       No deliberate grouping, because grouping would be chunking. */
     .expose-material.letters {
-      font-size: clamp(30px, 8vw, 48px);
-      letter-spacing: 0.32em;
-      text-indent: 0.32em; /* balance the trailing letter-space */
+      letter-spacing: 0.28em;
+      text-indent: 0.28em;
+      word-break: break-all;
+      overflow-wrap: anywhere;
     }
 
-    .expose-material.words {
-      font-size: clamp(24px, 6vw, 34px);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      max-width: 14ch;
-    }
+    .expose-material.letters.len-5  { font-size: clamp(34px, 9vw, 52px); }
+    .expose-material.letters.len-10 { font-size: clamp(30px, 8vw, 46px); }
+    .expose-material.letters.len-15 { font-size: clamp(28px, 7vw, 40px); }
+    .expose-material.letters.len-20 { font-size: clamp(26px, 6.5vw, 36px); }
+    .expose-material.letters.len-25 { font-size: clamp(24px, 6vw, 34px); }
 
     .expose-material.sentence {
       font-size: clamp(24px, 5.5vw, 32px);
       font-weight: 600;
       max-width: 22ch;
+      line-height: 1.35;
     }
 
     /* A thin depleting bar, no numerals: numbers would add reading
@@ -429,111 +441,27 @@
       min-height: 16px;
     }
 
-    /* Letter slots stay on one line and shrink to fit (twelve fit on a
-       phone); word slots need their width, so they wrap instead. */
-    .slots {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 26px;
-    }
-
-    .slots.words { flex-wrap: wrap; gap: 8px; }
-
-    .slot {
-      flex: 1 1 0;
-      min-width: 0;
-      max-width: 44px;
-      height: 46px;
-      border-bottom: 2px solid var(--rule);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--serif);
-      font-weight: 700;
-      font-size: 22px;
-      letter-spacing: 0.02em;
-    }
-
-    .slot.words { flex: 0 0 auto; font-size: 15px; text-transform: uppercase; min-width: 62px; max-width: none; padding: 0 8px; }
-    .slot.filled { border-bottom-color: var(--ink); }
-    .slot.next { border-bottom-color: var(--red); }
-
-    .bank {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .bank.words { grid-template-columns: repeat(3, 1fr); }
-
-    .bank-btn {
-      min-height: 58px;
-      border: 1.5px solid var(--ink);
-      background: transparent;
-      color: var(--ink);
-      font-family: var(--serif);
-      font-weight: 700;
-      font-size: 22px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      transition: background 0.12s, color 0.12s, opacity 0.15s;
-      padding: 0 6px;
-    }
-
-    .bank.words .bank-btn { font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; }
-
-    .bank-btn:active { background: var(--ink); color: var(--bg); }
-
-    .bank-btn.used { opacity: 0.22; }
-
-    .bank-btn:focus-visible {
-      outline: 2.5px solid var(--red);
-      outline-offset: 3px;
-    }
-
-    .recall-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-top: auto;
-      padding-top: 10px;
-    }
-
-    .link-quiet {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .link-quiet:hover { color: var(--red); }
-    .link-quiet[disabled] { opacity: 0.35; cursor: default; text-decoration: none; }
-
-    textarea.sentence-in {
+    textarea.recall-in {
       width: 100%;
-      min-height: 120px;
+      min-height: 110px;
       font-family: var(--serif);
-      font-size: 20px;
+      font-size: 22px;
       line-height: 1.5;
       padding: 14px 16px;
       border: 1.5px solid var(--ink);
       background: #fff;
       color: var(--ink);
-      resize: vertical;
-      margin-bottom: 18px;
+      resize: none;
+      margin-bottom: 14px;
     }
 
-    textarea.sentence-in:focus { outline: 2px solid var(--red); outline-offset: 2px; }
+    textarea.recall-in.letters {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+    }
+
+    textarea.recall-in:focus { outline: 2px solid var(--red); outline-offset: 2px; }
 
     .verdict {
       text-align: center;
@@ -547,6 +475,14 @@
     }
 
     .verdict.good { color: var(--ink); }
+
+    .recall-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      padding-top: 6px;
+    }
 
     /* ---------- deadpan score card ---------- */
     .score-card {
@@ -584,74 +520,76 @@
 
     .score-card .btn-row { justify-content: center; margin-top: 26px; }
 
-    /* ---------- reveal chart ---------- */
-    .chart { margin: 34px 0 10px; }
+    /* ---------- reveal chart (two curves) ---------- */
+    .chart { margin: 30px 0 10px; }
 
-    .chart-bars {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(14px, 4vw, 30px);
-      align-items: end;
-      height: 260px;
-      border-bottom: 1.5px solid var(--ink);
-      padding: 0 4px;
-    }
-
-    .chart-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      height: 100%;
-    }
-
-    .chart-val {
-      font-family: var(--mono);
-      font-size: clamp(13px, 3vw, 16px);
-      font-weight: 700;
-      margin-bottom: 6px;
-      white-space: nowrap;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
-    .chart-val.show { opacity: 1; }
-    .chart-val.red { color: var(--red); }
-
-    .chart-bar {
+    .chart svg {
       width: 100%;
-      max-width: 110px;
-      background: var(--ink);
-      height: 0;
-      transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      height: auto;
+      display: block;
+      overflow: visible;
     }
 
-    .chart-bar.red { background: var(--red); }
-
-    .chart-labels {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(14px, 4vw, 30px);
-      padding: 10px 4px 0;
-    }
-
-    .chart-label {
-      text-align: center;
+    .chart .axis { stroke: var(--ink); stroke-width: 1.5; }
+    .chart .grid { stroke: var(--rule); stroke-width: 1; }
+    .chart .perfect { stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 5 6; }
+    .chart .tick {
       font-family: var(--mono);
-      font-size: clamp(9px, 2.2vw, 11px);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.5;
+      font-size: 11px;
+      fill: var(--muted);
     }
-
-    .chart-label .sub { display: block; opacity: 0.75; }
+    .chart .axis-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      fill: var(--muted);
+    }
+    .chart .line {
+      fill: none;
+      stroke-width: 3;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .chart .line.show { stroke-dashoffset: 0; }
+    .chart .line.random { stroke: var(--ink); }
+    .chart .line.language { stroke: var(--red); }
+    .chart .dot { opacity: 0; transition: opacity 0.4s; }
+    .chart .dot.show { opacity: 1; }
+    .chart .dot.random { fill: var(--ink); }
+    .chart .dot.language { fill: var(--red); }
+    .chart .series-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .chart .series-label.show { opacity: 1; }
+    .chart .series-label.random { fill: var(--ink); }
+    .chart .series-label.language { fill: var(--red); }
+    .chart .value {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .chart .value.show { opacity: 1; }
+    .chart .value.random { fill: var(--ink); }
+    .chart .value.language { fill: var(--red); }
 
     .chart-note {
       font-family: var(--mono);
       font-size: 11px;
       color: var(--muted);
       margin-top: 16px;
+      line-height: 1.6;
     }
 
     /* ---------- the three beats (full screen, tap to continue) ---------- */
@@ -716,6 +654,8 @@
       text-transform: uppercase;
       color: var(--muted);
       margin-top: 4px;
+      max-width: 14ch;
+      line-height: 1.5;
     }
 
     .cite {
@@ -726,6 +666,52 @@
       margin-top: -8px;
       margin-bottom: 22px;
     }
+
+    /* the pairs table in the story: every string beside its sentence */
+    .pairs {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 22px;
+      font-size: 15px;
+    }
+
+    .pairs th {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      padding: 0 8px 8px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .pairs td {
+      padding: 9px 8px 9px 0;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      line-height: 1.45;
+    }
+
+    .pairs td.str {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      word-break: break-all;
+    }
+
+    .pairs td.n {
+      font-family: var(--mono);
+      font-size: 12px;
+      white-space: nowrap;
+      text-align: right;
+      padding-right: 16px;
+    }
+
+    .pairs td.n.red { padding-right: 0; }
+
+    .pairs td.n.red { color: var(--red); font-weight: 700; }
 
     @media print {
       .tool-mast, .tool-footer, .no-print, .btn, .btn-row { display: none !important; }
@@ -746,10 +732,10 @@
 
       <!-- ============ INTRO ============ -->
       <section class="view active" id="view-intro" aria-labelledby="intro-title">
-        <p class="t-eyebrow">A two and a half minute experiment</p>
+        <p class="t-eyebrow">A three minute experiment</p>
         <h1 class="t-title" id="intro-title">The Bottleneck</h1>
-        <p class="t-body">How much can you hold in your head at once? Let&rsquo;s measure it.</p>
-        <p class="t-body">Something will appear on the screen for four seconds. Then it disappears, and you put it back from memory. There are three short rounds, and the whole thing takes about two and a half minutes. There is no clock on your answers, so take your time with every one.</p>
+        <p class="t-body">How many letters can you hold in your head at once? Let&rsquo;s measure it.</p>
+        <p class="t-body">Some letters will appear on the screen for four seconds. Then they disappear, and you type back as many as you can remember, in order. There are two short rounds, and each one gets a little longer as it goes. The long ones are long on purpose. Nobody holds all of them, and you&rsquo;ll see why at the end.</p>
         <div class="btn-row" style="margin-top: 32px;">
           <button class="btn primary" id="btn-start">Start</button>
         </div>
@@ -768,6 +754,7 @@
           <div class="breather" id="breather" hidden>
             <div class="breather-round" id="breather-round"></div>
             <div class="breather-line" id="breather-line"></div>
+            <div class="breather-sub" id="breather-sub"></div>
             <div class="btn-row"><button class="btn primary" id="btn-breather">Ready</button></div>
           </div>
 
@@ -777,26 +764,13 @@
             <div class="expose-timer" aria-hidden="true"><div class="expose-timer-fill" id="expose-fill"></div></div>
           </div>
 
-          <!-- recall: tap-to-select (rounds 1 and 2) -->
-          <div class="recall" id="recall-bank" hidden>
-            <div class="recall-prompt" id="bank-prompt"></div>
-            <div class="slots" id="slots"></div>
-            <div class="bank" id="bank" role="group" aria-label="Choices"></div>
-            <div class="verdict" id="bank-verdict"></div>
+          <!-- recall: typing, both rounds -->
+          <div class="recall" id="recall" hidden>
+            <div class="recall-prompt" id="recall-prompt"></div>
+            <textarea class="recall-in" id="recall-in" rows="3" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="What you remember"></textarea>
+            <div class="verdict" id="verdict"></div>
             <div class="recall-actions">
-              <button class="link-quiet" id="btn-undo" disabled>Undo</button>
-              <button class="btn primary" id="btn-bank-done" disabled>Done</button>
-            </div>
-          </div>
-
-          <!-- recall: free typing (round 3) -->
-          <div class="recall" id="recall-type" hidden>
-            <div class="recall-prompt">Type the sentence as closely as you can remember it.</div>
-            <textarea class="sentence-in" id="sentence-in" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="The sentence you remember"></textarea>
-            <div class="verdict" id="type-verdict"></div>
-            <div class="recall-actions">
-              <span></span>
-              <button class="btn primary" id="btn-type-done">Done</button>
+              <button class="btn primary" id="btn-done">Done</button>
             </div>
           </div>
 
@@ -812,15 +786,14 @@
         </div>
       </section>
 
-      <!-- ============ REVEAL: the three bars ============ -->
+      <!-- ============ REVEAL: two curves ============ -->
       <section class="view" id="view-reveal" aria-labelledby="reveal-headline">
         <p class="t-eyebrow">The results</p>
-        <h2 class="t-headline" id="reveal-headline">Same brain. Same four seconds.</h2>
+        <h2 class="t-headline" id="reveal-headline">Same letters. Same four seconds.</h2>
 
-        <div class="chart" aria-label="How many letters you held in each round">
-          <div class="chart-bars" id="chart-bars"></div>
-          <div class="chart-labels" id="chart-labels"></div>
-          <p class="chart-note">How many letters you held in each round. Every round gave you exactly four seconds.</p>
+        <div class="chart" aria-label="Letters you held back, by how many were shown, as random letters and as sentences">
+          <div id="chart-svg"></div>
+          <p class="chart-note" id="chart-note"></p>
         </div>
 
         <div class="btn-row" style="margin-top: 30px;">
@@ -831,11 +804,13 @@
       <!-- ============ THE THREE BEATS (full screen, one idea each) ============
            CENTRAL TAKEAWAY — every sentence in the beats and the story serves this:
            Your conscious memory holds about seven pieces at a time, and that
-           number did not change during the game. What changed was the size of
-           each piece: years of reading turned letters into words, and grammar
-           turned words into sentences, so the same seven slots carried eight
-           times as much. Every expert's skill is built the same way, and the
-           round that felt hardest was the one that accomplished the least.
+           number did not change during the game. Round 1's strings were round 2's
+           sentences with the letters shuffled: same letters, same counts, same
+           four seconds. What changed was the size of each piece. Years of
+           reading turned letters into words, and grammar turned words into
+           sentences, so the same seven slots carried the whole sentence. Every
+           expert's skill is built the same way, and the round that felt hardest
+           was the one that accomplished the least.
            FRAME POSITIVELY: the reveal is capability made visible, never a
            shortfall. Nobody leaves feeling dumb about round 1; round 1 is
            everyone's number. -->
@@ -862,22 +837,29 @@
         </div>
 
         <div class="beat">
-          <p class="t-label red">The bottleneck</p>
+          <p class="t-label red">What you were actually shown</p>
+          <p class="t-body">Every string in round 1 was one of the sentences from round 2 with its letters shuffled. Here they are side by side, with how many letters you held back from each.</p>
+          <table class="pairs" id="pairs-table"></table>
+          <p class="t-body">Same letters, same counts, same four seconds. The only difference between the two columns is whether the letters were in an order your brain already knew.</p>
+        </div>
+
+        <div class="beat">
+          <p class="t-label">The bottleneck</p>
           <p class="t-body lede">The memory you used to hold those letters is small. Most people can keep about seven separate things in it at once, and in careful measurements the number often comes out closer to four. Psychologists have known this since the 1950s, when George Miller called it the magical number seven.</p>
-          <p class="t-body">That limit is real, it is narrow, and practice does not widen it. Every trick your brain has for getting more through it works the same way: it makes each thing bigger. Miller called those bigger things chunks. A word is a chunk of letters, and a sentence is a chunk of words. You built those chunks so long ago that you cannot remember doing it, which is why round 3 felt like nothing at all.</p>
+          <p class="t-body">That limit is real, it is narrow, and practice does not widen it. Every trick your brain has for getting more through it works the same way: it makes each thing bigger. Miller called those bigger things chunks. A word is a chunk of letters, and a sentence is a chunk of words. You built those chunks so long ago that you cannot remember doing it, which is why round 2 felt like nothing at all.</p>
         </div>
 
         <div class="beat">
           <p class="t-label">The runner who could hold 79 digits</p>
           <p class="t-body">Working memory gets measured in the lab with a digit span test: someone reads you a list of numbers and you say the list back. Most adults manage about seven. In 1980, the psychologist Anders Ericsson and his colleagues paid a college student, called S.F. in the paper, to practice this test for an hour a day. He started at seven like everyone else. After about 230 hours of practice, he could hear 79 digits once and repeat every one of them back.</p>
-          <p class="t-body">Had he grown his memory? The researchers checked. They switched from digits to letters, and his span dropped straight back to six, exactly where it had started. His working memory had not changed at all. What he had built was a way to hear digits as something he already knew deeply. He ran cross-country, so a string like 3492 became &ldquo;three minutes, forty-nine point two, close to a record mile,&rdquo; and a list of 79 digits became a short list of race times. He had built bigger chunks for digits, and for nothing else. Your round 1 score is S.F.&rsquo;s letter span. Practice never moved it for him, and it does not need to move for you either, because practice builds bigger chunks instead.</p>
+          <p class="t-body">Had he grown his memory? The researchers checked. They switched from digits to letters, and his span dropped straight back to six, exactly where it had started. His working memory had not changed at all. What he had built was a way to hear digits as something he already knew deeply. He ran cross-country, so a string like 3492 became &ldquo;three minutes, forty-nine point two, close to a record mile,&rdquo; and a list of 79 digits became a short list of race times. He had built bigger chunks for digits, and for nothing else. Your round 1 ceiling is S.F.&rsquo;s letter span. Practice never moved it for him, and it does not need to move for you either, because practice builds bigger chunks instead.</p>
           <p class="cite">Ericsson, Chase &amp; Faloon (1980). Acquisition of a memory skill. <em>Science</em>, 208, 1181&ndash;1182.</p>
         </div>
 
         <div class="beat">
           <p class="t-label">Chess masters and random boards</p>
           <p class="t-body">Chess gave the same result decades earlier. Researchers showed chess players a board from a real game for about five seconds and asked them to rebuild it from memory. Masters put nearly every piece back in place. Beginners managed four or five. Then the researchers scattered the same pieces around the board at random, and the masters&rsquo; advantage disappeared. They did no better than the beginners.</p>
-          <p class="t-body">So the masters were never remembering pieces one at a time. They were seeing whole attacking patterns they had met thousands of times before, and one pattern takes up one slot. On a random board there are no patterns, so a master is back to counting pieces, which is exactly what you were doing with the letters in round 1.</p>
+          <p class="t-body">So the masters were never remembering pieces one at a time. They were seeing whole attacking patterns they had met thousands of times before, and one pattern takes up one slot. On a random board there are no patterns, so a master is back to counting pieces, which is exactly what you were doing with the shuffled letters in round 1.</p>
           <p class="cite">Chase &amp; Simon (1973). Perception in chess. <em>Cognitive Psychology</em>, 4, 55&ndash;81. Building on de Groot (1965).</p>
         </div>
 
@@ -890,12 +872,12 @@
         <div class="beat">
           <p class="t-label">What a memory test is really measuring</p>
           <p class="t-body" id="iq-bridge"></p>
-          <p class="t-body">A span test measures the width of the raw channel, which means it measures you before the learning: the state that practice makes irrelevant. Everything that made you capable in rounds 2 and 3, the years of building bigger chunks, is exactly the part such a test cannot see. So a number from a test like that describes the one part of the system that starts out about the same in everyone. Expertise is what happens when you no longer need to squeeze through it.</p>
+          <p class="t-body">A span test measures the width of the raw channel, which means it measures you before the learning: the state that practice makes irrelevant. Everything that made you capable in round 2, the years of building bigger chunks, is exactly the part such a test cannot see. So a number from a test like that describes the one part of the system that starts out about the same in everyone. Expertise is what happens when you no longer need to squeeze through it.</p>
         </div>
 
         <div class="beat">
           <p class="t-label">Where this story comes from</p>
-          <p class="t-body">Everything in this game is one small piece of <em>The Genius and the Impostor</em>, a book about the two characters who share your head. The Genius is the vast non-conscious machinery that turned letters into words and words into meaning for you today, without ever asking for your attention. The Impostor is the conscious narrator, the part of you that was straining to hold seven letters in round 1 and keeping score the whole time.</p>
+          <p class="t-body">Everything in this game is one small piece of <em>The Genius and the Impostor</em>, a book about the two characters who share your head. The Genius is the vast non-conscious machinery that turned letters into words and words into meaning for you today, without ever asking for your attention. The Impostor is the conscious narrator, the part of you that was straining to hold seven shuffled letters in round 1 and keeping score the whole time.</p>
           <p class="t-body">The book has a name for what you just felt: the Effort Inversion. The work you can feel is a poor guide to where the skill lives. <strong>The book is about how the Genius gets built, and how to keep the Impostor out of its way when something real is on the line.</strong></p>
           <div class="btn-row" style="margin-top: 18px;">
             <a class="btn primary" href="https://www.amazon.com/Genius-Impostor-Neuroscience-Unlocking-Potential/dp/0593850998/" target="_blank" rel="noopener">Amazon</a>
@@ -941,45 +923,51 @@
 
 /* ================================================================
    THE BOTTLENECK
-   Three rounds, one exposure time (4.0 s, non-negotiable: it is the
-   control that makes the bars honest), three answers in the same
-   unit (letters). Round 1 random consonants, round 2 unrelated
-   words, round 3 one sentence. All state in memory; nothing stored.
+   Two rounds on the same ladder of lengths (5, 10, 15, 20, 25 letters),
+   one exposure time (4.0 s, non-negotiable: it is the control that
+   makes the curves honest), one recall method (typing), one scorer
+   (letters back in the right order). Round 1 shows the round 2
+   sentences with their letters shuffled, so the two columns are the
+   same letters in a different order. All state in memory; nothing
+   stored.
    ================================================================ */
 
 const EXPOSURE_MS = 4000;
+const LADDER = [5, 10, 15, 20, 25];
 
-/* ---------------- material: round 1 ---------------- */
+/* ---------------- material ---------------- */
 
-// No vowels (and no Y) so nothing is pronounceable. The blocklists
-// catch accidental chunks: acronyms, initialisms, common English
-// clusters. An accidental chunk inflates the round 1 baseline and
-// shrinks the contrast, so the generator is strict on purpose.
-const CONSONANTS = 'BCDFGHJKLMNPQRSTVWXZ'.split('');
-const BLOCK_2 = new Set(('TV PC CD DJ VW GM HP MD MS MR DR ST RD JR SR TX NY LG HD HR PR PS TB LB KG BC DC ' +
-  'FM PM GT RV XL XS WC PT TM CV MP PH SH CH TH WH KN QT BS PB DL LP NC SC FL NJ NM NH NV ND SD CT ' +
-  'GP VP CP CS KC LA NG CK MC ML MN NT RT LT SK SP SM SN SL SW TW BR CR DR FR GR PR TR BL CL GL PL ' +
-  'PG PT RN RM RL LS TS NS KS PS BS DS GS MS QR VR ZR JK OK ID').split(' '));
-const BLOCK_3 = new Set(('FBI CBS NBC CNN DVD MTV BBC NFL NBA NHL MLB BMW JFK PHD LBS MPH GPS CPR DNA RNA FYI ' +
-  'LOL BRB WTF LMK NYC CSS USB PDF SMS DMV IRS CDC FDA NSA CIA KFC SUV VHS HBO RSVP HTML TNT PVC ' +
-  'CBD THC LSD LCD LED DVR VCR MSG BLT PBJ NBD TBD TBH RPM MPG SPF ATM PDF PPT GDP CEO CFO CTO ' +
-  'VIP FAQ DIY BBQ RGB CMS SQL PHP XML JPG PNG GIF MP3 MRS DRS MDS').split(' '));
+// Exact letter counts, verified. Concrete, plain, no famous lines
+// (those are pre-memorized).
+const BANK = {
+  5:  ['Go now.', 'Try me.', 'We won.', 'Eat it.', 'Sit up.'],
+  10: ['Wash the car.', 'Feed the cat.', 'Pack the bag.', 'Fold the map.', 'Cut the rope.'],
+  15: ['A cold wind blew in.', 'The baby is asleep.', 'The bus left early.', 'The milk went sour.', 'My boots are muddy.'],
+  20: ['The old man fed the ducks.', 'The kids built a snowman.', 'The train was late again.', 'A fox ran across the road.', 'My phone fell in the lake.'],
+  25: ['A brown dog chased the red ball.', 'Snow fell on the barn all night.', 'The wet dog shook mud on the rug.', 'Her red hat blew into the river.']
+};
 
-function alphaAdjacent(a, b) {
-  return Math.abs(a.charCodeAt(0) - b.charCodeAt(0)) === 1;
-}
+// The bonus sentence after the ladder, to show the line keeps going.
+const BONUS = [
+  'The old man rowed his red boat across the lake before the storm hit.',
+  'A small brown dog chased the yellow ball down the steep muddy hill.',
+  'The tired nurse poured hot coffee into a chipped blue mug at dawn.',
+  'Two children built a tall sand castle while the gray waves rolled in.'
+];
 
-function cleanString(s) {
-  for (let i = 0; i < s.length - 1; i++) {
-    const pair = s[i] + s[i + 1];
-    if (BLOCK_2.has(pair) || BLOCK_2.has(s[i + 1] + s[i])) return false;
-    if (alphaAdjacent(s[i], s[i + 1])) return false;
-  }
-  for (let i = 0; i < s.length - 2; i++) {
-    if (BLOCK_3.has(s.slice(i, i + 3))) return false;
-  }
-  return true;
-}
+// Accidental chunks inflate the round 1 baseline, so a shuffle is
+// rejected if it contains any of the sentence's own words, any
+// common short word, or a doubled letter.
+const COMMON = ('THE AND YOU ARE FOR NOT BUT ALL ANY CAN HER WAS ONE OUR OUT DAY GET HAS HIM HIS HOW MAN NEW NOW OLD SEE ' +
+  'TWO WAY WHO BOY DID ITS LET PUT SAY SHE TOO USE DOG CAT RED HOT RUN EAT SIT BAG MAP CAR ROPE EGG BED BIG BOX BUS ' +
+  'CUP CUT EAR END EYE FAR FEW FLY FUN GOT GUN HAT HIT ICE JOB KEY KID LAW LEG LIE LOT LOW MAD MAY MEN MOM MUD OFF ' +
+  'OIL OWN PAY PEN PIE PIG POT RAT ROW SAD SEA SET SIX SKY SON SUN TEA TEN TIE TIP TOP TOY TRY WAR WET WIN YES YET ZOO ' +
+  'ATE ARM ART ASK BAD BAT BEE BIT BOW BUG CAP COW CRY DIE DIG DRY DUG FAN FAT FIT FOG FOX GAS GUM HAM HEN HOP HUG ' +
+  'HUT INK JAM JAR JET JOY LAP LID LIP LOG MAT MIX MOP NAP NET NUT OAK OWL PAD PAN PAW PET PIN PIT POP RAG RIB RIP ' +
+  'ROB ROD RUB RUG SAW SIP SUM TAB TAG TAN TAP TAR TIN TUB VAN VET WAX WEB WIG ZIP GO NO SO UP US WE ME MY HE BE IT ' +
+  'IN ON AT TO OF IS AS OR IF AN AM DO BY').split(' ');
+
+function lettersOf(s) { return s.toUpperCase().replace(/[^A-Z]/g, ''); }
 
 function shuffle(arr) {
   const a = arr.slice();
@@ -990,131 +978,72 @@ function shuffle(arr) {
   return a;
 }
 
-function makeLetterString(n) {
-  // Build one letter at a time and back up when a constraint fails,
-  // so long strings resolve cleanly instead of falling back to an
-  // unvetted draw. The last-resort fallback only relaxes adjacency.
-  const out = [];
-  function grow() {
-    if (out.length === n) return true;
-    for (const c of shuffle(CONSONANTS)) {
-      if (out.includes(c)) continue;
-      out.push(c);
-      if (cleanString(out.join('')) && grow()) return true;
-      out.pop();
-    }
-    return false;
+function hasAccidentalChunk(str, sentence) {
+  for (let i = 1; i < str.length; i++) if (str[i] === str[i - 1]) return true;
+  const own = lettersOf(sentence).length > 0 ? sentence.toUpperCase().replace(/[^A-Z ]/g, '').split(' ').filter(w => w.length >= 2) : [];
+  for (const w of own) if (str.includes(w)) return true;
+  for (const w of COMMON) if (w.length >= 2 && str.includes(w)) return true;
+  return false;
+}
+
+function scrambleOf(sentence) {
+  const letters = lettersOf(sentence).split('');
+  let best = null;
+  for (let attempt = 0; attempt < 3000; attempt++) {
+    const s = shuffle(letters).join('');
+    if (!hasAccidentalChunk(s, sentence)) return s;
+    if (!best) best = s;
   }
-  if (grow()) return out.join('');
-  return shuffle(CONSONANTS).slice(0, n).join('');
+  return best;
 }
 
-/* ---------------- material: round 2 ---------------- */
-
-// Common, concrete, one or two syllables, and chosen so that no two
-// of them make an obvious pair or category. Any random sample should
-// read as unrelated.
-const WORD_POOL = ['DOG', 'PLANT', 'RIVER', 'CHAIR', 'CLOUD', 'BREAD', 'HAMMER', 'PIANO', 'CANDLE',
-  'ROCKET', 'BUTTON', 'TURTLE', 'BASKET', 'PENCIL', 'ENGINE', 'LADDER', 'ANCHOR', 'LEMON', 'HELMET',
-  'SILVER', 'TICKET', 'BRIDGE', 'SADDLE', 'FEATHER', 'MARBLE', 'POCKET', 'SHADOW', 'TUNNEL', 'WAGON',
-  'PILLOW', 'TROPHY', 'JACKET', 'BARREL', 'NEEDLE', 'CACTUS', 'WALRUS', 'VIOLIN', 'CASTLE', 'PEPPER',
-  'MAGNET', 'COMPASS', 'BUCKET', 'ROBOT', 'ISLAND', 'BANJO'];
-
-function makeWordList(n, distractors) {
-  const pick = shuffle(WORD_POOL).slice(0, n + distractors);
-  return { targets: pick.slice(0, n), distractors: pick.slice(n) };
+function pickSet() {
+  // One sentence per rung, its scramble is the round 1 string.
+  return LADDER.map(n => {
+    const sentence = BANK[n][Math.floor(Math.random() * BANK[n].length)];
+    return { n, sentence, scramble: scrambleOf(sentence) };
+  });
 }
 
-/* ---------------- material: round 3 ---------------- */
+/* ---------------- scoring: one scorer for both rounds ---------------- */
 
-// Concrete, high-imagery, no famous lines (those are pre-memorized).
-// 50 to 60 letters each; the letter count is computed, not assumed.
-const SENTENCES = [
-  'The old man rowed his red boat across the lake before the storm hit.',
-  'A small brown dog chased the yellow ball down the steep muddy hill.',
-  'The tired nurse poured hot coffee into a chipped blue mug at dawn.',
-  'Two children built a tall sand castle while the gray waves rolled in.'
-];
-
-const FUNCTION_WORDS = new Set(('the a an and of to in on at his her its their before after across over ' +
-  'under into with from by was were is are had has up down out as it that this then off for all while').split(' '));
-
-function letterCount(s) { return (s.match(/[a-z]/gi) || []).length; }
-
-function tokenize(s) {
-  return s.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
-}
-
-function editDistance(a, b) {
-  if (a === b) return 0;
-  const m = a.length, n = b.length;
-  if (Math.abs(m - n) > 1) return 2;
-  const prev = new Array(n + 1);
-  for (let j = 0; j <= n; j++) prev[j] = j;
-  for (let i = 1; i <= m; i++) {
-    let diag = prev[0];
-    prev[0] = i;
-    for (let j = 1; j <= n; j++) {
-      const tmp = prev[j];
-      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1));
-      diag = tmp;
-    }
-  }
-  return prev[n];
-}
-
-function wordsMatch(a, b) { return editDistance(a, b) <= 1; }
-
-// Longest common subsequence of content words, in order, with one
-// typo of slack per word. Proportion of the target's content words
-// that came back is the score; letters credited are that proportion
-// of the sentence's letter count.
-function scoreSentence(target, typed) {
-  const t = tokenize(target).filter(w => !FUNCTION_WORDS.has(w));
-  const u = tokenize(typed);
-  const dp = Array.from({ length: t.length + 1 }, () => new Array(u.length + 1).fill(0));
+// Letters that came back in the right order: the longest common
+// subsequence between what was shown and what was typed, letters
+// only, case and spacing ignored. Identical for strings and sentences.
+function scoreLetters(target, typed) {
+  const t = lettersOf(target), u = lettersOf(typed);
+  if (!t.length || !u.length) return 0;
+  let prev = new Array(u.length + 1).fill(0);
   for (let i = 1; i <= t.length; i++) {
+    const cur = new Array(u.length + 1).fill(0);
     for (let j = 1; j <= u.length; j++) {
-      dp[i][j] = wordsMatch(t[i - 1], u[j - 1]) ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+      cur[j] = t[i - 1] === u[j - 1] ? prev[j - 1] + 1 : Math.max(prev[j], cur[j - 1]);
     }
+    prev = cur;
   }
-  const matched = dp[t.length][u.length];
-  const proportion = t.length ? matched / t.length : 0;
-  const letters = letterCount(target);
-  return { matched, total: t.length, proportion, letters: Math.round(proportion * letters), sentenceLetters: letters };
+  return prev[u.length];
 }
 
 /* ---------------- state ---------------- */
 
 const state = {
-  round: 0,           // 1, 2, 3
-  trial: 0,
-  length: 0,          // current list length (round 1: letters, round 2: words)
-  log: [],            // every trial: {round, length, correct, material, shownMs}
-  result: { r1: null, r2: null, r3: null }, // letters credited per round, plus details
-  current: null,      // the live trial
-  sentencesUsed: [],
-  bestSentence: null
+  round: 0,        // 1 = shuffled strings, 2 = sentences, 3 = bonus sentence
+  step: 0,         // index into the ladder for rounds 1 and 2
+  set: [],         // [{n, sentence, scramble}]
+  bonus: null,
+  log: [],         // {round, n, shown, typed, got, shownMs}
+  current: null
 };
-
-const ROUND_TRIALS = { 1: 5, 2: 4 };
-const ROUND_START = { 1: 5, 2: 3 };
-const ROUND_MIN = { 1: 2, 2: 1 };
-const ROUND_MAX = { 1: 12, 2: 9 };
 
 /* ---------------- dom ---------------- */
 
 const $ = id => document.getElementById(id);
-const views = {
-  intro: $('view-intro'), game: $('view-game'), reveal: $('view-reveal'), beat: $('view-beat'), story: $('view-story')
-};
+const views = { intro: $('view-intro'), game: $('view-game'), reveal: $('view-reveal'), beat: $('view-beat'), story: $('view-story') };
 const el = {
   statusRound: $('status-round'), statusTrial: $('status-trial'),
-  breather: $('breather'), breatherRound: $('breather-round'), breatherLine: $('breather-line'), btnBreather: $('btn-breather'),
+  breather: $('breather'), breatherRound: $('breather-round'), breatherLine: $('breather-line'), breatherSub: $('breather-sub'), btnBreather: $('btn-breather'),
   expose: $('expose'), exposeMaterial: $('expose-material'), exposeFill: $('expose-fill'),
-  recallBank: $('recall-bank'), bankPrompt: $('bank-prompt'), slots: $('slots'), bank: $('bank'), bankVerdict: $('bank-verdict'),
-  btnUndo: $('btn-undo'), btnBankDone: $('btn-bank-done'),
-  recallType: $('recall-type'), sentenceIn: $('sentence-in'), typeVerdict: $('type-verdict'), btnTypeDone: $('btn-type-done'),
+  recall: $('recall'), recallPrompt: $('recall-prompt'), recallIn: $('recall-in'), verdict: $('verdict'), btnDone: $('btn-done'),
   scoreCard: $('score-card'), scoreRound: $('score-round'), scoreNum: $('score-num'), scoreSub: $('score-sub'), btnScoreNext: $('btn-score-next')
 };
 
@@ -1126,7 +1055,7 @@ function showView(name, playing) {
 }
 
 function showStagePanel(name) {
-  [el.breather, el.expose, el.recallBank, el.recallType, el.scoreCard].forEach(p => { p.hidden = true; });
+  [el.breather, el.expose, el.recall, el.scoreCard].forEach(p => { p.hidden = true; });
   if (name) el[name].hidden = false;
 }
 
@@ -1134,39 +1063,32 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 
 /* ---------------- flow ---------------- */
 
-function resetState() {
-  state.round = 0; state.trial = 0; state.length = 0; state.log = [];
-  state.result = { r1: null, r2: null, r3: null };
-  state.current = null; state.sentencesUsed = []; state.bestSentence = null;
-}
-
 function startGame() {
-  resetState();
+  state.round = 0; state.step = 0; state.log = []; state.current = null;
+  state.set = pickSet();
+  state.bonus = BONUS[Math.floor(Math.random() * BONUS.length)];
   showView('game', true);
   startRound(1);
 }
 
 const ROUND_COPY = {
-  1: { title: 'Round 1', line: 'Some letters. Watch for four seconds, then put them back in order.' },
-  2: { title: 'Round 2', line: 'Some words this time. Same four seconds.' },
-  3: { title: 'Round 3', line: 'One sentence. Same four seconds.' }
+  1: { title: 'Round 1', line: 'Letters.', sub: 'Five strings, each longer than the last. Watch for four seconds, then type back what you remember, in order.' },
+  2: { title: 'Round 2', line: 'Sentences.', sub: 'Same lengths, same four seconds.' },
+  3: { title: 'One more', line: 'A longer one.', sub: 'Just to see how far it goes.' }
 };
 
 function startRound(r) {
   state.round = r;
-  state.trial = 0;
-  state.length = ROUND_START[r] || 0;
+  state.step = 0;
   el.statusRound.textContent = '';
   el.statusTrial.textContent = '';
   el.breatherRound.textContent = ROUND_COPY[r].title;
   el.breatherLine.textContent = ROUND_COPY[r].line;
+  el.breatherSub.textContent = ROUND_COPY[r].sub;
   showStagePanel('breather');
 }
 
-el.btnBreather.addEventListener('click', () => {
-  if (state.round === 3) runSentenceTrial();
-  else runListTrial();
-});
+el.btnBreather.addEventListener('click', runTrial);
 
 async function expose(material, cls) {
   el.exposeMaterial.className = 'expose-material ' + cls;
@@ -1183,7 +1105,7 @@ async function expose(material, cls) {
     requestAnimationFrame(() => requestAnimationFrame(go));
     setTimeout(go, 80);
   });
-  void el.exposeFill.offsetWidth; // force a reflow so the transition runs from full
+  void el.exposeFill.offsetWidth;
   const t0 = performance.now();
   el.exposeFill.classList.add('run');
   await wait(EXPOSURE_MS);
@@ -1193,147 +1115,59 @@ async function expose(material, cls) {
   return shownMs;
 }
 
-/* ---------- rounds 1 and 2: adaptive list, tap-to-select recall ---------- */
-
-async function runListTrial() {
+async function runTrial() {
   const r = state.round;
-  state.trial += 1;
-  el.statusRound.textContent = 'Round ' + r;
-  el.statusTrial.textContent = 'Try ' + state.trial + ' of ' + ROUND_TRIALS[r];
+  let shown, n, isLetters;
+  if (r === 1) { const rung = state.set[state.step]; shown = rung.scramble.split('').join(' '); n = rung.n; isLetters = true; }
+  else if (r === 2) { const rung = state.set[state.step]; shown = rung.sentence; n = rung.n; isLetters = false; }
+  else { shown = state.bonus; n = lettersOf(state.bonus).length; isLetters = false; }
 
-  let targets, distractors, material;
-  if (r === 1) {
-    const s = makeLetterString(state.length);
-    targets = s.split('');
-    distractors = shuffle(CONSONANTS.filter(c => !targets.includes(c))).slice(0, 4);
-    material = targets.join(' ');
-  } else {
-    const list = makeWordList(state.length, 3);
-    targets = list.targets;
-    distractors = list.distractors;
-    material = targets.join('\n');
-  }
-  state.current = { round: r, length: state.length, targets, distractors, picked: [], shownMs: 0 };
+  el.statusRound.textContent = r === 3 ? 'One more' : 'Round ' + r;
+  el.statusTrial.textContent = r === 3 ? '' : (state.step + 1) + ' of ' + LADDER.length;
 
-  if (r === 2) el.exposeMaterial.style.whiteSpace = 'pre-line'; else el.exposeMaterial.style.whiteSpace = '';
-  state.current.shownMs = await expose(material, r === 1 ? 'letters' : 'words');
-  renderBankRecall();
+  state.current = { round: r, n, shown, isLetters, shownMs: 0 };
+  state.current.shownMs = await expose(shown, isLetters ? 'letters len-' + n : 'sentence');
+
+  el.recallPrompt.textContent = isLetters ? 'Type the letters you remember, in order.' : 'Type the sentence as closely as you can remember it.';
+  el.recallIn.className = 'recall-in' + (isLetters ? ' letters' : '');
+  el.recallIn.setAttribute('autocapitalize', isLetters ? 'characters' : 'sentences');
+  el.recallIn.value = '';
+  el.verdict.textContent = '';
+  el.verdict.className = 'verdict';
+  el.btnDone.disabled = false;
+  showStagePanel('recall');
+  el.recallIn.focus();
 }
 
-function renderBankRecall() {
+el.btnDone.addEventListener('click', async () => {
   const c = state.current;
-  const isWords = c.round === 2;
-  el.bankPrompt.textContent = isWords ? 'Tap the words in the order you saw them.' : 'Tap the letters in the order you saw them.';
-  el.bankVerdict.textContent = '';
-  el.bankVerdict.className = 'verdict';
+  if (!c) return;
+  el.btnDone.disabled = true;
+  const typed = el.recallIn.value;
+  const got = scoreLetters(c.shown, typed);
+  state.log.push({ round: c.round, n: c.n, shown: c.shown, typed, got, shownMs: Math.round(c.shownMs) });
 
-  el.slots.className = 'slots' + (isWords ? ' words' : '');
-  el.slots.innerHTML = '';
-  for (let i = 0; i < c.length; i++) {
-    const d = document.createElement('div');
-    d.className = 'slot' + (isWords ? ' words' : '');
-    el.slots.appendChild(d);
-  }
+  el.verdict.textContent = got + ' of ' + c.n + ' letters';
+  el.verdict.className = 'verdict' + (got === c.n ? ' good' : '');
+  await wait(1000);
 
-  const options = shuffle(c.targets.concat(c.distractors));
-  el.bank.className = 'bank' + (isWords ? ' words' : '');
-  el.bank.innerHTML = '';
-  options.forEach(opt => {
-    const b = document.createElement('button');
-    b.className = 'bank-btn';
-    b.type = 'button';
-    b.textContent = opt;
-    b.dataset.value = opt;
-    b.addEventListener('click', () => pickOption(opt, b));
-    el.bank.appendChild(b);
-  });
-
-  c.picked = [];
-  updateSlots();
-  showStagePanel('recallBank');
-}
-
-function pickOption(value, btn) {
-  const c = state.current;
-  if (c.picked.length >= c.length) return;
-  if (btn.classList.contains('used')) return;
-  c.picked.push(value);
-  btn.classList.add('used');
-  updateSlots();
-}
-
-function updateSlots() {
-  const c = state.current;
-  const slots = el.slots.children;
-  for (let i = 0; i < slots.length; i++) {
-    slots[i].textContent = c.picked[i] || '';
-    slots[i].classList.toggle('filled', i < c.picked.length);
-    slots[i].classList.toggle('next', i === c.picked.length);
-  }
-  el.btnUndo.disabled = c.picked.length === 0;
-  el.btnBankDone.disabled = c.picked.length < c.length;
-}
-
-el.btnUndo.addEventListener('click', () => {
-  const c = state.current;
-  if (!c || !c.picked.length) return;
-  const last = c.picked.pop();
-  const btn = Array.from(el.bank.children).find(b => b.dataset.value === last && b.classList.contains('used'));
-  if (btn) btn.classList.remove('used');
-  updateSlots();
+  if (c.round === 3) { showScoreCard(3); return; }
+  state.step += 1;
+  if (state.step >= LADDER.length) showScoreCard(c.round);
+  else runTrial();
 });
 
-el.btnBankDone.addEventListener('click', async () => {
-  const c = state.current;
-  if (!c || c.picked.length < c.length) return;
-  el.btnBankDone.disabled = true;
-  el.btnUndo.disabled = true;
-  Array.from(el.bank.children).forEach(b => { b.disabled = true; });
-
-  const correct = c.picked.every((v, i) => v === c.targets[i]);
-  state.log.push({ round: c.round, length: c.length, correct, material: c.targets.join(' '), picked: c.picked.join(' '), shownMs: Math.round(c.shownMs) });
-
-  el.bankVerdict.textContent = correct ? 'Got it' : 'Not quite';
-  el.bankVerdict.className = 'verdict' + (correct ? ' good' : '');
-  await wait(750);
-
-  const r = c.round;
-  state.length = Math.max(ROUND_MIN[r], Math.min(ROUND_MAX[r], state.length + (correct ? 1 : -1)));
-  if (state.trial >= ROUND_TRIALS[r]) finishListRound(r);
-  else runListTrial();
-});
-
-function finishListRound(r) {
+function roundTotals(r) {
   const trials = state.log.filter(t => t.round === r);
-  const correctTrials = trials.filter(t => t.correct);
-  let spanItems, spanLetters, detail;
-  if (correctTrials.length) {
-    const best = correctTrials.reduce((a, b) => (b.length > a.length ? b : a));
-    spanItems = best.length;
-    spanLetters = r === 1 ? best.length : letterCount(best.material);
-    detail = best.material;
-  } else {
-    // Never a clean run: credit one below the shortest list attempted.
-    const shortest = Math.min(...trials.map(t => t.length));
-    spanItems = Math.max(1, shortest - 1);
-    spanLetters = r === 1 ? spanItems : Math.round(spanItems * 5.5);
-    detail = '';
-  }
-  state.result['r' + r] = { items: spanItems, letters: spanLetters, detail };
-  showScoreCard(r, spanLetters, r === 1 ? plural(spanItems, 'letter') : plural(spanItems, 'word'));
+  return { got: trials.reduce((a, t) => a + t.got, 0), shown: trials.reduce((a, t) => a + t.n, 0), trials };
 }
 
-function plural(n, word) {
-  const NUM = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
-  const w = NUM[n] || String(n);
-  return w + ' ' + word + (n === 1 ? '' : 's');
-}
-
-function showScoreCard(r, letters, sub) {
-  el.scoreRound.textContent = 'Round ' + r;
-  el.scoreNum.textContent = letters;
-  el.scoreSub.textContent = sub;
-  el.btnScoreNext.textContent = r === 3 ? 'See all three' : 'Round ' + (r + 1);
+function showScoreCard(r) {
+  const tot = roundTotals(r);
+  el.scoreRound.textContent = r === 3 ? 'One more' : 'Round ' + r;
+  el.scoreNum.textContent = tot.got;
+  el.scoreSub.textContent = 'of ' + tot.shown + ' shown';
+  el.btnScoreNext.textContent = r === 1 ? 'Round 2' : r === 2 ? 'One more' : 'See the whole picture';
   el.statusRound.textContent = '';
   el.statusTrial.textContent = '';
   showStagePanel('scoreCard');
@@ -1344,55 +1178,18 @@ el.btnScoreNext.addEventListener('click', () => {
   else showReveal();
 });
 
-/* ---------- round 3: one sentence, free typing ---------- */
-
-async function runSentenceTrial() {
-  state.trial += 1;
-  el.statusRound.textContent = 'Round 3';
-  el.statusTrial.textContent = state.trial === 1 ? '' : 'One more';
-  const pool = SENTENCES.filter(s => !state.sentencesUsed.includes(s));
-  const sentence = pool[Math.floor(Math.random() * pool.length)];
-  state.sentencesUsed.push(sentence);
-  state.current = { round: 3, sentence, shownMs: 0 };
-  el.exposeMaterial.style.whiteSpace = '';
-  state.current.shownMs = await expose(sentence, 'sentence');
-  el.sentenceIn.value = '';
-  el.typeVerdict.textContent = '';
-  el.btnTypeDone.disabled = false;
-  showStagePanel('recallType');
-  el.sentenceIn.focus();
-}
-
-el.btnTypeDone.addEventListener('click', async () => {
-  const c = state.current;
-  if (!c || c.round !== 3) return;
-  el.btnTypeDone.disabled = true;
-  const typed = el.sentenceIn.value;
-  const s = scoreSentence(c.sentence, typed);
-  state.log.push({ round: 3, length: s.sentenceLetters, correct: s.proportion >= 0.999, material: c.sentence, picked: typed, shownMs: Math.round(c.shownMs), proportion: s.proportion });
-  if (!state.bestSentence || s.letters > state.bestSentence.letters) state.bestSentence = { ...s, sentence: c.sentence, typed };
-
-  // A fumbled first sentence gets one backup; the better of the two
-  // counts. Below ~70% is the spec's line.
-  if (s.proportion < 0.7 && state.trial === 1) {
-    el.typeVerdict.textContent = 'Let’s try one more';
-    await wait(900);
-    runSentenceTrial();
-    return;
-  }
-  const best = state.bestSentence;
-  state.result.r3 = { items: 1, letters: best.letters, detail: best.sentence, proportion: best.proportion };
-  showScoreCard(3, best.letters, best.proportion >= 0.999 ? 'one sentence, word for word' : 'one sentence');
-});
-
-/* ---------------- the reveal ---------------- */
+/* ---------------- results ---------------- */
 
 function results() {
-  const n1 = state.result.r1 ? state.result.r1.letters : 0;
-  const n2 = state.result.r2 ? state.result.r2.letters : 0;
-  const n3 = state.result.r3 ? state.result.r3.letters : 0;
-  const mult = n1 > 0 ? Math.round(n3 / n1) : 0;
-  return { n1, n2, n3, mult };
+  const r1 = roundTotals(1), r2 = roundTotals(2), r3 = roundTotals(3);
+  const at = (r, n) => { const t = state.log.find(x => x.round === r && x.n === n); return t ? t.got : 0; };
+  const best1 = Math.max(0, ...r1.trials.map(t => t.got));
+  const best2 = Math.max(0, ...r2.trials.map(t => t.got), ...r3.trials.map(t => t.got));
+  const top = LADDER[LADDER.length - 1];
+  const r25 = at(1, top), s25 = at(2, top);
+  const mult = r25 > 0 ? Math.round(s25 / r25) : 0;
+  const bonus = r3.trials[0] || null;
+  return { r1, r2, r3, best1, best2, r25, s25, top, mult, bonus, at };
 }
 
 function multWord(m) {
@@ -1400,49 +1197,92 @@ function multWord(m) {
   return NUM[m] || (m + ' times');
 }
 
-function showReveal() {
-  const { n1, n2, n3, mult } = results();
-  showView('reveal', false);
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-  const head = $('reveal-headline');
-  if (mult >= 2 && n3 > n2 && n2 > n1) head.textContent = 'Same brain. Same four seconds. ' + capitalize(multWord(mult)) + ' the memory.';
-  else if (n3 > n1) head.textContent = 'Same brain. Same four seconds. More memory every round.';
-  else head.textContent = 'Same brain. Same four seconds.';
+/* ---------------- the reveal chart ---------------- */
 
-  const bars = $('chart-bars');
-  const labels = $('chart-labels');
-  bars.innerHTML = '';
-  labels.innerHTML = '';
-  const vals = [n1, n2, n3];
-  const names = [['Round 1', 'letters'], ['Round 2', 'words'], ['Round 3', 'a sentence']];
-  const max = Math.max(1, ...vals);
-  const cols = vals.map((v, i) => {
-    const col = document.createElement('div');
-    col.className = 'chart-col';
-    const val = document.createElement('div');
-    val.className = 'chart-val' + (i === 2 ? ' red' : '');
-    val.textContent = v + ' letters';
-    const bar = document.createElement('div');
-    bar.className = 'chart-bar' + (i === 2 ? ' red' : '');
-    col.appendChild(val);
-    col.appendChild(bar);
-    bars.appendChild(col);
-    const lab = document.createElement('div');
-    lab.className = 'chart-label';
-    lab.innerHTML = names[i][0] + '<span class="sub">' + names[i][1] + '</span>';
-    labels.appendChild(lab);
-    return { bar, val, v };
-  });
-  // Sequential grow-in, one bar at a time.
-  cols.forEach((c, i) => {
-    setTimeout(() => {
-      c.bar.style.height = Math.max(2, Math.round((c.v / max) * 100)) + '%';
-      c.val.classList.add('show');
-    }, 350 + i * 700);
-  });
+function svgEl(tag, attrs, text) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  return e;
 }
 
-function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function buildChart() {
+  const R = results();
+  const W = 600, H = 380, padL = 44, padR = 24, padT = 18, padB = 46;
+  const xs = LADDER.slice();
+  const bonusN = R.bonus ? R.bonus.n : 0;
+  const maxX = Math.max(30, bonusN + 4);
+  const maxY = maxX;
+  const X = v => padL + (v / maxX) * (W - padL - padR);
+  const Y = v => H - padB - (v / maxY) * (H - padT - padB);
+
+  const svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img' });
+
+  // grid + ticks
+  const ticks = [];
+  for (let v = 10; v <= maxX; v += 10) ticks.push(v);
+  ticks.forEach(v => {
+    svg.appendChild(svgEl('line', { x1: X(0), x2: X(maxX), y1: Y(v), y2: Y(v), class: 'grid' }));
+    svg.appendChild(svgEl('text', { x: X(0) - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 'tick' }, v));
+    svg.appendChild(svgEl('text', { x: X(v), y: H - padB + 18, 'text-anchor': 'middle', class: 'tick' }, v));
+  });
+  // perfect-recall diagonal
+  svg.appendChild(svgEl('line', { x1: X(0), y1: Y(0), x2: X(maxX), y2: Y(maxX), class: 'perfect' }));
+  svg.appendChild(svgEl('text', { x: X(maxX) - 4, y: Y(maxX) + 14, 'text-anchor': 'end', class: 'tick' }, 'held every letter'));
+  // axes
+  svg.appendChild(svgEl('line', { x1: X(0), y1: Y(0), x2: X(maxX), y2: Y(0), class: 'axis' }));
+  svg.appendChild(svgEl('line', { x1: X(0), y1: Y(0), x2: X(0), y2: Y(maxY), class: 'axis' }));
+  svg.appendChild(svgEl('text', { x: X(maxX), y: H - 6, 'text-anchor': 'end', class: 'axis-label' }, 'letters shown'));
+  const yl = svgEl('text', { x: 12, y: Y(maxY / 2), 'text-anchor': 'middle', class: 'axis-label', transform: 'rotate(-90 12 ' + Y(maxY / 2) + ')' }, 'letters held');
+  svg.appendChild(yl);
+
+  function series(points, cls, label) {
+    const d = points.map((p, i) => (i ? 'L' : 'M') + X(p.x).toFixed(1) + ' ' + Y(p.y).toFixed(1)).join(' ');
+    const path = svgEl('path', { d, class: 'line ' + cls, pathLength: 1 });
+    svg.appendChild(path);
+    const dots = points.map(p => { const c = svgEl('circle', { cx: X(p.x), cy: Y(p.y), r: 5, class: 'dot ' + cls }); svg.appendChild(c); return c; });
+    const last = points[points.length - 1];
+    const lab = svgEl('text', { x: X(last.x) + 10, y: Y(last.y) + 4, class: 'series-label ' + cls }, label);
+    if (X(last.x) + 120 > W) { lab.setAttribute('x', X(last.x) - 10); lab.setAttribute('text-anchor', 'end'); lab.setAttribute('y', Y(last.y) - 12); }
+    svg.appendChild(lab);
+    // value at the top rung
+    const topPt = points.find(p => p.x === R.top) || last;
+    // random: under its point; sentences: below-right, clear of the rising line
+    const val = cls === 'random'
+      ? svgEl('text', { x: X(topPt.x), y: Y(topPt.y) + 22, 'text-anchor': 'middle', class: 'value ' + cls }, topPt.y)
+      : svgEl('text', { x: X(topPt.x) + 12, y: Y(topPt.y) + 18, 'text-anchor': 'start', class: 'value ' + cls }, topPt.y);
+    svg.appendChild(val);
+    return { path, dots, lab, val };
+  }
+
+  const randomPts = xs.map(n => ({ x: n, y: R.at(1, n) }));
+  const langPts = xs.map(n => ({ x: n, y: R.at(2, n) }));
+  if (R.bonus) langPts.push({ x: R.bonus.n, y: R.bonus.got });
+
+  const s1 = series(randomPts, 'random', 'shuffled letters');
+  const s2 = series(langPts, 'language', 'sentences');
+
+  const host = $('chart-svg');
+  host.innerHTML = '';
+  host.appendChild(svg);
+
+  // draw the random line first, then the sentence line
+  setTimeout(() => { s1.path.classList.add('show'); s1.dots.forEach((d, i) => setTimeout(() => d.classList.add('show'), 200 + i * 220)); setTimeout(() => { s1.lab.classList.add('show'); s1.val.classList.add('show'); }, 1300); }, 300);
+  setTimeout(() => { s2.path.classList.add('show'); s2.dots.forEach((d, i) => setTimeout(() => d.classList.add('show'), 200 + i * 220)); setTimeout(() => { s2.lab.classList.add('show'); s2.val.classList.add('show'); }, 1500); }, 1900);
+}
+
+function showReveal() {
+  const R = results();
+  showView('reveal', false);
+  const head = $('reveal-headline');
+  if (R.mult >= 2) head.textContent = 'Same letters. Same four seconds. ' + capitalize(multWord(R.mult)) + ' the memory.';
+  else if (R.s25 > R.r25) head.textContent = 'Same letters. Same four seconds. More memory every step.';
+  else head.textContent = 'Same letters. Same four seconds.';
+  buildChart();
+  $('chart-note').textContent = 'How many letters you held back, against how many were shown. Every try gave you exactly four seconds. At ' + R.top + ' letters: ' + R.r25 + ' as shuffled letters, ' + R.s25 + ' as a sentence.';
+}
 
 $('btn-reveal-next').addEventListener('click', () => { beatIndex = 0; showBeat(); });
 
@@ -1451,17 +1291,16 @@ $('btn-reveal-next').addEventListener('click', () => { beatIndex = 0; showBeat()
 let beatIndex = 0;
 
 function beats() {
-  const { n1, n3, mult } = results();
-  const about7 = n1 >= 5 && n1 <= 9;
-  const timesLine = mult >= 2 ? 'about ' + multWord(mult) + ' as much' : 'far more';
+  const R = results();
+  const ceiling = R.best1;
+  const about7 = ceiling >= 5 && ceiling <= 9;
+  const timesLine = R.mult >= 2 ? 'about ' + multWord(R.mult) + ' as much' : 'far more';
   return [
     {
       label: 'What just happened',
       html:
-        '<p class="t-body">Your memory did not grow in the last two minutes. The channel you were pushing everything through stayed exactly the same width the whole time: ' +
-        (about7 ? 'about seven pieces, which is where almost everyone lands.' : 'about seven pieces for almost everyone, and it did not move for you either.') +
-        ' What changed was the size of the pieces.</p>' +
-        '<p class="t-body">A word is a bundle of letters that years of reading glued together for you. A sentence is a bundle of words that grammar glued together, and you absorbed that grammar as a toddler. In round 3 you were still holding about seven things. Each thing was just far bigger.</p>'
+        '<p class="t-body">Here is the trick. The strings in round 1 were the sentences from round 2 with their letters shuffled. Same letters, same counts, same four seconds. As shuffled letters you held about ' + ceiling + ' no matter how long the string got' + (about7 ? ', which is right where almost everyone lands' : '') + '. As sentences you held nearly all of them, all the way up.</p>' +
+        '<p class="t-body">Your memory did not grow between the rounds. The channel you were pushing everything through stayed exactly the same width the whole time: about seven pieces. What changed was the size of the pieces. A word is a bundle of letters that years of reading glued together for you, and a sentence is a bundle of words held together by grammar you absorbed as a toddler. In round 2 you were still holding about seven things. Each thing was just far bigger.</p>'
     },
     {
       label: 'What reading did for letters, practice does for everything',
@@ -1472,8 +1311,8 @@ function beats() {
     {
       label: 'The round that felt hardest',
       html:
-        '<p class="t-body">Think about which round felt hardest. Round 1 took the most effort and held the least. Round 3 took almost no effort and held ' + timesLine + '. Effort and ability ran in opposite directions.</p>' +
-        '<p class="t-body">We tend to call the effortful part of thinking “intelligence,” because the effortful part is the part we can feel. But the narrow channel that was straining in round 1 is just hardware, the brain’s working space, and it starts out about the same in everyone. What made you capable in round 3 was the compression, built by years of learning, and compression runs so smoothly that you never feel it working. So the straining part gets the credit for thinking, while the compression, which did most of the work, goes unnoticed.</p>'
+        '<p class="t-body">Think about which round felt hardest. Round 1 took the most effort and held the least. Round 2 took almost no effort and held ' + timesLine + '. Effort and ability ran in opposite directions.</p>' +
+        '<p class="t-body">We tend to call the effortful part of thinking “intelligence,” because the effortful part is the part we can feel. But the narrow channel that was straining in round 1 is just hardware, the brain’s working space, and it starts out about the same in everyone. What made you capable in round 2 was the compression, built by years of learning, and compression runs so smoothly that you never feel it working. So the straining part gets the credit for thinking, while the compression, which did most of the work, goes unnoticed.</p>'
     }
   ];
 }
@@ -1496,23 +1335,32 @@ $('btn-beat-next').addEventListener('click', () => {
 
 /* ---------------- the full story ---------------- */
 
+function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
 function showStory() {
-  const { n1, n2, n3, mult } = results();
+  const R = results();
   showView('story', false);
   $('story-stats').innerHTML =
-    '<div><div class="stat-num">' + n1 + '</div><div class="stat-cap">Round 1</div></div>' +
-    '<div><div class="stat-num">' + n2 + '</div><div class="stat-cap">Round 2</div></div>' +
-    '<div><div class="stat-num">' + n3 + '</div><div class="stat-cap">Round 3</div></div>' +
-    (mult >= 2 ? '<div><div class="stat-num">' + mult + '×</div><div class="stat-cap">Same four seconds</div></div>' : '');
+    '<div><div class="stat-num">' + R.r25 + '</div><div class="stat-cap">of ' + R.top + ' as shuffled letters</div></div>' +
+    '<div><div class="stat-num">' + R.s25 + '</div><div class="stat-cap">of ' + R.top + ' as a sentence</div></div>' +
+    (R.bonus ? '<div><div class="stat-num">' + R.bonus.got + '</div><div class="stat-cap">of ' + R.bonus.n + ' in the long one</div></div>' : '') +
+    (R.mult >= 2 ? '<div><div class="stat-num">' + R.mult + '×</div><div class="stat-cap">Same four seconds</div></div>' : '');
+
+  const rows = state.set.map(rung => {
+    const a = R.at(1, rung.n), b = R.at(2, rung.n);
+    return '<tr><td class="str">' + rung.scramble + '</td><td class="n">' + a + '</td><td>' + escapeHtml(rung.sentence) + '</td><td class="n red">' + b + '</td></tr>';
+  }).join('');
+  $('pairs-table').innerHTML = '<thead><tr><th>Round 1</th><th style="text-align:right">Held</th><th>Round 2</th><th style="text-align:right">Held</th></tr></thead><tbody>' + rows + '</tbody>';
+
   $('iq-bridge').textContent =
-    'You just watched your working memory go from ' + n1 + ' letters to ' + n3 + ' without your bottleneck changing at all. ' +
+    'At ' + R.top + ' letters you held ' + R.r25 + ' as a shuffled string and ' + R.s25 + ' as a sentence, without your bottleneck changing at all. ' +
     'Now consider that memory span tests, the same digit test S.F. practiced, are a standard part of IQ testing.';
 }
 
 /* ---------------- share card ---------------- */
 
 async function makeShareCard() {
-  const { n1, n2, n3, mult } = results();
+  const R = results();
   await document.fonts.ready;
 
   const W = 1080, H = 1350;
@@ -1531,42 +1379,49 @@ async function makeShareCard() {
 
   ctx.fillStyle = '#1a1a1a';
   ctx.font = '700 84px "Source Serif 4", Georgia, serif';
-  ctx.fillText('Same brain.', W / 2, 260);
+  ctx.fillText('Same letters.', W / 2, 260);
   ctx.fillText('Same 4 seconds.', W / 2, 360);
 
-  const names = ['LETTERS', 'WORDS', 'SENTENCE'];
-  const vals = [n1, n2, n3];
-  const max = Math.max(1, ...vals);
-  const chartTop = 470, chartH = 420, baseY = chartTop + chartH;
-  const barW = 200, gap = 80;
-  const totalW = 3 * barW + 2 * gap;
-  let x = (W - totalW) / 2;
-  vals.forEach((v, i) => {
-    const h = (v / max) * chartH;
-    ctx.fillStyle = i === 2 ? '#c44b3a' : '#1a1a1a';
-    ctx.fillRect(x, baseY - h, barW, h);
-    ctx.fillStyle = '#1a1a1a';
-    ctx.font = '700 36px "Space Mono", monospace';
-    ctx.fillText(String(v), x + barW / 2, baseY - h - 18);
-    ctx.fillStyle = '#666';
-    ctx.font = '400 26px "Space Mono", monospace';
-    ctx.fillText(names[i], x + barW / 2, baseY + 44);
-    x += barW + gap;
-  });
-  ctx.strokeStyle = '#1a1a1a';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo((W - totalW) / 2 - 20, baseY);
-  ctx.lineTo((W + totalW) / 2 + 20, baseY);
-  ctx.stroke();
+  // chart
+  const left = 140, right = W - 100, top = 440, bottom = 900;
+  const bonusN = R.bonus ? R.bonus.n : 0;
+  const maxV = Math.max(30, bonusN + 4);
+  const X = v => left + (v / maxV) * (right - left);
+  const Y = v => bottom - (v / maxV) * (bottom - top);
+  ctx.strokeStyle = '#e0dcd4'; ctx.lineWidth = 3; ctx.setLineDash([10, 12]);
+  ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(maxV), Y(maxV)); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(maxV), Y(0)); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0), Y(maxV)); ctx.stroke();
+  ctx.fillStyle = '#666'; ctx.font = '400 24px "Space Mono", monospace';
+  for (let v = 10; v <= maxV; v += 10) { ctx.textAlign = 'center'; ctx.fillText(String(v), X(v), bottom + 36); ctx.textAlign = 'right'; ctx.fillText(String(v), left - 16, Y(v) + 8); }
+  ctx.textAlign = 'right'; ctx.fillText('LETTERS SHOWN', right, bottom + 76);
+  function line(points, color) {
+    ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 7; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath();
+    points.forEach((p, i) => { if (i) ctx.lineTo(X(p.x), Y(p.y)); else ctx.moveTo(X(p.x), Y(p.y)); });
+    ctx.stroke();
+    points.forEach(p => { ctx.beginPath(); ctx.arc(X(p.x), Y(p.y), 9, 0, Math.PI * 2); ctx.fill(); });
+  }
+  const rp = LADDER.map(n => ({ x: n, y: R.at(1, n) }));
+  const lp = LADDER.map(n => ({ x: n, y: R.at(2, n) }));
+  if (R.bonus) lp.push({ x: R.bonus.n, y: R.bonus.got });
+  line(rp, '#1a1a1a');
+  line(lp, '#c44b3a');
+  ctx.font = '700 26px "Space Mono", monospace';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#1a1a1a'; ctx.fillText('SHUFFLED LETTERS', X(rp[rp.length - 1].x) + 18, Y(rp[rp.length - 1].y) + 34);
+  const ll = lp[lp.length - 1];
+  ctx.fillStyle = '#c44b3a'; ctx.textAlign = 'right'; ctx.fillText('SENTENCES', X(ll.x) - 4, Y(ll.y) - 22);
 
+  ctx.textAlign = 'center';
   ctx.fillStyle = '#c44b3a';
   ctx.font = '700 52px "Space Mono", monospace';
-  ctx.fillText(mult >= 2 ? mult + 'x the memory.' : 'More memory every round.', W / 2, 1040);
+  ctx.fillText(R.r25 + ' vs ' + R.s25 + ' at ' + R.top + ' letters', W / 2, 1050);
 
   ctx.fillStyle = '#1a1a1a';
   ctx.font = '600 40px "Source Serif 4", Georgia, serif';
-  ctx.fillText('Expertise is compression.', W / 2, 1110);
+  ctx.fillText('Expertise is compression.', W / 2, 1120);
 
   ctx.fillStyle = '#666';
   ctx.font = 'italic 400 34px "Source Serif 4", Georgia, serif';
@@ -1606,9 +1461,9 @@ $('btn-replay').addEventListener('click', startGame);
 $('btn-replay-top').addEventListener('click', startGame);
 $('btn-share').addEventListener('click', shareCard);
 
-// Enter in the sentence box submits (shift+enter for a newline nobody needs).
-el.sentenceIn.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.btnTypeDone.click(); }
+// Enter submits (shift+enter for a newline nobody needs).
+el.recallIn.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!el.btnDone.disabled) el.btnDone.click(); }
 });
 
 // Local-only dev hook, same gate as ayumu-test.html: a local hostname
@@ -1616,13 +1471,7 @@ el.sentenceIn.addEventListener('keydown', e => {
 (function devHook() {
   const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
   if (!local || !/[?&]dev=1(&|$)/.test(location.search)) return;
-  window.__bottleneck = {
-    state,
-    current: () => state.current,
-    log: () => state.log,
-    results,
-    scoreSentence
-  };
+  window.__bottleneck = { state, current: () => state.current, log: () => state.log, results, scoreLetters, scrambleOf, pickSet };
 })();
 </script>
 </body>
