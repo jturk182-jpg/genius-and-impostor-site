@@ -820,7 +820,7 @@
       <!-- ============ REVEAL: two curves ============ -->
       <section class="view" id="view-reveal" aria-labelledby="reveal-headline">
         <p class="t-eyebrow">The results</p>
-        <h2 class="t-headline" id="reveal-headline">The same brain, the same four seconds.</h2>
+        <h2 class="t-headline" id="reveal-headline">What your brain did with the same letters in the same four seconds.</h2>
 
         <div class="chart" aria-label="Letters you held back, by how many were shown, as random letters and as sentences">
           <div id="chart-svg"></div>
@@ -926,7 +926,7 @@
 
         <!-- ============ SHARE + REPLAY ============ -->
         <div class="beat no-print">
-          <p class="t-label">Take it with you</p>
+          <p class="t-label">Share your results</p>
           <div class="btn-row">
             <button class="btn primary" id="btn-share">Save the share card</button>
             <button class="btn ghost" id="btn-replay">Play again</button>
@@ -1221,7 +1221,7 @@ function showScoreCard(r) {
   $('score-rows').innerHTML = tot.trials.map(t =>
     '<tr><td>' + t.n + ' shown</td><td class="got">' + t.got + ' of ' + t.n + '</td><td class="pct">' + pct(t.got, t.n) + '</td></tr>'
   ).join('');
-  el.btnScoreNext.textContent = r === 1 ? 'Round 2' : r === 2 ? 'One more' : 'See the whole picture';
+  el.btnScoreNext.textContent = r === 1 ? 'Round 2' : r === 2 ? 'One more' : 'See the results';
   el.statusRound.textContent = '';
   el.statusTrial.textContent = '';
   showStagePanel('scoreCard');
@@ -1333,7 +1333,7 @@ function showReveal() {
   const head = $('reveal-headline');
   if (R.mult >= 2) head.textContent = capitalize(multWord(R.mult)) + ' the memory, from the same brain in the same four seconds.';
   else if (R.s25 > R.r25) head.textContent = 'More letters every step, from the same brain in the same four seconds.';
-  else head.textContent = 'The same brain, the same four seconds.';
+  else head.textContent = 'What your brain did with the same letters in the same four seconds.';
   buildChart();
   $('chart-note').textContent = 'How many letters you held, against how many you were shown. Every try gave you exactly four seconds. At ' + R.top + ' letters you held ' + R.r25 + ' as shuffled letters and ' + R.s25 + ' as a sentence.';
 }
@@ -1353,11 +1353,11 @@ function beats() {
     {
       label: 'What just happened',
       html:
-        '<p class="t-body">Here’s the trick. Every string in round 1 was one of the sentences from round 2 with its letters shuffled. Same letters, same counts, same four seconds. As shuffled letters, you held about ' + ceiling + ' no matter how long the string got' + (about7 ? ', which is right where almost everyone lands' : '') + '. As sentences, you held nearly all of them, all the way up.</p>' +
+        '<p class="t-body">Here’s the trick. Every string in round 1 was one of the sentences from round 2 with its letters shuffled. So you saw the same letters in both rounds, in the same amounts, for the same four seconds. As shuffled letters, you held about ' + ceiling + ' no matter how long the string got' + (about7 ? ', which is right where almost everyone lands' : '') + '. As sentences, you held nearly all of them, all the way up.</p>' +
         '<p class="t-body">So did your memory grow between the rounds? No. The part of your memory that holds things for a few seconds is small, about seven pieces, and it stayed the same size the whole time. What changed was the size of each piece. Years of reading glued letters together into words for you, and the grammar you soaked up as a toddler glues words together into sentences. Psychologists call these bigger pieces chunks. In round 2 you were still holding about seven things. Each one was just a much bigger chunk.</p>'
     },
     {
-      label: 'What reading did for letters, practice does for everything',
+      label: 'How every expert does it',
       html:
         '<p class="t-body">Back in 1980, a college student with a perfectly ordinary memory span of seven digits practiced for about 230 hours and got to 79 digits in a row. Had his memory grown? No. His span for letters stayed at six the whole time. He was a cross-country runner, and he’d learned to hear strings of digits as running times, so a long string of digits became a short list of race results. He’d built big chunks for digits, and for nothing else.</p>' +
         '<p class="t-body">Chess masters can glance at a game in progress and rebuild the whole board from memory. Scatter the same pieces around the board at random, though, and they do no better than a beginner. Their memory is the same size as everyone else’s. What they’ve built is chunks: whole patterns of pieces they’ve seen thousands of times, each one taking up a single slot. A musician hears one chord progression where a beginner hears a stream of separate notes, for the same reason. Round 1 was you looking at random chess pieces, and every expert started right there in their own field.</p>'
@@ -1366,7 +1366,7 @@ function beats() {
       label: 'The round that felt hardest',
       html:
         '<p class="t-body">Think back to which round felt hardest. Round 1 took the most effort and held the fewest letters. Round 2 took almost no effort and held ' + timesLine + '. The harder your mind was working, the less it was actually getting done.</p>' +
-        '<p class="t-body">We tend to call the effortful part of thinking intelligence, because the effortful part is the part we can feel. But that narrow, effortful memory is just the brain’s working space, and it starts out about the same size in everyone. What made you capable in round 2 was the chunking, built by years of learning, and chunking runs so smoothly that you never feel it happening. So the part that was straining gets the credit for being smart, while the part that did most of the work goes unnoticed. And the tests we call intelligence tests measure the straining part, and only the straining part.</p>'
+        '<p class="t-body">We tend to call the effortful part of thinking intelligence, because the effortful part is the part we can feel. But that narrow, effortful memory is just the brain’s working space, and it starts out about the same size in everyone. What made you capable in round 2 was the chunking, built by years of learning, and chunking runs so smoothly that you never feel it happening. So the part that was straining gets the credit for being smart, while the part that did most of the work goes unnoticed. And the tests we call intelligence tests measure the straining part.</p>'
     }
   ];
 }
@@ -1398,7 +1398,7 @@ function showStory() {
     '<div><div class="stat-num">' + R.r25 + '</div><div class="stat-cap">of ' + R.top + ' as shuffled letters</div></div>' +
     '<div><div class="stat-num">' + R.s25 + '</div><div class="stat-cap">of ' + R.top + ' as a sentence</div></div>' +
     (R.bonus ? '<div><div class="stat-num">' + R.bonus.got + '</div><div class="stat-cap">of ' + R.bonus.n + ' in the long one</div></div>' : '') +
-    (R.mult >= 2 ? '<div><div class="stat-num">' + R.mult + '×</div><div class="stat-cap">Same four seconds</div></div>' : '');
+    (R.mult >= 2 ? '<div><div class="stat-num">' + R.mult + '×</div><div class="stat-cap">times as many letters</div></div>' : '');
 
   const rows = state.set.map(rung => {
     const a = R.at(1, rung.n), b = R.at(2, rung.n);
@@ -1433,8 +1433,8 @@ async function makeShareCard() {
 
   ctx.fillStyle = '#1a1a1a';
   ctx.font = '700 84px "Source Serif 4", Georgia, serif';
-  ctx.fillText('Same letters.', W / 2, 260);
-  ctx.fillText('Same 4 seconds.', W / 2, 360);
+  ctx.fillText('I held ' + R.r25 + ' letters shuffled', W / 2, 260);
+  ctx.fillText('and ' + R.s25 + ' as a sentence.', W / 2, 360);
 
   // chart
   const left = 140, right = W - 100, top = 440, bottom = 900;
@@ -1471,11 +1471,11 @@ async function makeShareCard() {
   ctx.textAlign = 'center';
   ctx.fillStyle = '#c44b3a';
   ctx.font = '700 52px "Space Mono", monospace';
-  ctx.fillText(R.r25 + ' vs ' + R.s25 + ' at ' + R.top + ' letters', W / 2, 1050);
+  ctx.fillText('Same ' + R.top + ' letters, same 4 seconds', W / 2, 1050);
 
   ctx.fillStyle = '#1a1a1a';
   ctx.font = '600 40px "Source Serif 4", Georgia, serif';
-  ctx.fillText(R.mult >= 2 ? capitalize(multWord(R.mult)) + ' the memory as sentences.' : 'More memory as sentences.', W / 2, 1120);
+  ctx.fillText(R.mult >= 2 ? capitalize(multWord(R.mult)) + ' as many letters, from the same brain.' : 'More letters, from the same brain.', W / 2, 1120);
 
   ctx.fillStyle = '#666';
   ctx.font = 'italic 400 34px "Source Serif 4", Georgia, serif';
