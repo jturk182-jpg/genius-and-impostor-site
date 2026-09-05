@@ -1431,7 +1431,7 @@ async function makeShareCard() {
   line(lp, '#c44b3a');
   ctx.font = '700 26px "Space Mono", monospace';
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#1a1a1a'; ctx.fillText('SHUFFLED LETTERS', X(rp[rp.length - 1].x) + 18, Y(rp[rp.length - 1].y) + 34);
+  ctx.fillStyle = '#1a1a1a'; ctx.textAlign = 'right'; ctx.fillText('SHUFFLED LETTERS', X(rp[rp.length - 1].x) + 12, Y(rp[rp.length - 1].y) + 48);
   const ll = lp[lp.length - 1];
   ctx.fillStyle = '#c44b3a'; ctx.textAlign = 'center'; ctx.fillText('SENTENCES', X(ll.x), Y(ll.y) - 26);
 
