@@ -1493,6 +1493,15 @@ el.recallIn.addEventListener('keydown', e => {
   const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
   if (!local || !/[?&]dev=1(&|$)/.test(location.search)) return;
   window.__bottleneck = { state, current: () => state.current, log: () => state.log, results, scoreLetters, scrambleOf, pickSet };
+  // ?demo=reveal|story fills in typical results and jumps to that screen, for review.
+  const demo = (location.search.match(/[?&]demo=(\w+)/) || [])[1];
+  if (demo) {
+    state.set = pickSet();
+    state.log = [];
+    LADDER.forEach((n, i) => state.log.push({ round: 1, n, got: Math.min(n, 7), shown: state.set[i].scramble, typed: '', shownMs: 4000 }));
+    LADDER.forEach((n, i) => state.log.push({ round: 2, n, got: n === 25 ? 24 : n, shown: state.set[i].sentence, typed: '', shownMs: 4000 }));
+    if (demo === 'story') showStory(); else showReveal();
+  }
 })();
 </script>
 </body>
