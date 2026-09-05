@@ -98,7 +98,7 @@
 
     .t-eyebrow {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--muted);
@@ -119,6 +119,14 @@
       font-weight: 700;
       line-height: 1.25;
       margin-bottom: 20px;
+    }
+
+    .t-section {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4.4vw, 26px);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 14px;
     }
 
     .t-body {
@@ -634,7 +642,7 @@
       overflow-y: auto;
     }
 
-    .beat-screen .t-label { margin-bottom: 18px; }
+    .beat-screen .t-section { color: var(--red); margin-bottom: 18px; }
 
     .beat-screen .t-body {
       font-size: clamp(18px, 4vw, 23px);
@@ -694,8 +702,8 @@
       font-size: 11px;
       color: var(--muted);
       line-height: 1.6;
-      margin-top: -8px;
-      margin-bottom: 22px;
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
     /* the pairs table in the story: every string beside its sentence */
@@ -847,7 +855,7 @@
            everyone's number. -->
       <section class="view" id="view-beat">
         <div class="beat-screen">
-          <p class="t-label red" id="beat-label"></p>
+          <h2 class="t-section" id="beat-label"></h2>
           <div id="beat-body"></div>
           <div class="btn-row">
             <button class="btn primary" id="btn-beat-next">Continue</button>
@@ -861,47 +869,25 @@
         <p class="t-eyebrow">The full story</p>
         <h2 class="t-headline" id="story-headline">How you remembered 25 letters with a seven-item memory</h2>
 
-        <div class="stat-strip" id="story-stats"></div>
-
         <div class="btn-row no-print" style="margin: 18px 0 8px;">
           <button class="btn ghost" id="btn-replay-top">Play again</button>
         </div>
 
         <div class="beat">
-          <p class="t-label red">What you were actually shown</p>
+          <h3 class="t-section">What you were actually shown</h3>
           <p class="t-body">Every string in round 1 was one of the sentences from round 2 with its letters shuffled. Here they are side by side, with how many letters you remembered from each.</p>
           <table class="pairs" id="pairs-table"></table>
           <p class="t-body">The letters were the same, the number of letters was the same, and the four seconds were the same. The only difference between the two columns is whether the letters were in an order your brain had seen before.</p>
         </div>
 
         <div class="beat">
-          <p class="t-label">The bottleneck</p>
-          <p class="t-body lede">The memory you were using in this game is called working memory. It is the memory that keeps something in mind for a few seconds, like a phone number you are about to dial. Most people can keep about seven separate items in it at once, and in careful measurements the number often comes out closer to four. Psychologists have known this since the 1950s, when George Miller called it the magical number seven. That limit is the bottleneck this game is named after.</p>
-          <p class="t-body">Practice doesn&rsquo;t raise that limit. What practice does instead is change what counts as one item. Miller called these bigger items chunks. To someone who can read, a word is one chunk instead of five separate letters, and a familiar phrase is one chunk instead of three separate words. You built those chunks as a child, so you can&rsquo;t remember doing it, which is why round 2 felt like nothing at all.</p>
-        </div>
-
-        <div class="beat">
-          <p class="t-label">The runner who could remember 79 digits</p>
-          <p class="t-body">Working memory is measured in the lab with a digit span test: someone reads you a list of digits, you say the list back, and your span is the longest list you can repeat correctly. Most adults have a span of about seven. In 1980, the psychologist Anders Ericsson and his colleagues paid a college student, called S.F. in their paper, to practice this test for an hour a day. He started with a span of seven like everyone else. After about 230 hours of practice, he could hear 79 digits once and repeat every one of them back.</p>
-          <p class="t-body">Had his memory grown? The researchers checked. They switched from digits to letters, and his span dropped to six, the same as when he started. His working memory hadn&rsquo;t changed at all. What he had built was a way to hear digits as something he already knew well. He ran cross-country, so a string like 3492 became &ldquo;three minutes, forty-nine point two seconds, close to a record mile,&rdquo; and a list of 79 digits became a much shorter list of race times. He had built chunks for digits, and for nothing else. Your best score in round 1 is S.F.&rsquo;s letter span. Practice never changed his, and it doesn&rsquo;t need to change yours, because practice builds chunks instead.</p>
-          <p class="cite">Ericsson, Chase &amp; Faloon (1980). Acquisition of a memory skill. <em>Science</em>, 208, 1181&ndash;1182.</p>
-        </div>
-
-        <div class="beat">
-          <p class="t-label">Chess masters and random boards</p>
-          <p class="t-body">Chess gave the same result decades earlier. Researchers showed chess players a board from a real game for about five seconds and asked them to rebuild it from memory. Masters put nearly every piece back in place. Beginners managed four or five. Then the researchers scattered the same pieces around the board at random, and the masters remembered no more pieces than the beginners did.</p>
-          <p class="t-body">So what were the masters remembering? Whole formations of pieces they had seen thousands of times in real games, with each formation counting as one item. A random board contains no familiar formations, so a master is back to remembering pieces one at a time, which is exactly what you were doing with the shuffled letters in round 1.</p>
-          <p class="cite">Chase &amp; Simon (1973). Perception in chess. <em>Cognitive Psychology</em>, 4, 55&ndash;81. Building on de Groot (1965).</p>
-        </div>
-
-        <div class="beat">
-          <p class="t-label">It works this way in every field</p>
+          <h3 class="t-section">It works this way in every field</h3>
           <p class="t-body">A trained musician hears a chord and recognizes it as one thing, without picking out the separate notes, and hears a familiar chord progression as one thing too. A quarterback recognizes an entire defensive formation in one glance, where a rookie sees eleven separate players. Someone fluent in a language remembers a whole sentence with no effort, which is why speaking your own language feels like nothing. In every case, working memory holds the same number of items it always did, and years of practice have made each item bigger.</p>
-          <p class="t-body">This is also why memory drills by themselves do so little for anything else. Practice builds chunks, and it builds them only for the material you practice. S.F. got his 79 digits from hundreds of hours with digits. A musician gets the chords from hundreds of hours with chords.</p>
+          <p class="t-body">This is also why memory drills by themselves do so little for anything else. Practice builds bigger items, and it builds them only for the material you practice. The student got his 79 digits from hundreds of hours with digits. A musician gets the chords from hundreds of hours with chords.</p>
         </div>
 
         <div class="beat">
-          <p class="t-label">What an intelligence test is measuring</p>
+          <h3 class="t-section">What an intelligence test is measuring</h3>
           <p class="t-body" id="iq-bridge"></p>
           <p class="t-body">So what does that part of an IQ test measure? It measures round 1: how many separate items your working memory can hold when nothing you have learned can help. That was the weakest and least impressive thing your mind did today. It is about seven items in everyone, and practice never changes it.</p>
           <p class="t-body">And what does the test leave out? Round 2. That was the impressive part: years of reading turned the same 25 letters into a sentence you understood instantly, with no effort at all. That learned ability is what let you remember 25 letters, it is what lets you read this sentence right now, and no intelligence test measures it, because a span test is built to measure how much you can hold when nothing you have learned applies.</p>
@@ -909,7 +895,7 @@
         </div>
 
         <div class="beat">
-          <p class="t-label">Where this story comes from</p>
+          <h3 class="t-section">Where this story comes from</h3>
           <p class="t-body">Everything in this game is one small piece of <em>The Genius and the Impostor</em>, a book about the two characters who share your head. The Genius is the vast non-conscious machinery that turned letters into words and words into meaning for you today, without ever asking for your attention. The Impostor is the conscious narrator, the part of you that was straining to remember seven shuffled letters in round 1 and keeping score the whole time.</p>
           <p class="t-body">The book has a name for what you just felt: the Effort Inversion. How much effort you feel is not a measure of how much skill is involved. <strong>The book is about how the Genius gets built, and how to keep the Impostor out of its way when something real is on the line.</strong></p>
           <div class="btn-row" style="margin-top: 18px;">
@@ -920,17 +906,21 @@
         </div>
 
         <div class="beat">
-          <p class="t-label">One more memory game</p>
+          <h3 class="t-section">One more memory game</h3>
           <p class="t-body">A chimpanzee named Ayumu beats nearly every human at a game where numbers flash on a screen and vanish, and for years that was taken as proof that chimps have better working memory than we do. Then someone checked how much practice each side had had. <a class="inline-link" href="ayumu-test.html">Try his game</a> and see where you land.</p>
         </div>
 
         <!-- ============ SHARE + REPLAY ============ -->
         <div class="beat no-print">
-          <p class="t-label">Share your results</p>
+          <h3 class="t-section">Share your results</h3>
           <div class="btn-row">
             <button class="btn primary" id="btn-share">Save the share card</button>
             <button class="btn ghost" id="btn-replay">Play again</button>
           </div>
+        </div>
+
+        <div class="beat">
+          <p class="cite">Sources: Ericsson, Chase &amp; Faloon (1980). Acquisition of a memory skill. <em>Science</em>, 208, 1181&ndash;1182. &middot; Chase &amp; Simon (1973). Perception in chess. <em>Cognitive Psychology</em>, 4, 55&ndash;81. &middot; Miller (1956). The magical number seven, plus or minus two. <em>Psychological Review</em>, 63, 81&ndash;97.</p>
         </div>
       </section>
     </main>
@@ -979,14 +969,6 @@ const BANK = {
   20: ['The old man fed the ducks', 'The kids built a snowman', 'The train was late again', 'A fox ran across the road', 'My phone fell in the lake'],
   25: ['A brown dog chased the red ball', 'Snow fell on the barn all night', 'The wet dog shook mud on the rug', 'Her red hat blew into the river']
 };
-
-// The bonus sentence after the ladder, to show the line keeps going.
-const BONUS = [
-  'The old man rowed his red boat across the lake before the storm hit',
-  'A small brown dog chased the yellow ball down the steep muddy hill',
-  'The tired nurse poured hot coffee into a chipped blue mug at dawn',
-  'Two children built a tall sand castle while the gray waves rolled in'
-];
 
 // Accidental chunks inflate the round 1 baseline, so a shuffle is
 // rejected if it contains any of the sentence's own words, any
@@ -1060,10 +1042,9 @@ function scoreLetters(target, typed) {
 /* ---------------- state ---------------- */
 
 const state = {
-  round: 0,        // 1 = shuffled strings, 2 = sentences, 3 = bonus sentence
-  step: 0,         // index into the ladder for rounds 1 and 2
+  round: 0,        // 1 = shuffled strings, 2 = sentences
+  step: 0,         // index into the ladder
   set: [],         // [{n, sentence, scramble}]
-  bonus: null,
   log: [],         // {round, n, shown, typed, got, shownMs}
   current: null
 };
@@ -1099,15 +1080,13 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 function startGame() {
   state.round = 0; state.step = 0; state.log = []; state.current = null;
   state.set = pickSet();
-  state.bonus = BONUS[Math.floor(Math.random() * BONUS.length)];
   showView('game', true);
   startRound(1);
 }
 
 const ROUND_COPY = {
   1: { title: 'Round 1', line: 'Five strings of letters, each one longer than the last.', sub: '' },
-  2: { title: 'Round 2', line: 'Five more strings of letters, the same lengths as before.', sub: '' },
-  3: { title: 'One more', line: 'A longer string of letters.', sub: '' }
+  2: { title: 'Round 2', line: 'Five more strings of letters, the same lengths as before.', sub: '' }
 };
 
 function startRound(r) {
@@ -1150,13 +1129,13 @@ async function expose(material, cls) {
 
 async function runTrial() {
   const r = state.round;
-  let shown, n, isLetters;
-  if (r === 1) { const rung = state.set[state.step]; shown = rung.scramble.split('').join(' '); n = rung.n; isLetters = true; }
-  else if (r === 2) { const rung = state.set[state.step]; shown = rung.sentence; n = rung.n; isLetters = false; }
-  else { shown = state.bonus; n = lettersOf(state.bonus).length; isLetters = false; }
+  const rung = state.set[state.step];
+  const isLetters = r === 1;
+  const shown = isLetters ? rung.scramble.split('').join(' ') : rung.sentence;
+  const n = rung.n;
 
-  el.statusRound.textContent = r === 3 ? 'One more' : 'Round ' + r;
-  el.statusTrial.textContent = r === 3 ? '' : (state.step + 1) + ' of ' + LADDER.length;
+  el.statusRound.textContent = 'Round ' + r;
+  el.statusTrial.textContent = (state.step + 1) + ' of ' + LADDER.length;
 
   state.current = { round: r, n, shown, isLetters, shownMs: 0 };
   state.current.shownMs = await expose(shown, isLetters ? 'letters len-' + n : 'sentence');
@@ -1200,7 +1179,6 @@ el.btnDone.addEventListener('click', async () => {
   el.verdict.className = 'verdict' + (got === c.n ? ' good' : '');
   await wait(1000);
 
-  if (c.round === 3) { showScoreCard(3); return; }
   state.step += 1;
   if (state.step >= LADDER.length) showScoreCard(c.round);
   else runTrial();
@@ -1215,35 +1193,34 @@ function roundTotals(r) {
 
 function showScoreCard(r) {
   const tot = roundTotals(r);
-  el.scoreRound.textContent = r === 3 ? 'One more' : 'Round ' + r;
+  el.scoreRound.textContent = 'Round ' + r;
   el.scoreNum.textContent = tot.got;
   el.scoreSub.textContent = 'correct, out of ' + tot.shown + ' shown \u00b7 ' + pct(tot.got, tot.shown);
   $('score-rows').innerHTML = tot.trials.map(t =>
     '<tr><td>' + t.n + ' shown</td><td class="got">' + t.got + ' correct</td><td class="pct">' + pct(t.got, t.n) + '</td></tr>'
   ).join('');
-  el.btnScoreNext.textContent = r === 1 ? 'Round 2' : r === 2 ? 'One more' : 'See the results';
+  el.btnScoreNext.textContent = r === 1 ? 'Round 2' : 'See the results';
   el.statusRound.textContent = '';
   el.statusTrial.textContent = '';
   showStagePanel('scoreCard');
 }
 
 el.btnScoreNext.addEventListener('click', () => {
-  if (state.round < 3) startRound(state.round + 1);
+  if (state.round < 2) startRound(2);
   else showReveal();
 });
 
 /* ---------------- results ---------------- */
 
 function results() {
-  const r1 = roundTotals(1), r2 = roundTotals(2), r3 = roundTotals(3);
+  const r1 = roundTotals(1), r2 = roundTotals(2);
   const at = (r, n) => { const t = state.log.find(x => x.round === r && x.n === n); return t ? t.got : 0; };
   const best1 = Math.max(0, ...r1.trials.map(t => t.got));
-  const best2 = Math.max(0, ...r2.trials.map(t => t.got), ...r3.trials.map(t => t.got));
+  const best2 = Math.max(0, ...r2.trials.map(t => t.got));
   const top = LADDER[LADDER.length - 1];
   const r25 = at(1, top), s25 = at(2, top);
   const mult = r25 > 0 ? Math.round(s25 / r25) : 0;
-  const bonus = r3.trials[0] || null;
-  return { r1, r2, r3, best1, best2, r25, s25, top, mult, bonus, at };
+  return { r1, r2, best1, best2, r25, s25, top, mult, at };
 }
 
 function multWord(m) {
@@ -1266,8 +1243,7 @@ function buildChart() {
   const R = results();
   const W = 600, H = 380, padL = 44, padR = 24, padT = 18, padB = 46;
   const xs = LADDER.slice();
-  const bonusN = R.bonus ? R.bonus.n : 0;
-  const maxX = Math.max(30, bonusN + 4);
+  const maxX = 30;
   const maxY = maxX;
   const X = v => padL + (v / maxX) * (W - padL - padR);
   const Y = v => H - padB - (v / maxY) * (H - padT - padB);
@@ -1313,7 +1289,6 @@ function buildChart() {
 
   const randomPts = xs.map(n => ({ x: n, y: R.at(1, n) }));
   const langPts = xs.map(n => ({ x: n, y: R.at(2, n) }));
-  if (R.bonus) langPts.push({ x: R.bonus.n, y: R.bonus.got });
 
   const s1 = series(randomPts, 'random', 'shuffled letters');
   const s2 = series(langPts, 'language', 'sentences');
@@ -1394,12 +1369,6 @@ function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': 
 function showStory() {
   const R = results();
   showView('story', false);
-  $('story-stats').innerHTML =
-    '<div><div class="stat-num">' + R.r25 + '</div><div class="stat-cap">of ' + R.top + ' as shuffled letters</div></div>' +
-    '<div><div class="stat-num">' + R.s25 + '</div><div class="stat-cap">of ' + R.top + ' as a sentence</div></div>' +
-    (R.bonus ? '<div><div class="stat-num">' + R.bonus.got + '</div><div class="stat-cap">of ' + R.bonus.n + ' in the longer sentence</div></div>' : '') +
-    (R.mult >= 2 ? '<div><div class="stat-num">' + R.mult + '×</div><div class="stat-cap">times as many, as a sentence</div></div>' : '');
-
   const rows = state.set.map(rung => {
     const a = R.at(1, rung.n), b = R.at(2, rung.n);
     return '<tr><td class="str">' + rung.scramble + '</td><td class="n">' + a + '</td><td>' + escapeHtml(rung.sentence) + '</td><td class="n red">' + b + '</td></tr>';
@@ -1408,7 +1377,7 @@ function showStory() {
 
   $('iq-bridge').textContent =
     'At ' + R.top + ' letters, you remembered ' + R.r25 + ' when the letters were shuffled and ' + R.s25 + ' when they formed a sentence, and your working memory was the same size both times. ' +
-    'Memory span tests, the same digit test S.F. practiced, are a standard part of IQ tests.';
+    'Memory span tests, the same kind of digit test the student in 1980 practiced, are a standard part of IQ tests.';
 }
 
 /* ---------------- share card ---------------- */
@@ -1438,8 +1407,7 @@ async function makeShareCard() {
 
   // chart
   const left = 140, right = W - 100, top = 440, bottom = 900;
-  const bonusN = R.bonus ? R.bonus.n : 0;
-  const maxV = Math.max(30, bonusN + 4);
+  const maxV = 30;
   const X = v => left + (v / maxV) * (right - left);
   const Y = v => bottom - (v / maxV) * (bottom - top);
   ctx.strokeStyle = '#e0dcd4'; ctx.lineWidth = 3; ctx.setLineDash([10, 12]);
@@ -1459,14 +1427,13 @@ async function makeShareCard() {
   }
   const rp = LADDER.map(n => ({ x: n, y: R.at(1, n) }));
   const lp = LADDER.map(n => ({ x: n, y: R.at(2, n) }));
-  if (R.bonus) lp.push({ x: R.bonus.n, y: R.bonus.got });
   line(rp, '#1a1a1a');
   line(lp, '#c44b3a');
   ctx.font = '700 26px "Space Mono", monospace';
   ctx.textAlign = 'left';
   ctx.fillStyle = '#1a1a1a'; ctx.fillText('SHUFFLED LETTERS', X(rp[rp.length - 1].x) + 18, Y(rp[rp.length - 1].y) + 34);
   const ll = lp[lp.length - 1];
-  ctx.fillStyle = '#c44b3a'; ctx.textAlign = 'right'; ctx.fillText('SENTENCES', X(ll.x) - 4, Y(ll.y) - 22);
+  ctx.fillStyle = '#c44b3a'; ctx.textAlign = 'center'; ctx.fillText('SENTENCES', X(ll.x), Y(ll.y) - 26);
 
   ctx.textAlign = 'center';
   ctx.fillStyle = '#c44b3a';
