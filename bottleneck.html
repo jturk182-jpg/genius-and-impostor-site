@@ -1105,9 +1105,9 @@ function startGame() {
 }
 
 const ROUND_COPY = {
-  1: { title: 'Round 1', line: 'Letters', sub: 'Five strings, each one longer than the last.' },
-  2: { title: 'Round 2', line: 'Sentences', sub: 'Same lengths, same four seconds.' },
-  3: { title: 'One more', line: 'A long one', sub: '' }
+  1: { title: 'Round 1', line: 'Five strings, each one longer than the last.', sub: '' },
+  2: { title: 'Round 2', line: 'Same lengths, same four seconds.', sub: '' },
+  3: { title: 'One more', line: 'A long one.', sub: '' }
 };
 
 function startRound(r) {
@@ -1161,7 +1161,7 @@ async function runTrial() {
   state.current = { round: r, n, shown, isLetters, shownMs: 0 };
   state.current.shownMs = await expose(shown, isLetters ? 'letters len-' + n : 'sentence');
 
-  el.recallPrompt.textContent = isLetters ? 'Type the letters you remember, in order.' : 'Type the sentence as closely as you can remember it.';
+  el.recallPrompt.textContent = 'Type the letters you remember, in order.';
   el.recallIn.className = 'recall-in' + (isLetters ? ' letters' : '');
   el.recallIn.setAttribute('autocapitalize', isLetters ? 'characters' : 'sentences');
   el.recallIn.value = '';
