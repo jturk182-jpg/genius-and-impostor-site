@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -98,7 +99,7 @@
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
-      <a class="feelit" href="../diagnostic.html"><div class="feelit-name">The Genius Diagnostic</div><div class="feelit-blurb">See how your hours actually split between the engine and the narrator, and get a field manual for the narrator's favorite tricks.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
+      <a class="feelit" data-game="diagnostic" href="../diagnostic.html"><div class="feelit-name">The Genius Diagnostic</div><div class="feelit-blurb">See how your hours actually split between the engine and the narrator, and get a field manual for the narrator's favorite tricks.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
     </div>
     
     <div class="sec">
@@ -114,12 +115,13 @@
   <footer class="foot">
     <div class="foot-label">While you're here</div>
     <div class="foot-links">
-      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="../book.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>

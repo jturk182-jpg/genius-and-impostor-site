@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -98,7 +99,7 @@
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
-      <a class="feelit" href="../ayumu-test.html"><div class="feelit-name">The Ayumu Test</div><div class="feelit-blurb">Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
+      <a class="feelit" data-game="bottleneck" href="../bottleneck.html"><div class="feelit-name">The Bottleneck</div><div class="feelit-blurb">Remember strings of letters for four seconds, then find out why the same letters were easy or impossible depending on their order.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a><a class="feelit" data-game="ayumu-test" href="../ayumu-test.html"><div class="feelit-name">The Ayumu Test</div><div class="feelit-blurb">Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
     </div>
     
     <div class="sec">
@@ -114,12 +115,13 @@
   <footer class="foot">
     <div class="foot-label">While you're here</div>
     <div class="foot-links">
-      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="../book.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>

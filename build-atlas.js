@@ -144,12 +144,13 @@ const FOOTER = `
   <footer class="foot">
     <div class="foot-label">While you're here</div>
     <div class="foot-links">
-      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="../book.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>`;
@@ -187,7 +188,7 @@ function stationPage(s) {
   const feelit = (s.games && s.games.length) ? `
     <div class="sec">
       <div class="sec-label">Feel it</div>
-      ${s.games.map(g => `<a class="feelit" href="${esc(g.url)}"><div class="feelit-name">${esc(g.name)}</div><div class="feelit-blurb">${esc(g.blurb)}</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>`).join('')}
+      ${s.games.map(g => `<a class="feelit" data-game="${esc(g.url.replace(/^.*\//, "").replace(/\.html.*$/, ""))}" href="${esc(g.url)}"><div class="feelit-name">${esc(g.name)}</div><div class="feelit-blurb">${esc(g.blurb)}</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>`).join('')}
     </div>` : '';
 
   const frag = (s.relations && s.relations.length) ? `
@@ -217,6 +218,7 @@ function stationPage(s) {
 <meta name="description" content="${esc(s.oneBreath.slice(0, 155))}">
 ${FONTS}
 <style>${CSS}</style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -472,11 +474,12 @@ ${FONTS}
   .lv-tick { font-family:var(--mono); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); border:1px solid var(--red); border-radius:2px; padding:1px 6px; }
   .note { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.7; margin-top:12px; line-height:1.6; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
   <header class="mast">
-    <a class="mast-home" href="../index.html">&larr; The book</a>
+    <a class="mast-home" href="../index.html">&larr; GeniusAndImpostor.com</a>
     <span class="mast-kicker">Genius &amp; Impostor</span>
   </header>
   <main class="shell-main">

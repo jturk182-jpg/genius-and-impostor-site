@@ -873,6 +873,11 @@
       ],
       "games": [
         {
+          "name": "The Bottleneck",
+          "url": "../bottleneck.html",
+          "blurb": "Remember strings of letters for four seconds, then find out why the same letters were easy or impossible depending on their order."
+        },
+        {
           "name": "The Ayumu Test",
           "url": "../ayumu-test.html",
           "blurb": "Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains."
