@@ -118,7 +118,7 @@
   <!-- INTRO -->
   <section class="intro">
     <h1>You were told a story about how smart you are. <em>It's the wrong one.</em></h1>
-    <p>The real story is better, and you don't have to take anyone's word for it. These short games catch your mind doing the remarkable things it never bothers to mention, and the map lays out the ideas behind them. Come find out what you're actually working with.</p>
+    <p>The real story is better, and you don't have to take anyone's word for it. Play a short game and watch your own mind do something you didn't know it could do. Then The Map lays out the ideas behind what you just saw.</p>
   </section>
 
   <!-- HERO: featured game -->
@@ -169,8 +169,8 @@
     </div>
   </section>
 
-  <!-- ARCADE -->
-  <section class="sec">
+  <!-- ARCADE (hidden while only one game has launched; the hero already shows it) -->
+  <section class="sec" id="arcade">
     <div class="sec-eyebrow">The arcade</div>
     <div class="arcade-grid">
       <a class="card" data-game="ayumu-test" href="ayumu-test.html">
@@ -325,6 +325,11 @@
 
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (document.querySelectorAll('#arcade .card').length < 2) document.getElementById('arcade').hidden = true;
+  });
+</script>
 <script>
   // Newsletter signup. Posts to the subscribe function; shows a friendly
   // confirmation either way so a visitor is never left hanging.
