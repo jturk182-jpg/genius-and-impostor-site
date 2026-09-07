@@ -1147,6 +1147,7 @@
     }
 
   </style>
+  <script src="launched.js"></script>
 </head>
 <body>
   <div class="shell">
@@ -1243,10 +1244,10 @@
       <div class="tool-footer-label">While you’re here</div>
       <div class="tool-footer-links">
         <a href="index.html">The Genius and the Impostor</a>
-        <a href="diagnostic.html">The Genius Diagnostic</a>
-        <a href="unstoppable-reader.html">The Unstoppable Reader</a>
-        <a href="secret-grammar.html">The Secret Grammar</a>
-        <a href="ayumu-science.html">The science behind this game</a>
+        <a data-game="diagnostic" href="diagnostic.html">The Genius Diagnostic</a>
+        <a data-game="unstoppable-reader" href="unstoppable-reader.html">The Unstoppable Reader</a>
+        <a data-game="secret-grammar" href="secret-grammar.html">The Secret Grammar</a>
+        <a data-game="ayumu-test" href="ayumu-science.html">The science behind this game</a>
       </div>
       <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
     </footer>
@@ -3208,11 +3209,13 @@ function renderResults(opts) {
      First-play players get this offer inside the walk too; this section
      is for the ones who skipped it and for return visits.
      ⚠️ PLACEHOLDER copy, JT's pass. */
-  html += '<h2 class="t-section" style="margin-top:40px;">See it happen in your own head</h2>' +
-    '<p class="t-body">The explanation claims your brain turns every symbol into meaning whether you ask it to or not. We built another game that shows that exact thing happening inside your own head, live, while you play. It takes about two minutes, and we think you will like it.</p>' +
-    '<div class="btn-row">' +
-    '<a class="btn" href="unstoppable-reader.html?from=ayumu">Play the Unstoppable Reader</a>' +
-    '</div>';
+  if (window.launched('unstoppable-reader')) {
+    html += '<h2 class="t-section" style="margin-top:40px;">See it happen in your own head</h2>' +
+      '<p class="t-body">The explanation claims your brain turns every symbol into meaning whether you ask it to or not. We built another game that shows that exact thing happening inside your own head, live, while you play. It takes about two minutes, and we think you will like it.</p>' +
+      '<div class="btn-row">' +
+      '<a class="btn" href="unstoppable-reader.html?from=ayumu">Play the Unstoppable Reader</a>' +
+      '</div>';
+  }
 
   html += '<h2 class="t-section" style="margin-top:40px;">Keep going</h2>' +
     '<p class="t-body">Ayumu got good at this by practising, and so can you. The Training Room walks the difficulty up one step at a time, and the dials let you set how many numbers appear and how long they flash, so you can find a setting that feels comfortable and work your way up from there.</p>' +
@@ -4103,6 +4106,7 @@ async function runReveal(playedNine) {
          escort from replaying if they take the detour. */
       store.revealSeen = true;
       saveStore();
+      if (!window.launched('unstoppable-reader')) return true;
       const pick = await card({
         label: 'One more thing',
         title: '',
@@ -4148,7 +4152,7 @@ async function runReveal(playedNine) {
         title: '',
         body: '<p class="verdict ' + (ok ? 'ok' : 'miss') + '">' +
           (ok ? 'Right, that is the one.' : 'The answer: ' + esc(step.choices[step.correct])) + '</p>' + step.answer,
-        actions: [{ text: last ? 'One more thing' : 'Next', value: 'go', primary: true }, back]
+        actions: [{ text: last ? (window.launched('unstoppable-reader') ? 'One more thing' : 'My results') : 'Next', value: 'go', primary: true }, back]
       });
       if (aborted || go === 'quit') return false;
       if (go === 'back') { i--; onAnswer = !!steps[i].ask; continue; }
@@ -4161,7 +4165,7 @@ async function runReveal(playedNine) {
       label: 'What just happened · ' + (i + 1) + ' of ' + total,
       title: '',
       body: '<p>' + step.beat + '</p>',
-      actions: [{ text: last ? 'One more thing' : 'Next', value: 'go', primary: true }].concat(i > 0 ? [back] : [])
+      actions: [{ text: last ? (window.launched('unstoppable-reader') ? 'One more thing' : 'My results') : 'Next', value: 'go', primary: true }].concat(i > 0 ? [back] : [])
     });
     if (aborted || go === 'quit') return false;
     if (go === 'back') { i--; onAnswer = !!steps[i].ask; continue; }
