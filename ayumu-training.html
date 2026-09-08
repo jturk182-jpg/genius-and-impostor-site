@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Ayumu Test — GeniusAndImpostor.com</title>
+  <title>The Ayumu Training Room — GeniusAndImpostor.com</title>
   <meta name="description" content="Are you smarter than a chimp? Ayumu remembers five numbers flashed for a fifth of a second. Try his game, then find out why he wins.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1188,6 +1188,8 @@
         <div class="btn-row" style="margin-top: 30px;">
           <button class="btn primary" id="btn-flash-from-return">Battle Ayumu again</button>
           <button class="btn" id="btn-nine-from-return">Try the nine</button>
+          <button class="btn" id="btn-sandbox-from-return">Play with the dials</button>
+          <button class="btn" id="btn-training-from-return">Training Room</button>
           <button class="btn ghost" id="btn-results-from-return">Your Ayumu score</button>
         </div>
         <p class="t-quiet" style="margin-top:18px;">Want to start from the very beginning, as if you had never played? <button type="button" class="inline-link" id="btn-return-reset" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Clear my results and start over</button></p>
@@ -1215,6 +1217,16 @@
       <!-- ============ THE NINE: its own result ============ -->
       <section class="view" id="view-nine" aria-labelledby="nine-headline">
         <div id="nine-body"></div>
+      </section>
+
+      <!-- ============ THE DIALS (sandbox) ============ -->
+      <section class="view" id="view-sandbox" aria-labelledby="sandbox-title">
+        <div id="sandbox-body"></div>
+      </section>
+
+      <!-- ============ TRAINING ROOM ============ -->
+      <section class="view" id="view-training" aria-labelledby="training-title">
+        <div id="training-body"></div>
       </section>
 
       <!-- ============ SHARE ============ -->
@@ -1334,6 +1346,21 @@ const NINE_TRIES = 5;
 const MAX_REPLACEMENTS = 4;
 
 /* The dials, and the axes of the map. Ayumu sits in the bottom right corner. */
+const NUMERAL_STEPS = [3, 4, 5, 6, 7, 8, 9];
+const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
+/* The dials run one try per press, so there is no block size any more. */
+
+/* The training ladder for the TIMED task. Numbers first, then speed, and
+   it passes through Ayumu’s real fixed condition (five at 210) rather than
+   the old phantom nine-at-210. Everything past AYUMU_RUNG is genuinely
+   harder than anything Ayumu was measured on. */
+const LADDER = [
+  { n: 3, h: 1000 }, { n: 4, h: 1000 }, { n: 5, h: 1000 },  /* build to five  */
+  { n: 5, h: 650 },  { n: 5, h: 430 },  { n: 5, h: 290 },   /* take time away */
+  { n: 5, h: 210 },                                          /* MATCH AYUMU    */
+  { n: 6, h: 210 },  { n: 7, h: 210 },  { n: 8, h: 210 }, { n: 9, h: 210 }  /* beyond him */
+];
+const AYUMU_RUNG = 6;   /* index of 5 numbers at 210ms in LADDER */
 
 const BLOCK_TRIALS = 6;
 const BLOCKS_PER_SESSION = 3;
@@ -1406,6 +1433,57 @@ function saveStore() {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(store));
   } catch (e) { /* private mode: the visit still works, it just won’t persist */ }
+}
+
+/* ================================================================
+   3. THE MAP: every setting anyone has tried
+   ================================================================ */
+
+function mapKey(n, h) { return n + 'x' + h; }
+
+function mapGet(n, h) { return store.map[mapKey(n, h)] || null; }
+
+function mapRecord(n, h, wins, tries) {
+  const k = mapKey(n, h);
+  const cur = store.map[k] || { tries: 0, wins: 0 };
+  cur.tries += tries;
+  cur.wins += wins;
+  store.map[k] = cur;
+}
+
+/* The furthest they have got: most numbers cleared anywhere, and at that
+   number of numbers, the shortest flash they have managed. Written to cope
+   with someone who has never once cleared nine. */
+function frontier() {
+  let bestN = 0, bestHold = null;
+  Object.keys(store.map).forEach(k => {
+    const cell = store.map[k];
+    if (!cell.wins) return;
+    const parts = k.split('x');
+    const n = parseInt(parts[0], 10), h = parseInt(parts[1], 10);
+    if (n > bestN) { bestN = n; bestHold = h; }
+    else if (n === bestN && (bestHold === null || h < bestHold)) { bestHold = h; }
+  });
+  /* The scored attempt counts too, for anyone who landed one there. */
+  if (store.attempt && store.attempt.hits > 0 && FLASH_N >= bestN) {
+    if (FLASH_N > bestN || bestHold === null || FLASH_HOLD < bestHold) {
+      bestN = FLASH_N; bestHold = FLASH_HOLD;
+    }
+  }
+  return bestN ? { n: bestN, hold: bestHold } : null;
+}
+
+/* Fastest flash cleared at nine numbers specifically, or null. */
+function bestAtNine() {
+  let best = null;
+  HOLD_STEPS.forEach(h => {
+    const c = mapGet(FLASH_N, h);
+    if (c && c.wins && (best === null || h < best)) best = h;
+  });
+  if (store.attempt && store.attempt.hits > 0) {
+    if (best === null || FLASH_HOLD < best) best = FLASH_HOLD;
+  }
+  return best;
 }
 
 /* ================================================================
@@ -1489,6 +1567,10 @@ function showPlay() {
 
 /* Order matters: the view has to be showing before the board is mounted into
    it and measured, so every entry point to the dials goes through here. */
+function openSandbox() {
+  showView('view-sandbox');
+  renderSandbox();
+}
 
 function applyPrefs() {
   document.body.classList.toggle('hc', !!store.prefs.hc);
@@ -2430,6 +2512,8 @@ async function runAttempt(resume) {
      cannot lose a finished round. */
   store.attempt = rec;
   store.pending = null;
+  mapRecord(FLASH_N, FLASH_HOLD, rec.hits, rec.trials);
+  if (store.training.rung === null) store.training.rung = entryRung();
   saveStore();
   return rec;
 }
@@ -2817,9 +2901,8 @@ function revealSteps(playedNine) {
 
     { beat: 'And what you have built can keep growing. ' +
         (wonAny
-          ? 'You are already level with a chimpanzee who has practised this for years, and the people who kept practising went further still. '
-          : 'The people who practised this game got much closer to Ayumu, and some of them caught him. ') +
-        (window.launched('ayumu-training') ? 'There is a place on this site to train at this, one step at a time, if you want to close the gap. ' : '') +
+          ? 'You are already level with a chimpanzee who has practised this for years, so the question now is how far past him you can get. The Training Room here keeps raising the difficulty one step at a time, into settings Ayumu was never even tested on, so come back, play a few sets, and watch your score move. '
+          : 'The people who practised this game got much closer to Ayumu, and some of them caught him. The Training Room here walks you up one step at a time, starting at a setting you can already win, so come back, play a few sets, and watch your score move. ') +
         'The book this site is built around, The Genius and the Impostor, is about exactly this: how every extraordinary ability gets built, Ayumu’s included.' }
   ];
 }
@@ -3134,15 +3217,12 @@ function renderResults(opts) {
       '</div>';
   }
 
-  if (window.launched('ayumu-training')) {
-    html += '<h2 class="t-section" style="margin-top:40px;">Close the gap</h2>' +
-      '<p class="t-body">Ayumu got this good by practising, and so can you. There is a place on this site to train at his game, one step at a time.</p>' +
-      '<div class="btn-row"><a class="btn" href="ayumu-training.html">Go to the Training Room</a></div>';
-  }
-
-  html += '<h2 class="t-section" style="margin-top:40px;">Share your results</h2>' +
+  html += '<h2 class="t-section" style="margin-top:40px;">Keep going</h2>' +
+    '<p class="t-body">Ayumu got good at this by practising, and so can you. The Training Room walks the difficulty up one step at a time, and the dials let you set how many numbers appear and how long they flash, so you can find a setting that feels comfortable and work your way up from there.</p>' +
     '<div class="btn-row">' +
-    '<button class="btn primary" id="btn-to-share">Make a card to share</button>' +
+    '<button class="btn primary" id="btn-to-training">Training Room</button>' +
+    '<button class="btn" id="btn-to-sandbox">Find my edge</button>' +
+    '<button class="btn ghost" id="btn-to-share">Make a card to share</button>' +
     '</div>';
 
   /* Return visits can replay the walk; a first-time player just tapped
@@ -3162,7 +3242,569 @@ function renderResults(opts) {
     LearnFlow.open(revealFlowForReplay(), { doneLabel: 'Done' });
   });
   document.getElementById('btn-to-nine').addEventListener('click', startNine);
+  document.getElementById('btn-to-sandbox').addEventListener('click', () => { openSandbox(); });
+  document.getElementById('btn-to-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
   document.getElementById('btn-to-share').addEventListener('click', () => { pickDefaultShareKind(); renderShare(); showView('view-share'); });
+}
+
+/* ================================================================
+   13. THE MAP AND THE DIALS
+   ================================================================ */
+
+/* Where the dials currently sit. Starts one notch easier than the furthest
+   they have cleared, so the first go on this screen is winnable. */
+let dialN = null, dialH = null;
+
+function defaultDials() {
+  const f = frontier();
+  if (!f) return { n: 0, h: 1 };   /* 3 numbers, 1500ms */
+  let ni = NUMERAL_STEPS.indexOf(f.n);
+  let hi = HOLD_STEPS.indexOf(f.hold);
+  if (ni < 0) ni = 0;
+  if (hi < 0) hi = 1;
+  return { n: ni, h: hi };
+}
+
+function mapHTML() {
+  const cols = NUMERAL_STEPS.length;
+  let html = '<div class="map-wrap"><div class="map" style="grid-template-columns: 58px repeat(' + cols + ', 1fr);" role="img" aria-label="' + esc(mapAria()) + '">';
+  html += '<div class="map-corner"></div>';
+  NUMERAL_STEPS.forEach(n => { html += '<div class="map-head">' + n + '</div>'; });
+  HOLD_STEPS.forEach(h => {
+    html += '<div class="map-side">' + (h >= 1000 ? (h / 1000) + 's' : h + 'ms') + '</div>';
+    NUMERAL_STEPS.forEach(n => {
+      const cell = mapGet(n, h);
+      const isAyumu = (n === FLASH_N && h === FLASH_HOLD);
+      const here = (NUMERAL_STEPS[dialN] === n && HOLD_STEPS[dialH] === h);
+      let cls = 'map-cell';
+      if (isAyumu) cls += ' ayumu';
+      else if (cell && cell.wins) cls += ' won';
+      else if (cell && cell.tries) cls += ' tried';
+      if (here) cls += ' here';
+      html += '<div class="' + cls + '"></div>';
+    });
+  });
+  html += '</div></div>';
+  html += '<div class="map-legend">' +
+    '<span class="map-key"><span class="map-swatch won"></span>Done it</span>' +
+    '<span class="map-key"><span class="map-swatch tried"></span>Tried it</span>' +
+    '<span class="map-key"><span class="map-swatch"></span>Not yet</span>' +
+    '<span class="map-key"><span class="map-swatch ayumu"></span>Ayumu</span>' +
+    '</div>';
+  return html;
+}
+
+function mapAria() {
+  const won = [];
+  Object.keys(store.map).forEach(k => {
+    if (!store.map[k].wins) return;
+    const p = k.split('x');
+    won.push(p[0] + ' numbers at ' + p[1] + ' milliseconds');
+  });
+  return 'A grid of settings, numbers of digits across and flash lengths down. ' +
+    (won.length ? 'You have managed: ' + won.join('; ') + '.' : 'Nothing filled in yet.') +
+    ' Ayumu’s timed setting is five numbers at 210 milliseconds.';
+}
+
+function yourNumberHTML() {
+  const f = frontier();
+  const ayumuDiff = difficulty(FLASH_N, FLASH_HOLD);   /* five at 210 */
+  let html = '<div class="yournum">';
+  if (!f) {
+    html += '<div class="yournum-big">Nothing on the board yet.</div>' +
+      '<div class="yournum-sub">Clear one setting and your number appears here</div>';
+  } else {
+    html += '<div class="yournum-big">' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds.</div>' +
+      '<div class="yournum-sub">The furthest you have got so far</div>';
+    if (f.n === FLASH_N && f.hold === FLASH_HOLD) {
+      html += '<div class="yournum-vs">That is Ayumu’s timed setting exactly. Take a bow.</div>';
+    } else if (difficulty(f.n, f.hold) > ayumuDiff) {
+      html += '<div class="yournum-vs">Past Ayumu’s timed setting of five at 210. You are into ground he was never even tested on.</div>';
+    } else {
+      html += '<div class="yournum-vs">Ayumu’s timed setting is five numbers at 210 milliseconds. That is the corner to aim for.</div>';
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+/* The per-setting tally, which replaced the old end-of-block results card.
+   It says more than that card did, because it accumulates every go you have
+   ever had at this square rather than just the last three. */
+function sandboxTallyHTML() {
+  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
+  const cell = mapGet(n, h);
+  if (n === FLASH_N && h === FLASH_HOLD) {
+    return 'That is Ayumu’s exact setting. Rounds here do not count towards your official score, which only ever comes from the real thing.';
+  }
+  if (cell && cell.tries) {
+    return 'This setting: ' + cell.wins + ' of ' + cell.tries + ' remembered.';
+  }
+  return 'You have not tried this one yet.';
+}
+
+/* Everything that changes when a dial moves or a round lands. Nothing here
+   touches #sandbox-stage, because rewriting that would tear the live board
+   out of the page. */
+function updateSandboxUI() {
+  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
+  const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+  set('dial-n-val', n + '<small>numbers</small>');
+  set('dial-h-val', comma(h) + '<small>milliseconds</small>');
+  document.getElementById('dial-n-down').disabled = (dialN === 0);
+  document.getElementById('dial-n-up').disabled = (dialN === NUMERAL_STEPS.length - 1);
+  /* HOLD_STEPS runs long to short, so the end of the array is the SMALLEST
+     number of milliseconds. Minus runs out there, plus runs out at the start. */
+  document.getElementById('dial-h-down').disabled = (dialH === HOLD_STEPS.length - 1);
+  document.getElementById('dial-h-up').disabled = (dialH === 0);
+
+  set('sandbox-tally', sandboxTallyHTML());
+  set('sandbox-yournum', yourNumberHTML());
+  set('sandbox-map', mapHTML());
+
+  /* The strip above the board reads out what pressing go will actually do,
+     and tracks the dials as they move. */
+  setHud('', '', n + ' · ' + comma(h) + 'MS');
+}
+
+/* Locks the controls for the second the numbers are up, then hands them back.
+   The dials stay on screen throughout so the setting you are playing is
+   always readable. */
+function setSandboxBusy(busy) {
+  const dials = document.getElementById('sandbox-dials');
+  const row = document.getElementById('sandbox-go-row');
+  if (dials) dials.classList.toggle('busy', busy);
+  if (row) row.classList.toggle('busy', busy);
+}
+
+function renderSandbox() {
+  if (dialN === null) { const d = defaultDials(); dialN = d.n; dialH = d.h; }
+  const el = document.getElementById('sandbox-body');
+
+  /* LAYOUT ORDER MATTERS HERE. Board, dials and go all have to be reachable
+     together, so only a one-line setup goes above the board and the longer
+     explanation sits underneath the loop rather than on top of it. On a
+     375x812 phone this is the difference between the go button being on
+     screen and being two scrolls away. */
+  /* No standfirst above the board. The prompt under it already says to set
+     the dials and press go, and the two together cost 42px of the height the
+     dials need to stay on screen. The longer explanation is below the loop. */
+  let html = '<p class="t-eyebrow">Your dials</p>' +
+    '<h1 class="t-title" id="sandbox-title">Find your edge</h1>';
+
+  /* The board is mounted into this slot once the HTML lands. */
+  html += '<div id="sandbox-stage"></div>';
+
+  /* Dials first, then go. Both have to be on screen with the board, and the
+     dials are the reason anyone came to this page, so they get the position
+     directly under it. */
+  html += '<div class="dials compact" id="sandbox-dials">' +
+    '<div class="dial"><div class="dial-label">How many numbers</div>' +
+      '<div class="dial-row">' +
+      '<button class="dial-btn" id="dial-n-down" aria-label="Fewer numbers">–</button>' +
+      '<div class="dial-value" id="dial-n-val" aria-live="polite"></div>' +
+      '<button class="dial-btn" id="dial-n-up" aria-label="More numbers">+</button>' +
+      '</div></div>' +
+    '<div class="dial"><div class="dial-label">How long they show</div>' +
+      '<div class="dial-row">' +
+      '<button class="dial-btn" id="dial-h-down" aria-label="Shorter flash">–</button>' +
+      '<div class="dial-value" id="dial-h-val" aria-live="polite"></div>' +
+      '<button class="dial-btn" id="dial-h-up" aria-label="Longer flash">+</button>' +
+      '</div></div>' +
+    '</div>';
+
+  html += '<div class="btn-row" id="sandbox-go-row" style="margin-top:14px;">' +
+    '<button class="btn primary" id="btn-sandbox-go">Go</button>' +
+    '</div>';
+
+  html += '<p class="t-quiet" id="sandbox-tally" style="margin-top:12px;"></p>';
+
+  html += '<p class="t-body" style="margin-top:26px;">Here you can adjust how many numbers appear and how long they stay on the screen. Turn the dials wherever you like and have a go, and every setting you complete gets filled in on your map below, so you can see exactly where your edge is.</p>';
+
+  html += '<div id="sandbox-yournum"></div>';
+
+  html += '<h2 class="t-section" style="margin-top:40px;">Your map</h2>' +
+    '<p class="t-body">Numbers across the top, flash length down the side. Easiest at the top left, hardest at the bottom right. Ayumu’s setting, five at 210, is marked in red, and the square you are on is outlined.</p>' +
+    '<div id="sandbox-map"></div>';
+
+  html += '<h2 class="t-section" style="margin-top:44px;">Want a plan instead of a playground?</h2>' +
+    '<p class="t-body">The Training Room walks the difficulty up for you, starting somewhere you can already win and nudging it along as you hold your own.</p>' +
+    '<div class="btn-row">' +
+    '<button class="btn" id="btn-sandbox-training">Open the Training Room</button>' +
+    '<button class="btn ghost" id="btn-sandbox-results">Back to my Ayumu score</button>' +
+    '</div>';
+
+  el.innerHTML = html;
+
+  /* Board into the page, then measured, then painted empty and waiting. */
+  mountPlayInline('sandbox-stage');
+  setPrompt('Set the dials, then press go.');
+  phase = 'idle';
+  trial = null;
+  layoutField();
+  render();
+
+  updateSandboxUI();
+
+  /* dir is what the button does to the NUMBER ON SCREEN: +1 makes it bigger.
+     For the numbers dial that is also a step up the array. For the hold dial
+     it is a step DOWN it, because HOLD_STEPS runs long to short. Reading the
+     glyph as an instruction to the array rather than to the value is what had
+     plus shortening the flash. */
+  const bump = (which, dir) => {
+    if (sandboxBusy) return;
+    if (which === 'n') dialN = Math.max(0, Math.min(NUMERAL_STEPS.length - 1, dialN + dir));
+    else dialH = Math.max(0, Math.min(HOLD_STEPS.length - 1, dialH - dir));
+    updateSandboxUI();
+  };
+  document.getElementById('dial-n-down').addEventListener('click', () => bump('n', -1));
+  document.getElementById('dial-n-up').addEventListener('click', () => bump('n', 1));
+  document.getElementById('dial-h-down').addEventListener('click', () => bump('h', -1));
+  document.getElementById('dial-h-up').addEventListener('click', () => bump('h', 1));
+  document.getElementById('btn-sandbox-go').addEventListener('click', sandboxGo);
+  document.getElementById('btn-sandbox-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
+  document.getElementById('btn-sandbox-results').addEventListener('click', () => {
+    if (store.attempt) { renderResults(); showView('view-results'); } else { boot(); }
+  });
+}
+
+/* ONE ROUND, IN PLACE (rebuilt 2026-08-05 on JT’s call). This used to be a
+   block of three wrapped in a confirmation card and a results card, with a
+   view change either side. A block needs a beginning and an end, which is
+   what those cards were, so the whole ceremony fell away with the block.
+   One press is now one try: press, watch, answer, adjust, press again.
+   The map is unaffected, because mapRecord only ever adds and frontier()
+   only asks whether a square has been won at all. */
+let sandboxBusy = false;
+
+async function sandboxGo() {
+  if (sandboxBusy) return;
+  sandboxBusy = true;
+  aborted = false;
+  setSandboxBusy(true);
+
+  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
+
+  await document.fonts.ready;
+  layoutField();
+
+  if (await ensureTiming()) {
+    const t = await runTrial(n, h, { reveal: true });
+    if (t && t.valid) {
+      const wasBest = frontier();
+      mapRecord(n, h, t.success ? 1 : 0, 1);
+      saveStore();
+      updateSandboxUI();
+      /* Only say the edge moved when it actually did. */
+      if (t.success) {
+        const f = frontier();
+        const moved = f && f.n === n && f.hold === h &&
+          !(wasBest && wasBest.n === f.n && wasBest.hold === f.hold);
+        if (moved) setPrompt('That is a new best, so your edge just moved.');
+      }
+    } else if (t && !t.valid) {
+      setPrompt('The screen hiccuped, so that one does not count.', true);
+    }
+  }
+
+  setSandboxBusy(false);
+  sandboxBusy = false;
+}
+
+/* ================================================================
+   14. THE TRAINING ROOM
+   ================================================================ */
+
+/* How hard a setting is, along both axes at once. Adding a number is worth
+   roughly as much as halving the flash, which is what the 1.5 is doing.
+   Needed because the map runs out to 2 seconds while the ladder starts at 1,
+   so comparing hold against hold alone would call every slow success a
+   beginner. */
+function difficulty(n, h) {
+  return n + 1.5 * Math.log2(1000 / h);
+}
+
+/* Start from what they have actually cleared, read off the map rather than
+   guessed from their one impossible round. Ties break easy: the ladder
+   climbs a step per good set, so starting a notch low costs one set, while
+   starting too high costs several demoralising ones. */
+function entryRung() {
+  const f = frontier();
+  if (!f) return 0;
+  const ceiling = difficulty(f.n, f.hold);
+  let best = 0;
+  LADDER.forEach((r, i) => {
+    if (difficulty(r.n, r.h) <= ceiling) best = i;
+  });
+  return best;
+}
+
+function furthestRung() {
+  let m = 0;
+  store.training.sessions.forEach(s => s.blocks.forEach(b => { if (b.rung > m) m = b.rung; }));
+  return m;
+}
+
+function currentRung() {
+  const r = store.training.rung;
+  return r === null ? entryRung() : Math.max(0, Math.min(LADDER.length - 1, r));
+}
+
+function rungLabel(i) {
+  const r = LADDER[i];
+  return r.n + ' numbers · ' + comma(r.h) + 'ms';
+}
+
+async function runTrainingSession() {
+  aborted = false;
+  showPlay();
+  layoutField();
+  if (!await ensureTiming()) return { blocks: [] };
+
+  const session = { date: new Date().toISOString(), blocks: [], startRung: currentRung() };
+  let blocks = 0;
+
+  while (true) {
+    const rung = currentRung();
+    const cfg = LADDER[rung];
+
+    const go = await card({
+      label: 'Step ' + (rung + 1) + ' of ' + LADDER.length,
+      title: cfg.n + ' numbers in ' + comma(cfg.h) + ' milliseconds',
+      body: '<p>You will get ' + BLOCK_TRIALS + ' tries at this setting. If you land most of them, the next step will get a little harder, and if it turns out to be too much, the ladder will bring you back down a step.</p>',
+      actions: [
+        { text: blocks === 0 ? 'Go' : 'Next set', value: 'go', primary: true },
+        { text: 'That is enough for today', value: 'stop', ghost: true }
+      ]
+    });
+    if (aborted || go !== 'go') break;
+
+    let valid = 0, attempts = 0, hits = 0;
+    while (valid < BLOCK_TRIALS && attempts < BLOCK_TRIALS + MAX_REPLACEMENTS) {
+      attempts++;
+      setHud('TRAINING · STEP ' + (rung + 1), 'TRY ' + (valid + 1) + ' / ' + BLOCK_TRIALS, cfg.n + ' · ' + cfg.h + 'MS');
+      const t = await runTrial(cfg.n, cfg.h, { reveal: true });
+      if (aborted || !t) { session.aborted = true; break; }
+      if (t.valid) { valid++; if (t.success) hits++; }
+      else { setPrompt('The screen hiccuped, so that one does not count.', true); await wait(900); }
+    }
+    if (aborted) break;
+
+    const acc = valid ? hits / valid : 0;
+    session.blocks.push({ rung: rung, numerals: cfg.n, hold: cfg.h, hits: hits, trials: valid, acc: acc });
+    blocks++;
+    if (valid) { mapRecord(cfg.n, cfg.h, hits, valid); }
+
+    let moved = 'held';
+    if (acc >= RUNG_UP && rung < LADDER.length - 1) { store.training.rung = rung + 1; moved = 'up'; }
+    else if (acc <= RUNG_DOWN && rung > 0) { store.training.rung = rung - 1; moved = 'down'; }
+    saveStore();
+
+    const movedCopy = moved === 'up'
+      ? 'You cleared that one, so the next set is ' + rungLabel(currentRung()) + '.'
+      : (moved === 'down'
+        ? 'Back one step, to ' + rungLabel(currentRung()) + '. Training works best when the setting is just a little too hard, so the ladder went looking for that spot.'
+        : 'You are staying here for now. This is the useful zone, where the setting is hard enough to be worth doing and easy enough to land.');
+
+    const more = await card({
+      label: 'Set ' + blocks + ' done',
+      title: hits + ' of ' + valid + ' remembered.',
+      body: statsHTML([
+        { label: 'Got it', value: pct(acc) + '%' },
+        { label: 'Step', value: (currentRung() + 1) + ' / ' + LADDER.length, red: moved === 'up' },
+        { label: 'Setting', value: cfg.n + ' · ' + cfg.h + 'ms' }
+      ]) + '<p style="margin-top:16px;">' + esc(movedCopy) + '</p>',
+      actions: blocks >= BLOCKS_PER_SESSION
+        ? [{ text: 'One more set', value: 'go' }, { text: 'Done for today', value: 'stop', primary: true }]
+        : [{ text: 'Next set', value: 'go', primary: true }, { text: 'Done for today', value: 'stop', ghost: true }]
+    });
+    if (aborted || more !== 'go') break;
+  }
+
+  if (session.blocks.length) {
+    session.endRung = currentRung();
+    store.training.sessions.push(session);
+    saveStore();
+  }
+  return session;
+}
+
+function best210(session) {
+  let best = null;
+  session.blocks.forEach(b => {
+    if (b.numerals === FLASH_N && b.hold === FLASH_HOLD) best = best === null ? b.acc : Math.max(best, b.acc);
+  });
+  return best;
+}
+
+function crossings() {
+  const out = { human: null, ayumu: null };
+  store.training.sessions.forEach((s, i) => {
+    const b = best210(s);
+    if (b === null) return;
+    if (out.human === null && b >= HUMAN_HIGH) out.human = i;
+    if (out.ayumu === null && b >= AYUMU_ACC) out.ayumu = i;
+  });
+  return out;
+}
+
+function curveSVG() {
+  const sessions = store.training.sessions;
+  const c = colors();
+  const W = 380, H = 250, L = 62, R = 22, T = 32, B = 48;
+  const plotW = W - L - R, plotH = H - T - B;
+  const n = sessions.length;
+  const maxR = LADDER.length - 1;
+  const x = i => L + (n === 1 ? plotW / 2 : plotW * (i / (n - 1)));
+  const y = r => T + plotH * (1 - r / maxR);
+  const clampX = v => Math.max(L + 34, Math.min(W - R - 34, v));
+  const cross = crossings();
+  const mono = ' font-family="Space Mono, monospace"';
+
+  let g = '';
+  /* Gridlines derived from the ladder length rather than hard-coded, so a
+     shorter ladder can never index a rung that does not exist. */
+  [0, 3, AYUMU_RUNG, LADDER.length - 1].forEach(r => {
+    g += '<line x1="' + L + '" y1="' + y(r) + '" x2="' + (W - R) + '" y2="' + y(r) + '" stroke="' + c.rule + '" stroke-width="1"/>';
+    g += '<text x="' + (L - 8) + '" y="' + (y(r) + 4) + '" text-anchor="end"' + mono +
+         ' font-size="9" fill="' + c.muted + '">' + LADDER[r].n + '·' + LADDER[r].h + '</text>';
+  });
+
+  const reached = sessions.map(s => Math.max.apply(null, s.blocks.map(b => b.rung)));
+  g += '<polyline points="' + reached.map((r, i) => x(i) + ',' + y(r)).join(' ') + '" fill="none" stroke="' + c.ink + '" stroke-width="2.5"/>';
+  reached.forEach((r, i) => {
+    const isCross = (cross.ayumu === i);
+    g += '<circle cx="' + x(i) + '" cy="' + y(r) + '" r="' + (isCross ? 6 : 4.5) + '" fill="' + (isCross ? c.red : c.ink) + '" stroke="#fff" stroke-width="1.5"/>';
+    g += '<text x="' + x(i) + '" y="' + (H - B + 20) + '" text-anchor="middle"' + mono +
+         ' font-size="9" fill="' + c.muted + '">' + esc(fmtDateShort(sessions[i].date)) + '</text>';
+    const mark = cross.ayumu === i ? 'PASSED AYUMU' : null;
+    if (mark) {
+      g += '<text x="' + clampX(x(i)) + '" y="' + (y(r) - 13) + '" text-anchor="middle"' + mono +
+           ' font-size="9" font-weight="700" fill="' + c.red + '">' + mark + '</text>';
+    }
+  });
+  g += '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" stroke="' + c.ink + '" stroke-width="1.5"/>';
+
+  const label = 'Your progress across ' + n + ' visit' + (n === 1 ? '' : 's') +
+    ', showing the hardest step reached each time: ' + reached.map(r => rungLabel(r)).join('; ') + '.';
+  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
+}
+
+function renderTraining() {
+  const el = document.getElementById('training-body');
+  const rung = currentRung();
+  const sessions = store.training.sessions;
+
+  let html = '<p class="t-eyebrow">Five hundred tries</p>' +
+    '<h1 class="t-title" id="training-title">The Training Room</h1>' +
+    '<p class="t-body">Ayumu practised about five hundred times before anybody wrote a paper about him. Now it’s your turn to practise and see how much of the gap you can close.</p>' +
+    '<p class="t-body">You build this ability just like everything else you know how to do: start where you are, and progress one step at a time by pushing at the edge of where you’re at right now.</p>';
+
+  html += '<div class="parchment-card">' +
+    '<div class="card-header"><span>How anything gets built</span><span class="card-stamp">The method</span></div>' +
+    '<p class="t-body">Get the pieces working at a speed where they work, then combine them, then take the time away. The number count climbs first at a longer flash, and only once five feels easy does the flash start to shorten, down to Ayumu’s five at 210. Every skill you have was built in that order, including the reading you are doing right now.</p>' +
+    '</div>';
+
+  html += '<h2 class="t-section">Where you are</h2>';
+  let pips = '';
+  for (let i = 0; i < LADDER.length; i++) {
+    pips += '<div class="rung-pip ' + (i < rung ? 'done' : (i === rung ? 'here' : '')) + '" style="height:' + Math.round(30 + 70 * (i / (LADDER.length - 1))) + '%"></div>';
+  }
+  html += '<div class="rung-strip" role="img" aria-label="Step ' + (rung + 1) + ' of ' + LADDER.length + '">' + pips + '</div>' +
+    '<p class="score-line">Step <b>' + (rung + 1) + ' / ' + LADDER.length + '</b> · <b>' + esc(rungLabel(rung)) + '</b></p>';
+
+  html += '<div class="btn-row"><button class="btn primary" id="btn-train-start">' +
+    (sessions.length ? 'Start a session' : 'Start your first session') + '</button></div>' +
+    '<p class="t-quiet" style="margin-top:16px;">' + BLOCKS_PER_SESSION + ' sets of ' + BLOCK_TRIALS + ' tries, about four minutes. Stop whenever you like.</p>';
+
+  /* Manual override. The ladder still moves itself during a session; this
+     just decides where the next one opens. */
+  const furthest = furthestRung();
+  const suggested = entryRung();
+  html += '<h2 class="t-section" style="margin-top:44px;">Or start wherever you want</h2>' +
+    '<p class="t-body">The steps move themselves while you train. You can also just pick one yourself, and your next session will open there.</p>' +
+    '<div class="rung-list" role="group" aria-label="Choose a starting step">';
+
+  LADDER.forEach((r, i) => {
+    const tags = [];
+    if (i === rung) tags.push('You are here');
+    if (i === suggested && i !== rung) tags.push('Suggested by your map');
+    if (i === furthest && i !== rung && furthest > 0) tags.push('Furthest you have trained');
+    if (i === AYUMU_RUNG && i !== rung) tags.push('Ayumu’s setting');
+    if (i === LADDER.length - 1 && i !== rung) tags.push('Beyond Ayumu');
+    html += '<button type="button" class="rung-row' + (i === rung ? ' current' : '') +
+      (furthest > 0 && i > furthest + 1 && i !== rung ? ' beyond' : '') + '" data-rung="' + i + '"' +
+      ' aria-pressed="' + (i === rung) + '">' +
+      '<span class="rung-n">' + String(i + 1).padStart(2, '0') + '</span>' +
+      '<span class="rung-desc">' + r.n + ' numbers' +
+        (tags.length ? '<span class="rung-tag">' + esc(tags.join(' · ')) + '</span>' : '') + '</span>' +
+      '<span class="rung-hold">' + comma(r.h) + 'ms</span>' +
+      '</button>';
+  });
+  html += '</div>' +
+    '<p class="t-quiet">Nothing is locked. Reach for a step well past anything you have done and the ladder will simply walk you back down if it turns out to be too much.</p>';
+
+  if (sessions.length) {
+    const cross = crossings();
+    html += '<h2 class="t-section" style="margin-top:44px;">Your progress</h2>' +
+      '<div class="t-label">Hardest step reached, each visit</div>' +
+      '<div class="chart-panel">' + curveSVG() + '</div>' +
+      '<p class="chart-note">' +
+      (cross.ayumu !== null
+        ? 'You matched Ayumu’s 80% at his own setting, five numbers at 210 milliseconds, on ' + esc(fmtDate(sessions[cross.ayumu].date)) + '. Go and tell somebody you beat the chimp!'
+        : 'The day you pass Ayumu will get marked here when it arrives.') +
+      '</p>';
+
+    html += '<h2 class="t-section" style="margin-top:40px;">Every visit</h2>' +
+      '<table class="ladder-table"><thead><tr><th>Date</th><th>Sets</th><th>Step</th><th>Best set</th></tr></thead><tbody>';
+    sessions.slice().reverse().forEach(s => {
+      const bestAcc = Math.max.apply(null, s.blocks.map(b => b.acc));
+      html += '<tr><td>' + esc(fmtDateShort(s.date)) + '</td><td>' + s.blocks.length + '</td>' +
+        '<td>' + (s.startRung + 1) + ' → ' + ((s.endRung != null ? s.endRung : s.startRung) + 1) + '</td>' +
+        '<td>' + pct(bestAcc) + '%</td></tr>';
+    });
+    html += '</tbody></table>';
+  }
+
+  /* The Nine’s track, in the same hub. It trains on the clock, not the
+     grid, so it gets its own section rather than a rung on the ladder. */
+  const nrec = store.nine;
+  html += '<h2 class="t-section" style="margin-top:48px;">And the nine</h2>' +
+    '<p class="t-body">' + (nrec && nrec.tries
+      ? 'Here you can train to match or even beat Ayumu’s other record. He starts pressing at two thirds of a second and rarely gets it wrong, so it is an ambitious target, and it will take practice!'
+      : 'Here you can train on Ayumu’s other game, where all nine numbers stay on the screen until you tap the first one. Once you have a time on the board, you will see how it compares with his.') + '</p>';
+  if (nrec && nrec.bestMs !== null) {
+    html += '<p class="score-line">Your fastest clean run · <b>' + secs(nrec.bestMs) + '</b></p>';
+    const ncurve = nineCurveSVG();
+    if (ncurve) {
+      html += '<div class="t-label">Your times, sitting by sitting</div>' +
+        '<div class="chart-panel">' + ncurve + '</div>';
+    }
+  }
+  html += '<div class="btn-row"><button class="btn primary" id="btn-train-nine">' +
+    (nrec && nrec.bestMs !== null ? 'Train the nine' : 'Try the nine') + '</button></div>';
+
+  html += '<div class="btn-row" style="margin-top:40px;">' +
+    '<button class="btn ghost" id="btn-train-sandbox">Back to the dials</button>' +
+    '<a class="btn ghost" href="ayumu-science.html">The science</a></div>';
+
+  el.innerHTML = html;
+  document.getElementById('btn-train-start').addEventListener('click', startTraining);
+  document.getElementById('btn-train-nine').addEventListener('click', startNine);
+  document.getElementById('btn-train-sandbox').addEventListener('click', () => { openSandbox(); });
+
+  /* Re-render to update every marker, keeping the scroll position so the
+     list does not jump out from under the finger that just tapped it. */
+  el.querySelectorAll('.rung-row').forEach(row => {
+    row.addEventListener('click', () => {
+      store.training.rung = parseInt(row.dataset.rung, 10);
+      saveStore();
+      const y = window.scrollY;
+      renderTraining();
+      window.scrollTo(0, y);
+    });
+  });
 }
 
 /* ================================================================
@@ -3200,6 +3842,8 @@ function flashShareLines() {
   if (store.attempt) {
     return { big: ['Ayumu: 80%.', 'Me: ' + pct(store.attempt.acc) + '%.'], sub: 'FIVE NUMBERS · 210 MILLISECONDS' };
   }
+  const f = frontier();
+  if (f) return { big: ['Ayumu: five in 210ms.', 'My best: ' + f.n + ' in ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TEST' };
   return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TEST' };
 }
 
@@ -3296,31 +3940,44 @@ function drawShareCard(canvas, w, h, kind) {
     g.textAlign = 'left';
     vizBottom = vTop + 2 * rowGap;
   } else {
-    /* Two accuracy bars, his and yours, out of 100. */
-    const mine = store.attempt && store.attempt.trials ? store.attempt.acc : null;
-    const vTop = y + (tall ? h * 0.05 : h * 0.045);
-    const barH = tall ? h * 0.05 : h * 0.06, rowGap = tall ? h * 0.055 : h * 0.07;
-    const barX = pad + cw * 0.14, barW = cw * 0.86;
-    [['AYUMU', AYUMU_ACC, c.red], ['ME', mine, c.ink]].forEach((r, i) => {
-      const yy = vTop + i * rowGap;
-      g.fillStyle = c.muted;
-      g.font = '700 ' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
-      g.textAlign = 'left';
-      g.fillText(r[0], pad, yy + barH * 0.72);
-      if (r[1] === null) {
-        g.fillStyle = c.muted;
-        g.font = '' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
-        g.fillText('not played yet', barX, yy + barH * 0.72);
-      } else {
-        const bw = Math.max(w * 0.01, barW * r[1]);
-        g.fillStyle = r[2];
-        g.fillRect(barX, yy, bw, barH);
-        g.font = '700 ' + Math.round(w * (tall ? 0.024 : 0.016)) + 'px "Space Mono", monospace';
-        g.fillText(pct(r[1]) + '%', barX + bw + w * 0.012, yy + barH * 0.72);
-      }
+    /* The map, drawn small: the filled squares and the empty corner tell the
+       story without a word of explanation. */
+    const mapTop = y + (tall ? h * 0.035 : h * 0.03);
+    const cols = NUMERAL_STEPS.length, rows = HOLD_STEPS.length;
+    const gapPx = Math.max(2, w * 0.004);
+    const cellW = (cw - gapPx * (cols - 1)) / cols;
+    const cellH = Math.min(cellW, ((tall ? h * 0.30 : h * 0.34) - gapPx * (rows - 1)) / rows);
+
+    HOLD_STEPS.forEach((hold, ri) => {
+      NUMERAL_STEPS.forEach((n, ci) => {
+        const x = pad + ci * (cellW + gapPx);
+        const yy = mapTop + ri * (cellH + gapPx);
+        const cell = mapGet(n, hold);
+        const isAyumu = (n === FLASH_N && hold === FLASH_HOLD);
+        if (isAyumu) {
+          g.strokeStyle = c.red;
+          g.lineWidth = Math.max(2, w * 0.0035);
+          g.strokeRect(x, yy, cellW, cellH);
+        } else if (cell && cell.wins) {
+          g.fillStyle = c.ink;
+          g.fillRect(x, yy, cellW, cellH);
+        } else {
+          g.strokeStyle = c.rule;
+          g.lineWidth = 1;
+          g.strokeRect(x, yy, cellW, cellH);
+        }
+      });
     });
+
+    const mapBottom = mapTop + rows * (cellH + gapPx);
+    g.fillStyle = c.muted;
+    g.font = '' + Math.round(w * (tall ? 0.019 : 0.013)) + 'px "Space Mono", monospace';
+    g.fillText('MORE NUMBERS →', pad, mapBottom + w * (tall ? 0.04 : 0.028));
+    g.textAlign = 'right';
+    g.fillStyle = c.red;
+    g.fillText('AYUMU', pad + cw, mapBottom + w * (tall ? 0.04 : 0.028));
     g.textAlign = 'left';
-    vizBottom = vTop + 2 * rowGap;
+    vizBottom = mapBottom;
   }
 
   let dy = vizBottom + (tall ? h * 0.085 : h * 0.11);
@@ -3370,7 +4027,7 @@ function renderShare() {
     '</div>' +
     '<p class="t-quiet" id="copy-status" style="margin-top:18px;">The tall one fits Instagram and X stories. The wide one is for link previews.</p>' +
     '<div class="btn-row" style="margin-top:24px;">' +
-    '<button class="btn ghost" id="btn-share-back">Back to your results</button></div>';
+    '<button class="btn ghost" id="btn-share-back">Back to the dials</button></div>';
 
   const preview = document.getElementById('share-canvas');
   preview.style.aspectRatio = '1080 / 1920';
@@ -3408,7 +4065,7 @@ function renderShare() {
       status.textContent = 'Here it is: ' + text;
     }
   });
-  document.getElementById('btn-share-back').addEventListener('click', () => { renderResults(); showView('view-results'); });
+  document.getElementById('btn-share-back').addEventListener('click', () => { openSandbox(); });
 }
 
 /* ================================================================
@@ -3564,6 +4221,13 @@ async function startNine() {
   showView('view-nine');
 }
 
+async function startTraining() {
+  await document.fonts.ready;
+  await runTrainingSession();
+  renderTraining();
+  showView('view-training');
+}
+
 document.getElementById('btn-quit').addEventListener('click', () => {
   aborted = true;
   /* Release whichever promise the run is parked on, so the flow unwinds
@@ -3585,6 +4249,8 @@ document.getElementById('btn-quit').addEventListener('click', () => {
     if (!active) return;
     if (active.id === 'view-results') renderResults({ keep: true });
     if (active.id === 'view-nine') renderNine({ keep: true });
+    if (active.id === 'view-training') renderTraining();
+    if (active.id === 'view-sandbox') renderSandbox();
   });
 });
 
@@ -3594,17 +4260,20 @@ document.getElementById('btn-resume').addEventListener('click', () => startGame(
 document.getElementById('btn-resume-fresh').addEventListener('click', startFresh);
 document.getElementById('btn-flash-from-return').addEventListener('click', () => startGame(null, true));
 document.getElementById('btn-nine-from-return').addEventListener('click', startNine);
+document.getElementById('btn-sandbox-from-return').addEventListener('click', () => { openSandbox(); });
+document.getElementById('btn-training-from-return').addEventListener('click', () => { renderTraining(); showView('view-training'); });
 document.getElementById('btn-results-from-return').addEventListener('click', () => {
   if (store.attempt) { renderResults(); showView('view-results'); } else { startGame(null); }
 });
 document.getElementById('btn-return-reset').addEventListener('click', () => {
-  if (!confirm('This clears every score saved on this device. Start over?')) return;
+  if (!confirm('This clears every score, map square, and training session saved on this device. Start over?')) return;
   resetEverything();
 });
 
 /* Wipe everything this device remembers and go back to the first screen. */
 function resetEverything() {
   store = blankStore();
+  dialN = null; dialH = null;
   try { localStorage.removeItem(STORE_KEY); } catch (e) {}
   saveStore();
   boot();
@@ -3621,6 +4290,19 @@ window.addEventListener('resize', () => {
   }, 200);
 });
 
+/* On the dials, space or enter runs another round, so a run of goes never
+   needs the pointer. Held back while a round is live, and while the board
+   itself has focus, where those keys are already the answer keys. */
+window.addEventListener('keydown', e => {
+  if (e.key !== ' ' && e.key !== 'Enter') return;
+  if (sandboxBusy) return;
+  if (!document.getElementById('view-sandbox').classList.contains('active')) return;
+  const a = document.activeElement;
+  if (a && (a.id === 'board' || a.tagName === 'BUTTON' || a.tagName === 'A')) return;
+  e.preventDefault();
+  sandboxGo();
+});
+
 function boot() {
   applyPrefs();
 
@@ -3630,6 +4312,7 @@ function boot() {
   if (new URLSearchParams(location.search).get('reset') === '1') {
     history.replaceState(null, '', location.pathname);
     store = blankStore();
+    dialN = null; dialH = null;
     try { localStorage.removeItem(STORE_KEY); } catch (e) {}
     saveStore();
   }
@@ -3677,12 +4360,21 @@ function boot() {
   const rec = store.attempt;
   if (!rec) { showView('view-intro'); return; }
 
+  const f = frontier();
+  const sessions = store.training.sessions.length;
+
   let body = '<p class="t-body">Last time, you got <strong>' + pct(rec.acc) + '%</strong> at Ayumu’s setting: five numbers, 210 milliseconds. He gets about 80%.</p>';
   if (store.nine && store.nine.bestMs !== null) {
     body += '<p class="t-body">On the nine, your fastest clean run is <strong>' + secs(store.nine.bestMs) +
       '</strong>. Ayumu commits in about ' + secs(AYUMU_COMMIT_MS) + '.</p>';
   }
-  body += '<p class="t-body">Play either game again whenever you like. Your scores are saved on this device.</p>';
+  if (f) {
+    body += '<p class="t-body">Your furthest on the dials so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>.</p>';
+  }
+  body += '<p class="t-body">' + (sessions
+    ? 'You have trained ' + sessions + ' time' + (sessions === 1 ? '' : 's') + ', currently on step ' +
+      (currentRung() + 1) + ' of ' + LADDER.length + ': ' + esc(rungLabel(currentRung())) + '. Keep going and keep adding to that line.'
+    : 'The dials and the Training Room are both still waiting for you, and they are where the real fun is, because that is where you get to watch your own score move.') + '</p>';
 
   document.getElementById('return-body').innerHTML = body;
   showView('view-return');
@@ -3696,13 +4388,19 @@ if (DEV) {
   window.__ayumu = {
     state: () => ({
       phase: phase, frameDur: frameDur, measured: frameDurMeasured, field: field,
+      rung: currentRung(), frontier: frontier(), bestAtNine: bestAtNine(),
+      dials: (dialN === null ? null : { n: NUMERAL_STEPS[dialN], h: HOLD_STEPS[dialH] }),
       next: trial ? trial.next : null,
       kbFocus: kbFocus,
       focusValue: (trial && kbFocus >= 0) ? trial.items[kbFocus].value : null,
       tiles: trial ? trial.items.map(it => ({ v: it.value, cx: it.x + it.s / 2, cy: it.y + it.s / 2, taken: it.taken })) : null
     }),
     store: () => store,
-    reset: () => { store = blankStore(); saveStore(); boot(); },
+    reset: () => { store = blankStore(); dialN = null; dialH = null; saveStore(); boot(); },
+    setDials: (n, h) => {
+      dialN = NUMERAL_STEPS.indexOf(n); dialH = HOLD_STEPS.indexOf(h);
+      return { n: NUMERAL_STEPS[dialN], h: HOLD_STEPS[dialH] };
+    },
     /* Lay out and paint a board without running the timed flow, so the
        geometry can be inspected where rAF is unavailable. */
     demoBoard: (n, mode, taken) => {
@@ -3755,8 +4453,28 @@ if (DEV) {
       store.attempt = { date: new Date().toISOString(), completed: new Date().toISOString(),
         frameDur: 16.7, numerals: 9, hold: 210, log: log, hits: hits || 0, trials: n,
         excluded: 0, acc: (hits || 0) / n, meanMeasured: 216.7 };
+      mapRecord(9, 210, hits || 0, n);
+      if (store.training.rung === null) store.training.rung = entryRung();
       saveStore();
       return 'seeded';
+    },
+    seedMap: (pairs) => {
+      pairs.forEach(p => mapRecord(p[0], p[1], p[2], p[3]));
+      saveStore();
+      return frontier();
+    },
+    seedSessions: (n) => {
+      const out = [];
+      for (let i = 0; i < n; i++) {
+        const d = new Date(Date.now() - (n - i) * 86400000).toISOString();
+        const rung = Math.min(LADDER.length - 1, 3 + i * 2);
+        out.push({ date: d, startRung: Math.max(0, rung - 1), endRung: rung,
+          blocks: [{ rung: rung, numerals: LADDER[rung].n, hold: LADDER[rung].h, hits: 5, trials: 6, acc: 5 / 6 }] });
+      }
+      store.training.sessions = out;
+      store.training.rung = out[out.length - 1].endRung;
+      saveStore();
+      return out.length;
     }
   };
 }
