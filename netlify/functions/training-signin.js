@@ -51,11 +51,11 @@ exports.handler = async (event) => {
 
   const from = process.env.FROM_EMAIL || 'The Ayumu Training Room <onboarding@resend.dev>';
   const text =
-    'Here is your sign-in link for the Ayumu Training Room:\n\n' + link + '\n\n' +
+    'You asked to sign in to the Ayumu Training Room on GeniusAndImpostor.com, the practice app that goes with the Ayumu Test. Here is your sign-in link:\n\n' + link + '\n\n' +
     'Open it on the device you want to train on. It keeps you signed in for about six months, and your progress is saved every time you play.\n\n' +
     'If you did not ask for this, you can ignore it.\n';
   const html =
-    '<p>Here is your sign-in link for the Ayumu Training Room:</p>' +
+    '<p>You asked to sign in to the Ayumu Training Room on GeniusAndImpostor.com, the practice app that goes with the Ayumu Test. Here is your sign-in link:</p>' +
     '<p><a href="' + link + '">Open the Training Room</a></p>' +
     '<p>Open it on the device you want to train on. It keeps you signed in for about six months, and your progress is saved every time you play.</p>' +
     '<p style="color:#666">If you did not ask for this, you can ignore it.</p>';
@@ -63,7 +63,12 @@ exports.handler = async (event) => {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: 'Bearer ' + resendKey, 'content-type': 'application/json' },
-    body: JSON.stringify({ from, to: [email], subject: 'Your sign-in link for the Ayumu Training Room', text, html })
+    body: JSON.stringify({
+      from, to: [email],
+      /* Replies land somewhere real, which mail providers check. */
+      reply_to: process.env.REPLY_TO || 'turknetts@gmail.com',
+      subject: 'Your sign-in link for the Ayumu Training Room', text, html
+    })
   });
   if (!r.ok) {
     return { statusCode: 502, body: JSON.stringify({ error: 'email unavailable' }) };
