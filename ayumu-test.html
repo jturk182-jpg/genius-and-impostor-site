@@ -2832,16 +2832,6 @@ function revealFlowForReplay() {
   });
 }
 
-function timingDetailsHTML(rec) {
-  return '<details class="timing" style="margin-top:32px;"><summary>How long the numbers were really on screen</summary>' +
-    '<p class="chart-note" style="margin-top:14px;">Every try is timed from the screen’s own refresh rather than trusted to be right. This screen redraws itself about every ' +
-    rec.frameDur.toFixed(1) + ' milliseconds, so a flash has to land on a whole number of refreshes and can never sit exactly on 210. ' +
-    (rec.excluded
-      ? rec.excluded + (rec.excluded === 1 ? ' try was' : ' tries were') + ' thrown out and replaced.'
-      : 'Nothing had to be thrown out.') + '</p>' +
-    timingTableHTML(rec) + '</details>';
-}
-
 function timingTableHTML(rec) {
   let html = '<table class="timing-table"><thead><tr>' +
     '<th>Try</th><th>Aiming for</th><th>Actually</th><th>Off by</th><th>What happened</th></tr></thead><tbody>';
@@ -3091,7 +3081,6 @@ function renderResults(opts) {
       '<button class="btn primary" id="btn-flow-nine">Claim my shot at redemption</button>' +
       '<button class="btn ghost" id="btn-flow-skip">Skip ahead to what just happened</button>' +
       '</div>';
-    html += timingDetailsHTML(rec);
     el.innerHTML = html;
     renderTeamHuman(rec);
     const go = v => { const r = resultsFlow; resultsFlow = null; if (r) r(v); };
@@ -3153,7 +3142,6 @@ function renderResults(opts) {
     '<a class="btn ghost" href="ayumu-science.html">The science</a>' +
     '</div>';
 
-  html += timingDetailsHTML(rec);
 
   el.innerHTML = html;
   renderTeamHuman(rec);
