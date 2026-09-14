@@ -1728,6 +1728,24 @@ function makeTrial(n) {
       wrong: false
     };
   });
+
+  /* Centre the array on the fixation dot (JT, 2026-09-14). Which cells stay
+     empty is random, so left alone the array's centre wanders off the dot
+     and a numeral can sit out in a corner the eye is not parked on. Sliding
+     the whole array so its middle lands on the dot keeps the randomness of
+     the positions relative to each other while the dot always marks the
+     middle of what is about to appear. Tiles cannot overlap after a
+     uniform shift, and the shift is clamped so nothing leaves the box. */
+  const minX = Math.min.apply(null, items.map(it => it.x));
+  const maxX = Math.max.apply(null, items.map(it => it.x + it.s));
+  const minY = Math.min.apply(null, items.map(it => it.y));
+  const maxY = Math.max.apply(null, items.map(it => it.y + it.s));
+  let dx = (field.ox + field.pw / 2) - (minX + maxX) / 2;
+  let dy = (field.oy + field.ph / 2) - (minY + maxY) / 2;
+  dx = Math.max(field.ox - minX, Math.min(field.ox + field.pw - maxX, dx));
+  dy = Math.max(field.oy - minY, Math.min(field.oy + field.ph - maxY, dy));
+  items.forEach(it => { it.x += dx; it.y += dy; });
+
   return { items, order, step: 0, next: order[0], total: n, done: false, failed: false, errorAt: null };
 }
 
