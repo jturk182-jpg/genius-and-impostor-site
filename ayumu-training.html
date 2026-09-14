@@ -1358,10 +1358,20 @@ const STEP_UP = 0.80;        /* pass rate that earns the next step */
 const STEP_DOWN = 0.34;      /* pass rate that drops you back one */
 const COMPLETE_SETS = 2;     /* passes in a row at the top step = done */
 
+/* A mouse has to travel to the tiles; a thumb is already over them. On
+   mouse-driven screens the tiles are drawn smaller and packed closer, in a
+   smaller box, so that travel is short. Touch screens are untouched:
+   pointer:coarse never matches here, so every touch value below is the
+   original. */
+const MOUSE_DEVICE = (function () {
+  try { return window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(pointer: coarse)').matches; }
+  catch (e) { return false; }
+})();
+
 /* Layout. The whole non-overlap guarantee rests on these plus planGrid(). */
-const MIN_TILE = 44;         /* never smaller than a comfortable touch target */
-const MAX_TILE = 78;
-const TILE_GAP = 12;         /* guaranteed minimum clearance between tiles */
+const MIN_TILE = MOUSE_DEVICE ? 30 : 44;   /* touch: never smaller than a comfortable target */
+const MAX_TILE = MOUSE_DEVICE ? 40 : 78;
+const TILE_GAP = MOUSE_DEVICE ? 8 : 12;    /* guaranteed minimum clearance between tiles */
 
 /* Dev hooks are a cheat surface (window.__ayumu includes a solver), so ?dev=1
    only does anything on a local host. On the live domain the flag is inert and
@@ -1618,7 +1628,7 @@ let phase = 'idle';    /* idle | ready | numbers | respond | reveal */
    board snaps to a visible lattice: it stops looking like the scattered
    array in the experiment, and worse, a regular grid can be chunked
    ("top row, three across") which is an easier and different task. */
-const MIN_JITTER = 18;
+const MIN_JITTER = MOUSE_DEVICE ? 10 : 18;
 
 function planGrid(w, h) {
   let best = null;
@@ -1659,16 +1669,8 @@ function planGrid(w, h) {
    letterboxed, capped so it cannot outgrow one comfortable glance and
    floored so nine tiles still fit at a tappable size. The box is
    centred, which also keeps the array near the fixation dot. */
-const PLAY_BOX_MAX = 420;   /* about one glance at arm’s length */
-/* A mouse has to travel to the tiles; a thumb is already over them. On
-   mouse-driven screens the board is drawn smaller so that travel is short.
-   Touch screens are untouched: pointer:coarse never matches here. */
-const MOUSE_DEVICE = (function () {
-  try { return window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(pointer: coarse)').matches; }
-  catch (e) { return false; }
-})();
-const PLAY_BOX_MOUSE_MAX = 320;
-const PLAY_BOX_MIN = 260;   /* below this, 9 tiles stop being tappable */
+const PLAY_BOX_MAX = MOUSE_DEVICE ? 230 : 420;   /* touch: about one glance at arm’s length */
+const PLAY_BOX_MIN = MOUSE_DEVICE ? 200 : 260;   /* touch: below this, 9 tiles stop being tappable */
 
 function layoutField() {
   const rect = document.getElementById('field').getBoundingClientRect();
@@ -1677,7 +1679,7 @@ function layoutField() {
   const availH = Math.max(180, rect.height);
 
   /* Square where there is room; never wider or taller than what’s there. */
-  let box = Math.min(availW, availH, MOUSE_DEVICE ? PLAY_BOX_MOUSE_MAX : PLAY_BOX_MAX);
+  let box = Math.min(availW, availH, PLAY_BOX_MAX);
   if (box < PLAY_BOX_MIN) box = Math.min(availW, availH, PLAY_BOX_MIN);
 
   field.w = availW;
