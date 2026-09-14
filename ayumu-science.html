@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meet Ayumu — GeniusAndImpostor.com</title>
-  <meta name="description" content="A young chimpanzee out-remembers university students, and the reason why is more interesting than the headline.">
+  <title>The Ayumu Test, explained — GeniusAndImpostor.com</title>
+  <meta name="description" content="Why a young chimpanzee out-remembers almost every human who tries, what that says about IQ tests, and the studies behind it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -296,12 +296,12 @@
   <div class="shell">
     <header class="tool-mast">
       <a class="tool-mast-home" href="index.html">GeniusAndImpostor.com</a>
-      <span class="tool-mast-name">Meet Ayumu</span>
+      <span class="tool-mast-name">The explanation</span>
     </header>
 
     <main class="shell-main">
-      <p class="t-eyebrow">The story behind the game</p>
-      <h1 class="t-title" style="margin-bottom:32px;">Meet Ayumu</h1>
+      <p class="t-eyebrow">The explanation, and the science behind it</p>
+      <h1 class="t-title" style="margin-bottom:32px;">Why Ayumu wins</h1>
 
       <!-- The story now plays as a reader-paced card flow (learn-flow.js),
            chunked with questions woven in, per the standing rule that learning
@@ -343,53 +343,14 @@
   </div>
 
   <script src="learn-flow.js"></script>
+  <script src="ayumu-explanation.js"></script>
   <script>
-    /* The "Meet Ayumu" story as a reader-paced flow: chunks with three
-       questions woven in, each surfacing an assumption before overturning it.
-       Wording is placeholder for JT's voice pass. */
+    /* The explanation, as a reader-paced flow. The words come from
+       ayumu-explanation.js, shared with the game's own walk. */
     (function () {
-      var steps = [
-        { chunk: '<p>A young chimpanzee in a research lab in Japan can do something most humans can’t. Numbers flash on a screen and vanish, and he taps where they were, in order, from memory. He has been doing it since he was five years old.</p>' },
-
-        { chunk: '<p>When the study came out in 2007, the headlines said a chimpanzee had beaten humans at a memory test. And he had. Ayumu beat a group of university students at a task very much like the ones that turn up on IQ tests, where you hold a set of items in mind for a moment and give them back in order.</p>' },
-
-        { ask: 'The headline, a chimp smarter than humans, only works if you take one thing for granted. What is it?',
-          choices: [
-            'That chimps are secretly geniuses',
-            'That one memory test can measure how smart a mind is, and that the amount is fixed',
-            'That the students were not really trying'
-          ],
-          correct: 1,
-          answer: '<p>It assumes there is a single thing called intelligence, that a test can measure it, and that the amount you have is fixed. Hold onto that assumption, because the rest of this story is about whether it holds up.</p>' },
-
-        { chunk: '<p>Here is the first thing the headlines left out. By the time the study was published, Ayumu had played this game hundreds of times, and the students had played it a handful of times. When other researchers later gave people a real chance to practise, their scores climbed toward his, and a couple of them caught him. Whatever this test measures, it moves with practice.</p>' },
-
-        { chunk: '<p>Here is the second thing. The numbers are on the screen for 210 milliseconds, which is too short to scan across them, because a single eye movement takes longer than that. You have to take the whole screen in with one glance, a single mental snapshot.</p>' },
-
-        { ask: 'You and Ayumu both look at a 7. Handling it takes you a beat longer than it takes him. Why?',
-          choices: [
-            'Your memory holds fewer things',
-            'Your brain turns the shape into a meaning first',
-            'Your eyes move more slowly'
-          ],
-          correct: 1,
-          answer: '<p>Your brain adds a step. Ayumu had learned the order of the numerals, so to him a 7 was a shape with a known place in the sequence, and nothing more. You see a <em>symbol</em>, and your mind turns that shape into the number seven instantly, whether you want it to or not. That extra step takes time, and this game punishes time.</p><p>The evidence for this comes from the study itself. An older chimpanzee named Ai, Ayumu’s mother, knew the order just as he did, but she had also been taught what each numeral means as an amount, and she scored lower than he did. The study itself does not test why, so this is the most likely reading of the pattern rather than a proven one.</p>' },
-
-        { chunk: '<p>But you get something extraordinary in return for that step. The very thing that slows you down here is what lets you read this sentence, plan next week, and put an idea inside the head of someone who is not in the room.</p>' },
-
-        { ask: 'So your brain does something Ayumu’s does not, and it costs you this game. Is that a defect or a feature?',
-          choices: [
-            'A defect',
-            'A feature',
-            'A bit of both'
-          ],
-          correct: 1,
-          answer: '<p>A feature, and the defining one. Every waking moment, your brain is turning raw experience into symbols you can store, combine, and share. That is what makes everything distinctly human possible. Ayumu built the skill that a chimpanzee’s life asks for, and you built the one that a human’s life asks for.</p>' },
-
-        { chunk: '<p>So the assumption behind the headlines does not hold up. The test did not measure a fixed quantity of intelligence, because practice moved the scores. And it did not rank one mind above another, because what it measured was a skill, and each of you had practised a different one. There is no single ladder of intelligence here. There is only what each of you has built, and what you have built can keep growing.</p>' },
-
-        { chunk: '<p>That idea is what this whole site is built around, and the book, <em>The Genius and the Impostor</em>, tells the full story of how extraordinary abilities get built. Ayumu is one of its best examples. So is whatever you decide to learn next.</p>' }
-      ];
+      /* The same explanation the game walks you through, from
+         ayumu-explanation.js, worded for whatever this device has played. */
+      var steps = AyumuExplanation.toFlow(AyumuExplanation.steps(AyumuExplanation.contextFromStorage()));
 
       LearnFlow.render(document.getElementById('flow'), steps, {
         doneLabel: 'Finish',
