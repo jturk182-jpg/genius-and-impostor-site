@@ -1610,6 +1610,14 @@ function planGrid(w, h) {
    floored so nine tiles still fit at a tappable size. The box is
    centred, which also keeps the array near the fixation dot. */
 const PLAY_BOX_MAX = 420;   /* about one glance at arm’s length */
+/* A mouse has to travel to the tiles; a thumb is already over them. On
+   mouse-driven screens the board is drawn smaller so that travel is short.
+   Touch screens are untouched: pointer:coarse never matches here. */
+const MOUSE_DEVICE = (function () {
+  try { return window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(pointer: coarse)').matches; }
+  catch (e) { return false; }
+})();
+const PLAY_BOX_MOUSE_MAX = 320;
 const PLAY_BOX_MIN = 260;   /* below this, 9 tiles stop being tappable */
 
 function layoutField() {
@@ -1619,7 +1627,7 @@ function layoutField() {
   const availH = Math.max(180, rect.height);
 
   /* Square where there is room; never wider or taller than what’s there. */
-  let box = Math.min(availW, availH, PLAY_BOX_MAX);
+  let box = Math.min(availW, availH, MOUSE_DEVICE ? PLAY_BOX_MOUSE_MAX : PLAY_BOX_MAX);
   if (box < PLAY_BOX_MIN) box = Math.min(availW, availH, PLAY_BOX_MIN);
 
   field.w = availW;
@@ -2252,7 +2260,8 @@ async function runNineSession() {
     title: 'One through nine, from memory',
     body: '<p>This time, all nine numbers appear on the screen at once, and they stay there. There is no flash to worry about, and you can look at them for as long as you like.</p>' +
           '<p>When you feel ready, tap the <strong>1</strong>. The moment you do, the other eight numbers turn blank, and your job is to tap the rest of the tiles in order from memory: 2, then 3, and so on up to 9.</p>' +
-          '<p>We are timing how long you look before you tap the 1. So once you can get all nine, see how quickly you can commit. Ayumu has a time on this too, and you will find out what it is when you are done.</p>',
+          '<p>We are timing how long you look before you tap the 1. So once you can get all nine, see how quickly you can commit. Ayumu has a time on this too, and you will find out what it is when you are done.</p>' +
+          (MOUSE_DEVICE ? '<p class="t-quiet">This one is fairest on a phone or tablet. With a mouse, the time it takes to move the pointer counts against you.</p>' : ''),
     actions: [{ text: 'Start', value: 'go', primary: true }, { text: 'Not now', value: 'quit', ghost: true }]
   });
   if (aborted || go !== 'go') return null;

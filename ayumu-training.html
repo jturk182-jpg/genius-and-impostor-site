@@ -1660,6 +1660,14 @@ function planGrid(w, h) {
    floored so nine tiles still fit at a tappable size. The box is
    centred, which also keeps the array near the fixation dot. */
 const PLAY_BOX_MAX = 420;   /* about one glance at arm’s length */
+/* A mouse has to travel to the tiles; a thumb is already over them. On
+   mouse-driven screens the board is drawn smaller so that travel is short.
+   Touch screens are untouched: pointer:coarse never matches here. */
+const MOUSE_DEVICE = (function () {
+  try { return window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(pointer: coarse)').matches; }
+  catch (e) { return false; }
+})();
+const PLAY_BOX_MOUSE_MAX = 320;
 const PLAY_BOX_MIN = 260;   /* below this, 9 tiles stop being tappable */
 
 function layoutField() {
@@ -1669,7 +1677,7 @@ function layoutField() {
   const availH = Math.max(180, rect.height);
 
   /* Square where there is room; never wider or taller than what’s there. */
-  let box = Math.min(availW, availH, PLAY_BOX_MAX);
+  let box = Math.min(availW, availH, MOUSE_DEVICE ? PLAY_BOX_MOUSE_MAX : PLAY_BOX_MAX);
   if (box < PLAY_BOX_MIN) box = Math.min(availW, availH, PLAY_BOX_MIN);
 
   field.w = availW;
@@ -2695,6 +2703,7 @@ function trackIntroBody(kind, step, first) {
       ' If it turns out to be too much, the ladder brings you back down a step.</p>';
   }
   return '<p>' + n + ' numbers appear on the screen and stay there until you tap the lowest one. Then the rest turn blank and you tap them in order from memory.</p>' +
+    (MOUSE_DEVICE && first ? '<p class="t-quiet">Best on a phone or tablet: with a mouse, moving the pointer counts against your time.</p>' : '') +
     '<p>A go counts as a pass only if you get every number right <em>and</em> your first tap comes within ' + secs(AYUMU_COMMIT_MS) + ', which is Ayumu’s time. You get ' + SET_TRIES + ' goes in this set. Pass ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and the next set adds a number.</p>';
 }
 
@@ -2869,6 +2878,9 @@ function renderTrack(kind) {
   if (kind === 'flash') {
     html += '<p class="t-body">This is Ayumu’s timed game, built up one number at a time. Each stage is one number count, starting at three. Inside a stage the flash gets shorter with every set you pass, from a full second down to Ayumu’s 210 milliseconds, and only once you land that count at his speed does the next stage add a number and start slow again. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
   } else {
+    if (MOUSE_DEVICE) {
+      html += '<p class="t-quiet" style="margin-bottom:14px;">This track is best played on a phone or tablet. With a mouse, the time it takes to move the pointer counts against you, and Ayumu’s standard is tight.</p>';
+    }
     html += '<p class="t-body">This is Ayumu’s nine, built up one number at a time. Every step uses his standard: the numbers stay on the screen until you tap the lowest one, and a go only counts if you get them all right <em>and</em> your first tap comes within two thirds of a second, which is how fast he commits. You start with three numbers, and each time you pass a set, the next set adds one. When you can do all nine at his pace two sets in a row, the track is complete.</p>';
   }
 
