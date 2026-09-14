@@ -1313,35 +1313,42 @@ const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
 /* ────────────────────────────────────────────────────────────────
    THE TWO TRACKS (JT, 2026-09-14). One machine, two ladders.
 
-   Each track is a ladder over HOW MANY numbers, with Ayumu's standard held
-   fixed at every step:
-     timed  2 → 3 → 4 → 5 numbers, each flashed for 210ms (his exposure)
-     nine   3 → 4 → … → 9 numbers, self-paced, a go passes only if it is
-            clean AND the first tap comes within 670ms (his commit time)
+   Each track is a ladder of STAGES, one per number count, and you only
+   leave a stage by meeting Ayumu's standard at that count:
+     timed  stages of 3, 4, then 5 numbers. Inside a stage the flash
+            shortens step by step (1000 → 650 → 430 → 290 → 210ms); pass
+            the set at 210ms and the next stage adds a number, starting
+            slow again. (JT, 2026-09-14: "each stage is a progression
+            until 210ms is reached.")
+     nine   stages of 3 → … → 9 numbers, self-paced; a go passes only if
+            it is clean AND the first tap comes within 670ms (his commit
+            time), so there is nothing to shorten: the stage IS the step.
    A set is SET_TRIES goes. Pass STEP_UP of a set and you move up a step;
    fall to STEP_DOWN or worse and you drop back one. Reaching the top step
    and passing COMPLETE_SETS sets in a row there is "done": the timed track
-   stops at five (Ayumu's own condition; going beyond him adds nothing to
-   the argument), the nine stops at nine. Players pick a track and are told
-   to stay on it.
+   stops at five at 210ms (Ayumu's own condition; going beyond him adds
+   nothing to the argument), the nine stops at nine. Players pick a track
+   and are told to stay on it.
    ──────────────────────────────────────────────────────────────── */
+const FLASH_STAGE_HOLDS = [1000, 650, 430, 290, FLASH_HOLD];
+const FLASH_STAGE_NS = [3, 4, 5];
 const TRACKS = {
   flash: {
     key: 'flash',
     name: 'The timed game',
     short: 'Timed',
-    steps: [2, 3, 4, 5],
+    steps: [].concat.apply([], FLASH_STAGE_NS.map(n => FLASH_STAGE_HOLDS.map(h => ({ n, h })))),
     standard: 'Ayumu’s 210 milliseconds',
-    stepLabel: n => n + ' numbers at 210ms',
+    stepLabel: st => st.n + ' numbers at ' + comma(st.h) + 'ms',
     passWord: 'remembered'
   },
   nine: {
     key: 'nine',
     name: 'The nine',
     short: 'The nine',
-    steps: [3, 4, 5, 6, 7, 8, 9],
+    steps: [3, 4, 5, 6, 7, 8, 9].map(n => ({ n, h: null })),
     standard: 'Ayumu’s two thirds of a second',
-    stepLabel: n => n + ' numbers, first tap within ' + secs(AYUMU_COMMIT_MS),
+    stepLabel: st => st.n + ' numbers, first tap within ' + secs(AYUMU_COMMIT_MS),
     passWord: 'clean and fast enough'
   }
 };
@@ -2634,18 +2641,26 @@ function trackRung(kind) {
   const r = track(kind).rung;
   return Math.max(0, Math.min(trackTop(kind), typeof r === 'number' ? r : 0));
 }
-function trackN(kind, rung) { return TRACKS[kind].steps[rung]; }
+function trackStep(kind, rung) { return TRACKS[kind].steps[rung]; }
+/* Stage = number count; where this rung sits inside it (for the timed track's sub-steps). */
+function stageInfo(kind, rung) {
+  const st = TRACKS[kind].steps[rung];
+  const same = TRACKS[kind].steps.filter(x => x.n === st.n);
+  const stages = [...new Set(TRACKS[kind].steps.map(x => x.n))];
+  return { n: st.n, stage: stages.indexOf(st.n) + 1, stages: stages.length, sub: same.indexOf(st) + 1, subs: same.length };
+}
 function trackComplete(kind) { return !!track(kind).completedAt; }
 function rungLabel(kind, i) { return TRACKS[kind].stepLabel(TRACKS[kind].steps[i]); }
 
 /* Highest step where a set has ever been passed, for "your best so far". */
-function bestPassedN(kind) {
+function bestPassedRung(kind) {
   let best = null;
   track(kind).sessions.forEach(sn => sn.sets.forEach(st => {
-    if (st.trials && st.passes / st.trials >= STEP_UP && (best === null || st.n > best)) best = st.n;
+    if (st.trials && st.passes / st.trials >= STEP_UP && (best === null || st.rung > best)) best = st.rung;
   }));
   return best;
 }
+function bestPassedN(kind) { const r = bestPassedRung(kind); return r === null ? null : trackStep(kind, r).n; }
 
 /* Fastest clean commit at the full nine, for the share card. */
 function bestNineMs() {
@@ -2657,9 +2672,10 @@ function bestNineMs() {
 }
 
 /* One go on a track. Returns {valid, pass, clean, ms} or null on quit. */
-async function runTrackGo(kind, n) {
+async function runTrackGo(kind, step) {
+  const n = step.n;
   if (kind === 'flash') {
-    const t = await runTrial(n, FLASH_HOLD, { reveal: true });
+    const t = await runTrial(n, step.h, { reveal: true });
     if (!t) return null;
     return { valid: t.valid, pass: !!(t.valid && t.success), clean: !!t.success, ms: null };
   }
@@ -2668,10 +2684,15 @@ async function runTrackGo(kind, n) {
   return { valid: true, pass: !!(r.success && r.commitMs <= AYUMU_COMMIT_MS), clean: !!r.success, ms: r.commitMs };
 }
 
-function trackIntroBody(kind, n, first) {
+function trackIntroBody(kind, step, first) {
+  const n = step.n;
   if (kind === 'flash') {
-    return '<p>' + n + ' numbers will flash up for 210 milliseconds, which is exactly how long Ayumu gets, and then turn blank. Tap where they were, smallest first.</p>' +
-      '<p>You get ' + SET_TRIES + ' goes in this set. Land ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and the next set adds a number. If it turns out to be too much, the ladder brings you back down a step.</p>';
+    const atAyumu = step.h === FLASH_HOLD;
+    return '<p>' + n + ' numbers will flash up for ' + comma(step.h) + ' milliseconds' +
+      (atAyumu ? ', which is exactly how long Ayumu gets,' : ',') + ' and then turn blank. Tap where they were, smallest first.</p>' +
+      '<p>You get ' + SET_TRIES + ' goes in this set. Land ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and ' +
+      (atAyumu ? 'you have done ' + n + ' numbers at Ayumu’s speed, so the next stage adds a number and starts slow again.' : 'the next set shortens the flash.') +
+      ' If it turns out to be too much, the ladder brings you back down a step.</p>';
   }
   return '<p>' + n + ' numbers appear on the screen and stay there until you tap the lowest one. Then the rest turn blank and you tap them in order from memory.</p>' +
     '<p>A go counts as a pass only if you get every number right <em>and</em> your first tap comes within ' + secs(AYUMU_COMMIT_MS) + ', which is Ayumu’s time. You get ' + SET_TRIES + ' goes in this set. Pass ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and the next set adds a number.</p>';
@@ -2692,12 +2713,14 @@ async function runTrackSession(kind) {
 
   while (true) {
     const rung = trackRung(kind);
-    const n = trackN(kind, rung);
+    const step = trackStep(kind, rung);
+    const n = step.n;
+    const si = stageInfo(kind, rung);
 
     const go = await card({
-      label: def.name + ' · step ' + (rung + 1) + ' of ' + def.steps.length,
+      label: def.name + ' · stage ' + si.stage + ' of ' + si.stages + (si.subs > 1 ? ' · step ' + si.sub + ' of ' + si.subs : ''),
       title: rungLabel(kind, rung),
-      body: trackIntroBody(kind, n, sets === 0),
+      body: trackIntroBody(kind, step, sets === 0),
       actions: [
         { text: sets === 0 ? 'Go' : 'Next set', value: 'go', primary: true },
         { text: 'That is enough for today', value: 'stop', ghost: true }
@@ -2708,9 +2731,9 @@ async function runTrackSession(kind) {
     let trials = 0, attempts = 0, passes = 0, clean = 0, fastest = null;
     while (trials < SET_TRIES && attempts < SET_TRIES + MAX_REPLACEMENTS) {
       attempts++;
-      setHud(def.short.toUpperCase() + ' · STEP ' + (rung + 1), 'GO ' + (trials + 1) + ' / ' + SET_TRIES,
-        kind === 'flash' ? n + ' · ' + FLASH_HOLD + 'MS' : n + ' · ' + secs(AYUMU_COMMIT_MS));
-      const r = await runTrackGo(kind, n);
+      setHud(def.short.toUpperCase() + ' · STAGE ' + si.stage, 'GO ' + (trials + 1) + ' / ' + SET_TRIES,
+        kind === 'flash' ? n + ' · ' + step.h + 'MS' : n + ' · ' + secs(AYUMU_COMMIT_MS));
+      const r = await runTrackGo(kind, step);
       if (aborted || !r) { session.aborted = true; break; }
       if (!r.valid) { setPrompt('The screen hiccuped, so that one does not count.', true); await wait(900); continue; }
       trials++;
@@ -2725,9 +2748,9 @@ async function runTrackSession(kind) {
     if (aborted) break;
 
     const rate = trials ? passes / trials : 0;
-    session.sets.push({ rung, n, passes, trials, clean, fastest, rate });
+    session.sets.push({ rung, n, h: step.h, passes, trials, clean, fastest, rate });
     sets++;
-    if (kind === 'flash' && trials) mapRecord(n, FLASH_HOLD, passes, trials);
+    if (kind === 'flash' && trials) mapRecord(n, step.h, passes, trials);
 
     let moved = 'held';
     const top = trackTop(kind);
@@ -2745,7 +2768,12 @@ async function runTrackSession(kind) {
     saveStore();
 
     let movedCopy;
-    if (moved === 'up') movedCopy = 'You passed that one, so the next set adds a number: ' + rungLabel(kind, trackRung(kind)) + '.';
+    if (moved === 'up') {
+      const next = trackStep(kind, trackRung(kind));
+      movedCopy = next.n > n
+        ? 'You did ' + n + ' numbers at Ayumu’s speed, so the next stage adds a number and starts slow again: ' + rungLabel(kind, trackRung(kind)) + '.'
+        : 'You passed that one, so the next set shortens the flash: ' + rungLabel(kind, trackRung(kind)) + '.';
+    }
     else if (moved === 'down') movedCopy = 'Back one step, to ' + rungLabel(kind, trackRung(kind)) + '. Training works best when the setting is just a little too hard, so the ladder went looking for that spot.';
     else if (moved === 'top') movedCopy = justCompleted
       ? 'That is two sets in a row at Ayumu’s level. You have completed this track.'
@@ -2754,8 +2782,8 @@ async function runTrackSession(kind) {
 
     const stats = kind === 'flash'
       ? [{ label: 'Remembered', value: passes + ' / ' + trials },
-         { label: 'Step', value: (trackRung(kind) + 1) + ' / ' + def.steps.length, red: moved === 'up' || moved === 'top' },
-         { label: 'Numbers', value: String(n) }]
+         { label: 'Numbers', value: String(n), red: moved === 'up' && trackStep(kind, trackRung(kind)).n > n },
+         { label: 'Flash', value: comma(step.h) + 'ms', red: moved === 'up' && trackStep(kind, trackRung(kind)).n === n }]
       : [{ label: 'All correct', value: clean + ' / ' + trials },
          { label: 'Fast enough too', value: passes + ' / ' + trials, red: moved === 'up' || moved === 'top' },
          { label: 'Fastest clean', value: fastest === null ? '—' : secs(fastest) }];
@@ -2801,10 +2829,12 @@ function trackCurveSVG(kind) {
   const doneIdx = t.completedAt ? sessions.findIndex(sn => sn.date >= t.completedAt || sn.sets.some(st => st.rung === maxR && st.rate >= STEP_UP)) : -1;
 
   let g = '';
-  def.steps.forEach((num, r) => {
+  def.steps.forEach((st, r) => {
+    const lastOfStage = r === maxR || def.steps[r + 1].n !== st.n;
+    if (!lastOfStage) return;
     g += '<line x1="' + L + '" y1="' + y(r) + '" x2="' + (W - R) + '" y2="' + y(r) + '" stroke="' + c.rule + '" stroke-width="1"/>';
     g += '<text x="' + (L - 8) + '" y="' + (y(r) + 4) + '" text-anchor="end"' + mono +
-         ' font-size="9" fill="' + (r === maxR ? c.red : c.muted) + '">' + num + (r === maxR ? ' ★' : '') + '</text>';
+         ' font-size="9" fill="' + (r === maxR ? c.red : c.muted) + '">' + st.n + (st.h ? '·' + st.h : '') + (r === maxR ? ' ★' : '') + '</text>';
   });
   const reached = sessions.map(sn => Math.max.apply(null, sn.sets.map(st => st.rung)));
   g += '<polyline points="' + reached.map((r, i) => x(i) + ',' + y(r)).join(' ') + '" fill="none" stroke="' + c.ink + '" stroke-width="2.5"/>';
@@ -2817,7 +2847,7 @@ function trackCurveSVG(kind) {
          ' font-size="9" font-weight="700" fill="' + c.red + '">AYUMU’S LEVEL</text>';
   });
   g += '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" stroke="' + c.ink + '" stroke-width="1.5"/>';
-  const label = 'How many numbers you reached on each visit to ' + def.name.toLowerCase() + ': ' + reached.map(r => def.steps[r]).join(', ') + '.';
+  const label = 'The step you reached on each visit to ' + def.name.toLowerCase() + ': ' + reached.map(r => rungLabel(kind, r)).join('; ') + '.';
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
 
@@ -2837,7 +2867,7 @@ function renderTrack(kind) {
     '<h1 class="t-title" id="training-title">' + esc(def.name) + '</h1>';
 
   if (kind === 'flash') {
-    html += '<p class="t-body">This is Ayumu’s timed game, built up one number at a time. Every step uses his exposure, 210 milliseconds, so you are never practising at a slower speed than his. You start with two numbers, and each time you pass a set, the next set adds one. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
+    html += '<p class="t-body">This is Ayumu’s timed game, built up one number at a time. Each stage is one number count, starting at three. Inside a stage the flash gets shorter with every set you pass, from a full second down to Ayumu’s 210 milliseconds, and only once you land that count at his speed does the next stage add a number and start slow again. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
   } else {
     html += '<p class="t-body">This is Ayumu’s nine, built up one number at a time. Every step uses his standard: the numbers stay on the screen until you tap the lowest one, and a go only counts if you get them all right <em>and</em> your first tap comes within two thirds of a second, which is how fast he commits. You start with three numbers, and each time you pass a set, the next set adds one. When you can do all nine at his pace two sets in a row, the track is complete.</p>';
   }
@@ -2851,11 +2881,12 @@ function renderTrack(kind) {
 
   html += '<h2 class="t-section">Where you are</h2>';
   let pips = '';
-  def.steps.forEach((num, i) => {
+  def.steps.forEach((st, i) => {
     pips += '<div class="rung-pip ' + (i < rung ? 'done' : (i === rung ? 'here' : '')) + '" style="height:' + Math.round(30 + 70 * (i / (def.steps.length - 1))) + '%"></div>';
   });
+  const si = stageInfo(kind, rung);
   html += '<div class="rung-strip" role="img" aria-label="Step ' + (rung + 1) + ' of ' + def.steps.length + '">' + pips + '</div>' +
-    '<p class="score-line">Step <b>' + (rung + 1) + ' / ' + def.steps.length + '</b> · <b>' + esc(rungLabel(kind, rung)) + '</b>' +
+    '<p class="score-line">Stage <b>' + si.stage + ' / ' + si.stages + '</b>' + (si.subs > 1 ? ' · step <b>' + si.sub + ' / ' + si.subs + '</b>' : '') + ' · <b>' + esc(rungLabel(kind, rung)) + '</b>' +
     (rung === trackTop(kind) && t.topStreak && !t.completedAt ? ' · <b>' + t.topStreak + ' of ' + COMPLETE_SETS + '</b> passes at the top' : '') + '</p>';
 
   html += '<div class="btn-row"><button class="btn primary" id="btn-track-start">' +
@@ -2864,7 +2895,7 @@ function renderTrack(kind) {
 
   if (sessions.length) {
     html += '<h2 class="t-section" style="margin-top:44px;">Your progress</h2>' +
-      '<div class="t-label">Numbers reached, each visit</div>' +
+      '<div class="t-label">Step reached, each visit</div>' +
       '<div class="chart-panel">' + trackCurveSVG(kind) + '</div>';
     if (kind === 'nine') {
       const best = bestNineMs();
@@ -2872,11 +2903,11 @@ function renderTrack(kind) {
         '<p class="chart-note">Your fastest clean run at all nine against Ayumu’s. It only starts filling in once you reach the top step.</p>';
     }
     html += '<h2 class="t-section" style="margin-top:40px;">Every visit</h2>' +
-      '<table class="ladder-table"><thead><tr><th>Date</th><th>Sets</th><th>Numbers</th><th>Best set</th></tr></thead><tbody>';
+      '<table class="ladder-table"><thead><tr><th>Date</th><th>Sets</th><th>Reached</th><th>Best set</th></tr></thead><tbody>';
     sessions.slice().reverse().forEach(sn => {
       const bestRate = Math.max.apply(null, sn.sets.map(st => st.rate));
       html += '<tr><td>' + esc(fmtDateShort(sn.date)) + '</td><td>' + sn.sets.length + '</td>' +
-        '<td>' + def.steps[sn.startRung] + ' → ' + def.steps[sn.endRung != null ? sn.endRung : sn.startRung] + '</td>' +
+        '<td>' + esc(rungLabel(kind, sn.endRung != null ? sn.endRung : sn.startRung)) + '</td>' +
         '<td>' + pct(bestRate) + '%</td></tr>';
     });
     html += '</tbody></table>';
@@ -2931,9 +2962,9 @@ function shareTagline(kind) {
 
 /* The Flash card: your five-number score against Ayumu’s 80%. */
 function flashShareLines() {
-  const best = bestPassedN('flash');
+  const best = bestPassedRung('flash');
   if (trackComplete('flash')) return { big: ['Ayumu: five in 210ms.', 'Me: five in 210ms.'], sub: 'THE AYUMU TRAINING ROOM' };
-  if (best) return { big: ['Ayumu: five in 210ms.', 'Me so far: ' + best + ' in 210ms.'], sub: 'THE AYUMU TRAINING ROOM' };
+  if (best !== null) { const st = trackStep('flash', best); return { big: ['Ayumu: five in 210ms.', 'Me so far: ' + st.n + ' in ' + comma(st.h) + 'ms.'], sub: 'THE AYUMU TRAINING ROOM' }; }
   const f = frontier();
   if (f) return { big: ['Ayumu: five in 210ms.', 'My best: ' + f.n + ' in ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TRAINING ROOM' };
   return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TRAINING ROOM' };
@@ -3353,7 +3384,7 @@ function renderIntroStatus() {
 
   /* The room is behind the sign-in. Signed out, the page explains what is
      here and asks for an email; the doors only appear once you are in. */
-  copy.innerHTML = '<p class="t-body">Ayumu practised his game about five hundred times before anyone wrote a paper about him. This is where you practise yours. There are two tracks, one for each of his games: the timed game, and the nine. Each one raises the number of numbers one step at a time while holding Ayumu’s own standard at every step, so when you reach the top, you are at his level.</p>' +
+  copy.innerHTML = '<p class="t-body">Ayumu practised his game about five hundred times before anyone wrote a paper about him. This is where you practise yours. There are two tracks, one for each of his games: the timed game, and the nine. Each one adds a number only once you have met Ayumu’s own standard at the count before, so when you reach the top, you are at his level.</p>' +
     (signedIn
       ? '<p class="t-body">Pick one track and train it consistently. Switching back and forth slows both down, so stay on one until it is complete.</p>'
       : '<p class="t-body">Your progress is saved to your email address, so you can pick up on any phone or computer. Sign in below to open the room.</p>');
@@ -3512,7 +3543,7 @@ if (DEV) {
         const d = new Date(Date.now() - (n - i) * 86400000).toISOString();
         const rung = Math.min(def.steps.length - 1, i);
         out.push({ date: d, startRung: Math.max(0, rung - 1), endRung: rung,
-          sets: [{ rung, n: def.steps[rung], passes: 5, trials: 6, clean: 5, fastest: kind === 'nine' ? 640 : null, rate: 5 / 6 }] });
+          sets: [{ rung, n: def.steps[rung].n, h: def.steps[rung].h, passes: 5, trials: 6, clean: 5, fastest: kind === 'nine' ? 640 : null, rate: 5 / 6 }] });
       }
       store.tracks[kind].sessions = out;
       store.tracks[kind].rung = out[out.length - 1].endRung;
