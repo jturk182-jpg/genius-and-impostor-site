@@ -580,6 +580,9 @@
       letter-spacing: 0.08em;
       color: var(--muted);
       line-height: 1.5;
+      /* Three lines reserved, so a longer prompt never resizes the board
+         mid-round; the canvas above is measured once per round. */
+      min-height: calc(3 * 1.5em);
     }
 
     .stage-prompt.alert { color: var(--red); font-weight: 700; }
@@ -1998,8 +2001,14 @@ function acceptingTaps() {
 board.addEventListener('pointerdown', e => {
   if (!acceptingTaps()) return;
   usingKeyboard = false;
+  /* Map the tap through the canvas's real on-screen size. The canvas is
+     sized once per round; if anything around it changes height afterwards
+     the browser scales the drawing, and an unscaled tap would land above
+     or below the tile it was aimed at (JT's phone, 2026-09-14). */
   const r = board.getBoundingClientRect();
-  const i = hitTest(e.clientX - r.left, e.clientY - r.top);
+  const sx = r.width ? field.w / r.width : 1;
+  const sy = r.height ? field.h / r.height : 1;
+  const i = hitTest((e.clientX - r.left) * sx, (e.clientY - r.top) * sy);
   if (i !== null) resolveTap(i);
 });
 
