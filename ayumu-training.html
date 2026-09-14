@@ -1165,24 +1165,19 @@
       <section class="view" id="view-intro" aria-labelledby="intro-title">
         <h1 class="t-title" id="intro-title">How far can practice take you?</h1>
         <p class="t-subtitle">The Ayumu Training Room</p>
-        <p class="t-body">Ayumu practised his game about five hundred times before anyone wrote a paper about him. This is where you practise yours. The Training Room raises the difficulty one step at a time, the dials let you set any number of numbers at any flash length, and the nine has a clock of its own.</p>
+        <div id="intro-copy"></div>
         <div id="signin-box"></div>
         <div id="intro-status"></div>
-        <div class="btn-row" style="margin-top: 24px;">
-          <button class="btn primary" id="btn-go-training">Training Room</button>
-          <button class="btn" id="btn-go-sandbox">The dials</button>
-          <button class="btn" id="btn-go-nine">The nine</button>
+        <div class="btn-row" id="intro-doors" style="margin-top: 24px;">
+          <button class="btn primary" id="btn-go-flash">Train the timed game</button>
+          <button class="btn primary" id="btn-go-nine">Train the nine</button>
+          <button class="btn ghost" id="btn-go-sandbox">The dials</button>
           <a class="btn ghost" data-game="ayumu-test" href="ayumu-test.html">The Ayumu Test</a>
         </div>
         <div class="pref-row">
           <label class="pref-toggle"><input type="checkbox" id="pref-hc"> Higher contrast</label>
           <span class="t-quiet">Works best on a screen you can hold still, turned up bright.</span>
         </div>
-      </section>
-
-      <!-- ============ THE NINE: its own result ============ -->
-      <section class="view" id="view-nine" aria-labelledby="nine-headline">
-        <div id="nine-body"></div>
       </section>
 
       <!-- ============ THE DIALS (sandbox) ============ -->
@@ -1315,22 +1310,46 @@ const NUMERAL_STEPS = [3, 4, 5, 6, 7, 8, 9];
 const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
 /* The dials run one try per press, so there is no block size any more. */
 
-/* The training ladder for the TIMED task. Numbers first, then speed, and
-   it passes through Ayumu’s real fixed condition (five at 210) rather than
-   the old phantom nine-at-210. Everything past AYUMU_RUNG is genuinely
-   harder than anything Ayumu was measured on. */
-const LADDER = [
-  { n: 3, h: 1000 }, { n: 4, h: 1000 }, { n: 5, h: 1000 },  /* build to five  */
-  { n: 5, h: 650 },  { n: 5, h: 430 },  { n: 5, h: 290 },   /* take time away */
-  { n: 5, h: 210 },                                          /* MATCH AYUMU    */
-  { n: 6, h: 210 },  { n: 7, h: 210 },  { n: 8, h: 210 }, { n: 9, h: 210 }  /* beyond him */
-];
-const AYUMU_RUNG = 6;   /* index of 5 numbers at 210ms in LADDER */
+/* ────────────────────────────────────────────────────────────────
+   THE TWO TRACKS (JT, 2026-09-14). One machine, two ladders.
 
-const BLOCK_TRIALS = 6;
-const BLOCKS_PER_SESSION = 3;
-const RUNG_UP = 0.80;        /* top of the Goldilocks Zone: move up */
-const RUNG_DOWN = 0.34;      /* well under it: drop back a rung */
+   Each track is a ladder over HOW MANY numbers, with Ayumu's standard held
+   fixed at every step:
+     timed  2 → 3 → 4 → 5 numbers, each flashed for 210ms (his exposure)
+     nine   3 → 4 → … → 9 numbers, self-paced, a go passes only if it is
+            clean AND the first tap comes within 670ms (his commit time)
+   A set is SET_TRIES goes. Pass STEP_UP of a set and you move up a step;
+   fall to STEP_DOWN or worse and you drop back one. Reaching the top step
+   and passing COMPLETE_SETS sets in a row there is "done": the timed track
+   stops at five (Ayumu's own condition; going beyond him adds nothing to
+   the argument), the nine stops at nine. Players pick a track and are told
+   to stay on it.
+   ──────────────────────────────────────────────────────────────── */
+const TRACKS = {
+  flash: {
+    key: 'flash',
+    name: 'The timed game',
+    short: 'Timed',
+    steps: [2, 3, 4, 5],
+    standard: 'Ayumu’s 210 milliseconds',
+    stepLabel: n => n + ' numbers at 210ms',
+    passWord: 'remembered'
+  },
+  nine: {
+    key: 'nine',
+    name: 'The nine',
+    short: 'The nine',
+    steps: [3, 4, 5, 6, 7, 8, 9],
+    standard: 'Ayumu’s two thirds of a second',
+    stepLabel: n => n + ' numbers, first tap within ' + secs(AYUMU_COMMIT_MS),
+    passWord: 'clean and fast enough'
+  }
+};
+const SET_TRIES = 6;
+const SETS_PER_SESSION = 3;
+const STEP_UP = 0.80;        /* pass rate that earns the next step */
+const STEP_DOWN = 0.34;      /* pass rate that drops you back one */
+const COMPLETE_SETS = 2;     /* passes in a row at the top step = done */
 
 /* Layout. The whole non-overlap guarantee rests on these plus planGrid(). */
 const MIN_TILE = 44;         /* never smaller than a comfortable touch target */
@@ -1351,42 +1370,38 @@ const DEV = LOCAL_HOST && new URLSearchParams(location.search).has('dev');
    2. STORAGE
    ================================================================ */
 
-const STORE_KEY = 'giAyumu.v2';
-const PENDING_TTL_DAYS = 7;
+const STORE_KEY = 'giAyumuTraining.v1';
+
+function blankTrack() { return { rung: 0, sessions: [], topStreak: 0, completedAt: null }; }
 
 function blankStore() {
   return {
-    /* Task 2: the self-paced Nine. {bestMs, bestDate, perfects, tries, log} */
-    nine: null,
-    attempt: null,     /* the scored Flash: {date, hits, trials, acc, log} */
-    pending: null,     /* an attempt in progress */
-    map: {},           /* "9x210" -> {tries, wins} from the dials and training */
-    training: { rung: null, sessions: [] },
+    tracks: { flash: blankTrack(), nine: blankTrack() },
+    map: {},           /* "9x210" -> {tries, wins} from the dials */
     prefs: { hc: false }
   };
+}
+
+function normalizeStore(s) {
+  if (!s || typeof s !== 'object') return null;
+  if (!s.tracks || typeof s.tracks !== 'object') s.tracks = {};
+  ['flash', 'nine'].forEach(k => {
+    const t = s.tracks[k] || (s.tracks[k] = blankTrack());
+    if (!Array.isArray(t.sessions)) t.sessions = [];
+    if (typeof t.rung !== 'number') t.rung = 0;
+    if (typeof t.topStreak !== 'number') t.topStreak = 0;
+    if (t.completedAt === undefined) t.completedAt = null;
+  });
+  if (!s.map || typeof s.map !== 'object') s.map = {};
+  if (!s.prefs) s.prefs = { hc: false };
+  return s;
 }
 
 function loadStore() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) return null;
-    const s = JSON.parse(raw);
-    if (!s || typeof s !== 'object') return null;
-    if (!s.map || typeof s.map !== 'object') s.map = {};
-    if (!s.training) s.training = { rung: null, sessions: [] };
-    if (!Array.isArray(s.training.sessions)) s.training.sessions = [];
-    if (!s.prefs) s.prefs = { hc: false };
-    if (s.attempt === undefined) s.attempt = null;
-    if (s.nine === undefined) s.nine = null;
-    if (s.nine && !Array.isArray(s.nine.sessions)) s.nine.sessions = [];
-    if (s.pending === undefined) s.pending = null;
-    /* Don’t greet someone with a resume prompt for something they walked
-       away from months ago. */
-    if (s.pending && s.pending.lastSaved) {
-      const age = (Date.now() - new Date(s.pending.lastSaved).getTime()) / 86400000;
-      if (!(age >= 0) || age > PENDING_TTL_DAYS) s.pending = null;
-    }
-    return s;
+    return normalizeStore(JSON.parse(raw));
   } catch (e) {
     return null;
   }
@@ -1403,7 +1418,7 @@ function saveStore() {
 }
 
 /* ================================================================
-   3. THE MAP: every setting anyone has tried
+   3. THE MAP: every setting anyone has tried on the dials
    ================================================================ */
 
 function mapKey(n, h) { return n + 'x' + h; }
@@ -1418,9 +1433,8 @@ function mapRecord(n, h, wins, tries) {
   store.map[k] = cur;
 }
 
-/* The furthest they have got: most numbers cleared anywhere, and at that
-   number of numbers, the shortest flash they have managed. Written to cope
-   with someone who has never once cleared nine. */
+/* The furthest they have got on the dials: most numbers cleared anywhere,
+   and at that number of numbers, the shortest flash they have managed. */
 function frontier() {
   let bestN = 0, bestHold = null;
   Object.keys(store.map).forEach(k => {
@@ -1431,26 +1445,7 @@ function frontier() {
     if (n > bestN) { bestN = n; bestHold = h; }
     else if (n === bestN && (bestHold === null || h < bestHold)) { bestHold = h; }
   });
-  /* The scored attempt counts too, for anyone who landed one there. */
-  if (store.attempt && store.attempt.hits > 0 && FLASH_N >= bestN) {
-    if (FLASH_N > bestN || bestHold === null || FLASH_HOLD < bestHold) {
-      bestN = FLASH_N; bestHold = FLASH_HOLD;
-    }
-  }
   return bestN ? { n: bestN, hold: bestHold } : null;
-}
-
-/* Fastest flash cleared at nine numbers specifically, or null. */
-function bestAtNine() {
-  let best = null;
-  HOLD_STEPS.forEach(h => {
-    const c = mapGet(FLASH_N, h);
-    if (c && c.wins && (best === null || h < best)) best = h;
-  });
-  if (store.attempt && store.attempt.hits > 0) {
-    if (best === null || FLASH_HOLD < best) best = FLASH_HOLD;
-  }
-  return best;
 }
 
 /* ================================================================
@@ -2207,8 +2202,8 @@ function secs(ms) { return (ms / 1000).toFixed(2) + 's'; }
    window rather than a controlled exposure.
    ================================================================ */
 
-async function runNineTrial() {
-  trial = makeTrial(NINE_N);
+async function runNineTrial(n) {
+  trial = makeTrial(n || NINE_N);
   kbFocus = -1;
 
   phase = 'ready';
@@ -2227,7 +2222,7 @@ async function runNineTrial() {
   }));
   if (aborted) return null;
 
-  setPrompt('Take your time looking, then tap the 1. The moment you do, the other eight will hide.');
+  setPrompt('Take your time looking, then tap the lowest number. The moment you do, the rest will hide.');
 
   let commitMs = null;
   while (!trial.done && !trial.failed) {
@@ -2274,7 +2269,7 @@ async function runNineTrial() {
   }
 
   const success = trial.done && !trial.failed;
-  setPrompt(success ? 'All nine, and you committed in ' + secs(commitMs) + '.' : 'You lost it at number ' + trial.errorAt + '.', !success);
+  setPrompt(success ? 'All ' + trial.items.length + ', and you committed in ' + secs(commitMs) + '.' : 'You lost it at number ' + trial.errorAt + '.', !success);
 
   /* Always show the board back: this task is meant to be learnable. */
   phase = 'reveal';
@@ -2286,57 +2281,6 @@ async function runNineTrial() {
   phase = 'idle';
   render();
   return { success: success, commitMs: Math.round(commitMs), errorAt: trial.errorAt };
-}
-
-async function runNineSession() {
-  aborted = false;
-  showPlay();
-  layoutField();
-  await document.fonts.ready;
-
-  const prev = store.nine || { bestMs: null, bestDate: null, perfects: 0, tries: 0, log: [] };
-  const go = await card({
-    label: 'The nine',
-    title: 'One through nine, from memory',
-    body: '<p>This time, all nine numbers appear on the screen at once, and they stay there. There is no flash to worry about, and you can look at them for as long as you like.</p>' +
-          '<p>When you feel ready, tap the <strong>1</strong>. The moment you do, the other eight numbers turn blank, and your job is to tap the rest of the tiles in order from memory: 2, then 3, and so on up to 9.</p>' +
-          '<p>We are timing how long you look before you tap the 1. So once you can get all nine, see how quickly you can commit. Ayumu has a time on this too, and you will find out what it is when you are done.</p>',
-    actions: [{ text: 'Start', value: 'go', primary: true }, { text: 'Not now', value: 'quit', ghost: true }]
-  });
-  if (aborted || go !== 'go') return null;
-
-  const results = [];
-  for (let i = 0; i < NINE_TRIES; i++) {
-    setHud('THE NINE', 'GO ' + (i + 1) + ' / ' + NINE_TRIES, 'ALL NINE');
-    const t = await runNineTrial();
-    if (aborted || !t) break;
-    results.push(t);
-  }
-  if (!results.length) return null;
-
-  const perfects = results.filter(r => r.success);
-  const bestNow = perfects.length ? Math.min.apply(null, perfects.map(r => r.commitMs)) : null;
-
-  const rec = {
-    bestMs: prev.bestMs === null ? bestNow : (bestNow === null ? prev.bestMs : Math.min(prev.bestMs, bestNow)),
-    bestDate: (bestNow !== null && (prev.bestMs === null || bestNow < prev.bestMs)) ? new Date().toISOString() : prev.bestDate,
-    perfects: prev.perfects + perfects.length,
-    tries: prev.tries + results.length,
-    log: prev.log.concat(results.map(r => ({ ok: r.success, ms: r.commitMs }))).slice(-60),
-    /* One entry per sitting, for the commit-time curve. bestMs null if no
-       clean run that day, so the curve can skip it rather than plot a lie. */
-    sessions: (prev.sessions || []).concat([{
-      date: new Date().toISOString(), bestMs: bestNow,
-      perfects: perfects.length, tries: results.length
-    }]).slice(-40)
-  };
-  store.nine = rec;
-  saveStore();
-
-  /* No summary card here: the Nine's own results screen (renderNine) follows
-     straight after, and the two used to say the same thing twice. */
-  rec.lastSitting = { perfects: perfects.length, tries: results.length, bestMs: bestNow };
-  return rec;
 }
 
 /* ================================================================
@@ -2407,139 +2351,6 @@ function nineBarsSVG(rec) {
 /* The commit-time curve: your best time each sitting, dropping toward
    Ayumu’s line. Sittings with no clean run are skipped rather than plotted
    as a spike. Lower is better, so the axis runs fast at the top. */
-function nineCurveSVG() {
-  const pts = (store.nine.sessions || []).filter(s => s.bestMs !== null);
-  if (pts.length < 2) return '';
-  const c = colors();
-  const W = 380, H = 220, L = 46, R = 22, T = 26, B = 40;
-  const plotW = W - L - R, plotH = H - T - B;
-  const mono = ' font-family="Space Mono, monospace"';
-  const times = pts.map(p => p.bestMs).concat([AYUMU_COMMIT_MS]);
-  const hi = Math.max.apply(null, times) * 1.08;
-  const lo = Math.min(Math.min.apply(null, times), AYUMU_COMMIT_MS) * 0.9;
-  const n = pts.length;
-  const x = i => L + (n === 1 ? plotW / 2 : plotW * (i / (n - 1)));
-  const y = ms => T + plotH * ((ms - lo) / (hi - lo));   /* fast (small) at top */
-
-  let g = '';
-  /* Ayumu’s line, and the crossing the first time you dip under it. */
-  g += '<line x1="' + L + '" y1="' + y(AYUMU_COMMIT_MS) + '" x2="' + (W - R) + '" y2="' + y(AYUMU_COMMIT_MS) +
-       '" stroke="' + c.red + '" stroke-width="2" stroke-dasharray="6 4"/>';
-  g += '<text x="' + (W - R) + '" y="' + (y(AYUMU_COMMIT_MS) - 7) + '" text-anchor="end"' + mono +
-       ' font-size="10" font-weight="700" fill="' + c.red + '">AYUMU ' + secs(AYUMU_COMMIT_MS) + '</text>';
-
-  const line = pts.map((p, i) => x(i) + ',' + y(p.bestMs)).join(' ');
-  g += '<polyline points="' + line + '" fill="none" stroke="' + c.ink + '" stroke-width="2.5"/>';
-  let crossed = false;
-  pts.forEach((p, i) => {
-    const isCross = !crossed && p.bestMs <= AYUMU_COMMIT_MS;
-    if (isCross) crossed = true;
-    g += '<circle cx="' + x(i) + '" cy="' + y(p.bestMs) + '" r="' + (isCross ? 6 : 4) + '" fill="' +
-         (isCross ? c.red : c.ink) + '" stroke="#fff" stroke-width="1.5"/>';
-    g += '<text x="' + x(i) + '" y="' + (H - B + 18) + '" text-anchor="middle"' + mono +
-         ' font-size="9" fill="' + c.muted + '">' + esc(fmtDateShort(p.date)) + '</text>';
-    if (isCross) {
-      g += '<text x="' + x(i) + '" y="' + (y(p.bestMs) - 12) + '" text-anchor="middle"' + mono +
-           ' font-size="9" font-weight="700" fill="' + c.red + '">CAUGHT HIM</text>';
-    }
-  });
-  /* newest best, labelled */
-  const last = pts[pts.length - 1];
-  g += '<text x="' + (x(n - 1) - 8) + '" y="' + (y(last.bestMs) + 4) + '" text-anchor="end"' + mono +
-       ' font-size="11" font-weight="700" fill="' + c.ink + '">' + secs(last.bestMs) + '</text>';
-
-  const label = 'Your fastest clean run each sitting, from ' + secs(pts[0].bestMs) + ' down to ' +
-    secs(last.bestMs) + ', against Ayumu at ' + secs(AYUMU_COMMIT_MS) + '.';
-  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
-}
-
-/* When the Nine is played as part of the first run, its results screen ends
-   with one button that carries on to the explanation. `nineFlow` holds the
-   resolver for that button while the screen is up. */
-let nineFlow = null;
-
-function showNineAndWait() {
-  return new Promise(res => {
-    nineFlow = res;
-    renderNine({ keep: true });
-    showView('view-nine');
-  });
-}
-
-function renderNine(opts) {
-  if (!(opts && opts.keep)) nineFlow = null;
-  const rec = store.nine;
-  const el = document.getElementById('nine-body');
-  if (!rec) { boot(); return; }
-
-  const mine = rec.bestMs;
-  const beat = mine !== null && mine <= AYUMU_COMMIT_MS;
-  let html = '<p class="t-eyebrow">All nine · you set the clock</p>';
-
-  html += '<h1 class="t-headline" id="nine-headline">' + (mine === null
-    ? 'Getting all nine is the first hurdle.'
-    : 'Ayumu: ' + secs(AYUMU_COMMIT_MS) + '.<br>You: ' + secs(mine) + '.') + '</h1>';
-
-  const sit = rec.lastSitting;
-  html += '<p class="score-line"><b>' + rec.perfects + ' of ' + rec.tries + '</b> clean runs' +
-    (nineFlow && sit ? '' : (sit ? ' · this sitting <b>' + sit.perfects + ' of ' + sit.tries + '</b>' : '')) + '</p>';
-
-  html += '<div class="t-label' + (beat ? ' red' : '') + '">Commit time' + (beat ? ' · you matched him' : '') + '</div>' +
-    '<div class="chart-panel">' + nineBarsSVG(rec) + '</div>' +
-    '<p class="chart-note">The numbers stay on the screen until you touch the 1, so this is a time you chose for yourself rather than one the game imposed on you. Ayumu starts in well under a second and almost always gets all nine.</p>';
-
-  let nineLine;
-  if (mine === null) {
-    nineLine = 'The first goal is to get all nine in the right order, no matter how long you look before you start. ' + (nineFlow
-      ? 'The next time you play, take as long as you like, land one clean run, and then start working on your time. '
-      : 'Take as long as you like, land one clean run, and then start working on your time. ') +
-      'Once you have a time on the board, you will see how it compares with Ayumu’s.';
-  } else if (beat) {
-    nineLine = 'Amazing! Ayumu commits to the 1 in about two thirds of a second and almost never misses, and you matched him, which makes you a rare human specimen.';
-  } else {
-    const ratio = mine / AYUMU_COMMIT_MS;
-    const faster = ratio >= 1.95
-      ? (ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10) + ' times faster than your best'
-      : (ratio >= 1.15 ? Math.round((ratio - 1) * 100) + '% faster than your best' : 'just a little faster than your best');
-    nineLine = 'So here is the news. Ayumu commits to the 1 in about <strong>two thirds of a second</strong>, which is ' + faster +
-      ', and he still gets all nine almost every time. ' + (nineFlow
-        ? 'The next time you play, try tapping the 1 a little sooner on each go until you find the point where it falls apart. '
-        : 'Now see if you can close that gap. Tap the 1 a little sooner on each go until you find the point where it falls apart. ') +
-      'That point is your current edge, and it will move with practice.';
-  }
-  html += '<p class="t-body">' + nineLine + '</p>';
-
-  /* The commit-time curve, once there are two sittings to draw a line
-     between. This is the Nine’s answer to the Flash’s learning curve. */
-  const curve = nineCurveSVG();
-  if (curve) {
-    html += '<h2 class="t-section" style="margin-top:40px;">Your times, sitting by sitting</h2>' +
-      '<div class="chart-panel">' + curve + '</div>' +
-      '<p class="chart-note">Every sitting where you landed at least one clean nine, plotted by your fastest that day.</p>';
-  }
-
-  if (nineFlow) {
-    /* First run: the only way forward is the explanation. */
-    html += '<div class="btn-row" style="margin-top:28px;">' +
-      '<button class="btn primary" id="btn-nine-flow-next">So what just happened?</button>' +
-      '</div>';
-  } else {
-    html += '<div class="btn-row" style="margin-top:28px;">' +
-      '<button class="btn primary" id="btn-nine-again">Go again</button>' +
-      '<button class="btn" id="btn-nine-to-training">Back to the Training Room</button>' +
-      '<a class="btn ghost" href="ayumu-science.html">Why he wins</a>' +
-      '</div>';
-  }
-
-  el.innerHTML = html;
-  const flowNext = document.getElementById('btn-nine-flow-next');
-  if (flowNext) flowNext.addEventListener('click', () => { const r = nineFlow; nineFlow = null; if (r) r('go'); });
-  const again = document.getElementById('btn-nine-again');
-  if (again) again.addEventListener('click', startNine);
-  const back = document.getElementById('btn-nine-to-training');
-  if (back) back.addEventListener('click', () => { renderTraining(); showView('view-training'); });
-}
-
 /* ================================================================
    13. THE MAP AND THE DIALS
    ================================================================ */
@@ -2722,9 +2533,9 @@ function renderSandbox() {
     '<div id="sandbox-map"></div>';
 
   html += '<h2 class="t-section" style="margin-top:44px;">Want a plan instead of a playground?</h2>' +
-    '<p class="t-body">The Training Room walks the difficulty up for you, starting somewhere you can already win and nudging it along as you hold your own.</p>' +
+    '<p class="t-body">The two training tracks walk the difficulty up for you, one number at a time, with Ayumu’s standard held at every step.</p>' +
     '<div class="btn-row">' +
-    '<button class="btn" id="btn-sandbox-training">Open the Training Room</button>' +
+    '<button class="btn" id="btn-sandbox-training">Back to the tracks</button>' +
     '</div>';
 
   el.innerHTML = html;
@@ -2755,7 +2566,7 @@ function renderSandbox() {
   document.getElementById('dial-h-down').addEventListener('click', () => bump('h', -1));
   document.getElementById('dial-h-up').addEventListener('click', () => bump('h', 1));
   document.getElementById('btn-sandbox-go').addEventListener('click', sandboxGo);
-  document.getElementById('btn-sandbox-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
+  document.getElementById('btn-sandbox-training').addEventListener('click', () => { boot(); });
 }
 
 /* ONE ROUND, IN PLACE (rebuilt 2026-08-05 on JT’s call). This used to be a
@@ -2810,290 +2621,282 @@ async function sandboxGo() {
    Needed because the map runs out to 2 seconds while the ladder starts at 1,
    so comparing hold against hold alone would call every slow success a
    beginner. */
+/* One number for how hard a dials setting is, used by the map's "your number"
+   readout to compare a setting against Ayumu's five at 210. */
 function difficulty(n, h) {
   return n + 1.5 * Math.log2(1000 / h);
 }
 
-/* Start from what they have actually cleared, read off the map rather than
-   guessed from their one impossible round. Ties break easy: the ladder
-   climbs a step per good set, so starting a notch low costs one set, while
-   starting too high costs several demoralising ones. */
-function entryRung() {
-  const f = frontier();
-  if (!f) return 0;
-  const ceiling = difficulty(f.n, f.hold);
-  let best = 0;
-  LADDER.forEach((r, i) => {
-    if (difficulty(r.n, r.h) <= ceiling) best = i;
-  });
+function track(kind) { return store.tracks[kind]; }
+function trackDef(kind) { return TRACKS[kind]; }
+function trackTop(kind) { return TRACKS[kind].steps.length - 1; }
+function trackRung(kind) {
+  const r = track(kind).rung;
+  return Math.max(0, Math.min(trackTop(kind), typeof r === 'number' ? r : 0));
+}
+function trackN(kind, rung) { return TRACKS[kind].steps[rung]; }
+function trackComplete(kind) { return !!track(kind).completedAt; }
+function rungLabel(kind, i) { return TRACKS[kind].stepLabel(TRACKS[kind].steps[i]); }
+
+/* Highest step where a set has ever been passed, for "your best so far". */
+function bestPassedN(kind) {
+  let best = null;
+  track(kind).sessions.forEach(sn => sn.sets.forEach(st => {
+    if (st.trials && st.passes / st.trials >= STEP_UP && (best === null || st.n > best)) best = st.n;
+  }));
   return best;
 }
 
-function furthestRung() {
-  let m = 0;
-  store.training.sessions.forEach(s => s.blocks.forEach(b => { if (b.rung > m) m = b.rung; }));
-  return m;
+/* Fastest clean commit at the full nine, for the share card. */
+function bestNineMs() {
+  let best = null;
+  track('nine').sessions.forEach(sn => sn.sets.forEach(st => {
+    if (st.n === NINE_N && st.fastest !== null && (best === null || st.fastest < best)) best = st.fastest;
+  }));
+  return best;
 }
 
-function currentRung() {
-  const r = store.training.rung;
-  return r === null ? entryRung() : Math.max(0, Math.min(LADDER.length - 1, r));
+/* One go on a track. Returns {valid, pass, clean, ms} or null on quit. */
+async function runTrackGo(kind, n) {
+  if (kind === 'flash') {
+    const t = await runTrial(n, FLASH_HOLD, { reveal: true });
+    if (!t) return null;
+    return { valid: t.valid, pass: !!(t.valid && t.success), clean: !!t.success, ms: null };
+  }
+  const r = await runNineTrial(n);
+  if (!r) return null;
+  return { valid: true, pass: !!(r.success && r.commitMs <= AYUMU_COMMIT_MS), clean: !!r.success, ms: r.commitMs };
 }
 
-function rungLabel(i) {
-  const r = LADDER[i];
-  return r.n + ' numbers · ' + comma(r.h) + 'ms';
+function trackIntroBody(kind, n, first) {
+  if (kind === 'flash') {
+    return '<p>' + n + ' numbers will flash up for 210 milliseconds, which is exactly how long Ayumu gets, and then turn blank. Tap where they were, smallest first.</p>' +
+      '<p>You get ' + SET_TRIES + ' goes in this set. Land ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and the next set adds a number. If it turns out to be too much, the ladder brings you back down a step.</p>';
+  }
+  return '<p>' + n + ' numbers appear on the screen and stay there until you tap the lowest one. Then the rest turn blank and you tap them in order from memory.</p>' +
+    '<p>A go counts as a pass only if you get every number right <em>and</em> your first tap comes within ' + secs(AYUMU_COMMIT_MS) + ', which is Ayumu’s time. You get ' + SET_TRIES + ' goes in this set. Pass ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and the next set adds a number.</p>';
 }
 
-async function runTrainingSession() {
+async function runTrackSession(kind) {
+  const def = trackDef(kind);
+  const t = track(kind);
   aborted = false;
   showPlay();
   layoutField();
-  if (!await ensureTiming()) return { blocks: [] };
+  if (kind === 'flash' && !await ensureTiming()) return null;
+  await document.fonts.ready;
 
-  const session = { date: new Date().toISOString(), blocks: [], startRung: currentRung() };
-  let blocks = 0;
+  const session = { date: new Date().toISOString(), startRung: trackRung(kind), sets: [] };
+  let sets = 0;
+  let justCompleted = false;
 
   while (true) {
-    const rung = currentRung();
-    const cfg = LADDER[rung];
+    const rung = trackRung(kind);
+    const n = trackN(kind, rung);
 
     const go = await card({
-      label: 'Step ' + (rung + 1) + ' of ' + LADDER.length,
-      title: cfg.n + ' numbers in ' + comma(cfg.h) + ' milliseconds',
-      body: '<p>You will get ' + BLOCK_TRIALS + ' tries at this setting. If you land most of them, the next step will get a little harder, and if it turns out to be too much, the ladder will bring you back down a step.</p>',
+      label: def.name + ' · step ' + (rung + 1) + ' of ' + def.steps.length,
+      title: rungLabel(kind, rung),
+      body: trackIntroBody(kind, n, sets === 0),
       actions: [
-        { text: blocks === 0 ? 'Go' : 'Next set', value: 'go', primary: true },
+        { text: sets === 0 ? 'Go' : 'Next set', value: 'go', primary: true },
         { text: 'That is enough for today', value: 'stop', ghost: true }
       ]
     });
     if (aborted || go !== 'go') break;
 
-    let valid = 0, attempts = 0, hits = 0;
-    while (valid < BLOCK_TRIALS && attempts < BLOCK_TRIALS + MAX_REPLACEMENTS) {
+    let trials = 0, attempts = 0, passes = 0, clean = 0, fastest = null;
+    while (trials < SET_TRIES && attempts < SET_TRIES + MAX_REPLACEMENTS) {
       attempts++;
-      setHud('TRAINING · STEP ' + (rung + 1), 'TRY ' + (valid + 1) + ' / ' + BLOCK_TRIALS, cfg.n + ' · ' + cfg.h + 'MS');
-      const t = await runTrial(cfg.n, cfg.h, { reveal: true });
-      if (aborted || !t) { session.aborted = true; break; }
-      if (t.valid) { valid++; if (t.success) hits++; }
-      else { setPrompt('The screen hiccuped, so that one does not count.', true); await wait(900); }
+      setHud(def.short.toUpperCase() + ' · STEP ' + (rung + 1), 'GO ' + (trials + 1) + ' / ' + SET_TRIES,
+        kind === 'flash' ? n + ' · ' + FLASH_HOLD + 'MS' : n + ' · ' + secs(AYUMU_COMMIT_MS));
+      const r = await runTrackGo(kind, n);
+      if (aborted || !r) { session.aborted = true; break; }
+      if (!r.valid) { setPrompt('The screen hiccuped, so that one does not count.', true); await wait(900); continue; }
+      trials++;
+      if (r.pass) passes++;
+      if (r.clean) clean++;
+      if (r.clean && r.ms !== null && (fastest === null || r.ms < fastest)) fastest = r.ms;
+      if (kind === 'nine' && r.clean && !r.pass && trials < SET_TRIES) {
+        setPrompt('All correct, but ' + secs(r.ms) + ' is slower than Ayumu. Try committing sooner.', false);
+        await wait(1100);
+      }
     }
     if (aborted) break;
 
-    const acc = valid ? hits / valid : 0;
-    session.blocks.push({ rung: rung, numerals: cfg.n, hold: cfg.h, hits: hits, trials: valid, acc: acc });
-    blocks++;
-    if (valid) { mapRecord(cfg.n, cfg.h, hits, valid); }
+    const rate = trials ? passes / trials : 0;
+    session.sets.push({ rung, n, passes, trials, clean, fastest, rate });
+    sets++;
+    if (kind === 'flash' && trials) mapRecord(n, FLASH_HOLD, passes, trials);
 
     let moved = 'held';
-    if (acc >= RUNG_UP && rung < LADDER.length - 1) { store.training.rung = rung + 1; moved = 'up'; }
-    else if (acc <= RUNG_DOWN && rung > 0) { store.training.rung = rung - 1; moved = 'down'; }
+    const top = trackTop(kind);
+    if (rate >= STEP_UP) {
+      if (rung < top) { t.rung = rung + 1; moved = 'up'; t.topStreak = 0; }
+      else {
+        t.topStreak = (t.topStreak || 0) + 1;
+        if (t.topStreak >= COMPLETE_SETS && !t.completedAt) { t.completedAt = new Date().toISOString(); justCompleted = true; }
+        moved = 'top';
+      }
+    } else {
+      if (rung === top) t.topStreak = 0;
+      if (rate <= STEP_DOWN && rung > 0) { t.rung = rung - 1; moved = 'down'; }
+    }
     saveStore();
 
-    const movedCopy = moved === 'up'
-      ? 'You cleared that one, so the next set is ' + rungLabel(currentRung()) + '.'
-      : (moved === 'down'
-        ? 'Back one step, to ' + rungLabel(currentRung()) + '. Training works best when the setting is just a little too hard, so the ladder went looking for that spot.'
-        : 'You are staying here for now. This is the useful zone, where the setting is hard enough to be worth doing and easy enough to land.');
+    let movedCopy;
+    if (moved === 'up') movedCopy = 'You passed that one, so the next set adds a number: ' + rungLabel(kind, trackRung(kind)) + '.';
+    else if (moved === 'down') movedCopy = 'Back one step, to ' + rungLabel(kind, trackRung(kind)) + '. Training works best when the setting is just a little too hard, so the ladder went looking for that spot.';
+    else if (moved === 'top') movedCopy = justCompleted
+      ? 'That is two sets in a row at Ayumu’s level. You have completed this track.'
+      : 'That is the top step, passed. Pass it once more in a row and the track is complete.';
+    else movedCopy = 'You are staying here for now. This is the useful zone, where the setting is hard enough to be worth doing and easy enough to land.';
+
+    const stats = kind === 'flash'
+      ? [{ label: 'Remembered', value: passes + ' / ' + trials },
+         { label: 'Step', value: (trackRung(kind) + 1) + ' / ' + def.steps.length, red: moved === 'up' || moved === 'top' },
+         { label: 'Numbers', value: String(n) }]
+      : [{ label: 'All correct', value: clean + ' / ' + trials },
+         { label: 'Fast enough too', value: passes + ' / ' + trials, red: moved === 'up' || moved === 'top' },
+         { label: 'Fastest clean', value: fastest === null ? '—' : secs(fastest) }];
 
     const more = await card({
-      label: 'Set ' + blocks + ' done',
-      title: hits + ' of ' + valid + ' remembered.',
-      body: statsHTML([
-        { label: 'Got it', value: pct(acc) + '%' },
-        { label: 'Step', value: (currentRung() + 1) + ' / ' + LADDER.length, red: moved === 'up' },
-        { label: 'Setting', value: cfg.n + ' · ' + cfg.h + 'ms' }
-      ]) + '<p style="margin-top:16px;">' + esc(movedCopy) + '</p>',
-      actions: blocks >= BLOCKS_PER_SESSION
+      label: justCompleted ? 'Track complete' : 'Set ' + sets + ' done',
+      title: justCompleted
+        ? 'You are at Ayumu’s level.'
+        : passes + ' of ' + trials + ' ' + def.passWord + '.',
+      body: statsHTML(stats) + '<p style="margin-top:16px;">' + esc(movedCopy) + '</p>',
+      actions: (sets >= SETS_PER_SESSION || justCompleted)
         ? [{ text: 'One more set', value: 'go' }, { text: 'Done for today', value: 'stop', primary: true }]
         : [{ text: 'Next set', value: 'go', primary: true }, { text: 'Done for today', value: 'stop', ghost: true }]
     });
+    justCompleted = false;
     if (aborted || more !== 'go') break;
   }
 
-  if (session.blocks.length) {
-    session.endRung = currentRung();
-    store.training.sessions.push(session);
+  if (session.sets.length) {
+    session.endRung = trackRung(kind);
+    t.sessions.push(session);
     saveStore();
   }
   return session;
 }
 
-function best210(session) {
-  let best = null;
-  session.blocks.forEach(b => {
-    if (b.numerals === FLASH_N && b.hold === FLASH_HOLD) best = best === null ? b.acc : Math.max(best, b.acc);
-  });
-  return best;
-}
-
-function crossings() {
-  const out = { human: null, ayumu: null };
-  store.training.sessions.forEach((s, i) => {
-    const b = best210(s);
-    if (b === null) return;
-    if (out.human === null && b >= HUMAN_HIGH) out.human = i;
-    if (out.ayumu === null && b >= AYUMU_ACC) out.ayumu = i;
-  });
-  return out;
-}
-
-function curveSVG() {
-  const sessions = store.training.sessions;
+/* The step reached per visit, as a line. Marks the visit the track was
+   completed on. */
+function trackCurveSVG(kind) {
+  const def = trackDef(kind);
+  const t = track(kind);
+  const sessions = t.sessions;
+  if (!sessions.length) return '';
   const c = colors();
-  const W = 380, H = 250, L = 62, R = 22, T = 32, B = 48;
+  const W = 380, H = 230, L = 58, R = 22, T = 30, B = 46;
   const plotW = W - L - R, plotH = H - T - B;
   const n = sessions.length;
-  const maxR = LADDER.length - 1;
+  const maxR = def.steps.length - 1;
   const x = i => L + (n === 1 ? plotW / 2 : plotW * (i / (n - 1)));
   const y = r => T + plotH * (1 - r / maxR);
-  const clampX = v => Math.max(L + 34, Math.min(W - R - 34, v));
-  const cross = crossings();
+  const clampX = v => Math.max(L + 40, Math.min(W - R - 40, v));
   const mono = ' font-family="Space Mono, monospace"';
+  const doneIdx = t.completedAt ? sessions.findIndex(sn => sn.date >= t.completedAt || sn.sets.some(st => st.rung === maxR && st.rate >= STEP_UP)) : -1;
 
   let g = '';
-  /* Gridlines derived from the ladder length rather than hard-coded, so a
-     shorter ladder can never index a rung that does not exist. */
-  [0, 3, AYUMU_RUNG, LADDER.length - 1].forEach(r => {
+  def.steps.forEach((num, r) => {
     g += '<line x1="' + L + '" y1="' + y(r) + '" x2="' + (W - R) + '" y2="' + y(r) + '" stroke="' + c.rule + '" stroke-width="1"/>';
     g += '<text x="' + (L - 8) + '" y="' + (y(r) + 4) + '" text-anchor="end"' + mono +
-         ' font-size="9" fill="' + c.muted + '">' + LADDER[r].n + '·' + LADDER[r].h + '</text>';
+         ' font-size="9" fill="' + (r === maxR ? c.red : c.muted) + '">' + num + (r === maxR ? ' ★' : '') + '</text>';
   });
-
-  const reached = sessions.map(s => Math.max.apply(null, s.blocks.map(b => b.rung)));
+  const reached = sessions.map(sn => Math.max.apply(null, sn.sets.map(st => st.rung)));
   g += '<polyline points="' + reached.map((r, i) => x(i) + ',' + y(r)).join(' ') + '" fill="none" stroke="' + c.ink + '" stroke-width="2.5"/>';
   reached.forEach((r, i) => {
-    const isCross = (cross.ayumu === i);
-    g += '<circle cx="' + x(i) + '" cy="' + y(r) + '" r="' + (isCross ? 6 : 4.5) + '" fill="' + (isCross ? c.red : c.ink) + '" stroke="#fff" stroke-width="1.5"/>';
+    const mark = i === doneIdx;
+    g += '<circle cx="' + x(i) + '" cy="' + y(r) + '" r="' + (mark ? 6 : 4.5) + '" fill="' + (mark ? c.red : c.ink) + '" stroke="#fff" stroke-width="1.5"/>';
     g += '<text x="' + x(i) + '" y="' + (H - B + 20) + '" text-anchor="middle"' + mono +
          ' font-size="9" fill="' + c.muted + '">' + esc(fmtDateShort(sessions[i].date)) + '</text>';
-    const mark = cross.ayumu === i ? 'PASSED AYUMU' : null;
-    if (mark) {
-      g += '<text x="' + clampX(x(i)) + '" y="' + (y(r) - 13) + '" text-anchor="middle"' + mono +
-           ' font-size="9" font-weight="700" fill="' + c.red + '">' + mark + '</text>';
-    }
+    if (mark) g += '<text x="' + clampX(x(i)) + '" y="' + (y(r) - 13) + '" text-anchor="middle"' + mono +
+         ' font-size="9" font-weight="700" fill="' + c.red + '">AYUMU’S LEVEL</text>';
   });
   g += '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" stroke="' + c.ink + '" stroke-width="1.5"/>';
-
-  const label = 'Your progress across ' + n + ' visit' + (n === 1 ? '' : 's') +
-    ', showing the hardest step reached each time: ' + reached.map(r => rungLabel(r)).join('; ') + '.';
+  const label = 'How many numbers you reached on each visit to ' + def.name.toLowerCase() + ': ' + reached.map(r => def.steps[r]).join(', ') + '.';
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
 
-function renderTraining() {
+let currentTrack = 'flash';
+
+function renderTrack(kind) {
+  currentTrack = kind || currentTrack;
+  kind = currentTrack;
+  const def = trackDef(kind);
+  const t = track(kind);
+  const rung = trackRung(kind);
+  const sessions = t.sessions;
+  const other = kind === 'flash' ? 'nine' : 'flash';
   const el = document.getElementById('training-body');
-  const rung = currentRung();
-  const sessions = store.training.sessions;
 
-  let html = '<p class="t-eyebrow">Five hundred tries</p>' +
-    '<h1 class="t-title" id="training-title">The Training Room</h1>' +
-    '<p class="t-body">Ayumu practised about five hundred times before anybody wrote a paper about him. Now it’s your turn to practise and see how much of the gap you can close.</p>' +
-    '<p class="t-body">You build this ability just like everything else you know how to do: start where you are, and progress one step at a time by pushing at the edge of where you’re at right now.</p>';
+  let html = '<p class="t-eyebrow">' + esc(def.standard) + ', every step</p>' +
+    '<h1 class="t-title" id="training-title">' + esc(def.name) + '</h1>';
 
-  html += '<div class="parchment-card">' +
-    '<div class="card-header"><span>How anything gets built</span><span class="card-stamp">The method</span></div>' +
-    '<p class="t-body">Get the pieces working at a speed where they work, then combine them, then take the time away. The number count climbs first at a longer flash, and only once five feels easy does the flash start to shorten, down to Ayumu’s five at 210. Every skill you have was built in that order, including the reading you are doing right now.</p>' +
-    '</div>';
+  if (kind === 'flash') {
+    html += '<p class="t-body">This is Ayumu’s timed game, built up one number at a time. Every step uses his exposure, 210 milliseconds, so you are never practising at a slower speed than his. You start with two numbers, and each time you pass a set, the next set adds one. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
+  } else {
+    html += '<p class="t-body">This is Ayumu’s nine, built up one number at a time. Every step uses his standard: the numbers stay on the screen until you tap the lowest one, and a go only counts if you get them all right <em>and</em> your first tap comes within two thirds of a second, which is how fast he commits. You start with three numbers, and each time you pass a set, the next set adds one. When you can do all nine at his pace two sets in a row, the track is complete.</p>';
+  }
+
+  if (t.completedAt) {
+    html += '<div class="parchment-card">' +
+      '<div class="card-header"><span>Track complete</span><span class="card-stamp">Ayumu’s level</span></div>' +
+      '<p class="t-body">On ' + esc(fmtDate(t.completedAt)) + ' you passed the top step twice in a row, which is the standard Ayumu was measured at. You can keep training here to hold it, or switch to the other track.</p>' +
+      '</div>';
+  }
 
   html += '<h2 class="t-section">Where you are</h2>';
   let pips = '';
-  for (let i = 0; i < LADDER.length; i++) {
-    pips += '<div class="rung-pip ' + (i < rung ? 'done' : (i === rung ? 'here' : '')) + '" style="height:' + Math.round(30 + 70 * (i / (LADDER.length - 1))) + '%"></div>';
-  }
-  html += '<div class="rung-strip" role="img" aria-label="Step ' + (rung + 1) + ' of ' + LADDER.length + '">' + pips + '</div>' +
-    '<p class="score-line">Step <b>' + (rung + 1) + ' / ' + LADDER.length + '</b> · <b>' + esc(rungLabel(rung)) + '</b></p>';
-
-  html += '<div class="btn-row"><button class="btn primary" id="btn-train-start">' +
-    (sessions.length ? 'Start a session' : 'Start your first session') + '</button></div>' +
-    '<p class="t-quiet" style="margin-top:16px;">' + BLOCKS_PER_SESSION + ' sets of ' + BLOCK_TRIALS + ' tries, about four minutes. Stop whenever you like.</p>';
-
-  /* Manual override. The ladder still moves itself during a session; this
-     just decides where the next one opens. */
-  const furthest = furthestRung();
-  const suggested = entryRung();
-  html += '<h2 class="t-section" style="margin-top:44px;">Or start wherever you want</h2>' +
-    '<p class="t-body">The steps move themselves while you train. You can also just pick one yourself, and your next session will open there.</p>' +
-    '<div class="rung-list" role="group" aria-label="Choose a starting step">';
-
-  LADDER.forEach((r, i) => {
-    const tags = [];
-    if (i === rung) tags.push('You are here');
-    if (i === suggested && i !== rung) tags.push('Suggested by your map');
-    if (i === furthest && i !== rung && furthest > 0) tags.push('Furthest you have trained');
-    if (i === AYUMU_RUNG && i !== rung) tags.push('Ayumu’s setting');
-    if (i === LADDER.length - 1 && i !== rung) tags.push('Beyond Ayumu');
-    html += '<button type="button" class="rung-row' + (i === rung ? ' current' : '') +
-      (furthest > 0 && i > furthest + 1 && i !== rung ? ' beyond' : '') + '" data-rung="' + i + '"' +
-      ' aria-pressed="' + (i === rung) + '">' +
-      '<span class="rung-n">' + String(i + 1).padStart(2, '0') + '</span>' +
-      '<span class="rung-desc">' + r.n + ' numbers' +
-        (tags.length ? '<span class="rung-tag">' + esc(tags.join(' · ')) + '</span>' : '') + '</span>' +
-      '<span class="rung-hold">' + comma(r.h) + 'ms</span>' +
-      '</button>';
+  def.steps.forEach((num, i) => {
+    pips += '<div class="rung-pip ' + (i < rung ? 'done' : (i === rung ? 'here' : '')) + '" style="height:' + Math.round(30 + 70 * (i / (def.steps.length - 1))) + '%"></div>';
   });
-  html += '</div>' +
-    '<p class="t-quiet">Nothing is locked. Reach for a step well past anything you have done and the ladder will simply walk you back down if it turns out to be too much.</p>';
+  html += '<div class="rung-strip" role="img" aria-label="Step ' + (rung + 1) + ' of ' + def.steps.length + '">' + pips + '</div>' +
+    '<p class="score-line">Step <b>' + (rung + 1) + ' / ' + def.steps.length + '</b> · <b>' + esc(rungLabel(kind, rung)) + '</b>' +
+    (rung === trackTop(kind) && t.topStreak && !t.completedAt ? ' · <b>' + t.topStreak + ' of ' + COMPLETE_SETS + '</b> passes at the top' : '') + '</p>';
+
+  html += '<div class="btn-row"><button class="btn primary" id="btn-track-start">' +
+    (sessions.length ? 'Start a session' : 'Start your first session') + '</button></div>' +
+    '<p class="t-quiet" style="margin-top:16px;">' + SETS_PER_SESSION + ' sets of ' + SET_TRIES + ' goes, a few minutes. Stop whenever you like; the ladder remembers where you are.</p>';
 
   if (sessions.length) {
-    const cross = crossings();
     html += '<h2 class="t-section" style="margin-top:44px;">Your progress</h2>' +
-      '<div class="t-label">Hardest step reached, each visit</div>' +
-      '<div class="chart-panel">' + curveSVG() + '</div>' +
-      '<p class="chart-note">' +
-      (cross.ayumu !== null
-        ? 'You matched Ayumu’s 80% at his own setting, five numbers at 210 milliseconds, on ' + esc(fmtDate(sessions[cross.ayumu].date)) + '. Go and tell somebody you beat the chimp!'
-        : 'The day you pass Ayumu will get marked here when it arrives.') +
-      '</p>';
-
+      '<div class="t-label">Numbers reached, each visit</div>' +
+      '<div class="chart-panel">' + trackCurveSVG(kind) + '</div>';
+    if (kind === 'nine') {
+      const best = bestNineMs();
+      html += '<div class="chart-panel" style="margin-top:12px;">' + nineBarsSVG({ bestMs: best }) + '</div>' +
+        '<p class="chart-note">Your fastest clean run at all nine against Ayumu’s. It only starts filling in once you reach the top step.</p>';
+    }
     html += '<h2 class="t-section" style="margin-top:40px;">Every visit</h2>' +
-      '<table class="ladder-table"><thead><tr><th>Date</th><th>Sets</th><th>Step</th><th>Best set</th></tr></thead><tbody>';
-    sessions.slice().reverse().forEach(s => {
-      const bestAcc = Math.max.apply(null, s.blocks.map(b => b.acc));
-      html += '<tr><td>' + esc(fmtDateShort(s.date)) + '</td><td>' + s.blocks.length + '</td>' +
-        '<td>' + (s.startRung + 1) + ' → ' + ((s.endRung != null ? s.endRung : s.startRung) + 1) + '</td>' +
-        '<td>' + pct(bestAcc) + '%</td></tr>';
+      '<table class="ladder-table"><thead><tr><th>Date</th><th>Sets</th><th>Numbers</th><th>Best set</th></tr></thead><tbody>';
+    sessions.slice().reverse().forEach(sn => {
+      const bestRate = Math.max.apply(null, sn.sets.map(st => st.rate));
+      html += '<tr><td>' + esc(fmtDateShort(sn.date)) + '</td><td>' + sn.sets.length + '</td>' +
+        '<td>' + def.steps[sn.startRung] + ' → ' + def.steps[sn.endRung != null ? sn.endRung : sn.startRung] + '</td>' +
+        '<td>' + pct(bestRate) + '%</td></tr>';
     });
     html += '</tbody></table>';
   }
 
-  /* The Nine’s track, in the same hub. It trains on the clock, not the
-     grid, so it gets its own section rather than a rung on the ladder. */
-  const nrec = store.nine;
-  html += '<h2 class="t-section" style="margin-top:48px;">And the nine</h2>' +
-    '<p class="t-body">' + (nrec && nrec.tries
-      ? 'Here you can train to match or even beat Ayumu’s other record. He starts pressing at two thirds of a second and rarely gets it wrong, so it is an ambitious target, and it will take practice!'
-      : 'Here you can train on Ayumu’s other game, where all nine numbers stay on the screen until you tap the first one. Once you have a time on the board, you will see how it compares with his.') + '</p>';
-  if (nrec && nrec.bestMs !== null) {
-    html += '<p class="score-line">Your fastest clean run · <b>' + secs(nrec.bestMs) + '</b></p>';
-    const ncurve = nineCurveSVG();
-    if (ncurve) {
-      html += '<div class="t-label">Your times, sitting by sitting</div>' +
-        '<div class="chart-panel">' + ncurve + '</div>';
-    }
-  }
-  html += '<div class="btn-row"><button class="btn primary" id="btn-train-nine">' +
-    (nrec && nrec.bestMs !== null ? 'Train the nine' : 'Try the nine') + '</button></div>';
-
-  html += '<div class="btn-row" style="margin-top:40px;">' +
-    '<button class="btn ghost" id="btn-train-sandbox">Back to the dials</button>' +
-    '<a class="btn ghost" href="ayumu-science.html">The science</a></div>';
+  html += '<h2 class="t-section" style="margin-top:44px;">The other track</h2>' +
+    '<p class="t-body">' + (kind === 'flash'
+      ? 'The nine is Ayumu’s other game, and it trains a different thing: committing fast instead of taking in a flash. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.'
+      : 'The timed game is Ayumu’s other game, and it trains a different thing: taking in a flash instead of committing fast. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.') + '</p>' +
+    '<div class="btn-row">' +
+    '<button class="btn ghost" id="btn-track-other">Switch to ' + esc(trackDef(other).name.toLowerCase()) + '</button>' +
+    '<button class="btn ghost" id="btn-track-sandbox">The dials</button>' +
+    '<button class="btn ghost" id="btn-track-home">Back to the start</button>' +
+    '</div>';
 
   el.innerHTML = html;
-  document.getElementById('btn-train-start').addEventListener('click', startTraining);
-  document.getElementById('btn-train-nine').addEventListener('click', startNine);
-  document.getElementById('btn-train-sandbox').addEventListener('click', () => { openSandbox(); });
-
-  /* Re-render to update every marker, keeping the scroll position so the
-     list does not jump out from under the finger that just tapped it. */
-  el.querySelectorAll('.rung-row').forEach(row => {
-    row.addEventListener('click', () => {
-      store.training.rung = parseInt(row.dataset.rung, 10);
-      saveStore();
-      const y = window.scrollY;
-      renderTraining();
-      window.scrollTo(0, y);
-    });
-  });
+  document.getElementById('btn-track-start').addEventListener('click', () => startTrack(kind));
+  document.getElementById('btn-track-other').addEventListener('click', () => { renderTrack(other); showView('view-training'); });
+  document.getElementById('btn-track-sandbox').addEventListener('click', () => { openSandbox(); });
+  document.getElementById('btn-track-home').addEventListener('click', () => { boot(); });
 }
 
 /* ================================================================
@@ -3117,8 +2920,8 @@ const SHARE_LINES = {
   }
 };
 
-function beatFlash() { return crossings().ayumu !== null; }
-function beatNine() { return !!(store.nine && store.nine.bestMs !== null && store.nine.bestMs <= AYUMU_COMMIT_MS); }
+function beatFlash() { return trackComplete('flash'); }
+function beatNine() { return trackComplete('nine'); }
 
 function shareTagline(kind) {
   const set = kind === 'nine' ? SHARE_LINES.nine : SHARE_LINES.flash;
@@ -3128,20 +2931,22 @@ function shareTagline(kind) {
 
 /* The Flash card: your five-number score against Ayumu’s 80%. */
 function flashShareLines() {
-  if (store.attempt) {
-    return { big: ['Ayumu: 80%.', 'Me: ' + pct(store.attempt.acc) + '%.'], sub: 'FIVE NUMBERS · 210 MILLISECONDS' };
-  }
+  const best = bestPassedN('flash');
+  if (trackComplete('flash')) return { big: ['Ayumu: five in 210ms.', 'Me: five in 210ms.'], sub: 'THE AYUMU TRAINING ROOM' };
+  if (best) return { big: ['Ayumu: five in 210ms.', 'Me so far: ' + best + ' in 210ms.'], sub: 'THE AYUMU TRAINING ROOM' };
   const f = frontier();
-  if (f) return { big: ['Ayumu: five in 210ms.', 'My best: ' + f.n + ' in ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TEST' };
-  return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TEST' };
+  if (f) return { big: ['Ayumu: five in 210ms.', 'My best: ' + f.n + ' in ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TRAINING ROOM' };
+  return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TRAINING ROOM' };
 }
 
 /* The Nine card: your fastest clean commit against Ayumu’s 0.67s. */
 function nineShareLines() {
-  const n = store.nine;
-  if (n && n.bestMs !== null) {
-    return { big: ['Ayumu: ' + secs(AYUMU_COMMIT_MS) + '.', 'Me: ' + secs(n.bestMs) + '.'], sub: 'ALL NINE, FROM MEMORY' };
+  const best = bestNineMs();
+  if (best !== null) {
+    return { big: ['Ayumu: ' + secs(AYUMU_COMMIT_MS) + '.', 'Me: ' + secs(best) + '.'], sub: 'ALL NINE, FROM MEMORY' };
   }
+  const n = bestPassedN('nine');
+  if (n) return { big: ['Ayumu: all nine in ' + secs(AYUMU_COMMIT_MS) + '.', 'Me so far: ' + n + ' at his pace.'], sub: 'THE AYUMU TRAINING ROOM' };
   return { big: ['Ayumu: all nine in', secs(AYUMU_COMMIT_MS) + '.'], sub: 'ALL NINE, FROM MEMORY' };
 }
 
@@ -3203,7 +3008,7 @@ function drawShareCard(canvas, w, h, kind) {
   let vizBottom;
   if (kind === 'nine') {
     /* Two time bars, yours against his, scaled to the slower of the two. */
-    const mine = store.nine && store.nine.bestMs !== null ? store.nine.bestMs : null;
+    const mine = bestNineMs();
     const top = Math.max(AYUMU_COMMIT_MS, mine || AYUMU_COMMIT_MS) * 1.15;
     const vTop = y + (tall ? h * 0.05 : h * 0.045);
     const barH = tall ? h * 0.05 : h * 0.06, rowGap = tall ? h * 0.055 : h * 0.07;
@@ -3290,7 +3095,7 @@ let shareKind = 'flash';   /* which card is showing: 'flash' | 'nine' */
    Nine when catching Ayumu there is a genuine brag, or when the Nine is the
    only task they have on the board. */
 function pickDefaultShareKind() {
-  shareKind = (beatNine() || (store.nine && store.nine.bestMs !== null && !store.attempt))
+  shareKind = (beatNine() || (track('nine').sessions.length && !track('flash').sessions.length))
     ? 'nine' : 'flash';
 }
 
@@ -3364,21 +3169,10 @@ function renderShare() {
 /* The reveal, one thought per tap (JT, 2026-08-09): a wall of paragraphs
    gets skimmed, so each beat stands alone on a card and the reader clicks
    through at their own pace. */
-async function startNine() {
+async function startTrack(kind) {
   await document.fonts.ready;
-  const rec = await runNineSession();
-  /* The Nine has its own result. It used to fall through to the Flash
-     screen, which showed people a five-number score they had not earned
-     if they played this one first. */
-  if (!rec) { boot(); return; }
-  renderNine();
-  showView('view-nine');
-}
-
-async function startTraining() {
-  await document.fonts.ready;
-  await runTrainingSession();
-  renderTraining();
+  await runTrackSession(kind);
+  renderTrack(kind);
   showView('view-training');
 }
 
@@ -3401,15 +3195,14 @@ document.getElementById('btn-quit').addEventListener('click', () => {
     applyPrefs();
     const active = document.querySelector('.view.active');
     if (!active) return;
-    if (active.id === 'view-nine') renderNine({ keep: true });
-    if (active.id === 'view-training') renderTraining();
+    if (active.id === 'view-training') renderTrack(currentTrack);
     if (active.id === 'view-sandbox') renderSandbox();
   });
 });
 
-document.getElementById('btn-go-training').addEventListener('click', () => { renderTraining(); showView('view-training'); });
+document.getElementById('btn-go-flash').addEventListener('click', () => { renderTrack('flash'); showView('view-training'); });
+document.getElementById('btn-go-nine').addEventListener('click', () => { renderTrack('nine'); showView('view-training'); });
 document.getElementById('btn-go-sandbox').addEventListener('click', () => { openSandbox(); });
-document.getElementById('btn-go-nine').addEventListener('click', startNine);
 
 /* Wipe everything this device remembers and go back to the first screen. */
 function resetEverything() {
@@ -3443,8 +3236,10 @@ let syncState = 'idle';   /* idle | saving | saved | offline */
 let pushTimer = null;
 
 function hasProgress(st) {
-  return !!(st && ((st.training && st.training.sessions && st.training.sessions.length) ||
-    (st.map && Object.keys(st.map).length) || (st.nine && st.nine.tries)));
+  if (!st || typeof st !== 'object') return false;
+  const tr = st.tracks || {};
+  return !!(['flash', 'nine'].some(k => tr[k] && tr[k].sessions && tr[k].sessions.length) ||
+    (st.map && Object.keys(st.map).length));
 }
 
 /* Send the store up, a moment after the last change, so a burst of saves
@@ -3461,7 +3256,7 @@ function pushProgress() {
         headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' },
         body: JSON.stringify({ store })
       });
-      if (r.status === 401) { setToken(null); syncState = 'idle'; renderSignin(); return; }
+      if (r.status === 401) { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); return; }
       syncState = r.ok ? 'saved' : 'offline';
     } catch (e) { syncState = 'offline'; }
     renderSignin();
@@ -3476,15 +3271,14 @@ async function pullProgress() {
   if (!token) return;
   try {
     const r = await fetch(PROGRESS_URL, { headers: { authorization: 'Bearer ' + token } });
-    if (r.status === 401) { setToken(null); renderSignin(); return; }
+    if (r.status === 401) { setToken(null); renderSignin(); renderIntroStatus(); return; }
     if (!r.ok) { syncState = 'offline'; renderSignin(); return; }
     const d = await r.json();
     const remote = d.store && typeof d.store === 'object' ? d.store : null;
     const remoteAt = d.updated_at ? new Date(d.updated_at).getTime() : 0;
     const localAt = store.savedAt ? new Date(store.savedAt).getTime() : 0;
     if (remote && hasProgress(remote) && (!hasProgress(store) || remoteAt >= localAt)) {
-      store = remote;
-      if (!store.prefs) store.prefs = { hc: false };
+      store = normalizeStore(remote) || blankStore();
       dialN = null; dialH = null;
       try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
       applyPrefs();
@@ -3520,13 +3314,13 @@ function renderSignin() {
       ? 'Signed in as <strong>' + esc(email) + '</strong>. Saving is not working right now, so this visit is kept on this device only.'
       : 'Signed in as <strong>' + esc(email) + '</strong>. Your progress is saved as you play' + (syncState === 'saving' ? ' (saving…)' : '') + '.';
     box.innerHTML = '<p class="t-body" style="margin-top:6px;">' + line + ' <button type="button" class="inline-link" id="btn-signout" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Sign out</button></p>';
-    document.getElementById('btn-signout').addEventListener('click', () => { setToken(null); syncState = 'idle'; renderSignin(); });
+    document.getElementById('btn-signout').addEventListener('click', () => { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); });
     return;
   }
   box.innerHTML =
     '<div class="parchment-card">' +
-    '<div class="card-header"><span>Save your progress</span></div>' +
-    '<p class="t-body">Enter your email and we will send you a sign-in link. After that, your training is saved as you play and follows you to any phone or computer you open the link on.</p>' +
+    '<div class="card-header"><span>Sign in to open the room</span></div>' +
+    '<p class="t-body">Enter your email and we will send you a sign-in link. Open it and the room unlocks, with your training saved as you play and following you to any phone or computer you open the link on.</p>' +
     '<form id="signin-form" class="btn-row" style="margin-top:14px;">' +
     '<input type="email" id="signin-email" placeholder="you@email.com" aria-label="Your email" required style="flex:1 1 220px;min-width:0;font-family:var(--serif);font-size:17px;padding:11px 14px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);">' +
     '<button type="submit" class="btn primary" id="btn-signin">Send me a link</button>' +
@@ -3542,33 +3336,49 @@ function renderSignin() {
     document.getElementById('btn-signin').disabled = true;
     msg.textContent = 'Sending…';
     const out = await requestLink(email);
-    if (out === 'sent') msg.textContent = 'Sent. Check your email for the link. It is fine to keep playing here in the meantime.';
+    if (out === 'sent') msg.textContent = 'Sent. Check your email for the link, and look in spam if it is not there in a minute.';
     else if (out === 'invalid') msg.textContent = 'That does not look like an email address.';
-    else if (out === 'unconfigured') msg.textContent = 'Sign-in is not switched on yet. Your progress is still saved in this browser.';
-    else msg.textContent = 'That did not go through. Your progress is still saved in this browser, and you can try again in a minute.';
+    else if (out === 'unconfigured') msg.textContent = 'Sign-in is not switched on yet.';
+    else msg.textContent = 'That did not go through. Please try again in a minute.';
     document.getElementById('btn-signin').disabled = false;
   });
 }
 
 function renderIntroStatus() {
   const el = document.getElementById('intro-status');
+  const copy = document.getElementById('intro-copy');
+  const doors = document.getElementById('intro-doors');
   if (!el) return;
-  const sessions = store.training.sessions.length;
-  const f = frontier();
+  const signedIn = !!getToken();
+
+  /* The room is behind the sign-in. Signed out, the page explains what is
+     here and asks for an email; the doors only appear once you are in. */
+  copy.innerHTML = '<p class="t-body">Ayumu practised his game about five hundred times before anyone wrote a paper about him. This is where you practise yours. There are two tracks, one for each of his games: the timed game, and the nine. Each one raises the number of numbers one step at a time while holding Ayumu’s own standard at every step, so when you reach the top, you are at his level.</p>' +
+    (signedIn
+      ? '<p class="t-body">Pick one track and train it consistently. Switching back and forth slows both down, so stay on one until it is complete.</p>'
+      : '<p class="t-body">Your progress is saved to your email address, so you can pick up on any phone or computer. Sign in below to open the room.</p>');
+  if (doors) doors.style.display = signedIn ? '' : 'none';
+
   let html = '';
-  if (sessions) {
-    html += '<p class="t-body">You have trained <strong>' + sessions + ' time' + (sessions === 1 ? '' : 's') + '</strong>, and your next session opens at step ' +
-      (currentRung() + 1) + ' of ' + LADDER.length + ': ' + esc(rungLabel(currentRung())) + '.</p>';
-  }
-  if (f) html += '<p class="t-body">Your furthest on the dials so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>.</p>';
-  if (store.nine && store.nine.bestMs !== null) html += '<p class="t-body">On the nine, your fastest clean run is <strong>' + secs(store.nine.bestMs) + '</strong>. Ayumu commits in about ' + secs(AYUMU_COMMIT_MS) + '.</p>';
-  if (hasProgress(store)) {
-    html += '<p class="t-quiet"><button type="button" class="inline-link" id="btn-reset-all" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Clear my progress and start over</button></p>';
+  if (signedIn) {
+    ['flash', 'nine'].forEach(k => {
+      const t = track(k), def = trackDef(k);
+      if (!t.sessions.length) return;
+      html += '<p class="t-body"><strong>' + esc(def.name) + ':</strong> ' + (t.completedAt
+        ? 'complete, at Ayumu’s level, since ' + esc(fmtDate(t.completedAt)) + '.'
+        : 'you have trained ' + t.sessions.length + ' time' + (t.sessions.length === 1 ? '' : 's') + ', and your next session opens at step ' +
+          (trackRung(k) + 1) + ' of ' + def.steps.length + ': ' + esc(rungLabel(k, trackRung(k))) + '.') + '</p>';
+    });
+    const f = frontier();
+    if (f) html += '<p class="t-body">Your furthest on the dials so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>.</p>';
+    if (hasProgress(store)) {
+      html += '<p class="t-quiet"><button type="button" class="inline-link" id="btn-reset-all" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Clear my progress and start over</button></p>';
+    }
   }
   el.innerHTML = html;
   const reset = document.getElementById('btn-reset-all');
   if (reset) reset.addEventListener('click', () => {
-    if (!confirm('This clears every training session, map square and nine time you have saved' + (getToken() ? ', on every device' : '') + '. Start over?')) return;
+    if (!confirm('This clears every training session and map square you have saved, on every device. Start over?')) return;
     resetEverything();
   });
 }
@@ -3627,11 +3437,13 @@ async function boot() {
    Gated by DEV, which requires BOTH a local hostname and ?dev=1, so this block
    never installs on the live domain no matter what is in the query string.
    Includes a solver: do not relax that gate. */
+function Buffer_b64(s) { return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+
 if (DEV) {
   window.__ayumu = {
     state: () => ({
       phase: phase, frameDur: frameDur, measured: frameDurMeasured, field: field,
-      rung: currentRung(), frontier: frontier(), bestAtNine: bestAtNine(),
+      rungs: { flash: trackRung('flash'), nine: trackRung('nine') }, frontier: frontier(), bestNineMs: bestNineMs(),
       dials: (dialN === null ? null : { n: NUMERAL_STEPS[dialN], h: HOLD_STEPS[dialH] }),
       next: trial ? trial.next : null,
       kbFocus: kbFocus,
@@ -3692,19 +3504,23 @@ if (DEV) {
       saveStore();
       return frontier();
     },
-    seedSessions: (n) => {
+    seedSessions: (kind, n, complete) => {
+      kind = kind || 'flash';
+      const def = TRACKS[kind];
       const out = [];
       for (let i = 0; i < n; i++) {
         const d = new Date(Date.now() - (n - i) * 86400000).toISOString();
-        const rung = Math.min(LADDER.length - 1, 3 + i * 2);
+        const rung = Math.min(def.steps.length - 1, i);
         out.push({ date: d, startRung: Math.max(0, rung - 1), endRung: rung,
-          blocks: [{ rung: rung, numerals: LADDER[rung].n, hold: LADDER[rung].h, hits: 5, trials: 6, acc: 5 / 6 }] });
+          sets: [{ rung, n: def.steps[rung], passes: 5, trials: 6, clean: 5, fastest: kind === 'nine' ? 640 : null, rate: 5 / 6 }] });
       }
-      store.training.sessions = out;
-      store.training.rung = out[out.length - 1].endRung;
+      store.tracks[kind].sessions = out;
+      store.tracks[kind].rung = out[out.length - 1].endRung;
+      if (complete) store.tracks[kind].completedAt = new Date().toISOString();
       saveStore();
       return out.length;
-    }
+    },
+    signin: (email) => { setToken(Buffer_b64(email) + '.' + (Date.now() + 86400000) + '.dev'); renderSignin(); renderIntroStatus(); return 'signed in (dev token, will not sync)'; }
   };
 }
 
