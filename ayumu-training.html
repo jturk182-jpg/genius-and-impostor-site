@@ -1327,7 +1327,7 @@ const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
             it is clean AND the first tap comes within 670ms (his commit
             time), so there is nothing to shorten: the stage IS the step.
    A set is SET_TRIES goes. Pass STEP_UP of a set and you move up a step.
-   A step once earned is never taken away: at STEP_DOWN or worse the set
+   A step once unlocked is never taken away: at STEP_DOWN or worse the set
    card OFFERS a drop back one step, and the player decides (JT,
    2026-09-14: "don't force it"). Reaching the top step
    and passing COMPLETE_SETS sets in a row there is "done": the timed track
@@ -2816,7 +2816,7 @@ async function runTrackSession(kind) {
         ? 'You did ' + n + ' numbers at Ayumu’s speed, so the next stage adds a number and starts slow again: ' + rungLabel(kind, trackRung(kind)) + '.'
         : 'You passed that one, so the next set shortens the flash: ' + rungLabel(kind, trackRung(kind)) + '.';
     }
-    else if (moved === 'offer') movedCopy = 'That one was a stretch. You can stay here and have another go, or drop back to ' + rungLabel(kind, rung - 1) + ' for a set or two. Training works best when the setting is just a little too hard, so either is a fair choice, and you will not lose the step you have earned.';
+    else if (moved === 'offer') movedCopy = 'That one was a stretch. You can stay here and have another go, or drop back to ' + rungLabel(kind, rung - 1) + ' for a set or two. Training works best when the setting is just a little too hard, so either is a fair choice, and you will not lose the step you have unlocked.';
     else if (moved === 'top') movedCopy = justCompleted
       ? 'That is two sets in a row at Ayumu’s level. You have completed this track.'
       : 'That is the top step, passed. Pass it once more in a row and the track is complete.';
