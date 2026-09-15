@@ -1326,8 +1326,10 @@ const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
      nine   stages of 3 → … → 9 numbers, self-paced; a go passes only if
             it is clean AND the first tap comes within 670ms (his commit
             time), so there is nothing to shorten: the stage IS the step.
-   A set is SET_TRIES goes. Pass STEP_UP of a set and you move up a step;
-   fall to STEP_DOWN or worse and you drop back one. Reaching the top step
+   A set is SET_TRIES goes. Pass STEP_UP of a set and you move up a step.
+   A step once earned is never taken away: at STEP_DOWN or worse the set
+   card OFFERS a drop back one step, and the player decides (JT,
+   2026-09-14: "don't force it"). Reaching the top step
    and passing COMPLETE_SETS sets in a row there is "done": the timed track
    stops at five at 210ms (Ayumu's own condition; going beyond him adds
    nothing to the argument), the nine stops at nine. Players pick a track
@@ -1358,7 +1360,7 @@ const TRACKS = {
 const SET_TRIES = 6;
 const SETS_PER_SESSION = 3;
 const STEP_UP = 0.80;        /* pass rate that earns the next step */
-const STEP_DOWN = 0.34;      /* pass rate that drops you back one */
+const STEP_DOWN = 0.34;      /* pass rate at which dropping back is offered */
 const COMPLETE_SETS = 2;     /* passes in a row at the top step = done */
 
 /* A mouse has to travel to the tiles; a thumb is already over them. On
@@ -2729,7 +2731,7 @@ function trackIntroBody(kind, step, first) {
       (atAyumu ? ', which is exactly how long Ayumu gets,' : ',') + ' and then turn blank. Tap where they were, smallest first.</p>' +
       '<p>You get ' + SET_TRIES + ' goes in this set. Land ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and ' +
       (atAyumu ? 'you have done ' + n + ' numbers at Ayumu’s speed, so the next stage adds a number and starts slow again.' : 'the next set shortens the flash.') +
-      ' If it turns out to be too much, the ladder brings you back down a step.</p>';
+      ' If a set goes badly, you will be offered the step below, but nothing is ever taken away.</p>';
   }
   return '<p>' + n + ' numbers appear on the screen and stay there until you tap the lowest one. Then the rest turn blank and you tap them in order from memory.</p>' +
     (MOUSE_DEVICE && first ? '<p class="t-quiet">Best on a phone or tablet: with a mouse, moving the pointer counts against your time.</p>' : '') +
@@ -2801,7 +2803,9 @@ async function runTrackSession(kind) {
       }
     } else {
       if (rung === top) t.topStreak = 0;
-      if (rate <= STEP_DOWN && rung > 0) { t.rung = rung - 1; moved = 'down'; }
+      /* A hard set never demotes on its own; it puts the step below on the
+         card as a choice. */
+      if (rate <= STEP_DOWN && rung > 0) moved = 'offer';
     }
     saveStore();
 
@@ -2812,7 +2816,7 @@ async function runTrackSession(kind) {
         ? 'You did ' + n + ' numbers at Ayumu’s speed, so the next stage adds a number and starts slow again: ' + rungLabel(kind, trackRung(kind)) + '.'
         : 'You passed that one, so the next set shortens the flash: ' + rungLabel(kind, trackRung(kind)) + '.';
     }
-    else if (moved === 'down') movedCopy = 'Back one step, to ' + rungLabel(kind, trackRung(kind)) + '. Training works best when the setting is just a little too hard, so the ladder went looking for that spot.';
+    else if (moved === 'offer') movedCopy = 'That one was a stretch. You can stay here and have another go, or drop back to ' + rungLabel(kind, rung - 1) + ' for a set or two. Training works best when the setting is just a little too hard, so either is a fair choice, and you will not lose the step you have earned.';
     else if (moved === 'top') movedCopy = justCompleted
       ? 'That is two sets in a row at Ayumu’s level. You have completed this track.'
       : 'That is the top step, passed. Pass it once more in a row and the track is complete.';
@@ -2832,12 +2836,18 @@ async function runTrackSession(kind) {
         ? 'You are at Ayumu’s level.'
         : passes + ' of ' + trials + ' ' + def.passWord + '.',
       body: statsHTML(stats) + '<p style="margin-top:16px;">' + esc(movedCopy) + '</p>',
-      actions: (sets >= SETS_PER_SESSION || justCompleted)
-        ? [{ text: 'One more set', value: 'go' }, { text: 'Done for today', value: 'stop', primary: true }]
-        : [{ text: 'Next set', value: 'go', primary: true }, { text: 'Done for today', value: 'stop', ghost: true }]
+      actions: moved === 'offer'
+        ? [{ text: 'Stay here', value: 'go', primary: true },
+           { text: 'Drop back to ' + trackStep(kind, rung - 1).n + ' numbers' + (kind === 'flash' ? ' at ' + comma(trackStep(kind, rung - 1).h) + 'ms' : ''), value: 'down' },
+           { text: 'Done for today', value: 'stop', ghost: true }]
+        : (sets >= SETS_PER_SESSION || justCompleted)
+          ? [{ text: 'One more set', value: 'go' }, { text: 'Done for today', value: 'stop', primary: true }]
+          : [{ text: 'Next set', value: 'go', primary: true }, { text: 'Done for today', value: 'stop', ghost: true }]
     });
     justCompleted = false;
-    if (aborted || more !== 'go') break;
+    if (aborted) break;
+    if (more === 'down') { t.rung = rung - 1; saveStore(); continue; }
+    if (more !== 'go') break;
   }
 
   if (session.sets.length) {
