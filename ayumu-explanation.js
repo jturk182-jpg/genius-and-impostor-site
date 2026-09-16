@@ -65,7 +65,7 @@ window.AyumuExplanation = (function () {
     var you = mode === 'lost';
 
     /* Card 1: the plain result. */
-    var superhuman = 'He commits the locations of 9 digits to memory in less than a second. To many, it looks like a superhuman feat.';
+    var superhuman = 'He commits the locations of 9 digits to memory in less than a second. <strong>To many, it looks like a superhuman feat.</strong>';
     var opening;
     if (mode === 'none') {
       opening = 'Ayumu is a chimpanzee at a research institute in Japan, and at this game he almost always beats the humans who try it, and it usually isn’t even close. ' + superhuman;
@@ -81,7 +81,7 @@ window.AyumuExplanation = (function () {
       { beat: opening },
 
       { beat: 'Holding a set of numbers in your head for a moment and giving them back in order is a standard kind of task on IQ tests. It is one of the ways those tests measure working memory. So, in other words, a chimpanzee beat ' +
-          (you ? 'you at an item from an IQ test.' : 'the majority of humans on an IQ test.') +
+          (you ? '<strong>you at an item from an IQ test.</strong>' : '<strong>the majority of humans on an IQ test.</strong>') +
           '\n\nThat’s why when this study was first published, the headlines were about how a chimp appeared to be smarter than humans.' },
 
       { ask: 'Many people believe two things about IQ tests: the first is that they measure intelligence, and the second is that intelligence is fixed at birth. If both of those beliefs were true, what would Ayumu’s score mean?',
@@ -91,7 +91,7 @@ window.AyumuExplanation = (function () {
           'Nothing, because he is a chimpanzee'
         ],
         correct: 1,
-        answer: '<p>If both beliefs were true, you would have to accept that a chimpanzee is more intelligent than ' + (you ? 'you' : 'almost everyone you know') + ', and that nothing could ever be done about it. If that feels wrong to you, which it does to most, then it means there’s something fundamentally wrong with our concept of IQ and intelligence.</p><p>As it turns out, there are two reasons why Ayumu has a distinct advantage over most humans. Let’s explore those.</p>' },
+        answer: '<p>If both beliefs were true, you would have to accept that a chimpanzee is more intelligent than ' + (you ? 'you' : 'almost everyone you know') + ', and that nothing could ever be done about it. If that feels wrong to you, which it does to most, then <strong>it means there’s something fundamentally wrong with our concept of IQ and intelligence.</strong></p><p>As it turns out, there are two reasons why Ayumu has a distinct advantage over most humans. Let’s explore those.</p>' },
 
       { ask: you
           ? 'What is one reason why Ayumu is so much better at this? Take a guess.'
@@ -102,30 +102,30 @@ window.AyumuExplanation = (function () {
           'Humans are just bad with numbers'
         ],
         correct: 1,
-        answer: '<p>Ayumu has had lots of practice. By the time this study was published, Ayumu had played this game hundreds of times, and the people he was tested against had played it a handful of times. When other researchers later gave people a real chance to practise, their scores climbed toward his, and a couple of them caught him.</p><p>If performance improves that much with training, it’s not something we were born with. But is it right to even consider this kind of test a measure of “intelligence”? For that, let’s look at the story of Ayumu’s mother, Ai.</p>' },
+        answer: '<p>Ayumu has had lots of practice. By the time this study was published, Ayumu had played this game hundreds of times, and the people he was tested against had played it a handful of times. When other researchers later gave people a real chance to practice, their scores climbed toward his, and a couple of them caught him.</p><p><strong>If performance improves that much with training, it’s not something we were born with.</strong> But is it right to even consider this kind of test a measure of “intelligence”? For that, let’s look at the story of Ayumu’s mother, Ai.</p>' },
 
-      { beat: 'Like Ayumu, Ai had learned the order of the numerals, but years earlier she had also been taught what each one actually means as an amount, the way you know that a 7 means seven. And Ai was worse at this game than Ayumu.' },
+      { beat: 'Like Ayumu, Ai had learned the order of the numerals, but years earlier she had also been taught what each one actually means as an amount, the way you know that a 7 means seven. <strong>And Ai was worse at this game than Ayumu.</strong>' },
 
-      { ask: 'Both chimps knew the order of the numerals, because they had practised tapping them in sequence thousands of times. But unlike Ayumu, Ai had also been taught what each numeral means as an amount, the way you know that a 7 means seven. Why would knowing the meaning make her slower?',
+      { ask: 'Both chimps knew the order of the numerals, because they had practiced tapping them in sequence thousands of times. But unlike Ayumu, Ai had also been taught what each numeral means as an amount, the way you know that a 7 means seven. Why would knowing the meaning make her slower?',
         choices: [
           'Understanding a symbol takes an extra step, and that step costs time',
           'She was less clever than Ayumu',
           'Older chimpanzees remember less'
         ],
         correct: 0,
-        answer: '<p>Turning a shape into a meaning is an extra step, and it takes time. For Ayumu, a 7 was a shape with a known place in the sequence, and nothing more. For Ai it also meant seven, and that meaning is the most likely reason she was a step behind.</p><p>Your brain does the same thing Ai’s did. You cannot look at a 7 and not see “seven,” because you have practised reading symbols nearly every day of your life. And that processing slows you down. ' +
+        answer: '<p>Turning a shape into a meaning is an extra step, and it takes time. For Ayumu, a 7 was a shape with a known place in the sequence, and nothing more. For Ai it also meant seven, and that meaning is the most likely reason she was a step behind.</p><p>Your brain does the same thing Ai’s did. You cannot look at a 7 and not see “seven,” because you have practiced reading symbols nearly every day of your life. And that processing slows you down. ' +
           (mode === 'lost'
-            ? 'So you are behind Ayumu for two reasons: you have not practised his skill, and you have spent years practising a different skill that gets in the way of it.</p>'
+            ? '<strong>So you are behind Ayumu for two reasons: you have not practiced his skill, and you have spent years practicing a different skill that gets in the way of it.</strong></p>'
             : mode === 'won'
-            ? 'So most people are behind Ayumu for two reasons: they have not practised his skill, and they have spent years practising a different skill that gets in the way of it. You managed it in spite of that extra step, which is what makes your score so unusual.</p>'
-            : 'So most people are behind Ayumu for two reasons: they have not practised his skill, and they have spent years practising a different skill that gets in the way of it.</p>') },
+            ? '<strong>So most people are behind Ayumu for two reasons: they have not practiced his skill, and they have spent years practicing a different skill that gets in the way of it.</strong> You managed it in spite of that extra step, which is what makes your score so unusual.</p>'
+            : '<strong>So most people are behind Ayumu for two reasons: they have not practiced his skill, and they have spent years practicing a different skill that gets in the way of it.</strong></p>') },
 
-      { beat: 'So does this test measure intelligence? It measures how good you are at one specific thing, holding a snapshot of shapes in mind for a moment, and that depends on what you have practised. Ayumu practised the game. You practised something else: reading, which turns every symbol into meaning the instant you see it, and which is the skill that lets you read this sentence. There is no single ladder of intelligence with one of you above the other. There is only what each of you has built.' },
+      { beat: 'So does this test measure intelligence? It measures how good you are at one specific thing, holding a snapshot of shapes in mind for a moment, and that depends on what you have practiced. Ayumu practiced the game. You practiced something else: reading, which turns every symbol into meaning the instant you see it, and which is the skill that lets you read this sentence. <strong>There is no single ladder of intelligence with one of you above the other. There is only what each of you has built.</strong>' },
 
-      { beat: 'And what you have built can keep growing. ' +
+      { beat: '<strong>And what you have built can keep growing.</strong> ' +
           (wonAny
-            ? 'You are already level with a chimpanzee who has practised this for years, and the people who kept practising went further still. '
-            : 'The people who practised this game got much closer to Ayumu, and some of them caught him. ') +
+            ? 'You are already level with a chimpanzee who has practiced this for years, and the people who kept practicing went further still. '
+            : 'The people who practiced this game got much closer to Ayumu, and some of them caught him. ') +
           'The book this site is built around, The Genius and the Impostor, is about exactly this: how every extraordinary ability gets built, Ayumu’s included.' +
           (ctx.training ? '\n\nIf you want to train your brain to try to beat Ayumu, there’s a program here that’s just for that.' : ''),
         signup: !!ctx.training }
