@@ -3360,16 +3360,40 @@ function hasProgress(st) {
 }
 
 /* Send the store up, a moment after the last change, so a burst of saves
-   inside a session becomes one request. */
+   inside a session becomes one request. If the page is hidden or closed
+   while a send is still waiting, it goes immediately (keepalive lets the
+   request outlive the tab), so locking a phone right after a set cannot
+   drop that set. */
+let pushPending = false;
+
+function flushProgress() {
+  if (!pushPending) return;
+  clearTimeout(pushTimer);
+  pushPending = false;
+  const token = getToken();
+  if (!token) return;
+  try {
+    fetch(PROGRESS_URL, {
+      method: 'PUT', keepalive: true,
+      headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' },
+      body: JSON.stringify({ store })
+    }).catch(() => {});
+  } catch (e) {}
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushProgress(); });
+window.addEventListener('pagehide', flushProgress);
+
 function pushProgress() {
   const token = getToken();
   if (!token) return;
   clearTimeout(pushTimer);
   syncState = 'saving';
+  pushPending = true;
   pushTimer = setTimeout(async () => {
+    pushPending = false;
     try {
       const r = await fetch(PROGRESS_URL, {
-        method: 'PUT',
+        method: 'PUT', keepalive: true,
         headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' },
         body: JSON.stringify({ store })
       });
