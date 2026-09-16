@@ -135,7 +135,8 @@ window.LearnFlow = (function () {
         h += actionsHTML();
       } else {
         h += '<div class="lf-label">' + esc(step.label || ((idx + 1) + ' of ' + total)) + '</div>';
-        h += '<div class="lf-body">' + (step.chunk || '') + '</div>';
+        h += '<div class="lf-body">' + (step.chunk || '') +
+          (step.signup && window.AyumuExplanation ? window.AyumuExplanation.signupFormHTML() : '') + '</div>';
         h += actionsHTML();
       }
       h += '</div>';
@@ -178,6 +179,10 @@ window.LearnFlow = (function () {
       if (next) next.addEventListener('click', advance);
       var b = mount.querySelector('.lf-back');
       if (b) b.addEventListener('click', back);
+      if (steps[idx].signup && window.AyumuExplanation) {
+        window.AyumuExplanation.injectStyles();
+        window.AyumuExplanation.wireSignupForm(mount);
+      }
       var focusEl = mount.querySelector('.lf-choice') || next;
       if (focusEl) focusEl.focus();
     }

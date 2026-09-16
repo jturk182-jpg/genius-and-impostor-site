@@ -2111,7 +2111,8 @@ function card(spec) {
     resolveCard = resolve;
     document.getElementById('ov-label').textContent = spec.label || '';
     document.getElementById('ov-title').textContent = spec.title || '';
-    document.getElementById('ov-body').innerHTML = spec.body || '';
+    document.getElementById('ov-body').innerHTML = (spec.body || '') + (spec.signup ? AyumuExplanation.signupFormHTML() : '');
+    if (spec.signup) { AyumuExplanation.injectStyles(); AyumuExplanation.wireSignupForm(document.getElementById('ov-body')); }
     const actions = document.getElementById('ov-actions');
     actions.innerHTML = '';
     if (spec.choices) {
@@ -3438,7 +3439,8 @@ async function runReveal(playedNine) {
     const go = await card({
       label: 'What just happened · ' + (i + 1) + ' of ' + total,
       title: '',
-      body: '<p>' + step.beat + '</p>',
+      body: step.beat.split('\n\n').map(p => '<p>' + p + '</p>').join(''),
+      signup: !!step.signup,
       actions: [{ text: last ? (window.launched('unstoppable-reader') ? 'One more thing' : 'My results') : 'Next', value: 'go', primary: true }].concat(i > 0 ? [back] : [])
     });
     if (aborted || go === 'quit') return false;

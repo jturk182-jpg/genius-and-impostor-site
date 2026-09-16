@@ -6,7 +6,7 @@
 
    LAUNCH DAY FOR A GAME: add its slug to the list below and push main.
    Slugs: ayumu-test · bottleneck · unstoppable-reader · secret-grammar · diagnostic · ayumu-training (the separate Training Room app) */
-window.LAUNCHED = new Set(['ayumu-test']);
+window.LAUNCHED = new Set(['ayumu-test', 'ayumu-training']);
 window.launched = function (slug) { return window.LAUNCHED.has(slug); };
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-game]').forEach(function (el) {
