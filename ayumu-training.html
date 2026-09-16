@@ -230,6 +230,40 @@
       align-items: center;
     }
 
+    /* The signed-in progress panel on the intro. */
+    .status-rows { margin-top: 4px; }
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      align-items: baseline;
+      padding: 10px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .status-row:first-child { border-top: 0; padding-top: 2px; }
+    .status-key {
+      flex: 0 0 118px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .status-val { flex: 1 1 200px; font-family: var(--serif); font-size: 16px; line-height: 1.45; color: var(--ink); }
+    .status-val b { font-weight: 700; }
+    .status-foot {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .status-foot button { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+
     .parchment-card {
       background: var(--parchment);
       padding: 30px 28px 26px;
@@ -3391,12 +3425,10 @@ function renderSignin() {
   if (!box) return;
   const token = getToken();
   if (token) {
-    const email = tokenEmail(token) || 'you';
-    const line = syncState === 'offline'
-      ? 'Signed in as <strong>' + esc(email) + '</strong>. Saving is not working right now, so this visit is kept on this device only.'
-      : 'Signed in as <strong>' + esc(email) + '</strong>. Your progress is saved as you play' + (syncState === 'saving' ? ' (saving…)' : '') + '.';
-    box.innerHTML = '<p class="t-body" style="margin-top:6px;">' + line + ' <button type="button" class="inline-link" id="btn-signout" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Sign out</button></p>';
-    document.getElementById('btn-signout').addEventListener('click', () => { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); });
+    /* Signed in: the progress panel (renderIntroStatus) carries the
+       signed-in line, so this box stays empty. */
+    box.innerHTML = '';
+    if (document.getElementById('intro-status')) renderIntroStatus();
     return;
   }
   box.innerHTML =
@@ -3443,21 +3475,38 @@ function renderIntroStatus() {
 
   let html = '';
   if (signedIn) {
+    const email = tokenEmail(getToken()) || 'you';
+    let rows = '';
     ['flash', 'nine'].forEach(k => {
       const t = track(k), def = trackDef(k);
-      if (!t.sessions.length) return;
-      html += '<p class="t-body"><strong>' + esc(def.name) + ':</strong> ' + (t.completedAt
-        ? 'complete, at Ayumu’s level, since ' + esc(fmtDate(t.completedAt)) + '.'
-        : 'you have trained ' + t.sessions.length + ' time' + (t.sessions.length === 1 ? '' : 's') + ', and your next session opens at step ' +
-          (trackRung(k) + 1) + ' of ' + def.steps.length + ': ' + esc(rungLabel(k, trackRung(k))) + '.') + '</p>';
+      let val;
+      if (t.completedAt) val = '<b>Complete</b>, at Ayumu’s level, since ' + esc(fmtDate(t.completedAt)) + '.';
+      else if (!t.sessions.length) val = 'Not started. Your first session opens at ' + esc(rungLabel(k, 0)) + '.';
+      else {
+        const si = stageInfo(k, trackRung(k));
+        val = '<b>Stage ' + si.stage + ' of ' + si.stages + (si.subs > 1 ? ', step ' + si.sub + ' of ' + si.subs : '') + '</b> · ' + esc(rungLabel(k, trackRung(k))) +
+          ' · ' + t.sessions.length + ' session' + (t.sessions.length === 1 ? '' : 's') + ' so far';
+      }
+      rows += '<div class="status-row"><div class="status-key">' + esc(def.name) + '</div><div class="status-val">' + val + '</div></div>';
     });
     const f = frontier();
-    if (f) html += '<p class="t-body">Your furthest on the dials so far is <strong>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</strong>.</p>';
-    if (hasProgress(store)) {
-      html += '<p class="t-quiet"><button type="button" class="inline-link" id="btn-reset-all" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Clear my progress and start over</button></p>';
-    }
+    rows += '<div class="status-row"><div class="status-key">The dials</div><div class="status-val">' +
+      (f ? 'Furthest so far: <b>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</b>.' : 'Nothing on the map yet.') + '</div></div>';
+
+    const saved = syncState === 'offline'
+      ? 'Saving is not working right now, so this visit is kept on this device only.'
+      : 'Your progress is saved as you play' + (syncState === 'saving' ? ' (saving…)' : '') + '.';
+    html += '<div class="parchment-card" style="margin-top:22px;">' +
+      '<div class="card-header"><span>Where you are</span><span class="card-stamp">Saved</span></div>' +
+      '<div class="status-rows">' + rows + '</div>' +
+      '<div class="status-foot">Signed in as ' + esc(email) + '. ' + saved +
+      ' <button type="button" id="btn-signout">Sign out</button>' +
+      (hasProgress(store) ? ' · <button type="button" id="btn-reset-all">Clear my progress and start over</button>' : '') +
+      '</div></div>';
   }
   el.innerHTML = html;
+  const out = document.getElementById('btn-signout');
+  if (out) out.addEventListener('click', () => { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); });
   const reset = document.getElementById('btn-reset-all');
   if (reset) reset.addEventListener('click', () => {
     if (!confirm('This clears every training session and map square you have saved, on every device. Start over?')) return;
