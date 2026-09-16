@@ -3349,6 +3349,7 @@ function tokenEmail(t) {
 }
 
 let syncState = 'idle';   /* idle | saving | saved | offline */
+let lastSavedAt = null;   /* when the saved copy was last written, from the server */
 let pushTimer = null;
 
 function hasProgress(st) {
@@ -3374,14 +3375,40 @@ function pushProgress() {
       });
       if (r.status === 401) { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); return; }
       syncState = r.ok ? 'saved' : 'offline';
+      if (r.ok) { try { const j = await r.json(); if (j && j.updated_at) lastSavedAt = j.updated_at; } catch (e) {} }
     } catch (e) { syncState = 'offline'; }
     renderSignin();
   }, 800);
 }
 
-/* Fetch the saved copy. The newer of the two copies wins: a device that
-   played while signed out keeps that play, a fresh device picks up the
-   saved one. */
+/* Progress can never go backwards: the saved copy and this device's copy
+   are MERGED, track by track, keeping whichever has more sessions (ties go
+   to the newer save). The map keeps the best of both. A stale device can
+   therefore never overwrite a fresher one, whatever order things load in
+   (JT lost a day's progress to exactly that on 2026-09-16). */
+function mergeStores(local, remote) {
+  const out = blankStore();
+  const lAt = local && local.savedAt ? new Date(local.savedAt).getTime() : 0;
+  const rAt = remote && remote.savedAt ? new Date(remote.savedAt).getTime() : 0;
+  ['flash', 'nine'].forEach(k => {
+    const a = local && local.tracks && local.tracks[k] ? local.tracks[k] : blankTrack();
+    const b = remote && remote.tracks && remote.tracks[k] ? remote.tracks[k] : blankTrack();
+    const pick = a.sessions.length !== b.sessions.length ? (a.sessions.length > b.sessions.length ? a : b) : (lAt >= rAt ? a : b);
+    out.tracks[k] = JSON.parse(JSON.stringify(pick));
+    /* A completion recorded on either copy stands. */
+    if (!out.tracks[k].completedAt && (a.completedAt || b.completedAt)) out.tracks[k].completedAt = a.completedAt || b.completedAt;
+  });
+  const keys = new Set(Object.keys((local && local.map) || {}).concat(Object.keys((remote && remote.map) || {})));
+  keys.forEach(key => {
+    const a = (local && local.map && local.map[key]) || { tries: 0, wins: 0 };
+    const b = (remote && remote.map && remote.map[key]) || { tries: 0, wins: 0 };
+    out.map[key] = a.tries >= b.tries ? { tries: a.tries, wins: a.wins } : { tries: b.tries, wins: b.wins };
+  });
+  out.prefs = (local && local.prefs) || (remote && remote.prefs) || { hc: false };
+  out.savedAt = new Date(Math.max(lAt, rAt) || Date.now()).toISOString();
+  return out;
+}
+
 async function pullProgress() {
   const token = getToken();
   if (!token) return;
@@ -3390,19 +3417,18 @@ async function pullProgress() {
     if (r.status === 401) { setToken(null); renderSignin(); renderIntroStatus(); return; }
     if (!r.ok) { syncState = 'offline'; renderSignin(); return; }
     const d = await r.json();
-    const remote = d.store && typeof d.store === 'object' ? d.store : null;
-    const remoteAt = d.updated_at ? new Date(d.updated_at).getTime() : 0;
-    const localAt = store.savedAt ? new Date(store.savedAt).getTime() : 0;
-    if (remote && hasProgress(remote) && (!hasProgress(store) || remoteAt >= localAt)) {
-      store = normalizeStore(remote) || blankStore();
-      dialN = null; dialH = null;
-      try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
-      applyPrefs();
-      syncState = 'saved';
-    } else {
-      /* Nothing saved yet, or this device is ahead: this copy becomes the saved one. */
-      pushProgress();
-    }
+    const remote = normalizeStore(d.store && typeof d.store === 'object' ? d.store : null);
+    if (remote && d.updated_at && !remote.savedAt) remote.savedAt = d.updated_at;
+    const before = JSON.stringify(store);
+    store = mergeStores(store, remote);
+    lastSavedAt = d.updated_at || null;
+    dialN = null; dialH = null;
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
+    applyPrefs();
+    syncState = 'saved';
+    /* If the merge added anything this device did not have, or the saved
+       copy was behind, send the merged copy up so both sides agree. */
+    if (!remote || JSON.stringify(store) !== JSON.stringify(remote) || before !== JSON.stringify(store)) pushProgress();
   } catch (e) { syncState = 'offline'; }
   renderSignin();
   renderIntroStatus();
@@ -3495,7 +3521,8 @@ function renderIntroStatus() {
 
     const saved = syncState === 'offline'
       ? 'Saving is not working right now, so this visit is kept on this device only.'
-      : 'Your progress is saved as you play' + (syncState === 'saving' ? ' (saving…)' : '') + '.';
+      : 'Your progress is saved as you play' + (syncState === 'saving' ? ' (saving…)' : '') + '.' +
+        (lastSavedAt ? ' Last saved ' + esc(fmtDate(lastSavedAt)) + '.' : '');
     html += '<div class="parchment-card" style="margin-top:22px;">' +
       '<div class="card-header"><span>Where you are</span><span class="card-stamp">Saved</span></div>' +
       '<div class="status-rows">' + rows + '</div>' +
