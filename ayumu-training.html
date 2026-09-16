@@ -472,80 +472,6 @@
 
     .play-layer.active { display: flex; }
 
-    /* INLINE MODE. On the dials the board sits in the page rather than taking
-       over the screen, so the numbers, the dials and the map are all in one
-       place and a round never navigates anywhere. The play layer is physically
-       moved into #sandbox-stage and these rules undo the full-screen styling. */
-    .play-layer.inline {
-      position: static;
-      inset: auto;
-      z-index: auto;
-      padding: 0;
-      background: none;
-      margin: 4px 0 0;
-    }
-
-    .play-layer.inline .stage { max-width: none; }
-
-    .play-layer.inline .stage-field {
-      flex: none;
-      /* Tall enough for nine tiles, short enough that the dials and the go
-         button stay on screen with it. */
-      height: clamp(270px, 37vh, 380px);
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-    }
-
-    .play-layer.inline .stage-hud { padding: 0 2px 8px; }
-    .play-layer.inline .stage-foot { padding: 10px 2px 0; }
-    /* Nothing to quit out of when the round is already in the page. */
-    .play-layer.inline .stage-quit { display: none; }
-
-    /* While a round is live the dials stay visible but go untouchable, so a
-       dial cannot move under you between the flash and your answer. */
-    .dials.busy, .btn-row.busy { opacity: 0.4; pointer-events: none; }
-
-    /* COMPACT DIALS, for the inline board. Stacking each label above its own
-       buttons costs 226px, which is enough to push the dials off the bottom of
-       an 800px screen and hide the very control the page is named after. Label
-       beside the buttons instead, and the pair fits in about 120px. */
-    .dials.compact {
-      grid-template-columns: 1fr;
-      gap: 8px;
-      margin: 10px 0 0;
-    }
-
-    .dials.compact .dial {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 7px 12px;
-    }
-
-    .dials.compact .dial-label {
-      margin: 0;
-      flex: 1;
-      text-align: left;
-    }
-
-    .dials.compact .dial-row { flex: none; gap: 10px; }
-    .dials.compact .dial-btn { width: 44px; height: 40px; }
-    .dials.compact .dial-value { min-width: 96px; flex: none; }
-    .dials.compact .dial-value small { display: block; }
-
-    /* Side by side once there is room, which puts both dials, the board and
-       the go button on one screen without scrolling. */
-    @media (min-width: 560px) {
-      .dials.compact { grid-template-columns: 1fr 1fr; }
-      .dials.compact .dial { flex-direction: column; align-items: stretch; gap: 6px; padding: 8px 12px; }
-      .dials.compact .dial-label { text-align: center; }
-      .dials.compact .dial-value small { display: inline; margin-left: 5px; }
-      .dials.compact .dial-value { min-width: 0; flex: 1; }
-      .dials.compact .dial-row { flex: 1; }
-    }
-
-    body.playing { overflow: hidden; }
-
     .stage {
       width: 100%;
       max-width: 760px;
@@ -877,222 +803,6 @@
     .timing-table tr.excluded td { color: var(--muted); text-decoration: line-through; }
     .timing-table tr.excluded td.flag { text-decoration: none; }
 
-    /* ---------- THE MAP ----------
-       Numbers across, time down. Every square you have tried gets filled in,
-       and the boundary between filled and empty is the interesting part. */
-    .map-wrap { overflow-x: auto; padding-bottom: 4px; }
-
-    .map {
-      display: grid;
-      gap: 3px;
-      min-width: 300px;
-      margin: 6px 0 0;
-    }
-
-    .map-cell {
-      aspect-ratio: 1;
-      border: 1px solid var(--rule);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--muted);
-      background: #fff;
-    }
-
-    /* Cleared at least once. */
-    .map-cell.won {
-      background: var(--ink);
-      border-color: var(--ink);
-    }
-
-    /* Tried, not cleared yet. Hatching rather than a second colour, so the
-       three states are still distinct without relying on hue. */
-    .map-cell.tried {
-      border-color: var(--muted);
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 3px,
-        rgba(102,102,102,0.5) 3px, rgba(102,102,102,0.5) 5px);
-    }
-
-    .map-cell.ayumu {
-      border: 2px solid var(--red);
-      background: var(--parchment);
-    }
-
-    .map-cell.ayumu::after {
-      content: 'A';
-      color: var(--red);
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .map-cell.here {
-      box-shadow: inset 0 0 0 2px var(--red);
-    }
-
-    .map-head, .map-side {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-
-    .map-side { justify-content: flex-end; padding-right: 6px; white-space: nowrap; }
-
-    .map-corner { }
-
-    .map-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 18px;
-      margin-top: 14px;
-    }
-
-    .map-key {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .map-swatch {
-      width: 13px;
-      height: 13px;
-      flex: none;
-      border: 1px solid var(--rule);
-      background: #fff;
-    }
-
-    .map-swatch.won { background: var(--ink); border-color: var(--ink); }
-
-    .map-swatch.tried {
-      border-color: var(--muted);
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 3px,
-        rgba(102,102,102,0.5) 3px, rgba(102,102,102,0.5) 5px);
-    }
-
-    .map-swatch.ayumu { border: 2px solid var(--red); background: var(--parchment); }
-
-    /* ---------- your number ---------- */
-    .yournum {
-      border-top: 2px solid var(--ink);
-      border-bottom: 1px solid var(--rule);
-      padding: 20px 0 22px;
-      margin: 30px 0;
-    }
-
-    .yournum-big {
-      font-family: var(--serif);
-      font-size: clamp(27px, 6.4vw, 38px);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 6px;
-    }
-
-    .yournum-sub {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .yournum-vs {
-      font-family: var(--serif);
-      font-size: clamp(19px, 4vw, 22px);
-      font-weight: 600;
-      color: var(--red);
-      margin-top: 14px;
-    }
-
-    /* ---------- the dials ---------- */
-    .dials {
-      display: grid;
-      gap: 14px;
-      margin: 20px 0 24px;
-    }
-
-    .dial {
-      border: 1px solid var(--rule);
-      background: #fff;
-      padding: 14px 16px;
-    }
-
-    body.hc .dial { border-color: var(--ink); }
-
-    .dial-label {
-      font-family: var(--mono);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-
-    .dial-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .dial-btn {
-      flex: none;
-      width: 46px;
-      height: 46px;
-      border: 1.5px solid var(--red);
-      background: transparent;
-      color: var(--red);
-      font-family: var(--mono);
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .dial-btn:hover:not(:disabled) { background: var(--red); color: #fff; }
-
-    .dial-btn:disabled {
-      border-color: var(--rule);
-      color: var(--rule);
-      cursor: default;
-    }
-
-    .dial-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-
-    .dial-value {
-      flex: 1;
-      text-align: center;
-      font-family: var(--mono);
-      font-size: clamp(17px, 4.2vw, 21px);
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .dial-value small {
-      display: block;
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
     /* ---------- training room ---------- */
     .rung-strip {
       display: flex;
@@ -1208,18 +918,12 @@
         <div class="btn-row" id="intro-doors" style="margin-top: 24px;">
           <button class="btn primary" id="btn-go-flash">Train the timed game</button>
           <button class="btn primary" id="btn-go-nine">Train the nine</button>
-          <button class="btn ghost" id="btn-go-sandbox">The dials</button>
           <a class="btn ghost" data-game="ayumu-test" href="ayumu-test.html">The Ayumu Test</a>
         </div>
         <div class="pref-row">
           <label class="pref-toggle"><input type="checkbox" id="pref-hc"> Higher contrast</label>
           <span class="t-quiet">Works best on a screen you can hold still, turned up bright.</span>
         </div>
-      </section>
-
-      <!-- ============ THE DIALS (sandbox) ============ -->
-      <section class="view" id="view-sandbox" aria-labelledby="sandbox-title">
-        <div id="sandbox-body"></div>
       </section>
 
       <!-- ============ TRAINING ROOM ============ -->
@@ -1342,11 +1046,6 @@ const NINE_TRIES = 5;
    Capped so a device that cannot hold a frame budget still finishes. */
 const MAX_REPLACEMENTS = 4;
 
-/* The dials, and the axes of the map. Ayumu sits in the bottom right corner. */
-const NUMERAL_STEPS = [3, 4, 5, 6, 7, 8, 9];
-const HOLD_STEPS = [2000, 1500, 1000, 650, 430, 290, 210];
-/* The dials run one try per press, so there is no block size any more. */
-
 /* ────────────────────────────────────────────────────────────────
    THE TWO TRACKS (JT, 2026-09-14). One machine, two ladders.
 
@@ -1433,7 +1132,6 @@ function blankTrack() { return { rung: 0, sessions: [], topStreak: 0, completedA
 function blankStore() {
   return {
     tracks: { flash: blankTrack(), nine: blankTrack() },
-    map: {},           /* "9x210" -> {tries, wins} from the dials */
     prefs: { hc: false }
   };
 }
@@ -1448,7 +1146,6 @@ function normalizeStore(s) {
     if (typeof t.topStreak !== 'number') t.topStreak = 0;
     if (t.completedAt === undefined) t.completedAt = null;
   });
-  if (!s.map || typeof s.map !== 'object') s.map = {};
   if (!s.prefs) s.prefs = { hc: false };
   return s;
 }
@@ -1471,37 +1168,6 @@ function saveStore() {
     localStorage.setItem(STORE_KEY, JSON.stringify(store));
   } catch (e) { /* private mode: the visit still works, it just won’t persist */ }
   if (typeof pushProgress === 'function') pushProgress();
-}
-
-/* ================================================================
-   3. THE MAP: every setting anyone has tried on the dials
-   ================================================================ */
-
-function mapKey(n, h) { return n + 'x' + h; }
-
-function mapGet(n, h) { return store.map[mapKey(n, h)] || null; }
-
-function mapRecord(n, h, wins, tries) {
-  const k = mapKey(n, h);
-  const cur = store.map[k] || { tries: 0, wins: 0 };
-  cur.tries += tries;
-  cur.wins += wins;
-  store.map[k] = cur;
-}
-
-/* The furthest they have got on the dials: most numbers cleared anywhere,
-   and at that number of numbers, the shortest flash they have managed. */
-function frontier() {
-  let bestN = 0, bestHold = null;
-  Object.keys(store.map).forEach(k => {
-    const cell = store.map[k];
-    if (!cell.wins) return;
-    const parts = k.split('x');
-    const n = parseInt(parts[0], 10), h = parseInt(parts[1], 10);
-    if (n > bestN) { bestN = n; bestHold = h; }
-    else if (n === bestN && (bestHold === null || h < bestHold)) { bestHold = h; }
-  });
-  return bestN ? { n: bestN, hold: bestHold } : null;
 }
 
 /* ================================================================
@@ -1546,28 +1212,7 @@ function colors() {
   };
 }
 
-/* The play layer is one element used two ways. Normally it is a full-screen
-   takeover. On the dials it gets moved into the page so a round runs in place.
-   Both of these put it back where it belongs before doing anything else, so
-   the two modes can never be live at once. */
-function mountPlayInline(hostId) {
-  const layer = document.getElementById('view-play');
-  const host = document.getElementById(hostId);
-  if (!host) return;
-  if (layer.parentNode !== host) host.appendChild(layer);
-  layer.classList.add('inline', 'active');
-  document.body.classList.remove('playing');
-}
-
-function unmountPlayInline() {
-  const layer = document.getElementById('view-play');
-  if (!layer.classList.contains('inline')) return;
-  layer.classList.remove('inline', 'active');
-  document.body.appendChild(layer);
-}
-
 function showView(id) {
-  unmountPlayInline();
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById(id);
   if (el) el.classList.add('active');
@@ -1577,17 +1222,9 @@ function showView(id) {
 }
 
 function showPlay() {
-  unmountPlayInline();
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-play').classList.add('active');
   document.body.classList.add('playing');
-}
-
-/* Order matters: the view has to be showing before the board is mounted into
-   it and measured, so every entry point to the dials goes through here. */
-function openSandbox() {
-  showView('view-sandbox');
-  renderSandbox();
 }
 
 function applyPrefs() {
@@ -2101,7 +1738,7 @@ function setPrompt(text, alert) {
 
 /* showReveal: after a try ends, briefly put the numbers back so you can see
    what the board actually was. That is a learning aid, so it runs in the
-   warm-up, the dials and the Training Room. It is withheld during the scored
+   the Training Room. It is withheld during the scored
    attempt to keep those three tries independent of each other. */
 async function runTrial(numerals, hold, opts) {
   const showReveal = opts && opts.reveal;
@@ -2432,267 +2069,6 @@ function nineBarsSVG(rec) {
    Ayumu’s line. Sittings with no clean run are skipped rather than plotted
    as a spike. Lower is better, so the axis runs fast at the top. */
 /* ================================================================
-   13. THE MAP AND THE DIALS
-   ================================================================ */
-
-/* Where the dials currently sit. Starts one notch easier than the furthest
-   they have cleared, so the first go on this screen is winnable. */
-let dialN = null, dialH = null;
-
-function defaultDials() {
-  const f = frontier();
-  if (!f) return { n: 0, h: 1 };   /* 3 numbers, 1500ms */
-  let ni = NUMERAL_STEPS.indexOf(f.n);
-  let hi = HOLD_STEPS.indexOf(f.hold);
-  if (ni < 0) ni = 0;
-  if (hi < 0) hi = 1;
-  return { n: ni, h: hi };
-}
-
-function mapHTML() {
-  const cols = NUMERAL_STEPS.length;
-  let html = '<div class="map-wrap"><div class="map" style="grid-template-columns: 58px repeat(' + cols + ', 1fr);" role="img" aria-label="' + esc(mapAria()) + '">';
-  html += '<div class="map-corner"></div>';
-  NUMERAL_STEPS.forEach(n => { html += '<div class="map-head">' + n + '</div>'; });
-  HOLD_STEPS.forEach(h => {
-    html += '<div class="map-side">' + (h >= 1000 ? (h / 1000) + 's' : h + 'ms') + '</div>';
-    NUMERAL_STEPS.forEach(n => {
-      const cell = mapGet(n, h);
-      const isAyumu = (n === FLASH_N && h === FLASH_HOLD);
-      const here = (NUMERAL_STEPS[dialN] === n && HOLD_STEPS[dialH] === h);
-      let cls = 'map-cell';
-      if (isAyumu) cls += ' ayumu';
-      else if (cell && cell.wins) cls += ' won';
-      else if (cell && cell.tries) cls += ' tried';
-      if (here) cls += ' here';
-      html += '<div class="' + cls + '"></div>';
-    });
-  });
-  html += '</div></div>';
-  html += '<div class="map-legend">' +
-    '<span class="map-key"><span class="map-swatch won"></span>Done it</span>' +
-    '<span class="map-key"><span class="map-swatch tried"></span>Tried it</span>' +
-    '<span class="map-key"><span class="map-swatch"></span>Not yet</span>' +
-    '<span class="map-key"><span class="map-swatch ayumu"></span>Ayumu</span>' +
-    '</div>';
-  return html;
-}
-
-function mapAria() {
-  const won = [];
-  Object.keys(store.map).forEach(k => {
-    if (!store.map[k].wins) return;
-    const p = k.split('x');
-    won.push(p[0] + ' numbers at ' + p[1] + ' milliseconds');
-  });
-  return 'A grid of settings, numbers of digits across and flash lengths down. ' +
-    (won.length ? 'You have managed: ' + won.join('; ') + '.' : 'Nothing filled in yet.') +
-    ' Ayumu’s timed setting is five numbers at 210 milliseconds.';
-}
-
-function yourNumberHTML() {
-  const f = frontier();
-  const ayumuDiff = difficulty(FLASH_N, FLASH_HOLD);   /* five at 210 */
-  let html = '<div class="yournum">';
-  if (!f) {
-    html += '<div class="yournum-big">Nothing on the board yet.</div>' +
-      '<div class="yournum-sub">Clear one setting and your number appears here</div>';
-  } else {
-    html += '<div class="yournum-big">' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds.</div>' +
-      '<div class="yournum-sub">The furthest you have got so far</div>';
-    if (f.n === FLASH_N && f.hold === FLASH_HOLD) {
-      html += '<div class="yournum-vs">That is Ayumu’s timed setting exactly. Take a bow.</div>';
-    } else if (difficulty(f.n, f.hold) > ayumuDiff) {
-      html += '<div class="yournum-vs">Past Ayumu’s timed setting of five at 210. You are into ground he was never even tested on.</div>';
-    } else {
-      html += '<div class="yournum-vs">Ayumu’s timed setting is five numbers at 210 milliseconds. That is the corner to aim for.</div>';
-    }
-  }
-  html += '</div>';
-  return html;
-}
-
-/* The per-setting tally, which replaced the old end-of-block results card.
-   It says more than that card did, because it accumulates every go you have
-   ever had at this square rather than just the last three. */
-function sandboxTallyHTML() {
-  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
-  const cell = mapGet(n, h);
-  if (n === FLASH_N && h === FLASH_HOLD) {
-    return 'That is Ayumu’s exact setting. Rounds here do not count towards your official score, which only ever comes from the real thing.';
-  }
-  if (cell && cell.tries) {
-    return 'This setting: ' + cell.wins + ' of ' + cell.tries + ' remembered.';
-  }
-  return 'You have not tried this one yet.';
-}
-
-/* Everything that changes when a dial moves or a round lands. Nothing here
-   touches #sandbox-stage, because rewriting that would tear the live board
-   out of the page. */
-function updateSandboxUI() {
-  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
-  const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-
-  set('dial-n-val', n + '<small>numbers</small>');
-  set('dial-h-val', comma(h) + '<small>milliseconds</small>');
-  document.getElementById('dial-n-down').disabled = (dialN === 0);
-  document.getElementById('dial-n-up').disabled = (dialN === NUMERAL_STEPS.length - 1);
-  /* HOLD_STEPS runs long to short, so the end of the array is the SMALLEST
-     number of milliseconds. Minus runs out there, plus runs out at the start. */
-  document.getElementById('dial-h-down').disabled = (dialH === HOLD_STEPS.length - 1);
-  document.getElementById('dial-h-up').disabled = (dialH === 0);
-
-  set('sandbox-tally', sandboxTallyHTML());
-  set('sandbox-yournum', yourNumberHTML());
-  set('sandbox-map', mapHTML());
-
-  /* The strip above the board reads out what pressing go will actually do,
-     and tracks the dials as they move. */
-  setHud('', '', n + ' · ' + comma(h) + 'MS');
-}
-
-/* Locks the controls for the second the numbers are up, then hands them back.
-   The dials stay on screen throughout so the setting you are playing is
-   always readable. */
-function setSandboxBusy(busy) {
-  const dials = document.getElementById('sandbox-dials');
-  const row = document.getElementById('sandbox-go-row');
-  if (dials) dials.classList.toggle('busy', busy);
-  if (row) row.classList.toggle('busy', busy);
-}
-
-function renderSandbox() {
-  if (dialN === null) { const d = defaultDials(); dialN = d.n; dialH = d.h; }
-  const el = document.getElementById('sandbox-body');
-
-  /* LAYOUT ORDER MATTERS HERE. Board, dials and go all have to be reachable
-     together, so only a one-line setup goes above the board and the longer
-     explanation sits underneath the loop rather than on top of it. On a
-     375x812 phone this is the difference between the go button being on
-     screen and being two scrolls away. */
-  /* No standfirst above the board. The prompt under it already says to set
-     the dials and press go, and the two together cost 42px of the height the
-     dials need to stay on screen. The longer explanation is below the loop. */
-  let html = '<p class="t-eyebrow">Your dials</p>' +
-    '<h1 class="t-title" id="sandbox-title">Find your edge</h1>';
-
-  /* The board is mounted into this slot once the HTML lands. */
-  html += '<div id="sandbox-stage"></div>';
-
-  /* Dials first, then go. Both have to be on screen with the board, and the
-     dials are the reason anyone came to this page, so they get the position
-     directly under it. */
-  html += '<div class="dials compact" id="sandbox-dials">' +
-    '<div class="dial"><div class="dial-label">How many numbers</div>' +
-      '<div class="dial-row">' +
-      '<button class="dial-btn" id="dial-n-down" aria-label="Fewer numbers">–</button>' +
-      '<div class="dial-value" id="dial-n-val" aria-live="polite"></div>' +
-      '<button class="dial-btn" id="dial-n-up" aria-label="More numbers">+</button>' +
-      '</div></div>' +
-    '<div class="dial"><div class="dial-label">How long they show</div>' +
-      '<div class="dial-row">' +
-      '<button class="dial-btn" id="dial-h-down" aria-label="Shorter flash">–</button>' +
-      '<div class="dial-value" id="dial-h-val" aria-live="polite"></div>' +
-      '<button class="dial-btn" id="dial-h-up" aria-label="Longer flash">+</button>' +
-      '</div></div>' +
-    '</div>';
-
-  html += '<div class="btn-row" id="sandbox-go-row" style="margin-top:14px;">' +
-    '<button class="btn primary" id="btn-sandbox-go">Go</button>' +
-    '</div>';
-
-  html += '<p class="t-quiet" id="sandbox-tally" style="margin-top:12px;"></p>';
-
-  html += '<p class="t-body" style="margin-top:26px;">Here you can adjust how many numbers appear and how long they stay on the screen. Turn the dials wherever you like and have a go, and every setting you complete gets filled in on your map below, so you can see exactly where your edge is.</p>';
-
-  html += '<div id="sandbox-yournum"></div>';
-
-  html += '<h2 class="t-section" style="margin-top:40px;">Your map</h2>' +
-    '<p class="t-body">Numbers across the top, flash length down the side. Easiest at the top left, hardest at the bottom right. Ayumu’s setting, five at 210, is marked in red, and the square you are on is outlined.</p>' +
-    '<div id="sandbox-map"></div>';
-
-  html += '<h2 class="t-section" style="margin-top:44px;">Want a plan instead of a playground?</h2>' +
-    '<p class="t-body">The two training tracks walk the difficulty up for you, one number at a time, with Ayumu’s standard held at every step.</p>' +
-    '<div class="btn-row">' +
-    '<button class="btn" id="btn-sandbox-training">Back to the tracks</button>' +
-    '</div>';
-
-  el.innerHTML = html;
-
-  /* Board into the page, then measured, then painted empty and waiting. */
-  mountPlayInline('sandbox-stage');
-  setPrompt('Set the dials, then press go.');
-  phase = 'idle';
-  trial = null;
-  layoutField();
-  render();
-
-  updateSandboxUI();
-
-  /* dir is what the button does to the NUMBER ON SCREEN: +1 makes it bigger.
-     For the numbers dial that is also a step up the array. For the hold dial
-     it is a step DOWN it, because HOLD_STEPS runs long to short. Reading the
-     glyph as an instruction to the array rather than to the value is what had
-     plus shortening the flash. */
-  const bump = (which, dir) => {
-    if (sandboxBusy) return;
-    if (which === 'n') dialN = Math.max(0, Math.min(NUMERAL_STEPS.length - 1, dialN + dir));
-    else dialH = Math.max(0, Math.min(HOLD_STEPS.length - 1, dialH - dir));
-    updateSandboxUI();
-  };
-  document.getElementById('dial-n-down').addEventListener('click', () => bump('n', -1));
-  document.getElementById('dial-n-up').addEventListener('click', () => bump('n', 1));
-  document.getElementById('dial-h-down').addEventListener('click', () => bump('h', -1));
-  document.getElementById('dial-h-up').addEventListener('click', () => bump('h', 1));
-  document.getElementById('btn-sandbox-go').addEventListener('click', sandboxGo);
-  document.getElementById('btn-sandbox-training').addEventListener('click', () => { boot(); });
-}
-
-/* ONE ROUND, IN PLACE (rebuilt 2026-08-05 on JT’s call). This used to be a
-   block of three wrapped in a confirmation card and a results card, with a
-   view change either side. A block needs a beginning and an end, which is
-   what those cards were, so the whole ceremony fell away with the block.
-   One press is now one try: press, watch, answer, adjust, press again.
-   The map is unaffected, because mapRecord only ever adds and frontier()
-   only asks whether a square has been won at all. */
-let sandboxBusy = false;
-
-async function sandboxGo() {
-  if (sandboxBusy) return;
-  sandboxBusy = true;
-  aborted = false;
-  setSandboxBusy(true);
-
-  const n = NUMERAL_STEPS[dialN], h = HOLD_STEPS[dialH];
-
-  await document.fonts.ready;
-  layoutField();
-
-  if (await ensureTiming()) {
-    const t = await runTrial(n, h, { reveal: true });
-    if (t && t.valid) {
-      const wasBest = frontier();
-      mapRecord(n, h, t.success ? 1 : 0, 1);
-      saveStore();
-      updateSandboxUI();
-      /* Only say the edge moved when it actually did. */
-      if (t.success) {
-        const f = frontier();
-        const moved = f && f.n === n && f.hold === h &&
-          !(wasBest && wasBest.n === f.n && wasBest.hold === f.hold);
-        if (moved) setPrompt('That is a new best, so your edge just moved.');
-      }
-    } else if (t && !t.valid) {
-      setPrompt('The screen hiccuped, so that one does not count.', true);
-    }
-  }
-
-  setSandboxBusy(false);
-  sandboxBusy = false;
-}
-
-/* ================================================================
    14. THE TRAINING ROOM
    ================================================================ */
 
@@ -2701,12 +2077,6 @@ async function sandboxGo() {
    Needed because the map runs out to 2 seconds while the ladder starts at 1,
    so comparing hold against hold alone would call every slow success a
    beginner. */
-/* One number for how hard a dials setting is, used by the map's "your number"
-   readout to compare a setting against Ayumu's five at 210. */
-function difficulty(n, h) {
-  return n + 1.5 * Math.log2(1000 / h);
-}
-
 function track(kind) { return store.tracks[kind]; }
 function trackDef(kind) { return TRACKS[kind]; }
 function trackTop(kind) { return TRACKS[kind].steps.length - 1; }
@@ -2824,7 +2194,6 @@ async function runTrackSession(kind) {
     const rate = trials ? passes / trials : 0;
     session.sets.push({ rung, n, h: step.h, passes, trials, clean, fastest, rate });
     sets++;
-    if (kind === 'flash' && trials) mapRecord(n, step.h, passes, trials);
 
     let moved = 'held';
     const top = trackTop(kind);
@@ -3004,14 +2373,12 @@ function renderTrack(kind) {
       : 'The timed game is Ayumu’s other game, and it trains a different thing: taking in a flash instead of committing fast. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.') + '</p>' +
     '<div class="btn-row">' +
     '<button class="btn ghost" id="btn-track-other">Switch to ' + esc(trackDef(other).name.toLowerCase()) + '</button>' +
-    '<button class="btn ghost" id="btn-track-sandbox">The dials</button>' +
     '<button class="btn ghost" id="btn-track-home">Back to the start</button>' +
     '</div>';
 
   el.innerHTML = html;
   document.getElementById('btn-track-start').addEventListener('click', () => startTrack(kind));
   document.getElementById('btn-track-other').addEventListener('click', () => { renderTrack(other); showView('view-training'); });
-  document.getElementById('btn-track-sandbox').addEventListener('click', () => { openSandbox(); });
   document.getElementById('btn-track-home').addEventListener('click', () => { boot(); });
 }
 
@@ -3050,8 +2417,6 @@ function flashShareLines() {
   const best = bestPassedRung('flash');
   if (trackComplete('flash')) return { big: ['Ayumu: five in 210ms.', 'Me: five in 210ms.'], sub: 'THE AYUMU TRAINING ROOM' };
   if (best !== null) { const st = trackStep('flash', best); return { big: ['Ayumu: five in 210ms.', 'Me so far: ' + st.n + ' in ' + comma(st.h) + 'ms.'], sub: 'THE AYUMU TRAINING ROOM' }; }
-  const f = frontier();
-  if (f) return { big: ['Ayumu: five in 210ms.', 'My best: ' + f.n + ' in ' + comma(f.hold) + 'ms.'], sub: 'THE AYUMU TRAINING ROOM' };
   return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TRAINING ROOM' };
 }
 
@@ -3150,44 +2515,47 @@ function drawShareCard(canvas, w, h, kind) {
     g.textAlign = 'left';
     vizBottom = vTop + 2 * rowGap;
   } else {
-    /* The map, drawn small: the filled squares and the empty corner tell the
-       story without a word of explanation. */
-    const mapTop = y + (tall ? h * 0.035 : h * 0.03);
-    const cols = NUMERAL_STEPS.length, rows = HOLD_STEPS.length;
-    const gapPx = Math.max(2, w * 0.004);
-    const cellW = (cw - gapPx * (cols - 1)) / cols;
-    const cellH = Math.min(cellW, ((tall ? h * 0.30 : h * 0.34) - gapPx * (rows - 1)) / rows);
-
-    HOLD_STEPS.forEach((hold, ri) => {
-      NUMERAL_STEPS.forEach((n, ci) => {
-        const x = pad + ci * (cellW + gapPx);
-        const yy = mapTop + ri * (cellH + gapPx);
-        const cell = mapGet(n, hold);
+    /* The timed ladder, drawn small: one row per stage, five boxes per row
+       for the five flash lengths, filled as far as the player has passed.
+       The last box of the last row is Ayumu's own condition. */
+    const def = TRACKS.flash;
+    const passed = bestPassedRung('flash');
+    const stages = FLASH_STAGE_NS, holds = FLASH_STAGE_HOLDS;
+    const top0 = y + (tall ? h * 0.035 : h * 0.03);
+    const gapPx = Math.max(2, w * 0.006);
+    const labelW = cw * 0.22;
+    const boxW = (cw - labelW - gapPx * (holds.length - 1)) / holds.length;
+    const rowH = Math.min(boxW, (tall ? h * 0.26 : h * 0.30) / stages.length - gapPx);
+    g.font = '700 ' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
+    stages.forEach((n, ri) => {
+      const yy = top0 + ri * (rowH + gapPx * 3);
+      g.textAlign = 'left';
+      g.fillStyle = c.muted;
+      g.fillText(n + ' NUMBERS', pad, yy + rowH * 0.66);
+      holds.forEach((hold, ci) => {
+        const rung = def.steps.findIndex(st => st.n === n && st.h === hold);
+        const x = pad + labelW + ci * (boxW + gapPx);
         const isAyumu = (n === FLASH_N && hold === FLASH_HOLD);
-        if (isAyumu) {
-          g.strokeStyle = c.red;
-          g.lineWidth = Math.max(2, w * 0.0035);
-          g.strokeRect(x, yy, cellW, cellH);
-        } else if (cell && cell.wins) {
-          g.fillStyle = c.ink;
-          g.fillRect(x, yy, cellW, cellH);
+        if (passed !== null && rung <= passed) {
+          g.fillStyle = isAyumu ? c.red : c.ink;
+          g.fillRect(x, yy, boxW, rowH);
         } else {
-          g.strokeStyle = c.rule;
-          g.lineWidth = 1;
-          g.strokeRect(x, yy, cellW, cellH);
+          g.strokeStyle = isAyumu ? c.red : c.rule;
+          g.lineWidth = isAyumu ? Math.max(2, w * 0.0035) : 1;
+          g.strokeRect(x, yy, boxW, rowH);
         }
       });
     });
-
-    const mapBottom = mapTop + rows * (cellH + gapPx);
+    const ladderBottom = top0 + stages.length * (rowH + gapPx * 3);
     g.fillStyle = c.muted;
     g.font = '' + Math.round(w * (tall ? 0.019 : 0.013)) + 'px "Space Mono", monospace';
-    g.fillText('MORE NUMBERS →', pad, mapBottom + w * (tall ? 0.04 : 0.028));
+    g.textAlign = 'left';
+    g.fillText('FLASH GETS SHORTER →', pad + labelW, ladderBottom + w * (tall ? 0.03 : 0.02));
     g.textAlign = 'right';
     g.fillStyle = c.red;
-    g.fillText('AYUMU', pad + cw, mapBottom + w * (tall ? 0.04 : 0.028));
+    g.fillText('AYUMU', pad + cw, ladderBottom + w * (tall ? 0.03 : 0.02));
     g.textAlign = 'left';
-    vizBottom = mapBottom;
+    vizBottom = ladderBottom;
   }
 
   let dy = vizBottom + (tall ? h * 0.085 : h * 0.11);
@@ -3237,7 +2605,7 @@ function renderShare() {
     '</div>' +
     '<p class="t-quiet" id="copy-status" style="margin-top:18px;">The tall one fits Instagram and X stories. The wide one is for link previews.</p>' +
     '<div class="btn-row" style="margin-top:24px;">' +
-    '<button class="btn ghost" id="btn-share-back">Back to the dials</button></div>';
+    '<button class="btn ghost" id="btn-share-back">Back to the tracks</button></div>';
 
   const preview = document.getElementById('share-canvas');
   preview.style.aspectRatio = '1080 / 1920';
@@ -3275,7 +2643,7 @@ function renderShare() {
       status.textContent = 'Here it is: ' + text;
     }
   });
-  document.getElementById('btn-share-back').addEventListener('click', () => { openSandbox(); });
+  document.getElementById('btn-share-back').addEventListener('click', () => { renderTrack(currentTrack); showView('view-training'); });
 }
 
 /* ================================================================
@@ -3312,18 +2680,15 @@ document.getElementById('btn-quit').addEventListener('click', () => {
     const active = document.querySelector('.view.active');
     if (!active) return;
     if (active.id === 'view-training') renderTrack(currentTrack);
-    if (active.id === 'view-sandbox') renderSandbox();
   });
 });
 
 document.getElementById('btn-go-flash').addEventListener('click', () => { renderTrack('flash'); showView('view-training'); });
 document.getElementById('btn-go-nine').addEventListener('click', () => { renderTrack('nine'); showView('view-training'); });
-document.getElementById('btn-go-sandbox').addEventListener('click', () => { openSandbox(); });
 
 /* Wipe everything this device remembers and go back to the first screen. */
 function resetEverything() {
   store = blankStore();
-  dialN = null; dialH = null;
   try { localStorage.removeItem(STORE_KEY); } catch (e) {}
   saveStore();
   boot();
@@ -3355,8 +2720,7 @@ let pushTimer = null;
 function hasProgress(st) {
   if (!st || typeof st !== 'object') return false;
   const tr = st.tracks || {};
-  return !!(['flash', 'nine'].some(k => tr[k] && tr[k].sessions && tr[k].sessions.length) ||
-    (st.map && Object.keys(st.map).length));
+  return !!['flash', 'nine'].some(k => tr[k] && tr[k].sessions && tr[k].sessions.length);
 }
 
 /* Send the store up, a moment after the last change, so a burst of saves
@@ -3422,12 +2786,6 @@ function mergeStores(local, remote) {
     /* A completion recorded on either copy stands. */
     if (!out.tracks[k].completedAt && (a.completedAt || b.completedAt)) out.tracks[k].completedAt = a.completedAt || b.completedAt;
   });
-  const keys = new Set(Object.keys((local && local.map) || {}).concat(Object.keys((remote && remote.map) || {})));
-  keys.forEach(key => {
-    const a = (local && local.map && local.map[key]) || { tries: 0, wins: 0 };
-    const b = (remote && remote.map && remote.map[key]) || { tries: 0, wins: 0 };
-    out.map[key] = a.tries >= b.tries ? { tries: a.tries, wins: a.wins } : { tries: b.tries, wins: b.wins };
-  });
   out.prefs = (local && local.prefs) || (remote && remote.prefs) || { hc: false };
   out.savedAt = new Date(Math.max(lAt, rAt) || Date.now()).toISOString();
   return out;
@@ -3446,7 +2804,6 @@ async function pullProgress() {
     const before = JSON.stringify(store);
     store = mergeStores(store, remote);
     lastSavedAt = d.updated_at || null;
-    dialN = null; dialH = null;
     try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
     applyPrefs();
     syncState = 'saved';
@@ -3539,9 +2896,6 @@ function renderIntroStatus() {
       }
       rows += '<div class="status-row"><div class="status-key">' + esc(def.name) + '</div><div class="status-val">' + val + '</div></div>';
     });
-    const f = frontier();
-    rows += '<div class="status-row"><div class="status-key">The dials</div><div class="status-val">' +
-      (f ? 'Furthest so far: <b>' + f.n + ' numbers in ' + comma(f.hold) + ' milliseconds</b>.' : 'Nothing on the map yet.') + '</div></div>';
 
     const saved = syncState === 'offline'
       ? 'Saving is not working right now, so this visit is kept on this device only.'
@@ -3560,7 +2914,7 @@ function renderIntroStatus() {
   if (out) out.addEventListener('click', () => { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); });
   const reset = document.getElementById('btn-reset-all');
   if (reset) reset.addEventListener('click', () => {
-    if (!confirm('This clears every training session and map square you have saved, on every device. Start over?')) return;
+    if (!confirm('This clears every training session you have saved, on every device. Start over?')) return;
     resetEverything();
   });
 }
@@ -3576,19 +2930,6 @@ window.addEventListener('resize', () => {
   }, 200);
 });
 
-/* On the dials, space or enter runs another round, so a run of goes never
-   needs the pointer. Held back while a round is live, and while the board
-   itself has focus, where those keys are already the answer keys. */
-window.addEventListener('keydown', e => {
-  if (e.key !== ' ' && e.key !== 'Enter') return;
-  if (sandboxBusy) return;
-  if (!document.getElementById('view-sandbox').classList.contains('active')) return;
-  const a = document.activeElement;
-  if (a && (a.id === 'board' || a.tagName === 'BUTTON' || a.tagName === 'A')) return;
-  e.preventDefault();
-  sandboxGo();
-});
-
 async function boot() {
   applyPrefs();
   const params = new URLSearchParams(location.search);
@@ -3598,7 +2939,6 @@ async function boot() {
   if (params.get('reset') === '1') {
     history.replaceState(null, '', location.pathname);
     store = blankStore();
-    dialN = null; dialH = null;
     try { localStorage.removeItem(STORE_KEY); } catch (e) {}
     saveStore();
   }
@@ -3625,19 +2965,14 @@ if (DEV) {
   window.__ayumu = {
     state: () => ({
       phase: phase, frameDur: frameDur, measured: frameDurMeasured, field: field,
-      rungs: { flash: trackRung('flash'), nine: trackRung('nine') }, frontier: frontier(), bestNineMs: bestNineMs(),
-      dials: (dialN === null ? null : { n: NUMERAL_STEPS[dialN], h: HOLD_STEPS[dialH] }),
+      rungs: { flash: trackRung('flash'), nine: trackRung('nine') }, bestNineMs: bestNineMs(),
       next: trial ? trial.next : null,
       kbFocus: kbFocus,
       focusValue: (trial && kbFocus >= 0) ? trial.items[kbFocus].value : null,
       tiles: trial ? trial.items.map(it => ({ v: it.value, cx: it.x + it.s / 2, cy: it.y + it.s / 2, taken: it.taken })) : null
     }),
     store: () => store,
-    reset: () => { store = blankStore(); dialN = null; dialH = null; saveStore(); boot(); },
-    setDials: (n, h) => {
-      dialN = NUMERAL_STEPS.indexOf(n); dialH = HOLD_STEPS.indexOf(h);
-      return { n: NUMERAL_STEPS[dialN], h: HOLD_STEPS[dialH] };
-    },
+    reset: () => { store = blankStore(); saveStore(); boot(); },
     /* Lay out and paint a board without running the timed flow, so the
        geometry can be inspected where rAF is unavailable. */
     demoBoard: (n, mode, taken) => {
@@ -3680,11 +3015,6 @@ if (DEV) {
       };
       tick();
       return 'solving';
-    },
-    seedMap: (pairs) => {
-      pairs.forEach(p => mapRecord(p[0], p[1], p[2], p[3]));
-      saveStore();
-      return frontier();
     },
     seedSessions: (kind, n, complete) => {
       kind = kind || 'flash';
