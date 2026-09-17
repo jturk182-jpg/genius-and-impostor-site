@@ -550,7 +550,7 @@ ${FONTS}
     pvEnter.setAttribute('href', id + '.html');
     /* The play button only shows for a launched game (launched.js gates
        static links on load; this one is set after, so it checks itself). */
-    var slug = d.game ? d.game.url.replace(/^.*\//, '').replace(/\.html.*$/, '') : null;
+    var slug = d.game ? d.game.url.split('/').pop().split('.')[0] : null;
     if (d.game && (!window.launched || window.launched(slug))){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
     else { pvPlay.hidden = true; }
     preview.classList.add('on');
