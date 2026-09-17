@@ -375,7 +375,7 @@ function mapPage() {
       ly = above ? s.y - (RI + 10) : s.y + (RI + 18);
       anchor = 'middle';
     }
-    return `<g class="station" tabindex="0" role="link" data-id="${s.id}" data-name="${esc(s.name)}" data-breath="${esc(s.oneBreath)}" data-game="${hasGame ? esc(s.games[0].name) : ''}" data-gameurl="${hasGame ? esc(s.games[0].url) : ''}">
+    return `<g class="station" tabindex="0" role="link" data-id="${s.id}" data-name="${esc(s.name)}" data-breath="${esc(s.oneBreath)}">
       <circle cx="${s.x}" cy="${s.y}" r="26" fill="transparent"/>
       ${glyph}${tick}
       <text class="station-label" x="${lx}" y="${ly}" text-anchor="${anchor}">${esc(label)}</text>
@@ -548,7 +548,10 @@ ${FONTS}
     pvName.textContent = d.name;
     pvBreath.textContent = d.breath;
     pvEnter.setAttribute('href', id + '.html');
-    if (d.game){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
+    /* The play button only shows for a launched game (launched.js gates
+       static links on load; this one is set after, so it checks itself). */
+    var slug = d.game ? d.game.url.replace(/^.*\//, '').replace(/\.html.*$/, '') : null;
+    if (d.game && (!window.launched || window.launched(slug))){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
     else { pvPlay.hidden = true; }
     preview.classList.add('on');
     preview.scrollIntoView({behavior:'smooth', block:'nearest'});
