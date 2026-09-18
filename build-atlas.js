@@ -173,7 +173,8 @@ function stationPage(s) {
     // reader reasons to the insight; the question comes before the
     // knowledge and the belief to overturn comes last. Rendered verbatim.
     s.flow.forEach(st => {
-      if (st.ask) flowSteps.push({ ask: st.ask, choices: st.choices, correct: st.correct, answer: st.answer });
+      if (st.ask) flowSteps.push({ ask: st.ask, choices: st.choices, correct: st.correct,
+        answer: st.answer + (st.cite ? '<p class="lf-cite">' + esc(st.cite) + '</p>' : '') });
       else flowSteps.push({ chunk: st.chunk + (st.cite ? '<p class="lf-cite">' + esc(st.cite) + '</p>' : '') });
     });
   } else if (s.claimsBlock) {
