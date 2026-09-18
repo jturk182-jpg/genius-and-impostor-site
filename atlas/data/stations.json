@@ -194,10 +194,24 @@
           "answer": "<p>One mechanism. Every skill, whatever it looks like from the outside, is built by the same process: practice moving the work off the channel you can feel onto machinery that runs on its own.</p><p class=\"lf-cite\">Power-law learning across domains (Newell &amp; Rosenbloom, 1981)</p>"
         },
         {
-          "chunk": "<p>Picasso draws a quick sketch and names a high price. The buyer protests that it only took a minute. Picasso answers that it took fifty years. The buyer is looking at a minute of output. Picasso is looking at fifty years of training folded up inside the ease of it.</p>"
+          "ask": "Picasso dashes off a sketch in about a minute and names a high price. The buyer objects: it only took you a minute! Picasso answers: no, it took me fifty years. You have just worked out what practice does to a skill. So who is right about what the buyer watched?",
+          "choices": [
+            "The buyer. A minute of work is a minute of work",
+            "Picasso. The ease of that minute is fifty years of training, running on its own",
+            "Neither. It is just a good line"
+          ],
+          "correct": 1,
+          "answer": "<p>Picasso. What the buyer saw was the automatic version, the sketch running off machinery that fifty years of drawing had built. What he could not see was the machinery, for the same reason you cannot feel yourself reading right now. The ease is what all that training looks like from the outside.</p>"
         },
         {
-          "chunk": "<p>A bat solves echolocation the way you solve reading, with machinery that runs on its own. That the bat was born with it and you built yours makes no difference to what it is. Automatic problem-solving is intelligence, whichever way the machinery got there.</p>"
+          "ask": "One more. A bat finds its way in the dark by echolocation, with machinery that runs on its own. The bat was born with its machinery. You built yours, for reading. Is what the bat does intelligence, and what you do not? Or the other way round?",
+          "choices": [
+            "The bat's is instinct, so it does not count. Yours is intelligence",
+            "Yours is just habit. The bat's is the real thing",
+            "Both are intelligence. Where the machinery came from makes no difference to what it does"
+          ],
+          "correct": 2,
+          "answer": "<p>Both. Automatic problem-solving is intelligence, whichever way the machinery got there. The bat's came with the bat. Yours you built, one practice session at a time, and that is the whole reason this map exists.</p>"
         }
       ]
     },
