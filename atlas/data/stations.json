@@ -242,7 +242,8 @@
             "The shared shape of the learning curve means all skills are equally hard"
           ],
           "correct": 1,
-          "answer": "<p>The shared shape points to one mechanism. Every skill, whatever it looks like from the outside, is built by the same process: practice moving the work off the channel you can feel onto machinery that runs on its own.</p><p class=\"lf-cite\">Power-law learning across domains (Newell &amp; Rosenbloom, 1981)</p>"
+          "answer": "<p>The shared shape points to one mechanism. Every skill, whatever it looks like from the outside, is built by the same process: practice moving the work off the channel you can feel onto machinery that runs on its own.</p>",
+          "cite": "Power-law learning across domains (Newell & Rosenbloom, 1981)"
         },
         {
           "ask": "Picasso dashes off a sketch in about a minute and names a high price. The buyer objects: it only took you a minute! Picasso answers: no, it took me fifty years. You have just worked out what practice does to a skill. So who is right about what the buyer watched?",
@@ -369,7 +370,7 @@
             "People are just cheap when it comes to paying for services"
           ],
           "correct": 1,
-          "answer": "<p>You cannot see the skill inside the locksmith's head. You can see eight balls in the air. You cannot see what is happening inside a skilled head. So when the work is mental, the only evidence left is how hard the person looks like they are trying, and we judge by that instead.</p>"
+          "answer": "<p>You cannot see the skill inside the locksmith's head. With the jugglers you could see eight balls in the air. With the locksmith, the accountant and the writer, the work happens inside a skilled head, where you cannot see it. So when the work is mental, the only evidence left is how hard the person looks like they are trying, and we judge by that instead.</p>"
         },
         {
           "ask": "So here is the belief, stated plainly. If something looks effortful it must be complex, and if it looks easy it must be simple. Knowing what you now know, which way does it actually run?",
