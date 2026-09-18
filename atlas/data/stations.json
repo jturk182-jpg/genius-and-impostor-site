@@ -137,7 +137,69 @@
       "next": {
         "target": "effort-inversion",
         "reason": "If effortless skill is the real machinery, then everything we assume about effort is upside down. See how."
-      }
+      },
+      "flow": [
+        {
+          "ask": "Think back to the first time you drove a car, or the first time you did anything that took your whole attention. Merging into traffic, say. Could you have held a real conversation at the same time?",
+          "choices": [
+            "Yes, easily",
+            "No, there was no room left for it",
+            "Only if the road was empty"
+          ],
+          "correct": 1,
+          "answer": "<p>No, and you know why. Every part of driving needed the small piece of your mind you can pay attention with, and there was nothing left over.</p><p>And now? You can drive through traffic and argue about dinner at the same time. The traffic did not change. So what did?</p>"
+        },
+        {
+          "ask": "What changed between then and now?",
+          "choices": [
+            "Driving got simpler",
+            "The driving moved off the part of your mind you can feel, and now runs on its own",
+            "You got better at paying attention to two things at once"
+          ],
+          "correct": 1,
+          "answer": "<p>Driving did not get simpler. Merging still means tracking a dozen cars, judging their speeds, and moving your hands and feet, all at once. And nobody gets better at attending to two things at once; that channel is as narrow as it ever was.</p><p>What practice did was move the whole job off the channel you can feel and onto machinery that runs by itself. That is what automatic means.</p>"
+        },
+        {
+          "chunk": "<p>Here is how narrow that channel is. The part of your mind you can pay attention with holds about four things at once, and it works through them one at a time.</p>",
+          "cite": "Working memory limits (Cowan, 2001)"
+        },
+        {
+          "ask": "Reading a sentence needs letter shapes, sounds, spellings, meanings and grammar, all at the same time. If reading had to run through that four-slot channel, one thing at a time, what would reading be like?",
+          "choices": [
+            "About the same, just a little slower",
+            "Slow and effortful, one letter at a time, the way a six-year-old reads",
+            "It would make no difference"
+          ],
+          "correct": 1,
+          "answer": "<p>You have seen that version. It is a child sounding out a word. That is what reading looks like when it runs through the channel you can feel.</p><p>So the reading you are doing right now must be running somewhere else, on its own, outside that channel. The channel could not do it. Almost everything your mind does well is like this. Walking coordinates dozens of muscles at once. Recognizing a face, catching a ball, understanding speech: none of it could run one slow step at a time.</p>"
+        },
+        {
+          "ask": "Some people say that automatic means mindless, and that the real thinking is the slow, effortful kind you can feel yourself doing. The driving, the reading and the walking you just thought about: which are they?",
+          "choices": [
+            "Mindless routines, not real thinking",
+            "The mind doing its most complex work, without bothering you",
+            "Somewhere in between"
+          ],
+          "correct": 1,
+          "answer": "<p>The slow channel you can feel holds four things. It could not run a mind. Everything complex your mind does is possible only because it was moved off that channel onto machinery that runs on its own.</p><p>Automaticity is not the absence of intelligence. It is what intelligence is built out of.</p>"
+        },
+        {
+          "ask": "Learning curves have the same shape whether you are training face recognition, a tennis serve, or algebra: a fast rise, then a levelling off. When one signature shows up in every skill there is, what is it pointing at?",
+          "choices": [
+            "A coincidence",
+            "One shared mechanism underneath all of them",
+            "That all skills are equally hard"
+          ],
+          "correct": 1,
+          "answer": "<p>One mechanism. Every skill, whatever it looks like from the outside, is built by the same process: practice moving the work off the channel you can feel onto machinery that runs on its own.</p><p class=\"lf-cite\">Power-law learning across domains (Newell &amp; Rosenbloom, 1981)</p>"
+        },
+        {
+          "chunk": "<p>Picasso draws a quick sketch and names a high price. The buyer protests that it only took a minute. Picasso answers that it took fifty years. The buyer is looking at a minute of output. Picasso is looking at fifty years of training folded up inside the ease of it.</p>"
+        },
+        {
+          "chunk": "<p>A bat solves echolocation the way you solve reading, with machinery that runs on its own. That the bat was born with it and you built yours makes no difference to what it is. Automatic problem-solving is intelligence, whichever way the machinery got there.</p>"
+        }
+      ]
     },
     {
       "id": "effort-inversion",

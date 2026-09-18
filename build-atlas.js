@@ -168,19 +168,29 @@ function stationPage(s) {
   // and reader-driven. The claim becomes a bias-surfacing question; evidence
   // and stories become one-idea cards.
   const flowSteps = [];
-  if (s.claimsBlock) {
+  if (Array.isArray(s.flow) && s.flow.length) {
+    // Hand-authored generative sequence (JT's method, 2026-09-18): the
+    // reader reasons to the insight; the question comes before the
+    // knowledge and the belief to overturn comes last. Rendered verbatim.
+    s.flow.forEach(st => {
+      if (st.ask) flowSteps.push({ ask: st.ask, choices: st.choices, correct: st.correct, answer: st.answer });
+      else flowSteps.push({ chunk: st.chunk + (st.cite ? '<p class="lf-cite">' + esc(st.cite) + '</p>' : '') });
+    });
+  } else if (s.claimsBlock) {
     flowSteps.push({
       ask: 'A lot of people would say: “' + s.claimsBlock.believe + '” Does that hold up?',
       choices: ['Sounds about right', 'I’m not sure', 'No, that’s off'],
       answer: '<p>' + s.claimsBlock.evidence + '</p>'
     });
   }
-  (s.evidence || []).forEach(e => {
-    flowSteps.push({ chunk: '<p>' + e.text + '</p>' + (e.cite ? '<p class="lf-cite">' + esc(e.cite) + '</p>' : '') });
-  });
-  (s.stories || []).forEach(st => {
-    flowSteps.push({ chunk: '<p>' + st.text + '</p>' });
-  });
+  if (!(Array.isArray(s.flow) && s.flow.length)) {
+    (s.evidence || []).forEach(e => {
+      flowSteps.push({ chunk: '<p>' + e.text + '</p>' + (e.cite ? '<p class="lf-cite">' + esc(e.cite) + '</p>' : '') });
+    });
+    (s.stories || []).forEach(st => {
+      flowSteps.push({ chunk: '<p>' + st.text + '</p>' });
+    });
+  }
   const walk = flowSteps.length
     ? `<button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>`
     : '';
