@@ -85,7 +85,7 @@
             "He has lost both"
           ],
           "correct": 1,
-          "answer": "<p>The skill is intact, and you can prove it. The route is cut. Dennis is your toast, made permanent by a stroke: capability in place, access gone.</p><p>That is the whole model. What you can do in a given moment is what you have built, multiplied by how much of it your brain state will let you reach. Capability times access. Push the access to zero and the performance goes to zero, with the skill sitting right there.</p>"
+          "answer": "<p>The skill is intact, and you can prove it. The route is cut. Dennis is the toast example made permanent by a stroke. The ability is in place. The access to it is gone.</p><p>That is the whole model. What you can do in a given moment is what you have built, multiplied by how much of it your brain state will let you reach. Capability times access. Push the access to zero and the performance goes to zero, with the skill sitting right there.</p>"
         },
         {
           "ask": "Researchers taught people a number puzzle with a hidden shortcut that nobody was told about. Some then slept, some stayed awake, and everybody had the same training. Who found the shortcut?",
@@ -262,7 +262,7 @@
             "Both are intelligence. Where the machinery came from makes no difference to what it does"
           ],
           "correct": 2,
-          "answer": "<p>Both. Automatic problem-solving is intelligence, whichever way the machinery got there. The bat's came with the bat. Yours you built, one practice session at a time, and that is the whole reason this map exists.</p>"
+          "answer": "<p>Both. Automatic problem-solving is intelligence, whichever way the machinery got there. The bat's came with the bat. Yours you built, one practice session at a time.</p>"
         }
       ],
       "contested": "Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing. (The reader will resist the idea that the automatic part is the intelligence, not the absence of it.)"
@@ -339,7 +339,7 @@
             "You cannot tell from the outside"
           ],
           "correct": 1,
-          "answer": "<p>Nobody hesitates on this one. Eight balls is harder than three, and the calm is what being good at it looks like. The sweat is what beginning looks like.</p><p>Hold on to how obvious that felt.</p>"
+          "answer": "<p>Nobody hesitates on this one. Eight balls is harder than three, and the calm is what being good at it looks like. The sweat is what a beginner looks like.</p><p>Notice how obvious that was.</p>"
         },
         {
           "ask": "Now a medical student sweating through a procedure, and a surgeon doing the same procedure calmly, almost bored. Which one is showing more skill?",
@@ -349,7 +349,7 @@
             "They are showing the same skill in different moods"
           ],
           "correct": 1,
-          "answer": "<p>The surgeon, and you got there just as fast. So far, so consistent.</p>"
+          "answer": "<p>The surgeon, and you answered just as quickly. So far your judgment is consistent: ease means skill.</p>"
         },
         {
           "ask": "Here is where it gets strange. A locksmith opens your lock in thirty seconds and charges you sixty dollars. Another one sweats and fumbles for ten minutes and charges the same. Which one do most people feel got the fair deal?",
@@ -359,7 +359,7 @@
             "Both, it is the same price"
           ],
           "correct": 1,
-          "answer": "<p>The slow one, if you are honest. Customers argue that the fast locksmith deserves less, and locksmiths will tell you the tips were better as an apprentice than as a master.</p><p>So with the jugglers you read ease as skill. With the locksmith you read ease as not much work. Same ease. Opposite verdict.</p>"
+          "answer": "<p>The slow one, if you are honest. Customers argue that the fast locksmith deserves less, and locksmiths will tell you the tips were better as an apprentice than as a master.</p><p>So with the jugglers you read ease as skill. With the locksmith you read ease as not much work. The same ease gets the opposite judgment.</p>"
         },
         {
           "ask": "Why the switch? What is different about the locksmith, or the accountant who solves your problem in a minute, or the writer who makes it look easy?",
@@ -369,20 +369,20 @@
             "People are just cheap"
           ],
           "correct": 1,
-          "answer": "<p>You can see eight balls in the air. You cannot see what is happening inside a skilled head. So when the work is mental, the only evidence left is how hard the person looks like they are trying, and we grade on that instead.</p>"
+          "answer": "<p>You can see eight balls in the air. You cannot see what is happening inside a skilled head. So when the work is mental, the only evidence left is how hard the person looks like they are trying, and we judge by that instead.</p>"
         },
         {
           "ask": "So here is the belief, stated plainly. If something looks effortful it must be complex, and if it looks easy it must be simple. Knowing what you now know, which way does it actually run?",
           "choices": [
             "That way. Effort is the honest signal of difficulty",
-            "The other way. Ease is the signature of mastery, and the struggle is what beginning looks like",
+            "The other way. Ease is the sign of mastery, and the struggle is what a beginner looks like",
             "It depends on the job"
           ],
           "correct": 1,
-          "answer": "<p>Backwards. The person making it look easy is doing the harder thing. We have the sign reversed, and we only notice when the skill is one we can watch.</p><p>Michelangelo put it well. If people knew how hard he had worked for his mastery, it would not seem wonderful at all.</p>"
+          "answer": "<p>Backwards. The person making it look easy is doing the harder thing. We read the signal backwards, and we only get it right when the skill is one we can watch, like juggling.</p><p>Michelangelo put it well. If people knew how hard he had worked for his mastery, it would not seem wonderful at all.</p>"
         },
         {
-          "chunk": "<p>One more place you can see it. No one watches a beginner’s tennis strokes and calls them more athletic than Federer’s. In the body we grant this instantly. In the mind we deny it, because in the mind we cannot see the swing.</p>"
+          "chunk": "<p>One more place you can see it. No one watches a beginner’s tennis strokes and calls them more athletic than Federer’s. For physical skills we see this instantly. For mental skills we get it wrong, because we cannot see what a skilled mind is doing.</p>"
         }
       ]
     },
@@ -458,7 +458,7 @@
             "Only if I had seen them recently"
           ],
           "correct": 1,
-          "answer": "<p>No. Picking one face out of hundreds is some of the hardest computation your brain does, and you experience none of it. You get the answer and no receipt for the work.</p>"
+          "answer": "<p>No. Picking one face out of hundreds is some of the hardest computation your brain does, and you experience none of it. You get the answer without any sense of the work that produced it.</p>"
         },
         {
           "ask": "So here is the question this station is about. Why can you feel yourself working through a hard sum, but not feel yourself reading or recognizing a face?",
@@ -468,17 +468,17 @@
             "Because reading and faces are habits, not thinking"
           ],
           "correct": 1,
-          "answer": "<p>The sum is not harder. It just runs in the one part of your mind you can watch. Reading and face recognition ran there once too, when you were learning them. Practice moved them out, and the window does not follow.</p><p>So the better you get at something, the less of it you can feel. That is the blindness.</p>"
+          "answer": "<p>The sum is not harder. It just runs in the one part of your mind you can watch. Reading and face recognition ran there once too, when you were learning them. Practice moved them out of that part, and now you cannot watch them at all.</p><p>So the better you get at something, the less of it you can feel. That is the blindness.</p>"
         },
         {
           "ask": "Walking across a cluttered room feels like nothing. Dozens of muscles, balance, vision, all coordinated in real time, and our best robots still fall over doing it. So what does the feeling of nothing tell you about the work?",
           "choices": [
             "That there is not much work",
-            "Nothing. The feeling of nothing is what machinery that is too good to notice feels like",
+            "Nothing. The feeling of nothing is what machinery feels like when it runs too well to notice",
             "That walking is simpler than it looks"
           ],
           "correct": 1,
-          "answer": "<p>The feeling of nothing is the machinery being too good to notice. And this is why it matters: because you cannot feel these feats, you do not count them. The hardest things your brain does are filed under nothing at all.</p>"
+          "answer": "<p>The feeling of nothing means the machinery runs too well to notice. And this is why it matters: because you cannot feel these feats, you do not count them. So the hardest things your brain does get counted as nothing.</p>"
         },
         {
           "chunk": "<p>You have watched this happen once already, with reading. You remember sounding out each letter, c, a, t, slowly, all of it effortful and conscious. Now you cannot look at a word and not read it, and you have no idea how you do it. The whole process dropped out of your awareness the moment you got good. That is not a quirk of reading. It is what learning does to every skill.</p>"
@@ -563,7 +563,7 @@
             "Only the physical skills"
           ],
           "correct": 1,
-          "answer": "<p>Almost everything. The lit corner you can see is the small, slow, effortful part. The rest of the room is dark to introspection, and it is where most of the work happens. The theory mistook the lit corner for the whole room.</p>"
+          "answer": "<p>Almost everything. The part you can see is the small, slow, effortful part. The rest, which is most of what the mind does, cannot be seen from the inside. The theory mistook the small visible part for the whole mind.</p>"
         },
         {
           "ask": "Now think about what an IQ test actually asks you to do. Puzzles, sequences, remembering digits, defining words, all conscious and effortful. Given where the theory came from, is that a coincidence?",
@@ -573,7 +573,7 @@
             "Tests measure everything the mind does"
           ],
           "correct": 1,
-          "answer": "<p>No coincidence. The tests measure the kind of thinking you can feel yourself doing, because that was the part on the table. The far larger automatic part was never a candidate, because nobody can introspect on it.</p>"
+          "answer": "<p>No coincidence. The tests measure the kind of thinking you can feel yourself doing, because that was the only part they could see. The far larger automatic part was never a candidate, because nobody can introspect on it.</p>"
         },
         {
           "ask": "One last thing to notice. Watch a room full of people learn that a chimpanzee beat them at a memory task, and then watch them scramble for a reason it does not count. What is being protected in that scramble?",
@@ -583,7 +583,7 @@
             "Nothing, they are just surprised"
           ],
           "correct": 1,
-          "answer": "<p>The picture. And this is the bias caught live: a model of the mind built from the wrong vantage point, defending itself against a result the model cannot hold. Start from the brain instead and the chimp is not a problem at all.</p>",
+          "answer": "<p>The picture. This is the bias in action: a model of the mind built from the inside view, defending itself against a result it cannot explain. Start from how the brain actually works and the chimp’s result is exactly what you would expect.</p>",
           "cite": "Inoue & Matsuzawa, 2007"
         }
       ]
@@ -645,7 +645,7 @@
             "Neither, chess is not thinking"
           ],
           "correct": 0,
-          "answer": "<p>The amateur. All that visible calculation looks like the real thing, and the glance looks like instinct. That is how almost everyone reads it.</p><p>Now hold that verdict up against the result. The grandmaster wins.</p>"
+          "answer": "<p>The amateur. All that visible calculation looks like the real thing, and the glance looks like instinct. That is how almost everyone reads it.</p><p>Now compare that judgment with the outcome. The grandmaster wins.</p>"
         },
         {
           "ask": "Early in a doctor’s training, a diagnosis takes an hour of effortful examination. Years later the same doctor has it in the first minute, and is far more often right. Which version was the rigorous one?",
@@ -675,10 +675,10 @@
             "Both count equally"
           ],
           "correct": 1,
-          "answer": "<p>We took the beginner’s experience as the standard, because it is the only thinking we can feel, and then judged mastery against it. Turned the right way up: the expert is doing more thinking, faster, and we cannot see any of it.</p>"
+          "answer": "<p>We took the beginner’s experience as the standard, because it is the only thinking we can feel, and then judged mastery against it. Put the right way round: the expert is doing more thinking, faster, and we cannot see any of it.</p>"
         },
         {
-          "chunk": "<p>Even Einstein gets read this way. The finished insight, relativity, feels less like hard thinking than the visible years of struggle with equations that came before it. So we credit the struggle and treat the breakthrough as something that just arrived. The arrival was the thinking working.</p>"
+          "chunk": "<p>Even Einstein gets read this way. The finished insight, relativity, feels less like hard thinking than the visible years of struggle with equations that came before it. So we give the credit to the struggle and treat the breakthrough as something that just arrived. The breakthrough was the thinking, finished.</p>"
         }
       ]
     },
@@ -750,7 +750,7 @@
             "The heart and the brain"
           ],
           "correct": 1,
-          "answer": "<p>Only the brain. Of every organ in the body, it is the one we tell the special-issue story about. So the first question is not whether the story is true. It is why we tell it about this organ alone.</p>"
+          "answer": "<p>Only the brain. Of every organ in the body, it is the only one we say some people were issued a better version of. So the first question is not whether the story is true. It is why we tell it about this organ alone.</p>"
         },
         {
           "ask": "Einstein’s brain was studied about as thoroughly as any brain in history. It weighed 1,230 grams, a little under the average for a man. Before you read on, what do you expect the examiners found?",
@@ -770,7 +770,7 @@
             "From IQ testing"
           ],
           "correct": 1,
-          "answer": "<p>From before. The idea that each head comes with a fixed ration of some mental stuff, and that your job is to find out how much you got, is older than any way of looking inside a skull. Now that we can look, we keep trying to retrofit the old story onto what we actually find.</p>"
+          "answer": "<p>From before. The idea that each head comes with a fixed ration of some mental stuff, and that your job is to find out how much you got, is older than any way of looking inside a skull. Now that we can look, we keep trying to fit the old story to what we actually find.</p>"
         },
         {
           "ask": "Here is the part that makes the story dangerous. Suppose you believe you are not a math person. What do you do about math?",
@@ -780,7 +780,7 @@
             "Nothing changes"
           ],
           "correct": 1,
-          "answer": "<p>You avoid it. Then years later the missing skill looks like proof the story was right. The belief arranges its own evidence. It explains every failure in advance, so nobody bothers to change how the thing is taught, and the failures keep coming.</p>",
+          "answer": "<p>You avoid it. Then years later the missing skill looks like proof the story was right. The belief creates its own evidence. It explains every failure in advance, so nobody bothers to change how the thing is taught, and the failures keep coming.</p>",
           "cite": "Fixed-mindset avoidance (Dweck)"
         },
         {
@@ -791,10 +791,10 @@
             "Luck"
           ],
           "correct": 1,
-          "answer": "<p>The path. The machinery that builds skill is standard equipment in every intact brain. What differs is what it has been asked to build, and the story feels true mostly because believing it keeps you from ever running the test.</p>"
+          "answer": "<p>The path. The machinery that builds skill is standard equipment in every intact brain. What differs is what it has been asked to build, and the story feels true mostly because believing it keeps you from ever trying, and trying is the only thing that could prove it wrong.</p>"
         },
         {
-          "chunk": "<p>If any of this made you bristle, notice that. The story hands out a ranking of minds with yours somewhere on it, and part of you draws standing from that ranking. The discomfort is that part defending its place. It tells you nothing about whether the story is true.</p>"
+          "chunk": "<p>If any of this made you bristle, notice that. The story ranks minds, with yours somewhere on the list, and part of you gets its sense of status from that position. The discomfort is that part defending its position. It tells you nothing about whether the story is true.</p>"
         }
       ]
     },
@@ -918,7 +918,7 @@
             "Your conscience"
           ],
           "correct": 1,
-          "answer": "<p>A narrator, not a witness. The book calls it the Impostor, and the first move against it is to stop mistaking it for you. Give it a small, slightly ridiculous name if that helps. It is much easier to roll your eyes at a voice you no longer think is yourself.</p>"
+          "answer": "<p>A narrator, not a reliable witness. The book calls it the Impostor, and the first move against it is to stop mistaking it for you. Give it a small, slightly ridiculous name if that helps. It is much easier to roll your eyes at a voice you no longer think is yourself.</p>"
         }
       ]
     },
@@ -991,7 +991,7 @@
             "School, over many years"
           ],
           "correct": 1,
-          "answer": "<p>Nobody. A two-year-old learns language with no lessons and no one explaining a single rule. The engine simply pulls the pattern out of the flood of speech around it and builds a working grammar, mistakes and all. Goed. Foots. Nobody ever said those. The child inferred the rule and then over-applied it.</p><p>The most impressive learning most humans ever do runs with no syllabus.</p>"
+          "answer": "<p>Nobody. A two-year-old learns language with no lessons and no one explaining a single rule. The engine simply pulls the pattern out of the flood of speech around it and builds a working grammar, mistakes and all. Goed. Foots. Nobody ever said those. The child inferred the rule and then over-applied it.</p><p>The most impressive learning most humans ever do happens with no lessons at all.</p>"
         },
         {
           "ask": "Preschoolers were handed a toy with several hidden functions. Some were shown one function first, as a lesson. Some were handed the toy with no instruction. Which group discovered more of what the toy could do?",
@@ -1001,7 +1001,7 @@
             "About the same"
           ],
           "correct": 1,
-          "answer": "<p>The ones with no lesson, by a wide margin. The taught children did the one thing they were shown and stopped. Instruction narrowed the search that the engine runs on its own.</p>",
+          "answer": "<p>The ones with no lesson, by a wide margin. The taught children did the one thing they were shown and stopped. The lesson narrowed the exploring that children do on their own.</p>",
           "cite": "Bonawitz et al., 2011"
         },
         {
@@ -1106,7 +1106,7 @@
             "None of these. None of them is a lost ability"
           ],
           "correct": 3,
-          "answer": "<p>None of them. Every reason adult change slows is something other than the door closing. Less needs changing. Changing a working system is costlier. The old way is always sitting there. Those are reasons it is slower, and not one of them says it is gone.</p>"
+          "answer": "<p>None of them. Every reason adult change slows is something other than a lost ability. Less needs changing. Changing a working system is costlier. The old way is always sitting there. Those are reasons it is slower, and not one of them says it is gone.</p>"
         },
         {
           "ask": "Now the part that cuts both ways. If you go years without learning anything hard, and then try, it feels stiff. What is that stiffness?",
@@ -1116,7 +1116,7 @@
             "Just being out of practice, which is different from a brain change"
           ],
           "correct": 1,
-          "answer": "<p>The machinery went unmaintained. The brain keeps up what is demanded of it and lets the rest go, and that applies to the learning system as much as to anything it learns. The less you learn, the harder learning gets. Which reads like the door closing, until you notice it runs the other way too.</p>"
+          "answer": "<p>The machinery went unmaintained. The brain keeps up what is demanded of it and lets the rest go, and that applies to the learning system as much as to anything it learns. The less you learn, the harder learning gets. That feels like proof the ability is gone. But the same rule runs in reverse.</p>"
         },
         {
           "ask": "So pick it back up. Learn something genuinely hard again. What happens to the stiffness?",
@@ -1126,7 +1126,7 @@
             "It gets worse"
           ],
           "correct": 1,
-          "answer": "<p>It goes. Plasticity is itself plastic. Keep the learning system in use and new things come easier.</p>"
+          "answer": "<p>It goes. The ability to change is itself something that gets stronger with use. Keep the learning system in use and new things come easier.</p>"
         },
         {
           "ask": "So, the belief. You cannot teach an old dog new tricks, and the time for learning was childhood. After the monkey, the four reasons, and the stiffness that reverses, what is the honest version?",
@@ -1136,7 +1136,7 @@
             "It depends on the person"
           ],
           "correct": 1,
-          "answer": "<p>Same engine, same head. And much of what gets called normal cognitive aging looks less like decay and more like the brain faithfully responding to a collapse in demand. Retirement, routine, comfort. We withdraw the demands and then grieve the response as fate, at exactly the age when people finally have the freedom to make magnificent new demands of themselves.</p>"
+          "answer": "<p>Same engine, same head. And much of what gets called normal cognitive aging looks less like decay and more like the brain responding, exactly as designed, to a drop in what is being asked of it. Retirement, routine, and comfort withdraw the demands, and then we treat the result as unavoidable decline, at exactly the age when people finally have the freedom to make magnificent new demands of themselves.</p>"
         }
       ]
     },
@@ -1208,7 +1208,7 @@
             "More from school, it was more thorough"
           ],
           "correct": 1,
-          "answer": "<p>Little from the classes. Nearly everything you chased. Same brain, and the difference is stark enough that it wants an explanation.</p>"
+          "answer": "<p>Little from the classes. Nearly everything you chased. Same brain, and the difference is big enough to need an explanation.</p>"
         },
         {
           "ask": "So what was different about the things you chased? Not the subject. The conditions.",
@@ -1228,7 +1228,7 @@
             "Neither, it is about toys"
           ],
           "correct": 1,
-          "answer": "<p>The lesson is the classroom, and it shut down the search. Being handed the toy is what your obsessions looked like. Nobody was grading, so the engine ran the way it runs.</p>",
+          "answer": "<p>The lesson is the classroom, and it shut down the search. Being handed the toy is what your obsessions looked like. Nobody was grading, so your learning engine ran the way it naturally runs.</p>",
           "cite": "Bonawitz et al., 2011"
         },
         {
@@ -1321,7 +1321,7 @@
           "ask": "When the same building order shows up in every domain there is, what is it telling you?",
           "choices": [
             "That children are all alike",
-            "That one learning mechanism is underneath all of them, wearing different outfits",
+            "That one learning mechanism is underneath all of them, showing up in different subjects",
             "That teachers copy each other"
           ],
           "correct": 1,
@@ -1335,7 +1335,7 @@
             "Practice making you faster"
           ],
           "correct": 1,
-          "answer": "<p>Combination. Once a piece runs on its own, it is available to every other piece at once, and the possibilities multiply instead of adding. That is how software, not hardware, scales what a mind can do.</p>"
+          "answer": "<p>Combination. Once a piece runs on its own, it is available to every other piece at once, and the possibilities multiply instead of adding. That is why what a mind can do grows with what it has learned, not with a bigger brain.</p>"
         },
         {
           "ask": "So the belief: you can learn a complex thing by studying the complex thing, and skip the small stuff. Think of a skyscraper. Can you pour the penthouse before the lobby?",
@@ -1345,7 +1345,7 @@
             "Only if you have good architects"
           ],
           "correct": 1,
-          "answer": "<p>No. And that is the whole reason the order never changes. It is also why the strain of learning something new is not a verdict about you. It is the sound of a floor being poured.</p>"
+          "answer": "<p>No. And that is the whole reason the order never changes. It is also why the strain of learning something new is not a verdict about you. It is a new floor being built.</p>"
         }
       ]
     },
@@ -1421,7 +1421,7 @@
             "Building confidence, which is the same thing"
           ],
           "correct": 1,
-          "answer": "<p>Performing. When almost everything is easy, there is nothing to fix, and the engine idles. When almost everything is a struggle, there is too much going wrong to tell what to fix. The band that works sits in between: succeeding around two times out of three up to about five out of six.</p>",
+          "answer": "<p>Performing. When almost everything is easy, there is nothing to fix, and no learning happens. When almost everything is a struggle, there is too much going wrong to tell what to fix. The band that works sits in between: succeeding around two times out of three up to about five out of six.</p>",
           "cite": "The 60 to 85 percent success band"
         },
         {
@@ -1453,7 +1453,7 @@
             "It depends on the skill"
           ],
           "correct": 1,
-          "answer": "<p>At the edge. Watch a toddler learning to walk. They are not repeating steps they have mastered and they are not attempting a marathon. They work right at the edge of what they can do, fall often, and adjust every time. They find the zone without being told. It is the setting the engine runs best at.</p>"
+          "answer": "<p>At the edge. Watch a toddler learning to walk. They are not repeating steps they have mastered and they are not attempting a marathon. They work right at the edge of what they can do, fall often, and adjust every time. They find the zone without being told. That is the level where learning happens fastest.</p>"
         }
       ]
     },
@@ -1566,7 +1566,7 @@
             "A mix, but mostly a gift"
           ],
           "correct": 1,
-          "answer": "<p>A record of what mattered to someone. Which is the same thing that built your grammar. The knowledge went in below words, it runs perfectly, and because you never saw yourself learn it, you assumed you never did.</p>"
+          "answer": "<p>A record of what someone paid attention to, for a long time. That is the same thing that built your grammar. The knowledge went in below words, it runs perfectly, and because you never saw yourself learn it, you assumed you never did.</p>"
         }
       ]
     },
@@ -1645,7 +1645,7 @@
             "As many as I heard"
           ],
           "correct": 1,
-          "answer": "<p>About seven. That is the size of the part of your mind that holds things in front of you, and it has been about seven for everyone, everywhere, as long as anyone has measured it.</p>"
+          "answer": "<p>About seven. That is the size of the part of your mind that holds things in view at once, and it has been about seven for everyone, everywhere, as long as anyone has measured it.</p>"
         },
         {
           "ask": "Now four seconds of a sentence instead. Same exposure time. How many letters’ worth do you get back?",
@@ -1676,7 +1676,7 @@
             "A better brain"
           ],
           "correct": 1,
-          "answer": "<p>The same slots. A master is not holding more items than you. They have learned to pack far more meaning into each one, and only in the domain they trained. Which is why memory expertise does not travel.</p>"
+          "answer": "<p>The same slots. A master is not holding more items than you. They have learned to pack far more meaning into each one, and only in the domain they trained. Which is why memory expertise does not carry over to other material.</p>"
         },
         {
           "ask": "Last step, and it is the bridge to IQ. Digit span, how many numbers you can hold before any training goes in, is one of the classic IQ subtests. What is that test measuring?",
@@ -1686,7 +1686,7 @@
             "How much you have learned"
           ],
           "correct": 1,
-          "answer": "<p>The untrained state. Every real skill works by building learned shortcuts around that limit. So the test zeroes in on the one thing expertise is designed to get past, and then crowns it the core of intelligence. Grant that the limit is real and partly inherited. It costs nothing, because SF never expanded the limit. He built a way around it.</p>"
+          "answer": "<p>The untrained state. Every real skill works by building learned shortcuts around that limit. So the test zeroes in on the one thing expertise is designed to get past, and then calls that the core of intelligence. Grant that the limit is real and partly inherited. It costs nothing, because SF never expanded the limit. He built a way around it.</p>"
         }
       ]
     },
@@ -1715,7 +1715,7 @@
           "cite": "Moravec's Paradox"
         },
         {
-          "text": "Taking an IQ test requires understanding language, holding instructions, recognizing shapes, and controlling attention, and every one of those is more complex than anything the test then measures. The hard part is the part we hand out for free as the baseline.",
+          "text": "Taking an IQ test requires understanding language, holding instructions, recognizing shapes, and controlling attention, and every one of those is more complex than anything the test then measures. The hard part is the part we treat as a given.",
           "cite": "The prerequisites of a cognitive test"
         }
       ],
@@ -1765,7 +1765,7 @@
             "Because those problems are unimportant"
           ],
           "correct": 1,
-          "answer": "<p>Easy means mastered. The feats that feel like nothing are the ones your brain solved so thoroughly that you cannot feel the machinery anymore. Their ease is not evidence they are simple. It is evidence they are done.</p>"
+          "answer": "<p>Easy means mastered. The feats that feel like nothing are the ones your brain solved so thoroughly that you cannot feel the machinery anymore. Their ease is not evidence they are simple. It is evidence they are fully mastered.</p>"
         },
         {
           "ask": "The gurus say humans cannot multitask. You drive home through traffic, lanes, stopping distances, while holding a conversation and catching sarcasm in it. What is that?",
@@ -1791,7 +1791,7 @@
           "ask": "So the belief: real intelligence is rare, and walking and talking are just basic. Taking an IQ test requires understanding language, holding instructions, recognizing shapes, and controlling attention. Which is more complex, those prerequisites or the puzzles the test then scores?",
           "choices": [
             "The puzzles, obviously",
-            "The prerequisites, every one of them. The hard part is the part we hand out for free as the baseline",
+            "The prerequisites, every one of them. The hard part is the part we treat as a given",
             "About equal"
           ],
           "correct": 1,
@@ -1862,7 +1862,7 @@
             "Nothing unusual"
           ],
           "correct": 1,
-          "answer": "<p>The most inventive periods of both lives, and both outside the institution. Remove the results machine, give a curious mind self-directed time pointed at an unusual set of problems, and this is what pours out.</p>"
+          "answer": "<p>The most inventive periods of both lives, and both outside the institution. Take away the institutions that judge results, give a curious mind self-directed time on an unusual set of problems, and this is what can come out.</p>"
         },
         {
           "ask": "Darwin spent about eight years dissecting barnacles between the voyage and the great book, with no career reason to. Then his theory arrived. Was it reasoned out from first principles?",
@@ -1872,7 +1872,7 @@
             "It came to him in a flash"
           ],
           "correct": 1,
-          "answer": "<p>Assembled. The theory that reorganized biology was a recombination of parts already sitting in other people’s fields, put together by a mind that had spent years building unusual scaffolding. What looks like raw reasoning is almost always this: pieces you have automated, combined in an arrangement nobody has used, often by importing one from far away.</p>"
+          "answer": "<p>Assembled. The theory that reorganized biology was a recombination of parts already sitting in other people’s fields, put together by a mind that had spent years building unusual skills. What looks like raw reasoning is almost always this: pieces you have automated, combined in an arrangement nobody has used, often by importing one from far away.</p>"
         },
         {
           "ask": "So what makes a breakthrough reachable for one person and not for the rest of us?",
@@ -1882,7 +1882,7 @@
             "Being in the right place"
           ],
           "correct": 1,
-          "answer": "<p>The path. Uncommon interests build uncommon scaffolding, and uncommon scaffolding reaches uncommon places. The engine doing the building is the one that built your reading.</p>"
+          "answer": "<p>The path. Uncommon interests build uncommon skills, and uncommon skills reach uncommon answers. The engine doing the building is the one that built your reading.</p>"
         },
         {
           "ask": "What about prodigies, the chess-obsessed five-year-old? Surely that is the special brain.",
@@ -1973,7 +1973,7 @@
             "The bat"
           ],
           "correct": 1,
-          "answer": "<p>It depends entirely on the problem. Asking who is smarter in general is like asking whether a submarine beats a helicopter at transportation. And the pattern holds across animals: a rat out-learns you at the statistics of foraging, a scrub jay remembers thousands of hiding places, a chimp beats adults at one memory task. If we held a bigger helping of general smart-stuff, our advantage would show up everywhere. It shows up in patches, and the patches track what each species does for a living.</p>"
+          "answer": "<p>It depends entirely on the problem. Asking who is smarter in general is like asking whether a submarine beats a helicopter at transportation. And the pattern holds across animals: a rat out-learns you at the statistics of foraging, a scrub jay remembers thousands of hiding places, a chimp beats adults at one memory task. If we had more of some general intelligence, our advantage would show up everywhere. It shows up in patches, and the patches match what each species needs to do to survive.</p>"
         },
         {
           "ask": "Put a world-class basketball player with no tennis experience against a well-trained fourth-grader at tennis. Who wins?",
@@ -1983,7 +1983,7 @@
             "A close match"
           ],
           "correct": 1,
-          "answer": "<p>The child. Hardware does not beat software. And the same thing happens with minds: a chess champion cannot manage his own life, a brilliant physicist is hopeless outside physics, Newton lost a fortune in a market bubble. We are surprised every time.</p>"
+          "answer": "<p>The child. A physical advantage does not beat a trained skill. And the same thing happens with minds: a chess champion cannot manage his own life, a brilliant physicist is hopeless outside physics, Newton lost a fortune in a market bubble. We are surprised every time.</p>"
         },
         {
           "ask": "That surprise is the giveaway. Under which picture of intelligence are those cases baffling flukes, and under which are they exactly what you would expect?",
@@ -2072,7 +2072,7 @@
             "Only for common phrases"
           ],
           "correct": 1,
-          "answer": "<p>Yes, and it only works one way: the brain is out ahead, generating what is likely and being ready for it, all the time. Comprehension is mostly successful prediction. That is why reading feels smooth and why you finish other people’s sentences.</p>"
+          "answer": "<p>Yes, and it only works one way: the brain is running ahead, generating what is likely and being ready for it, all the time. Comprehension is mostly successful prediction. That is why reading feels smooth and why you finish other people’s sentences.</p>"
         },
         {
           "ask": "Processing what your eyes see takes about eighty milliseconds. So what are you experiencing as now?",
@@ -2113,7 +2113,7 @@
             "Recording"
           ],
           "correct": 1,
-          "answer": "<p>Guessing and checking. There is a machine built by Anthropic that learned everything it can do by predicting the next piece of text, over and over, until capability fell out of the practice. It is an odd kind of proof of this whole map: capability built from training, made out of silicon, and it only has a rough copy of this one part of you.</p>"
+          "answer": "<p>Guessing and checking. There is a machine built by Anthropic that learned everything it can do by predicting the next piece of text, over and over, until capability fell out of the practice. It is an odd kind of proof of this whole map: capability built from training, in a computer, and it has only a rough copy of this one part of you.</p>"
         }
       ]
     },
@@ -2180,7 +2180,7 @@
             "You relaxed and got lucky"
           ],
           "correct": 1,
-          "answer": "<p>The state changed. The background-worker story is comforting, but it raises more questions than it answers: what work, exactly, and why would it need you to stop trying? The simpler account fits better. The connection existed already. During focused effort your brain actively suppresses everything off-task, and when the answer is an off-task connection, the suppression is precisely what keeps it out. Step away and the filter loosens. Illumination is a gate opening, not labor finishing.</p>",
+          "answer": "<p>The state changed. The background-worker story is comforting, but it raises more questions than it answers: what work, exactly, and why would it need you to stop trying? The simpler account fits better. The connection existed already. During focused effort your brain actively suppresses everything off-task, and when the answer is an off-task connection, the suppression is precisely what keeps it out. Step away and the filter relaxes. The insight arrives because the filter relaxed, not because hidden work finished.</p>",
           "cite": "The incubation effect (Sio & Ormerod, 117 studies); disinhibition versus the unconscious"
         },
         {
@@ -2191,7 +2191,7 @@
             "Nothing changes"
           ],
           "correct": 1,
-          "answer": "<p>It goes quiet. Nothing was added and nothing was trained in that moment. The generative state arrives exactly when the supervisor steps out of the room. The same pattern shows up in freestyle rappers.</p>",
+          "answer": "<p>It goes quiet. Nothing was added and nothing was trained in that moment. The creative state arrives exactly when the self-monitoring switches off. The same pattern shows up in freestyle rappers.</p>",
           "cite": "Limb, jazz improvisation imaging"
         },
         {
@@ -2202,7 +2202,7 @@
             "Revealed that the skill was shaky"
           ],
           "correct": 1,
-          "answer": "<p>Changed the routing. The knowledge is all still there, provably, a minute later. High arousal cut the line to the automatic machinery, and that happens through no choice of your own. The shower opens a route. The podium closes one. Same skills, different schedule.</p>",
+          "answer": "<p>Changed the routing. The knowledge is all still there, provably, a minute later. High arousal cut the line to the automatic machinery, and that happens through no choice of your own. The shower opens a route. The podium closes one. Same skills, different brain state.</p>",
           "cite": "Choking under pressure (Beilock & Carr, 2001)"
         },
         {
@@ -2213,7 +2213,7 @@
             "Yes, confidence"
           ],
           "correct": 1,
-          "answer": "<p>Nothing added. A gate opened. Which means you are already capable of more than you can currently reach, and what stands between you and it is usually a gate, not a gap.</p>"
+          "answer": "<p>Nothing added. A gate opened. Which means you are already capable of more than you can currently reach, and what stands between you and it is usually something blocking access, not something missing.</p>"
         },
         {
           "ask": "So the two beliefs. If I cannot reach it now I do not have it, and the shower answer came from my subconscious grinding away. After the pianist, the podium, and the singers, what is the honest picture?",
@@ -2302,7 +2302,7 @@
             "A tall fence and a short fence"
           ],
           "correct": 1,
-          "answer": "<p>A wall, and a perimeter. And the perimeter has two ways to move: learning moves the posts, and a change of state reaches corners of the land you fenced off from yourself.</p>"
+          "answer": "<p>A wall, and a perimeter. And the perimeter has two ways to move: learning moves the posts, and a change of state reaches parts of the land you could not get to before.</p>"
         },
         {
           "ask": "So the belief: what I can do is fixed by what I am. How many doors are there, and how many of them are fixed?",
@@ -2312,7 +2312,7 @@
             "Two doors, one fixed"
           ],
           "correct": 1,
-          "answer": "<p>Two doors, neither fixed. The space is exactly capability and access taken together, the two halves of the performance equation, and both halves are yours to move.</p>"
+          "answer": "<p>Two doors, neither fixed. The space is exactly capability and access taken together, the two halves of the performance equation, and you can change both.</p>"
         }
       ]
     },
@@ -2391,7 +2391,7 @@
             "They refuse to answer"
           ],
           "correct": 1,
-          "answer": "<p>Most do not notice, and the reasons flow. This is the narrator from the Impostor station again, now working on memory: it will explain a choice you did not make with the same confidence it explains the ones you did.</p>",
+          "answer": "<p>Most do not notice, and they give reasons anyway. This is the narrator from the Impostor station again, now working on memory: it will explain a choice you did not make with the same confidence it explains the ones you did.</p>",
           "cite": "Choice blindness (Johansson & Hall, 2005)"
         },
         {
@@ -2402,7 +2402,7 @@
             "An exaggeration"
           ],
           "correct": 1,
-          "answer": "<p>A reconstruction, running on the exact machinery that put sleep on the list. And this one matters more than most, because the Special Brain Story is built out of rewritten memories of past failures. The narrator supplies the raw material and the story does the rest.</p>"
+          "answer": "<p>A reconstruction, running on the exact machinery that put sleep on the list. And this one matters more than most, because the Special Brain Story is built out of rewritten memories of past failures. The narrator supplies the rewritten memories, and the story is built from them.</p>"
         },
         {
           "ask": "So the belief: I remember what happened to me, and the story of who I am is built from facts. What is the honest version?",
@@ -2498,7 +2498,7 @@
             "About half"
           ],
           "correct": 1,
-          "answer": "<p>Almost everyone. Same logic, different costume. If reasoning were a general engine you point at any problem, the costume could not matter. It matters enormously.</p>"
+          "answer": "<p>Almost everyone. Same logic, different wording. If reasoning were a general ability you could point at any problem, the wording could not matter. It matters enormously.</p>"
         },
         {
           "ask": "Ask doctors a question about a medical test in percentages and most get it badly wrong. Ask the identical question as a count of people, out of a thousand, and most get it right. What is doing the work when they get it right?",
@@ -2512,14 +2512,14 @@
           "cite": "Gigerenzer, natural frequencies"
         },
         {
-          "ask": "Here is the strange part. The thing we treat as the crown of human intelligence, formal logic, was one of the first things a machine could do. A mechanical device was cranking out valid inferences in the 1860s. Meanwhile, what are the problems machines still find hardest?",
+          "ask": "Here is the strange part. The thing we treat as the highest form of human intelligence, formal logic, was one of the first things a machine could do. A mechanical device was cranking out valid inferences in the 1860s. Meanwhile, what are the problems machines still find hardest?",
           "choices": [
             "Logic and math",
             "Messy pattern recognition, creative leaps, reading a room. The things humans do without noticing",
             "Chess"
           ],
           "correct": 1,
-          "answer": "<p>The messy, automatic things. We built our schools and our tests around valorizing the one kind of thinking a Victorian machine could already do, and treated the genuinely hard human abilities as the basics.</p>",
+          "answer": "<p>The messy, automatic things. We built our schools and our tests around prizing the one kind of thinking a Victorian machine could already do, and treated the genuinely hard human abilities as the basics.</p>",
           "cite": "Jevons’ Logical Piano"
         },
         {
@@ -2530,13 +2530,13 @@
             "Checking the fast gear’s work"
           ],
           "correct": 1,
-          "answer": "<p>Building. That explains what a reasoning engine cannot: why the effort vanishes as you get good, why formal logic has to be laboriously taught rather than switched on, and why the same problem is easy in one costume and impossible in another.</p>"
+          "answer": "<p>Building. That explains what a reasoning engine cannot: why the effort vanishes as you get good, why formal logic has to be laboriously taught rather than switched on, and why the same problem is easy in one wording and impossible in another.</p>"
         },
         {
           "ask": "So the belief: reasoning is a general faculty, and either you are a logical person or you are not. What follows if reasoning is a trained skill instead?",
           "choices": [
             "Nothing changes in practice",
-            "It can be taught. Show someone the moves that turn the hard costume into the easy one and their score climbs on the next round",
+            "It can be taught. Show someone how to turn the hard wording into the easy one and their score climbs on the next round",
             "Some people still cannot learn it"
           ],
           "correct": 1,
