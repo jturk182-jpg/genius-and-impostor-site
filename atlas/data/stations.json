@@ -1141,24 +1141,24 @@
       "lines": [
         "genius"
       ],
-      "oneBreath": "There are two ways to learn and they are not equally good. One runs on curiosity, builds as it goes, and lives on feedback, which is how the Genius works. The other runs on grades and approval, takes facts in passively, and tests only to score. School mostly runs the second one.",
+      "oneBreath": "There are two ways to learn and they are nowhere near equally good. One runs on curiosity, builds as it goes and lives on fast feedback, which is how the Genius works. The other hands you information to receive and tests you on it months later. You can tell which one you got by looking at what you still have.",
       "claimsBlock": {
         "believe": "Learning is what happens in school. You take the class, you pass the test, you know it.",
-        "evidence": "Real learning needs three things a classroom rarely gives: your own curiosity, active building, and steady feedback. Without them you get facts that fade, which is why you kept almost nothing from school and nearly everything you taught yourself."
+        "evidence": "Learning that sticks is curiosity-driven, hands-on and feedback-rich. School mostly runs the other way, and the results show up in what people actually keep."
       },
       "evidence": [
         {
-          "text": "Learning that lasts has three parts. The drive has to be yours, so you actually want it. You have to build the knowledge, not just receive it. And you need feedback often enough to correct as you go. A lecture followed by one exam supplies almost none of that.",
+          "text": "Learning that lasts has three parts. The drive has to be yours, so you actually want the thing. You have to build the knowledge by doing rather than sit and receive it. And you have to find out fast whether each attempt worked. A lecture followed by one exam in December supplies almost none of that.",
           "cite": "The three ingredients of learning"
         },
         {
-          "text": "Look at what you actually kept. Little from the classes you sat through, and a great deal from whatever you chased on your own. Same brain, two modes. What differed was whether the Genius or the Impostor was running the session.",
+          "text": "Look at what you actually kept. Very little from the classes you sat through, and a great deal from whatever you chased on your own. Same brain in both cases, same years, wildly different results. That gap needs explaining, and the conditions explain it.",
           "cite": "Curiosity-driven versus status-driven learning"
         }
       ],
       "stories": [
         {
-          "text": "Da Vinci said it five centuries ago: study without desire spoils the memory, and it keeps nothing it takes in. Desire is not a bonus laid on top of learning. It is part of the machine."
+          "text": "Da Vinci said it five centuries ago. Study without desire spoils the memory, and it keeps nothing it takes in. Desire isn’t a bonus feature bolted onto learning. It’s part of the machine."
         }
       ],
       "relations": [
@@ -1179,11 +1179,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book draws the line between the two modes of learning and shows how schooling trades the good one for the other.",
+      "bookRef": "The book draws the line between the two modes of learning and shows how schooling trades the good one away for the other.",
       "transmissions": [],
       "next": {
         "target": "goldilocks-zone",
-        "reason": "The feedback this learning runs on has a name and a number. Meet the zone."
+        "reason": "The feedback this kind of learning runs on has a name and a number. Go meet the zone."
       },
       "contested": "Learning is what happens in school. You take the class, you pass the test, you know it. (The reader spent years being taught this way and will resist the idea that it is the weaker of two modes.)",
       "flow": [
@@ -1195,7 +1195,7 @@
             "You have more from school, because school was more thorough"
           ],
           "correct": 1,
-          "answer": "<p>You have little from the classes, and nearly everything you chased. Same brain in both cases, and the difference is big enough to need an explanation.</p>"
+          "answer": "<p>Very little from the classes. Nearly everything you chased.</p><p>Same brain in both cases. Same years of your life. And the gap between the two is big enough that it needs explaining.</p>"
         },
         {
           "ask": "So what was different about the things you chased? Not the subject. The conditions.",
@@ -1205,7 +1205,7 @@
             "You were younger when you chased them"
           ],
           "correct": 1,
-          "answer": "<p>Three things were different. The drive was yours. You built the knowledge by doing instead of receiving it. And you found out fast whether each attempt worked. A lecture followed by one exam months later supplies almost none of that.</p>"
+          "answer": "<p>Three things were different, and none of them is the subject matter.</p><p>The drive was yours, so you actually wanted it. You built the knowledge by doing instead of sitting and receiving it. And you found out fast whether each attempt worked. A lecture followed by one exam in December gives you none of the three.</p>"
         },
         {
           "ask": "You met the toy study at The Genius station: children shown one function of a toy did that one thing and stopped, while children shown nothing discovered far more. Which classroom is that, and which is the hobby?",
@@ -1215,18 +1215,18 @@
             "Neither matches, because the study was only about toys"
           ],
           "correct": 1,
-          "answer": "<p>The lesson is the classroom, and it shut down the search. Being handed the toy with no instruction is what your obsessions looked like. Nobody was grading, so your learning machinery ran the way it naturally runs.</p>",
+          "answer": "<p>The lesson is the classroom, and it shut the search down.</p><p>Being handed the toy with nothing said is what your obsessions looked like. Nobody was grading, so your learning machinery ran the way it naturally runs, which is to say it kept going until it ran out of things to find.</p>",
           "cite": "Bonawitz et al., 2011"
         },
         {
-          "ask": "Here is the same split in a Tennessee pre-kindergarten trial. Children in the instructed classrooms scored higher at the end of the year than children in play-based ones. By sixth grade, who was ahead?",
+          "ask": "Here’s the same split, run on real children for years. In a Tennessee pre-kindergarten trial, children in the instructed classrooms scored higher at the end of that first year than children in the play-based ones. By third grade the play-based children had caught up, and by sixth grade they’d pulled ahead. So what were those early gains actually made of?",
           "choices": [
-            "The instructed group was still ahead in sixth grade",
-            "The play-based group had caught up by third grade and was ahead by sixth",
-            "The two groups were level by sixth grade"
+            "Real learning that the play-based children later matched by working harder",
+            "Performance that looked like learning on a test, without the building underneath it",
+            "Nothing. The early test scores were measured badly"
           ],
           "correct": 1,
-          "answer": "<p>The play-based children were ahead by sixth grade. The instructed group’s early gains were performance that looked like learning. Performance is what grades reward, and why the Impostor loves grades: they are a status signal, and somewhere early, chasing the signal replaces the curiosity that was doing the actual building.</p>"
+          "answer": "<p>Performance, not learning. The instructed children could produce the right answers on the day, and there wasn’t much underneath.</p><p>Which is exactly what grades are built to reward, and exactly why the Impostor loves them so much. A grade is a status signal. And somewhere very early, chasing the signal quietly takes over from the curiosity that was doing the actual building.</p>"
         },
         {
           "ask": "So the belief. Learning is what happens in school: take the class, pass the test, know it. Given your own inventory, which mode does the knowing come from?",
@@ -1236,7 +1236,7 @@
             "The knowing comes from neither. It is all memory"
           ],
           "correct": 1,
-          "answer": "<p>The knowing comes from the curiosity-driven mode. Da Vinci said it five centuries ago: study without desire spoils the memory, and it keeps nothing it takes in. Desire is not a bonus laid on top of learning. It is part of the machine.</p>"
+          "answer": "<p>From the curiosity-driven mode. The one nobody was grading.</p><p>Da Vinci had this five centuries ago. Study without desire spoils the memory, and it keeps nothing it takes in. Desire isn’t a bonus feature bolted onto learning. It’s part of the machine.</p>"
         }
       ]
     },
@@ -1252,20 +1252,20 @@
       "lines": [
         "machinery"
       ],
-      "oneBreath": "Every skill gets built the same way. You learn simple pieces, you practice them until they run on their own, and then you combine them into bigger pieces and do it again. It is layers, and each layer stands on the one below it, which is why the order never changes.",
+      "oneBreath": "Every skill gets built the same way. You learn simple pieces, you practice them until they run on their own, and then you combine them into bigger pieces and do it again. Two steps, repeated without limit. The order can’t be skipped, because each layer is standing on the one underneath it.",
       "evidence": [
         {
-          "text": "Babies reach the motor milestones in the same order everywhere, head control, then sitting, then crawling, then walking, because each one is the platform the next is built on. You cannot walk before you can balance sitting up. The sequence is fixed because the dependencies are fixed.",
+          "text": "Babies reach the motor milestones in the same order everywhere on earth. Head control, then sitting, then crawling, then walking. Not by convention, but because each one is the platform the next one stands on. You can’t walk before you can balance sitting up.",
           "cite": "Motor development milestones"
         },
         {
-          "text": "The same shape shows up in language. Cooing, then babbling sounds, then words, then sentences. And it shows up again in music, chess, math, and sport. When the same building logic appears in every domain, it is telling you the learning mechanism is one thing wearing many outfits.",
+          "text": "The same shape turns up in language, and not just in the mouth. Children learn nouns first, then verbs, then adjectives, then adverbs. Verbs aren’t harder to pronounce than nouns. They’re harder to understand, and you only learn to say the words you understand.",
           "cite": "Developmental sequences across domains"
         }
       ],
       "stories": [
         {
-          "text": "Think of a skyscraper. You cannot pour the penthouse before the lobby. Each floor depends on the stability of everything under it. Skill is the same, which is also why trying to skip the lower floors guarantees the upper ones never hold."
+          "text": "The Genius is a structural engineer. You can’t pour the penthouse of a skyscraper before you’ve poured the concrete for the lobby, because every floor depends on the stability of everything under it. Your brain is working under the same rules of construction."
         }
       ],
       "relations": [
@@ -1286,11 +1286,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book uses progressive composition to show that the process that taught you to walk is the same process that can teach you calculus.",
+      "bookRef": "The book calls this progressive composition, and uses it to show that the process that taught you to walk is the same process that can teach you calculus.",
       "transmissions": [],
       "next": {
         "target": "goldilocks-zone",
-        "reason": "Layers only get built at the right difficulty. Go find the zone where learning actually happens."
+        "reason": "Layers only get built at the right level of hard. Go find the zone where learning actually happens."
       },
       "contested": "You can learn a complex thing by studying the complex thing. (The reader will resist the idea that the order is fixed and that skipping the small pieces guarantees the big ones never hold.)",
       "flow": [
@@ -1302,7 +1302,7 @@
             "Because walking is the hardest milestone"
           ],
           "correct": 1,
-          "answer": "<p>Because each milestone is built on the one before it. Each skill is the floor the next skill stands on, so the sequence cannot change. Language runs the same way: cooing, babbling, words, sentences. So do music, chess, math, and sport.</p>"
+          "answer": "<p>Because each one is the platform the next one stands on.</p><p>You can’t walk before you can balance sitting up. The order isn’t a convention anybody chose, it’s a dependency, which is why it’s the same order in every country on earth. Language runs the same way. So do music, chess, math and sport.</p>"
         },
         {
           "ask": "When the same building order shows up in every domain there is, what is it telling you?",
@@ -1312,7 +1312,7 @@
             "The same building order in every domain tells you that teachers copy each other"
           ],
           "correct": 1,
-          "answer": "<p>The same order everywhere points to one mechanism. Learn simple pieces, practice them until they run on their own, combine them into bigger pieces, and repeat. Two steps, repeated without limit. That is how every skill you have got built.</p>"
+          "answer": "<p>One mechanism, wearing different clothes in each subject.</p><p>Learn simple pieces. Practice them until they run on their own. Combine them into bigger pieces. Do it again. Two steps, repeated without limit, and that is how every skill you own got built.</p><p>Here’s a tell for it. Children learn nouns first, then verbs, then adjectives, then adverbs. Verbs aren’t harder to pronounce than nouns. They’re harder to understand, and you only learn to say the words you already understand.</p>"
         },
         {
           "ask": "Here is why the order pays off so enormously. With ten words you can make a handful of sentences. With three hundred, about ten million. With twenty thousand, roughly a quadrillion. What is doing that multiplying?",
@@ -1322,7 +1322,7 @@
             "Practice making you faster is doing the multiplying"
           ],
           "correct": 1,
-          "answer": "<p>Combination is doing the multiplying. Once a piece runs on its own, it is available to every other piece at once, and the possibilities multiply instead of adding. That is why what a mind can do grows with what it has learned, not with a bigger brain.</p>"
+          "answer": "<p>Combination.</p><p>The moment a piece runs on its own, it becomes available to every other piece at once, so the possibilities multiply instead of adding. That’s why what a mind can do grows with what it has learned, and not with the size of the brain it came in.</p>"
         },
         {
           "ask": "So the belief: you can learn a complex thing by studying the complex thing, and skip the small stuff. Think of a skyscraper. Can you pour the penthouse before the lobby?",
@@ -1332,7 +1332,7 @@
             "You can pour the penthouse first if you have good architects"
           ],
           "correct": 1,
-          "answer": "<p>No, you cannot pour the penthouse first. And that is the whole reason the order of learning never changes. It is also why the strain of learning something new is not a verdict about you. It is a new floor being built.</p>"
+          "answer": "<p>Not a chance, and everyone knows it about buildings.</p><p>The Genius is a structural engineer. Every floor depends on the stability of everything under it, which is the entire reason the order of learning never changes.</p><p>It’s also why the strain of learning something new isn’t a verdict about you. It’s a new floor going up.</p>"
         }
       ]
     },
@@ -1349,24 +1349,24 @@
       "lines": [
         "machinery"
       ],
-      "oneBreath": "Learning happens at a specific level of hard. Too easy and there is nothing to learn from. Too hard and there is no clear signal about what to fix. The zone in between, where you succeed most of the time but miss often enough to get corrected, is where the building actually happens.",
+      "oneBreath": "Learning happens at one specific level of hard. Too easy and there’s nothing to correct. Too hard and there’s no clear signal about what to fix. The zone in between is where your brain builds, and it should feel like stretching without breaking.",
       "claimsBlock": {
         "believe": "The best practice is the practice that goes well. Getting things right means you are learning.",
-        "evidence": "If you are getting nearly everything right, you have stopped learning and started performing. The miss is not a failure of practice, it is the signal that practice runs on. Learning lives at the edge where you are missing about one try in six."
+        "evidence": "Learning lives at the edge, around a success rate of 60 to 85 percent. Practice with no misses in it builds very little, because the miss is the signal the whole process runs on."
       },
       "evidence": [
         {
-          "text": "The band that works sits around succeeding two times out of three up to about five times out of six. Below that, when almost everything is a struggle, there is too much going wrong to tell what to fix. Above it, when almost everything is easy, there is nothing to correct and the engine idles.",
+          "text": "Research on optimal learning across domains keeps landing on the same band, a success rate of 60 to 85 percent. That rate gives your brain enough errors to signal that a change is needed, and enough wins to show which patterns are worth keeping.",
           "cite": "The 60 to 85 percent success band"
         },
         {
-          "text": "Your brain has a built-in response that fires the instant you make an error, a little signal that says that one was wrong. That signal is not the problem, it is the point. It is the thing learning is made of, which is why practice with no misses in it builds so little.",
+          "text": "Your brain has a built-in response that fires the instant you make an error, a little jolt that says that one was wrong. That signal is the raw material of learning, which is exactly why a practice session with nothing going wrong in it builds so little.",
           "cite": "The error-related negativity as a learning signal"
         }
       ],
       "stories": [
         {
-          "text": "Watch a toddler learning to walk. They are not practicing steps they have mastered and they are not attempting a marathon. They are working right at the edge of what they can do, falling often, adjusting every time. That edge is the zone, and they find it without being told."
+          "text": "Watch a toddler learning to walk. They aren’t repeating steps they’ve already mastered and they aren’t attempting a marathon. They work right at the edge of what they can do, fall constantly, and adjust every single time. Nobody taught them to find that edge."
         }
       ],
       "relations": [
@@ -1382,11 +1382,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book treats the Goldilocks Zone as the most directly usable idea in the framework, the one you can act on tomorrow.",
+      "bookRef": "The book treats the Goldilocks Zone as the most directly usable idea in the whole framework, the one you can act on tomorrow morning.",
       "transmissions": [],
       "next": {
         "target": "implicit-learning",
-        "reason": "The engine can build things in this zone that you never notice you are learning at all. See how."
+        "reason": "Your brain can build things in this zone that you never notice you’re learning at all. Go see."
       },
       "contested": "The best practice is the practice that goes well. Getting things right means you are learning. (The reader reads the miss as a failure of practice and will resist the idea that the miss is what practice runs on.)",
       "flow": [
@@ -1398,7 +1398,7 @@
             "Any weight builds muscle, as long as you do enough of it"
           ],
           "correct": 1,
-          "answer": "<p>The weight that nearly fails builds muscle. Too light builds nothing, too heavy cannot be moved. The muscle grows at the edge, where the last rep is a struggle. And notice that the edge moves: the weight that nearly fails this month is a warm-up next month.</p>"
+          "answer": "<p>The one that nearly fails on the last rep.</p><p>Too light and nothing happens. Too heavy and it doesn’t move. The muscle grows right at the edge, where the last one is a genuine struggle. And notice that the edge keeps moving. The weight that nearly killed you this month is your warm-up next month.</p>"
         },
         {
           "ask": "Now learning. Your brain solves instead of lifts, but suppose the same rule holds. If you are getting nearly everything right in practice, what are you doing?",
@@ -1408,7 +1408,7 @@
             "If you are getting nearly everything right, you are building confidence, which is the same thing as learning"
           ],
           "correct": 1,
-          "answer": "<p>If you are getting nearly everything right, you are performing. When almost everything is easy, there is nothing to fix, and no learning happens. When almost everything is a struggle, there is too much going wrong to tell what to fix. The band that works sits in between: succeeding around two times out of three up to about five out of six.</p>",
+          "answer": "<p>Performing. Not learning.</p><p>When almost everything is easy there’s nothing to correct, so nothing gets built. When almost everything is a disaster there’s too much going wrong to tell what to fix. Research on optimal learning keeps landing on the same band in between, a success rate somewhere around 60 to 85 percent. You should be succeeding a little over half the time.</p>",
           "cite": "The 60 to 85 percent success band"
         },
         {
@@ -1419,7 +1419,7 @@
             "The error signal is noise"
           ],
           "correct": 1,
-          "answer": "<p>The error signal is the point. That signal is the thing learning is built from, which is exactly why practice with no misses in it builds so little. The miss is not the failure of the session. The miss is the session working.</p>",
+          "answer": "<p>It’s the whole point. That signal is what learning is made of.</p><p>Enough errors to tell your brain a change is needed, enough wins to show which patterns are worth keeping. Which is why a practice session where nothing goes wrong builds so little. The miss isn’t the session failing. The miss is the session working.</p>",
           "cite": "The error-related negativity as a learning signal"
         },
         {
@@ -1430,7 +1430,7 @@
             "You feel bad about the struggle in both cases"
           ],
           "correct": 1,
-          "answer": "<p>The same strain gets the opposite story. In the gym the burn means a good session. At the desk the same strain gets read as a sign you are not up to it. The sensation did not change. The story around it did, and the story is the only thing making learning feel bad.</p>"
+          "answer": "<p>Good in the gym. Frustrated at the desk. Identical sensation, opposite feeling about it.</p><p>In the gym the burn means you’re doing it right, and you’ve been told so your whole life. At the desk that same strain gets read as evidence you’re not cut out for this. The sensation didn’t change. The story around it did, and the story is the only thing making learning feel bad.</p>"
         },
         {
           "ask": "So the belief: the best practice is the practice that goes well, and getting things right means you are learning. Which is it?",
@@ -1440,7 +1440,7 @@
             "Whether the belief is right depends on the skill"
           ],
           "correct": 1,
-          "answer": "<p>Learning lives at the edge. Watch a toddler learning to walk. They are not repeating steps they have mastered and they are not attempting a marathon. They work right at the edge of what they can do, fall often, and adjust every time. They find the zone without being told. That is the level where learning happens fastest.</p>"
+          "answer": "<p>At the edge, where you’re missing about one try in six.</p><p>Watch a toddler learning to walk. They aren’t repeating steps they’ve already mastered and they aren’t attempting a marathon. They work right at the edge of what they can do, fall constantly, and adjust every single time. Nobody taught them to find that edge.</p><p>It should feel like stretching. Not like breaking.</p>"
         }
       ]
     },
@@ -1457,20 +1457,20 @@
       "lines": [
         "machinery"
       ],
-      "oneBreath": "A lot of what you know, you cannot say. Your brain picks up patterns from sheer exposure and puts them to work without ever handing you the rule. You obey grammar you were never taught and read situations you could not explain, because the knowledge went in below the level of words.",
+      "oneBreath": "A great deal of what you know, you can’t say. Your brain picks patterns out of sheer exposure and puts them to work without ever handing you the rule. You obey grammar rules you could not state at gunpoint, perfectly, in every sentence you speak.",
       "evidence": [
         {
-          "text": "You say big red barn, never red big barn, and you have never once thought about why. English has a strict order for stacking adjectives and you follow it perfectly, yet almost nobody can state the rule. You learned it as a toddler from listening, and it works flawlessly while staying completely out of reach.",
+          "text": "You say big red barn and never red big barn, and you have never once thought about why. English has a strict order for stacking adjectives and almost nobody can state it, including people who follow it flawlessly all day long.",
           "cite": "Adjective ordering; the royal order of adjectives"
         },
         {
-          "text": "What we call talent is often a record of this. A person who seems to just get music or just read people has usually had thousands of hours of exposure that built the pattern without either them or us noticing the training happened.",
+          "text": "What gets called talent is usually a record of this. Someone who seems to just get music, or just read people, has almost always had thousands of hours of exposure that nobody logged and nobody counted as training, including them.",
           "cite": "Talent as accumulated implicit exposure"
         }
       ],
       "stories": [
         {
-          "text": "Tick-tock, never tock-tick. Ping-pong, never pong-ping. There is a rule about which vowel sound comes first in these pairs, you have followed it your whole life, and you almost certainly could not state it before now. That gap between using a rule and knowing it is the whole idea."
+          "text": "Tick-tock, never tock-tick. Ping-pong, never pong-ping. There’s a rule about which vowel sound comes first in pairs like these, you have followed it your entire life, and nobody ever taught it to you."
         }
       ],
       "relations": [
@@ -1497,11 +1497,11 @@
           "blurb": "Ace rounds of adjective ordering instantly, then try to state the rule you just used. You will not be able to."
         }
       ],
-      "bookRef": "The book uses implicit learning to dismantle the talent myth. What looks like a gift is usually a hidden training history.",
+      "bookRef": "The book uses implicit learning to take the talent myth apart. What looks like a gift is usually a training history nobody wrote down.",
       "transmissions": [],
       "next": {
         "target": "automaticity",
-        "reason": "You have seen the engine acquire hidden knowledge. Now see what it does with the skills you do practice."
+        "reason": "You’ve seen your brain pick up knowledge in the dark. Now go see what it does with the skills you actually practice."
       },
       "contested": "What I know, I can explain, and what looks like natural talent in others is a gift. (The reader will resist that most of their knowledge went in below words, and that talent is learning nobody watched.)",
       "flow": [
@@ -1513,7 +1513,7 @@
             "There is no rule. It is just habit"
           ],
           "correct": 1,
-          "answer": "<p>There is a rule, a strict order for stacking adjectives in English, and you follow it perfectly in every sentence. Almost nobody can state it. A lovely little old green French whittling knife sounds fine. Rearrange it and it sounds insane. You learned this as a toddler from listening, and it works flawlessly while staying completely out of reach.</p>"
+          "answer": "<p>There’s a rule, and you follow it perfectly in every sentence you speak.</p><p>English has a strict order for stacking adjectives. A lovely little old green French whittling knife sounds completely normal. Shuffle those words and it sounds deranged. You picked this up as a toddler by listening, and it works flawlessly while staying entirely out of your reach.</p>"
         },
         {
           "ask": "Tick-tock. Ping-pong. Never tock-tick or pong-ping. Same question. Where did that rule come from?",
@@ -1523,7 +1523,7 @@
             "The tick-tock rule exists because everyone copies each other"
           ],
           "correct": 1,
-          "answer": "<p>The rule came from exposure. Your brain pulls patterns out of sheer volume and puts them to work without ever handing you the rule. A lot of what you know, you cannot say, and it works anyway.</p>"
+          "answer": "<p>From nowhere you can point to. It went in from exposure, underneath the level of words.</p><p>Your brain pulls patterns out of sheer volume and puts them straight to work without ever handing you the rule. So a great deal of what you know, you cannot say. And it works anyway.</p>"
         },
         {
           "ask": "Now think about a child who seems to just get music, or just reads people, or takes to numbers. Nobody logged any study. What is the honest explanation?",
@@ -1533,7 +1533,7 @@
             "The child has good genes and good luck"
           ],
           "correct": 1,
-          "answer": "<p>The child had training that nobody witnessed. When learning happens in a classroom we call it learning. When the same building happens through immersion, play, and obsessive attention nobody wrote down, we see only the output. And an ability with no visible cause reads as coming from inside.</p>"
+          "answer": "<p>Training that nobody witnessed.</p><p>When learning happens in a classroom we call it learning. When exactly the same building happens through immersion and play and obsessive attention that nobody wrote down, we only ever see the output. And an ability with no visible cause looks for all the world like it came from inside.</p>"
         },
         {
           "ask": "Here is the giveaway. No baby is born able to speak a word. Then, on their own, from noisy examples and no instruction, they build the exact language around them, grammar and idioms included. Does anyone ever say that child has a talent for English?",
@@ -1543,7 +1543,7 @@
             "People say it only about bilingual children"
           ],
           "correct": 1,
-          "answer": "<p>Nobody ever says a child has a talent for English. Yet learning a language and learning to pick out songs on a piano are the same kind of event. The most impressive learning most humans ever do gets called growing up, and a smaller version of it at the piano gets called a gift. The difference is only whether we happened to watch.</p>"
+          "answer": "<p>Nobody has ever said it, about any child, anywhere.</p><p>And yet learning a language and learning to pick out songs on a piano are the same kind of event, run by the same machinery. The most advanced learning most humans ever do gets filed under growing up. A smaller version of it at the piano gets called a gift. The only difference is whether we happened to be watching.</p>"
         },
         {
           "ask": "So the belief: what I know, I can explain, and talent in others is a gift. After the adjectives and the child, what is talent?",
@@ -1553,7 +1553,7 @@
             "Talent is a mix, but mostly a gift"
           ],
           "correct": 1,
-          "answer": "<p>Talent is a record of what someone paid attention to, for a long time. That is the same thing that built your grammar. The knowledge went in below words, it runs perfectly, and because you never saw yourself learn it, you assumed you never did.</p>"
+          "answer": "<p>A record of what somebody paid attention to, for a very long time.</p><p>The same process that built your grammar. The knowledge went in underneath words, it runs perfectly, and because you never once caught yourself learning it, you assumed you never did.</p>"
         }
       ]
     },
