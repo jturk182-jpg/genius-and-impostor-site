@@ -127,31 +127,31 @@
         "machinery",
         "genius"
       ],
-      "oneBreath": "When you practice something enough, it stops needing you. It runs on its own, fast and in the background, while your attention is free to be somewhere else. That handing-off is not a shortcut around thinking. It is the thing that makes real thinking possible.",
+      "oneBreath": "Practice something long enough and it stops needing you. It runs on its own, fast, in the background, while your attention wanders off to something else. That handoff isn’t a shortcut around thinking. It’s the thing that makes real thinking possible, because the part of your mind you can actually feel holds about four items and could never run a mind by itself.",
       "claimsBlock": {
         "believe": "Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing.",
-        "evidence": "Automaticity is not the absence of intelligence. It is the machinery that intelligence is built out of. There is no complex thought without it, because the slow effortful channel is far too small to run a mind on its own."
+        "evidence": "Automaticity is what intelligence is built out of. There is no complex thought without it, because the slow channel you can feel is far too small to run a mind."
       },
       "evidence": [
         {
-          "text": "The part of your mind you can pay attention with holds about four things at once and works through them one at a time. Walking coordinates dozens of muscles at the same moment. Reading runs sound, spelling, and meaning all at once. None of that could happen one slow step at a time. It only works because the brain moved it off the small conscious channel and onto automatic machinery that runs in parallel.",
+          "text": "The part of your mind you can pay attention with holds about four things at once, and it works through them one at a time. Meanwhile walking coordinates dozens of muscles in the same moment, and reading runs letters, sounds, grammar and meaning all at once. None of that could happen one slow step at a time. It only works because your brain moved the job off the small conscious channel and onto machinery that runs in parallel, without you.",
           "cite": "Working memory limits (Cowan, 2001)"
         },
         {
-          "text": "You can drive through traffic and hold a real conversation at the same time, tracking cars and turns and stop signs while you decode speech and answer back. Our best computers still cannot do this. And there was a time you could not either. Every bit of it got built by practice into something that now runs without you.",
+          "text": "You can drive home through traffic and hold a real conversation at the same time, tracking cars and stop signs while you decode speech and come back with a joke. Our best computers still can’t do this. And there was a time you couldn’t either. Every bit of it got built by practice into something that now runs without you.",
           "cite": "Driving while talking (from the book)"
         },
         {
-          "text": "Learning curves look the same whether you are training face recognition, a tennis serve, or algebra. They rise fast and then level off, the exact same shape in every domain. When one signature shows up everywhere, it is pointing at one shared mechanism underneath, and this is it.",
+          "text": "Learning curves have the same shape whether you’re training face recognition, a tennis serve, or algebra. A fast rise, then a levelling off, in every domain anyone has measured. When one signature turns up everywhere, it’s pointing at one shared mechanism underneath. This is that mechanism.",
           "cite": "Power-law learning across domains (Newell & Rosenbloom, 1981)"
         }
       ],
       "stories": [
         {
-          "text": "Picasso draws a quick sketch and names a high price. The buyer protests that it only took a minute. Picasso answers that it took fifty years. The buyer is looking at a minute of output. Picasso is looking at fifty years of training folded up inside the ease of it."
+          "text": "Picasso dashes off a sketch and names a high price. The buyer protests that it only took a minute. Picasso answers that it took fifty years. The buyer is looking at a minute of output. Picasso is looking at fifty years of training folded up inside the ease of it."
         },
         {
-          "text": "A bat solves echolocation the way you solve reading, with machinery that runs on its own. That the bat was born with it and you built yours makes no difference to what it is. Automatic problem-solving is intelligence, whichever way the machinery got there."
+          "text": "A bat solves echolocation the way you solve reading, with machinery that runs on its own. That the bat was born with its machinery and you built yours makes no difference to what it does. Automatic problem solving is intelligence, whichever way the machinery got there."
         }
       ],
       "relations": [
@@ -183,11 +183,11 @@
           "blurb": "Try to look at a word and not read it. You will find that you cannot, because reading now starts on its own."
         }
       ],
-      "bookRef": "The book calls automaticity the engine of intelligence and spends real time on why. This page is the short version of that argument.",
+      "bookRef": "The book calls automaticity the engine of intelligence and gives it a whole chapter. This is the short version.",
       "transmissions": [],
       "next": {
         "target": "effort-inversion",
-        "reason": "If effortless skill is the real machinery, then everything we assume about effort is upside down. See how."
+        "reason": "If effortless skill is the real machinery, then everything we assume about effort is upside down. Go see."
       },
       "flow": [
         {
@@ -198,7 +198,7 @@
             "You could have held a conversation only if the road was empty"
           ],
           "correct": 1,
-          "answer": "<p>No, and you know why. Every part of driving needed the small piece of your mind you can pay attention with, and there was nothing left over for talking.</p><p>And now? You can drive through traffic and argue about dinner at the same time. The traffic did not get easier. So what changed?</p>"
+          "answer": "<p>Of course not. Every scrap of your attention was going into staying in your lane, and there wasn’t any left over for talking about dinner.</p><p>And today you do both without noticing. Same traffic. Same you. So what changed?</p>"
         },
         {
           "ask": "What changed between then and now?",
@@ -208,10 +208,10 @@
             "You got better at paying attention to two things at once"
           ],
           "correct": 1,
-          "answer": "<p>Driving moved off the part of your mind you can feel. It did not get simpler: merging still means tracking a dozen cars, judging their speeds, and moving your hands and feet, all at once. And nobody gets better at attending to two things at once. That channel is as narrow as it ever was.</p><p>What practice did was move the whole job of driving off the channel you can feel and onto machinery that runs by itself. That is what automatic means.</p>"
+          "answer": "<p>The driving moved off the part of your mind you can feel.</p><p>We can actually watch this happen. Researchers trained people for two weeks on a button-pressing task while imaging their brains. Early on, the work was lighting up the area that handles conscious control. By the end, that area had gone quiet and the load had shifted onto machinery that runs without you. And that’s exactly when they could suddenly do the task and count tones at the same time, faster than they’d managed the task alone as beginners.</p><p>Nobody gets better at attending to two things at once. That channel is as narrow as it ever was. What practice did was move the driving off it.</p>"
         },
         {
-          "chunk": "<p>Here is how narrow that channel is. The part of your mind you can pay attention with holds about four things at once, and it works through them one at a time.</p>",
+          "chunk": "<p>Here’s how narrow that channel is. The part of your mind you can pay attention with holds about four things at once, and it works through them one at a time.</p><p>That’s it. That’s the whole conscious bottleneck.</p>",
           "cite": "Working memory limits (Cowan, 2001)"
         },
         {
@@ -222,7 +222,7 @@
             "Reading would be no different, because the channel is fast enough"
           ],
           "correct": 1,
-          "answer": "<p>Reading would be slow and effortful, and you have seen that version. It is a child sounding out a word. That is what reading looks like when it runs through the channel you can feel.</p><p>So the reading you are doing right now must be running somewhere else, on its own, outside that channel. The channel could not do it. Almost everything your mind does well is like this. Walking coordinates dozens of muscles at once. Recognizing a face, catching a ball, understanding speech: none of it could run one slow step at a time.</p>"
+          "answer": "<p>Slow and painful, one letter at a time. And you’ve seen that version. It’s a six-year-old sounding out c-a-t.</p><p>So the reading you’re doing this second has to be running somewhere else, because the four-slot channel couldn’t possibly handle it. All your conscious mind is doing right now is keeping your eyes pointed at the page while the nonconscious networks crunch the data and hand it up as a tidy little package of comprehension.</p>"
         },
         {
           "ask": "Some people say that automatic means mindless, and that the real thinking is the slow, effortful kind you can feel yourself doing. The driving, the reading and the walking you just thought about: which are they?",
@@ -232,7 +232,7 @@
             "Driving, reading and walking are somewhere in between routine and thinking"
           ],
           "correct": 1,
-          "answer": "<p>Driving, reading and walking are the mind doing its most complex work. The slow channel you can feel holds four things. It could not run a mind. Everything complex your mind does is possible only because it was moved off that channel onto machinery that runs on its own.</p><p>Automaticity is not the absence of intelligence. It is what intelligence is built out of.</p>"
+          "answer": "<p>They’re your mind doing its most complex work without bothering you about it.</p><p>The channel you can feel holds four things. It could not run a mind. Everything complicated you do is possible only because it got moved off that channel and onto machinery that runs by itself.</p><p>Which turns the usual picture inside out. There is no intelligence without automation.</p>"
         },
         {
           "ask": "Learning curves have the same shape whether you are training face recognition, a tennis serve, or algebra: a fast rise, then a levelling off. When one signature shows up in every skill there is, what is it pointing at?",
@@ -242,7 +242,7 @@
             "The shared shape of the learning curve means all skills are equally hard"
           ],
           "correct": 1,
-          "answer": "<p>The shared shape points to one mechanism. Every skill, whatever it looks like from the outside, is built by the same process: practice moving the work off the channel you can feel onto machinery that runs on its own.</p>",
+          "answer": "<p>One mechanism, running underneath all of them.</p><p>Whatever a skill looks like from the outside, it gets built the same way. Practice moves the work off the channel you can feel and onto machinery that runs on its own. Face recognition, a tennis serve, algebra. Same engine every time.</p>",
           "cite": "Power-law learning across domains (Newell & Rosenbloom, 1981)"
         },
         {
@@ -253,7 +253,7 @@
             "Neither is right. It is just a good line"
           ],
           "correct": 1,
-          "answer": "<p>Picasso is right. What the buyer saw was the automatic version of drawing, the sketch running off machinery that fifty years of practice had built. What the buyer could not see was that machinery, for the same reason you cannot feel yourself reading right now. The ease of the sketch is what fifty years of training looks like from the outside.</p>"
+          "answer": "<p>Picasso’s right, and he isn’t being cute about it.</p><p>What the buyer watched was the automatic version of drawing, running off machinery that fifty years at it had built. What the buyer couldn’t see was the machinery, for the same reason you can’t feel yourself reading this sentence. The minute was real. So were the fifty years.</p>"
         },
         {
           "ask": "One more. A bat finds its way in the dark by echolocation, with machinery that runs on its own. The bat was born with its machinery. You built yours, for reading. Is what the bat does intelligence, and what you do not? Or the other way round?",
@@ -263,7 +263,7 @@
             "Both are intelligence. Where the machinery came from makes no difference to what the machinery does"
           ],
           "correct": 2,
-          "answer": "<p>Both the bat's echolocation and your reading are intelligence. Automatic problem-solving is intelligence, whichever way the machinery got there. The bat's machinery came with the bat. Yours you built, one practice session at a time.</p>"
+          "answer": "<p>Both of them. Automatic problem solving is intelligence no matter how the machinery got there.</p><p>The bat was issued its echolocation at the factory. You built your reading one practice session at a time, which if anything is the more impressive of the two.</p>"
         }
       ],
       "contested": "Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing. (The reader will resist the idea that the automatic part is the intelligence, not the absence of it.)"
@@ -280,24 +280,24 @@
       "lines": [
         "bias"
       ],
-      "oneBreath": "We watch someone struggle and decide the task must be hard. We watch someone breeze through it and decide it must be easy. Reality runs the other way. The struggle is what beginning looks like, and the ease is what mastery looks like.",
+      "oneBreath": "We watch somebody struggle and decide the task must be hard. We watch somebody breeze through it and decide it must be easy. It runs the other way. Struggle is what beginning looks like and ease is what mastery looks like, and we only get this right when we can actually watch the work happening.",
       "claimsBlock": {
         "believe": "If something looks effortful, it must be complex. If it looks easy, it must be simple.",
-        "evidence": "Effortlessness is the signature of mastery, not of simplicity. The person making it look easy is doing the harder thing. We have the sign exactly reversed."
+        "evidence": "Easy doesn’t mean simple. Easy means automated. The person making it look easy is doing the harder thing, and we have the sign exactly reversed."
       },
       "evidence": [
         {
-          "text": "Nobody looks at an expert juggling eight balls without a wobble and concludes juggling must be easy. Everyone can see the beginner dropping two is the one doing worse. We get it right for juggling and then apply the opposite logic to thinking, where we cannot watch the machinery and so we trust the struggle instead.",
+          "text": "Nobody watches an expert keep eight balls in the air and concludes that juggling must be easy. Everybody can see that the beginner dropping two of three is the one doing worse. We get it right for juggling, then apply the opposite logic to thinking, where we can’t watch the machinery and so we trust the strain instead.",
           "cite": "The juggling comparison (from the book)"
         },
         {
-          "text": "A medical student sweating through a procedure looks like they are working harder than the surgeon who does it calmly, and in a way they are. But the calm is not less skill. The calm is what a few thousand more repetitions look like from the outside.",
+          "text": "A medical student sweating through a procedure looks like they’re working harder than the surgeon who does it calmly, and in a sense they are. But the calm isn’t less skill. The calm is what a few thousand more repetitions look like from the outside.",
           "cite": "Novice effort versus expert fluency"
         }
       ],
       "stories": [
         {
-          "text": "A locksmith who opens a lock in seconds gets treated as less skilled than one who sweats and fumbles for ten minutes, and customers will argue the fast one deserves less pay. The fast one is more expert, not less. We are paying for visible strain and calling it work."
+          "text": "A locksmith who opens your lock in thirty seconds gets treated as worse value than one who sweats and fumbles for ten minutes, and customers really will argue that the fast one deserves less. Ask around and locksmiths will tell you the tips were better back when they were apprentices. We are paying for visible strain and calling it work."
         }
       ],
       "relations": [
@@ -324,11 +324,11 @@
           "blurb": "The part of the task that felt like nothing was the sophisticated part. This game makes you feel that directly."
         }
       ],
-      "bookRef": "Effort Inversion is one of the named biases in the book, and it does a lot of the work of explaining how we got intelligence wrong.",
+      "bookRef": "Easy is not the same as simple. That one is a section heading in the book, and it does a lot of the work of explaining how we got intelligence wrong.",
       "transmissions": [],
       "next": {
         "target": "competence-inversion",
-        "reason": "There is a deeper version of this same mistake, aimed at the whole idea of expertise. See Competence Inversion."
+        "reason": "There’s a deeper version of this same mistake, pointed straight at expertise itself."
       },
       "contested": "If something looks effortful it must be complex, and if it looks easy it must be simple. (The reader trusts visible strain as the sign of real work and will resist the idea that they have the sign backwards.)",
       "flow": [
@@ -340,7 +340,7 @@
             "You cannot tell which juggler is doing the harder thing from the outside"
           ],
           "correct": 1,
-          "answer": "<p>The juggler with eight balls is doing the harder thing, and nobody hesitates on this one. Eight balls is harder than three. The calm is what being good at juggling looks like, and the sweat is what a beginner looks like.</p><p>Notice how obvious that was.</p>"
+          "answer": "<p>The one with eight balls, obviously. Nobody hesitates here. Eight is harder than three, the calm is what good looks like, and the sweating is what a beginner looks like.</p><p>Hold on to how obvious that felt.</p>"
         },
         {
           "ask": "Now a medical student sweating through a procedure, and a surgeon doing the same procedure calmly, almost bored. Which one is showing more skill?",
@@ -350,7 +350,7 @@
             "The student and the surgeon are showing the same skill in different moods"
           ],
           "correct": 1,
-          "answer": "<p>The surgeon is showing more skill, and you answered just as quickly as you did for the jugglers. So far your judgment is consistent: ease means skill.</p>"
+          "answer": "<p>The surgeon, and you answered that one just as fast.</p><p>So far you’ve been perfectly consistent. Ease means skill.</p>"
         },
         {
           "ask": "Here is where it gets strange. A locksmith opens your lock in thirty seconds and charges you sixty dollars. Another one sweats and fumbles for ten minutes and charges the same. Which one do most people feel got the fair deal?",
@@ -360,7 +360,7 @@
             "Both locksmiths gave the same deal, because the price was the same"
           ],
           "correct": 1,
-          "answer": "<p>Most people feel the slow locksmith gave the fair deal, if they are honest. Customers argue that the fast locksmith deserves less, and locksmiths will tell you the tips were better as an apprentice than as a master.</p><p>So with the jugglers you read ease as skill. With the locksmith you read ease as not much work. The same ease gets the opposite judgment.</p>"
+          "answer": "<p>The slow one, if we’re being honest about it.</p><p>Customers really do argue that the fast locksmith should charge less, and ask around and you’ll hear locksmiths say the tips were better back when they were apprentices fumbling at the door.</p><p>So with the jugglers, ease meant skill. With the locksmith, ease means he barely did anything. Same ease, opposite verdict.</p>"
         },
         {
           "ask": "Why the switch? What is different about the locksmith, or the accountant who solves your problem in a minute, or the writer who makes it look easy?",
@@ -370,7 +370,7 @@
             "People are just cheap when it comes to paying for services"
           ],
           "correct": 1,
-          "answer": "<p>You cannot see the skill inside the locksmith's head. With the jugglers you could see eight balls in the air. With the locksmith, the accountant and the writer, the work happens inside a skilled head, where you cannot see it. So when the work is mental, the only evidence left is how hard the person looks like they are trying, and we judge by that instead.</p>"
+          "answer": "<p>You can’t see inside the locksmith’s head.</p><p>Eight balls in the air is visible. A skilled mind working is not. So when the work is mental, the only evidence left in the room is how hard the person looks like they’re trying, and that’s what we end up grading.</p>"
         },
         {
           "ask": "So here is the belief, stated plainly. If something looks effortful it must be complex, and if it looks easy it must be simple. Knowing what you now know, which way does it actually run?",
@@ -380,10 +380,10 @@
             "Whether effort signals difficulty depends on the job"
           ],
           "correct": 1,
-          "answer": "<p>The belief is backwards. The person making it look easy is doing the harder thing. We read the signal of effort backwards, and we only get it right when the skill is one we can watch, like juggling.</p><p>Michelangelo put it well. If people knew how hard he had worked for his mastery, it would not seem wonderful at all.</p>"
+          "answer": "<p>Backwards. The person making it look easy is doing the harder thing.</p><p>Easy doesn’t mean simple. Easy means automated. We only get this right when the skill is one we can actually watch, like juggling, and we get it wrong just about everywhere else.</p><p>Michelangelo said it best. If people knew how hard he’d worked for his mastery, it wouldn’t seem so wonderful at all.</p>"
         },
         {
-          "chunk": "<p>One more place you can see it. No one watches a beginner’s tennis strokes and calls them more athletic than Federer’s. For physical skills we see this instantly. For mental skills we get it wrong, because we cannot see what a skilled mind is doing.</p>"
+          "chunk": "<p>One more place you can catch yourself doing it. Nobody watches a beginner flail at tennis and calls it more athletic than Federer.</p><p>With physical skills we see it instantly, because the scaffolding is on display. With mental skills the scaffolding is hidden, so we get it exactly wrong.</p>"
         }
       ]
     },
@@ -399,20 +399,20 @@
       "lines": [
         "bias"
       ],
-      "oneBreath": "Once a skill runs on its own, you cannot feel it working anymore. You can only notice the effortful parts of your own mind, so the automatic parts go silent and start to look like nothing at all, even when they are the most complex thing you do.",
+      "oneBreath": "Once a skill runs on its own, you can’t feel it working. You only notice the effortful parts of your own mind, so the automatic parts go silent and start to look like nothing at all, right at the moment they’re doing the most complex work you do.",
       "evidence": [
         {
-          "text": "Read this sentence and the meaning simply arrives. You cannot feel the sound of the words being assembled, the letters being recognized, the grammar being parsed, all of it happening at once. The work is real and enormous. You just have no window onto it, because introspection only reaches the effortful stuff.",
+          "text": "Read this sentence and the meaning simply arrives. You can’t feel the letters being recognized, the sounds being attached, the grammar being sorted, all of it happening at once. All your conscious mind is doing is keeping your eyes on the page while the nonconscious networks crunch the data and hand it up as a tidy little package of comprehension.",
           "cite": "Reading comprehension as invisible processing"
         },
         {
-          "text": "You spot a friend's face in a crowd instantly and cannot say how. The pattern-matching that pulled one face out of hundreds is some of the hardest computation your brain performs, and you experience none of it. You get the answer with no sense of the work.",
+          "text": "You spot a friend’s face in a crowd instantly and you can’t say how. Pulling one face out of hundreds is some of the hardest computation your brain performs, and you experience none of it. The answer just arrives, with no sense of the work behind it.",
           "cite": "Face recognition"
         }
       ],
       "stories": [
         {
-          "text": "Walking across a cluttered room feels like nothing, which is exactly the problem. Dozens of systems are coordinating balance, vision, and dozens of muscles in real time, and our best robots still struggle to do it. The feeling of nothing is the machinery being too good to notice."
+          "text": "Walking across a cluttered room feels like nothing, which is exactly the problem. Dozens of muscles, balance and vision are all being coordinated in real time, and our best robots still fall over trying it. The feeling of nothing is the machinery being too good to notice."
         }
       ],
       "relations": [
@@ -433,11 +433,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book treats this blindness as the root of a whole family of errors about intelligence. This is the mechanism underneath the biases.",
+      "bookRef": "The book treats this blindness as the root of a whole family of errors about intelligence.",
       "transmissions": [],
       "next": {
         "target": "everyday-genius",
-        "reason": "Now that you know what hides the machinery, go see the machinery. This is what you have been missing."
+        "reason": "Now that you know what hides the machinery, go have a look at the machinery."
       },
       "contested": "The things I do without effort are not doing much. (The reader will resist the idea that their most complex mental work is the part they cannot feel at all.)",
       "flow": [
@@ -449,7 +449,7 @@
             "You can feel none of those steps. The meaning just arrives"
           ],
           "correct": 2,
-          "answer": "<p>You can feel none of those steps, and slowing down does not help. You can make yourself read slowly, but you still cannot feel the letters being recognized or the grammar being sorted. The meaning arrives finished.</p><p>The work is real and it is enormous. You just have no window onto it.</p>"
+          "answer": "<p>None of them, and slowing down doesn’t help. You can force yourself to read slowly, but you still can’t feel the letters being recognized or the grammar being sorted out. The meaning just shows up, finished.</p><p>The work is real and it is enormous. You simply have no window onto it.</p>"
         },
         {
           "ask": "You spot a friend’s face in a crowd of hundreds, instantly. Could you say how you did it? What you compared, what you ruled out?",
@@ -459,7 +459,7 @@
             "You could describe it only if you had seen the friend recently"
           ],
           "correct": 1,
-          "answer": "<p>No, you could not describe it. Picking one face out of hundreds is some of the hardest computation your brain does, and you experience none of it. You get the answer without any sense of the work that produced it.</p>"
+          "answer": "<p>Not a chance. Pulling one face out of hundreds is some of the hardest computation your brain does, and you experience exactly none of it. The answer just arrives, with no sense of the work behind it.</p>"
         },
         {
           "ask": "So here is the question this station is about. Why can you feel yourself working through a hard sum, but not feel yourself reading or recognizing a face?",
@@ -469,7 +469,7 @@
             "Because reading and recognizing faces are habits, not thinking"
           ],
           "correct": 1,
-          "answer": "<p>Because your ability to notice your own mind only reaches the effortful parts. The sum is not harder. It just runs in the one part of your mind you can watch. Reading and face recognition ran there once too, when you were learning them. Practice moved them out of that part, and now you cannot watch them at all.</p><p>So the better you get at something, the less of it you can feel. That is the blindness.</p>"
+          "answer": "<p>Because the part of your mind you can watch is the only part you can watch, and everything automatic runs outside it.</p><p>The sum isn’t harder than reading. It just happens to run in the one room with a window in it. Reading and face recognition were in that room once too, back when you were learning them. Practice moved them out, and now you can’t see a thing.</p><p>So the better you get at something, the less of it you can feel. That’s the blindness.</p>"
         },
         {
           "ask": "Walking across a cluttered room feels like nothing. Dozens of muscles, balance, vision, all coordinated in real time, and our best robots still fall over doing it. So what does the feeling of nothing tell you about the work?",
@@ -479,10 +479,10 @@
             "The feeling of nothing tells you walking is simpler than it looks"
           ],
           "correct": 1,
-          "answer": "<p>The feeling of nothing tells you nothing about the amount of work. It means the walking machinery runs too well to notice. And this is why it matters: because you cannot feel these feats, you do not count them. So the hardest things your brain does get counted as nothing.</p>"
+          "answer": "<p>Nothing at all. The feeling of nothing is what machinery feels like when it runs too well to notice.</p><p>And that’s a problem, because what you can’t feel, you don’t count. The hardest things your brain does get filed under nothing.</p>"
         },
         {
-          "chunk": "<p>You have watched this happen once already, with reading. You remember sounding out each letter, c, a, t, slowly, all of it effortful and conscious. Now you cannot look at a word and not read it, and you have no idea how you do it. The whole process dropped out of your awareness the moment you got good. That is not a quirk of reading. It is what learning does to every skill.</p>"
+          "chunk": "<p>You’ve already watched this happen once, with reading. You remember sounding out c-a-t, slowly, every bit of it effortful and conscious. Now you can’t look at a word and not read it, and you have no idea how you do it.</p><p>The whole process dropped out of your awareness the moment you got good. That isn’t a quirk of reading. That’s what learning does to every skill you’ve ever built.</p>"
         }
       ]
     },
@@ -600,16 +600,16 @@
       "lines": [
         "bias"
       ],
-      "oneBreath": "When you are learning, thinking is slow and effortful, so that is what we decided real thinking is. Then we look at an expert whose thinking has gone fast and smooth and say that is not really thinking, it is just instinct. We took the beginner's experience as the standard and judged mastery against it.",
+      "oneBreath": "When you’re learning, thinking is slow and effortful, so that’s what we all decided real thinking must be. Then we look at an expert whose thinking has gone fast and smooth and call it instinct. We took the beginner’s experience as the standard and judged mastery against it.",
       "evidence": [
         {
-          "text": "The effort you feel while learning is scaffolding. It holds the building up while it goes up, and then it comes down. Expert fluidity is not a lesser version of thinking, it is thinking that finished being built. We keep pointing at the scaffolding and calling it the building.",
+          "text": "The effort you feel while learning is scaffolding. It holds the skill up while the skill is being built, and then it comes down. Expert fluency isn’t a lesser kind of thinking. It’s thinking that finished being built. We keep pointing at the scaffolding and calling it the building.",
           "cite": "Effort as scaffolding, fluency as the finished structure"
         }
       ],
       "stories": [
         {
-          "text": "Einstein's relativity, the finished insight, feels less like hard thinking than the visible struggle with equations that came before it. So we credit the struggle and treat the breakthrough as something that just arrived. We have it backwards. The arrival was the thinking working."
+          "text": "Einstein’s relativity, the finished insight, feels like less work than the visible years of struggling with equations that came before it. So we hand the credit to the struggle and treat the breakthrough as something that simply arrived one morning. The arrival was the thinking, finished."
         }
       ],
       "relations": [
@@ -630,11 +630,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The Picasso and locksmith moments in the book are this idea in a single exchange. Effort is not the measure of the thinking.",
+      "bookRef": "Michelangelo put it in one line. If people knew how hard he’d worked for his mastery, it wouldn’t seem so wonderful at all. Effort was never the measure of the thinking.",
       "transmissions": [],
       "next": {
         "target": "introspective-bias",
-        "reason": "Step back and see the whole trap these smaller biases belong to."
+        "reason": "Step back and look at the whole trap these smaller mistakes belong to."
       },
       "contested": "Real thinking is slow and effortful. The expert who does it fast and smooth is running on instinct, not thinking. (The reader will resist demoting their own deliberate effort from the top of the ladder.)",
       "flow": [
@@ -646,7 +646,7 @@
             "Neither looks like they are thinking, because chess is not thinking"
           ],
           "correct": 0,
-          "answer": "<p>The amateur looks like the one doing the real thinking. All that visible calculation looks like the real thing, and the grandmaster's glance looks like instinct. That is how almost everyone reads it.</p><p>Now compare that judgment with the outcome. The grandmaster wins.</p>"
+          "answer": "<p>The amateur, and that’s how nearly everyone reads it. All that visible calculating looks like the real thing, and the grandmaster’s glance looks like instinct.</p><p>Now hold that judgment up against the scoreboard. The grandmaster wins.</p>"
         },
         {
           "ask": "Early in a doctor’s training, a diagnosis takes an hour of effortful examination. Years later the same doctor has it in the first minute, and is far more often right. Which version was the rigorous one?",
@@ -656,7 +656,7 @@
             "Both diagnoses were rigorous, in different ways"
           ],
           "correct": 1,
-          "answer": "<p>The one-minute diagnosis was the rigorous one. The effortful hour was not careful thinking at its best. It was the doctor's skill before it had finished being built.</p>"
+          "answer": "<p>The one-minute version.</p><p>That effortful hour wasn’t careful thinking at its finest. It was the same doctor’s skill before it had finished being built.</p>"
         },
         {
           "ask": "So what is the effort you feel while learning something? If it goes away as you get good, what was it for?",
@@ -666,7 +666,7 @@
             "The effort of learning is a sign you are not suited to the task"
           ],
           "correct": 1,
-          "answer": "<p>The effort of learning is scaffolding. The strain is what building a skill feels like from the inside. Once the skill stands on its own, the scaffolding comes down, and what is left is fast and smooth because it is finished.</p><p>We keep pointing at the scaffolding and calling it the building.</p>"
+          "answer": "<p>Scaffolding. The strain is what building a skill feels like from the inside.</p><p>Once the skill stands up on its own the scaffolding comes down, and what’s left is fast and smooth because it’s finished. We keep pointing at the scaffolding and calling it the building.</p>"
         },
         {
           "ask": "Here is the belief, then. Real thinking is slow and effortful, and the expert’s fast, smooth version is just instinct. After the grandmaster and the doctor, which is it?",
@@ -676,10 +676,10 @@
             "Effort and fluency count equally as thinking"
           ],
           "correct": 1,
-          "answer": "<p>The expert’s fluency is thinking that finished being built. We took the beginner’s experience as the standard, because the beginner’s effort is the only thinking we can feel, and then judged mastery against it. Put the right way round: the expert is doing more thinking, faster, and we cannot see any of it.</p>"
+          "answer": "<p>We took the beginner’s experience and made it the standard, because a beginner’s effort is the only thinking any of us can actually feel. Then we judged mastery against it and found mastery wanting.</p><p>Put it the right way round. The expert is doing far more thinking, far faster, and we can’t see a second of it.</p>"
         },
         {
-          "chunk": "<p>Even Einstein gets read this way. The finished insight, relativity, feels less like hard thinking than the visible years of struggle with equations that came before it. So we give the credit to the struggle and treat the breakthrough as something that just arrived. The breakthrough was the thinking, finished.</p>"
+          "chunk": "<p>Even Einstein gets read this way. The finished insight feels like less work than the visible years of struggling with equations that came before it, so we hand the credit to the struggle and treat the breakthrough as something that simply arrived one morning.</p><p>The breakthrough was the thinking. Finished.</p>"
         }
       ]
     },
