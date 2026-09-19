@@ -498,14 +498,14 @@
       "lines": [
         "bias"
       ],
-      "oneBreath": "We build our whole picture of thinking out of the only thing we can watch, which is effortful conscious deliberation. Everything the mind does automatically is invisible to that view, so we left it out of the theory and mistook the small lit corner for the whole room.",
+      "oneBreath": "We built our whole picture of thinking out of the one part we can actually watch, which is slow conscious deliberation. Everything the mind does automatically is invisible from the inside, so it never made it into the theory at all.",
       "evidence": [
         {
-          "text": "This is why IQ tests measure what they measure. They test the kind of conscious, effortful problem-solving you can feel yourself doing, because that is the part of the mind that was visible to the people building the tests. The far larger automatic part was never on the table, because it cannot be introspected on.",
+          "text": "This is why IQ tests measure what they measure. They test the kind of conscious, effortful problem solving you can feel yourself doing, because that was the only kind the people building the tests could see. The far larger automatic part was never even a candidate.",
           "cite": "Psychometrics built from conscious problem-solving"
         },
         {
-          "text": "Watch a room try to explain away a chimpanzee beating them at a memory task. The scramble to reframe the result, to find a reason it does not count, is the bias happening live. People are protecting a model of intelligence built from their own inside view.",
+          "text": "Watch a room full of people find out that a chimpanzee just beat them at a memory task, then watch the scramble to explain why it doesn’t count. What’s being defended in that scramble isn’t human dignity. It’s a picture of the mind built entirely from the inside view.",
           "cite": "The chimp working-memory result (Inoue & Matsuzawa, 2007)"
         }
       ],
@@ -528,11 +528,11 @@
         }
       ],
       "games": [],
-      "bookRef": "In the book this is the umbrella that most of the other biases sit under. It is the deep reason we got the mind backwards.",
+      "bookRef": "In the book this is the umbrella most of the other biases sit under. It’s the deep reason we got the mind wrong.",
       "transmissions": [],
       "next": {
         "target": "trained-reasoning",
-        "reason": "The bias reaches its target when it dresses up as pure logic. See what reasoning really is."
+        "reason": "The bias does its worst work when it dresses up as pure logic. Go see what reasoning really is."
       },
       "contested": "Thinking is the slow, deliberate stuff I can feel myself doing. (The reader takes their inside view of their own mind as an accurate picture of it, and will resist learning that the picture leaves out most of what the mind does.)",
       "flow": [
@@ -544,7 +544,7 @@
             "That theory of energy is fine, as long as its predictions work"
           ],
           "correct": 1,
-          "answer": "<p>A theory of energy that leaves out the organs is absurd. And yet that is very close to what we did with intelligence. A hundred years of serious work on what makes people smart, and you could become a world expert in it without ever thinking about a single neuron. The model was built without the organ.</p>"
+          "answer": "<p>Absurd, obviously. The organs are the whole story.</p><p>And yet that is very nearly what we did with intelligence. A hundred years of serious work on what makes people smart, and you could become a world expert in the field without ever once thinking about a neuron. We built the model without the organ.</p>"
         },
         {
           "ask": "So where did that model come from, if not the brain? What was the evidence the people building it actually had?",
@@ -554,7 +554,7 @@
             "The model of intelligence came from animal studies"
           ],
           "correct": 1,
-          "answer": "<p>The model came from what thinking feels like from the inside. When you look inward, you find deliberate, effortful problem solving. That is the only part of your own mind you can watch. So that is what got written down as thinking.</p>"
+          "answer": "<p>From what thinking feels like from the inside.</p><p>Look inward and what you find is deliberate, effortful problem solving, because that’s the only part of your own mind you can watch. So that is what got written down as thinking, and everything else got left out of the file.</p>"
         },
         {
           "ask": "You already know something about that inside view from the last few stations. Reading, recognizing a face, walking a cluttered room: enormous work, none of it visible to you. So if you build a theory of the mind from what you can feel, what do you leave out?",
@@ -564,7 +564,7 @@
             "A theory built from what you can feel leaves out only the physical skills"
           ],
           "correct": 1,
-          "answer": "<p>A theory built from what you can feel leaves out almost everything the mind does. The part you can see is the small, slow, effortful part. The rest, which is most of what the mind does, cannot be seen from the inside. The theory mistook the small visible part for the whole mind.</p>"
+          "answer": "<p>Almost the entire mind.</p><p>The part you can see is the small, slow, effortful part. The rest, which is very nearly everything, runs where introspection can’t reach. So the theory mistook the one lit room for the whole house.</p>"
         },
         {
           "ask": "Now think about what an IQ test actually asks you to do. Puzzles, sequences, remembering digits, defining words, all conscious and effortful. Given where the theory came from, is that a coincidence?",
@@ -574,7 +574,7 @@
             "It is not a coincidence, because IQ tests measure everything the mind does"
           ],
           "correct": 1,
-          "answer": "<p>It is no coincidence. IQ tests measure the kind of thinking you can feel yourself doing, because that was the only part the people who built the tests could see. The far larger automatic part was never a candidate, because nobody can introspect on it.</p>"
+          "answer": "<p>No coincidence at all.</p><p>IQ tests measure the kind of thinking you can feel yourself doing, because that was the only kind the people who built them could see. The far larger automatic part was never a candidate, for the simple reason that nobody can introspect on it.</p>"
         },
         {
           "ask": "One last thing to notice. Watch a room full of people learn that a chimpanzee beat them at a memory task, and then watch them scramble for a reason it does not count. What is being protected in that scramble?",
@@ -584,7 +584,7 @@
             "The scramble is protecting nothing. They are just surprised"
           ],
           "correct": 1,
-          "answer": "<p>The scramble is protecting a picture of intelligence. This is the bias in action: a model of the mind built from the inside view, defending itself against a result it cannot explain. Start from how the brain actually works and the chimp’s result is exactly what you would expect.</p>",
+          "answer": "<p>A picture of intelligence, built from the inside view, defending itself.</p><p>It isn’t human dignity under threat in that room. It’s a model of the mind that has no way to accommodate the result. Start instead from how the brain actually works, and the chimp’s performance is roughly what you’d predict.</p>",
           "cite": "Inoue & Matsuzawa, 2007"
         }
       ]
@@ -1571,20 +1571,20 @@
       "lines": [
         "machinery"
       ],
-      "oneBreath": "The conscious mind can only hold a handful of things at once. That never changes. What changes with expertise is how much each thing holds. A master is not remembering more items than you, they have learned to pack far more meaning into each one.",
+      "oneBreath": "The conscious mind holds a handful of things at once, and that never changes for anybody. What expertise changes is how much each of those slots can hold. A master isn’t carrying more items than you. They’ve learned to pack far more into each one.",
       "evidence": [
         {
-          "text": "Hold four seconds of random letters and you catch about seven. Hold four seconds of a sentence and you catch far more, maybe fifty. The exposure was identical and the raw capacity never moved. What changed is that the sentence arrives in meaningful chunks and the letters do not.",
+          "text": "Hold four seconds of random letters and you’ll catch about seven. Hold four seconds of a sentence and you’ll catch far more, maybe fifty letters’ worth. The exposure is identical and the raw capacity never moved. The sentence just arrives pre-packed.",
           "cite": "Chunking and exposure (from the book)"
         },
         {
-          "text": "A man known as SF trained his digit span from the ordinary seven up to seventy-nine by learning to hear strings of numbers as running times he already knew. And his memory for random letters stayed at six the whole time. The general capacity never grew. He built one specific, trained skill.",
+          "text": "A student known as SF trained his digit span from an ordinary seven up to seventy-nine by learning to hear strings of numbers as running times he already knew from athletics. Then they tested him on letters. Six. The capacity never grew at all.",
           "cite": "Ericsson & Chase, the SF study"
         }
       ],
       "stories": [
         {
-          "text": "This is the bridge to IQ. A span test measures how much you can hold before any training goes in. Expertise is defined by not needing that raw span, because the expert has learned to chunk. So the test measures the unlearned state and we have been calling it the ceiling."
+          "text": "This is the bridge to IQ. A span test measures how much you can hold before any training goes in. Expertise is defined by building learned shortcuts around exactly that limit. So the test aims squarely at the one thing expertise exists to get past, and then calls it the core of intelligence."
         }
       ],
       "relations": [
@@ -1616,11 +1616,11 @@
           "blurb": "Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains."
         }
       ],
-      "bookRef": "The book uses the bottleneck and chunking to walk from working memory straight into why IQ measures the wrong thing.",
+      "bookRef": "The book walks from working memory straight into why IQ ends up measuring the wrong thing.",
       "transmissions": [],
       "next": {
         "target": "everyday-genius",
-        "reason": "You have seen how much the machinery packs into a moment. Now see how much of it you do without noticing."
+        "reason": "You’ve seen how much your machinery packs into a moment. Now go see how much of it you do without noticing."
       },
       "contested": "A good memory is a bigger memory. Experts remember more because they can hold more. (The reader will resist the idea that the raw capacity never grows, and that this is what an IQ test measures.)",
       "flow": [
@@ -1632,7 +1632,7 @@
             "You can give back as many letters as you heard"
           ],
           "correct": 1,
-          "answer": "<p>You can give back about seven. That is the size of the part of your mind that holds things in view at once, and it has been about seven for everyone, everywhere, as long as anyone has measured it.</p>"
+          "answer": "<p>About seven.</p><p>That’s the size of the part of your mind that holds things in view at once, and it has been about seven for everybody, everywhere, for as long as anyone has bothered to measure it.</p>"
         },
         {
           "ask": "Now four seconds of a sentence instead. Same exposure time. How many letters’ worth do you get back?",
@@ -1642,17 +1642,17 @@
             "You get back fewer, because sentences are harder"
           ],
           "correct": 1,
-          "answer": "<p>You get back far more. The exposure was identical and the raw capacity never moved. What changed is that the sentence arrives in meaningful chunks, a word or a phrase per slot, and random letters do not. Seven slots, and each one holds more.</p>"
+          "answer": "<p>Far more. Maybe fifty letters’ worth.</p><p>The exposure was identical and the raw capacity did not budge. What changed is that a sentence arrives pre-packed, a word or a phrase to a slot, and random letters arrive one letter to a slot. Seven slots either way. Each one holding a great deal more.</p>"
         },
         {
-          "ask": "A student known as SF practiced hearing strings of digits until he could repeat back seventy-nine of them. He did it by hearing groups of numbers as running times he already knew from athletics. Then they tested him on random letters. What was his letter span?",
+          "ask": "A student known as SF spent months training on strings of digits until he could repeat back seventy-nine of them, which is more than ten times what you or I can do. His trick was hearing groups of numbers as running times he already knew from athletics. Then the researchers tested him on random letters, and his span came back at six. So what had all those months of training actually built?",
           "choices": [
-            "SF's letter span was also huge. His memory had grown",
-            "SF's letter span was still six. His capacity never grew. He had built one specific, trained skill",
-            "SF's letter span was somewhere in between six and seventy-nine"
+            "A bigger memory, which for some reason didn’t show up on the letter test",
+            "One narrow trained skill, a way of packing more into each slot, and only for digits",
+            "Nothing real. The digit result must have been a trick"
           ],
           "correct": 1,
-          "answer": "<p>SF’s letter span was still six. Months of training and his general capacity did not budge. He had built a way of packing more into each slot for one kind of material, digits, and only that kind.</p>",
+          "answer": "<p>One narrow, beautifully specific skill. And nothing else.</p><p>Months of training and the general capacity never moved a millimeter. What SF built was a way of packing more into each slot for one kind of material, and the moment you handed him a different kind of material he was you again.</p>",
           "cite": "Ericsson & Chase, the SF study"
         },
         {
@@ -1663,7 +1663,7 @@
             "The expert has a better brain"
           ],
           "correct": 1,
-          "answer": "<p>The expert has the same slots. A master is not holding more items than you. They have learned to pack far more meaning into each one, and only in the domain they trained. Which is why memory expertise does not carry over to other material.</p>"
+          "answer": "<p>The same seven slots you’ve got.</p><p>A master isn’t holding more items than you. They’ve learned to pack far more meaning into each one, and only inside the domain they trained in, which is exactly why memory expertise refuses to carry over to anything else.</p>"
         },
         {
           "ask": "Last step, and it is the bridge to IQ. Digit span, how many numbers you can hold before any training goes in, is one of the classic IQ subtests. What is that test measuring?",
@@ -1673,7 +1673,7 @@
             "The digit span test is measuring how much you have learned"
           ],
           "correct": 1,
-          "answer": "<p>The digit span test is measuring the untrained state. Every real skill works by building learned shortcuts around that limit. So the test zeroes in on the one thing expertise is designed to get past, and then calls that the core of intelligence. Grant that the limit is real and partly inherited. Granting it costs nothing, because SF never expanded the limit. He built a way around it.</p>"
+          "answer": "<p>The untrained state. The raw number before any expertise goes in.</p><p>Every real skill works by building learned shortcuts around that limit. So a span test aims squarely at the one thing expertise exists to get past, and then calls it the core of intelligence.</p><p>Grant that the limit is real and partly inherited. Granting it costs you nothing, because SF never expanded the limit either. He built a road around it.</p>"
         }
       ]
     },
@@ -1691,18 +1691,18 @@
         "machinery",
         "intelligence"
       ],
-      "oneBreath": "The things you do without thinking, walking, understanding speech, recognizing a face, reading this sentence, are some of the hardest problems any system has ever solved. They only feel like nothing because your brain solved them so completely that the work went invisible.",
+      "oneBreath": "The things you do without thinking, walking across a room, understanding speech in a noisy bar, recognizing a face, reading this sentence, are some of the hardest problems any system has ever solved. They only feel like nothing because your brain solved them so completely.",
       "claimsBlock": {
         "believe": "Real intelligence is rare. Walking and talking are just basic things everybody can do.",
-        "evidence": "The skills we find easiest are the most complex things the brain does. We know because they proved the hardest to build into computers. The ease is not evidence they are simple. It is evidence they are mastered."
+        "evidence": "Easy does not mean simple. The feats we dismiss as basic are the most sophisticated things any mind does, and they run on the same machinery as everything we do call genius."
       },
       "evidence": [
         {
-          "text": "The things people find easiest turned out to be the hardest to program into a computer, and the things people find hard, like chess and arithmetic, turned out to be easy for a machine. That reversal has a lesson in it. Easy does not mean simple. Easy means massively practiced.",
+          "text": "The things people find easiest turned out to be the hardest to program into a computer, and the things people find hardest turned out to be the easy ones. A mechanical device was cranking out valid logic in the 1860s. Walking across a cluttered room took the best minds in computing decades, and some of it still isn’t solved well.",
           "cite": "Moravec's Paradox"
         },
         {
-          "text": "Taking an IQ test requires understanding language, holding instructions, recognizing shapes, and controlling attention, and every one of those is more complex than anything the test then measures. The hard part is the part we treat as a given.",
+          "text": "Taking an IQ test requires understanding language, holding instructions in mind, recognizing shapes and controlling your attention. Every one of those prerequisites is more complex than the puzzles the test then scores you on. The hard part is the part we treat as a given.",
           "cite": "The prerequisites of a cognitive test"
         }
       ],
@@ -1725,23 +1725,16 @@
         }
       ],
       "games": [],
-      "bookRef": "The book leans on everyday genius to show that the equipment for extraordinary things is already standard issue, already running.",
+      "bookRef": "The book leans on everyday genius to show that the equipment for extraordinary things is already standard issue.",
       "transmissions": [],
       "next": {
         "target": "domain-specific-intelligence",
-        "reason": "If everyone is already a genius at the everyday, what is intelligence even measuring? Follow the Intelligence Line."
+        "reason": "If everyone is already a genius at the everyday, what is intelligence even measuring?"
       },
       "contested": "Real intelligence is rare. Walking and talking are just basic things everybody can do. (The reader will resist counting their own effortless skills as feats of intelligence.)",
       "flow": [
         {
-          "ask": "Early computer scientists set out to build machines that could do what people find hard, chess, arithmetic, and logic. What happened?",
-          "choices": [
-            "Chess, arithmetic and logic turned out to be the hard problems for machines",
-            "Chess, arithmetic and logic were easy for machines. Walking, seeing and talking, the things people find easy, turned out to be the hard ones",
-            "Everything was equally hard for machines"
-          ],
-          "correct": 1,
-          "answer": "<p>The result was backwards from what everyone expected. A mechanical machine was cranking out valid logic in the 1860s. Chess fell decades ago. Walking across a cluttered room, understanding speech in a noisy bar, recognizing a friend at a distance: those took the best minds in the field decades, and some are still not solved well.</p>",
+          "chunk": "<p>When computer scientists first set out to build thinking machines, they wanted to start with something easy. So they reasoned that the problems humans find hardest would be hardest to program, and the things humans find easy would be easy. Seems obvious enough.</p><p>It came out exactly backwards. A mechanical device was cranking out valid logic in the 1860s. Chess fell decades ago. Meanwhile walking across a cluttered room, understanding speech in a noisy bar and recognizing a friend at a distance took the best minds in computing decades, and some of it still isn’t solved well.</p><p>And you can see how the mistake got made. Talking is a thinking skill, but everyone can do it, so it mustn’t be special. Only a few people are good at chess, so chess must be the higher thing. We were grading on rarity and calling it complexity.</p>",
           "cite": "Moravec’s paradox"
         },
         {
@@ -1752,7 +1745,7 @@
             "Because walking, seeing and talking are unimportant problems"
           ],
           "correct": 1,
-          "answer": "<p>Because easy means mastered, not simple. The feats that feel like nothing are the ones your brain solved so thoroughly that you cannot feel the machinery anymore. Their ease is not evidence they are simple. It is evidence they are fully mastered.</p>"
+          "answer": "<p>Because easy means mastered, not simple.</p><p>Their ease is not evidence that these problems are small. It’s evidence that they are finished. Your brain solved them so completely that the whole business dropped out of view.</p>"
         },
         {
           "ask": "The gurus say humans cannot multitask. You drive home through traffic, lanes, stopping distances, while holding a conversation and catching sarcasm in it. What is that?",
@@ -1762,7 +1755,7 @@
             "Driving while talking is dangerous"
           ],
           "correct": 1,
-          "answer": "<p>Driving while talking is multitasking of the highest order. It is possible because the driving runs on its own and the listening runs on its own, and both were built by you, from nothing, years ago.</p>"
+          "answer": "<p>Multitasking of the very highest order.</p><p>You’re tracking lanes and stopping distances while decoding speech and catching sarcasm in it, and it works because the driving runs on its own and the listening runs on its own. Both were built by you, from nothing, years ago.</p>"
         },
         {
           "ask": "Here is one you might not have counted. Making a room laugh with an original joke means tracking what the audience knows, what they think you know, what they expect next, and how to break it, several layers at once. Has there ever been a genuinely funny five-year-old with original material?",
@@ -1772,7 +1765,7 @@
             "Funny five-year-olds exist only in families of comedians"
           ],
           "correct": 1,
-          "answer": "<p>There has never been a genuinely funny five-year-old with original material. Humor may be the single most demanding thing a human mind does, and most adults do it at dinner without noticing. Prodigies exist in the narrow skills. Not in this one.</p>"
+          "answer": "<p>There has never been one.</p><p>Humor may be the single most demanding thing a human mind does, and most adults pull it off at dinner without noticing. There are five-year-old chess masters and ten-year-olds doing graduate math. There are no five-year-old stand-ups, because there isn’t enough childhood to build the apparatus.</p>"
         },
         {
           "ask": "So the belief: real intelligence is rare, and walking and talking are just basic. Taking an IQ test requires understanding language, holding instructions, recognizing shapes, and controlling attention. Which is more complex, those prerequisites or the puzzles the test then scores?",
@@ -1782,7 +1775,7 @@
             "The prerequisites and the puzzles are about equally complex"
           ],
           "correct": 1,
-          "answer": "<p>The prerequisites are more complex. The things you do without thinking are some of the hardest problems any system has ever solved. They only feel like nothing because your brain solved them so completely. And the machinery that did it is the same machinery behind every feat we do call genius.</p>"
+          "answer": "<p>The prerequisites. Every one of them.</p><p>The things you do without thinking are among the hardest problems any system has ever solved, and they only feel like nothing because your brain solved them completely. The machinery that pulled that off is the same machinery sitting behind every feat we do call genius.</p>"
         }
       ]
     },
@@ -1799,20 +1792,20 @@
         "machinery",
         "intelligence"
       ],
-      "oneBreath": "The breakthroughs we celebrate come from the same engine that built your walking and your reading. The difference is the path. Someone spent years pointed at an unusual set of problems, which built an unusual set of skills, which reached an answer the rest of us could not.",
+      "oneBreath": "The breakthroughs we celebrate came out of the same engine that built your walking and your reading. What differs is the path. Somebody spent years pointed at an unusual set of problems, built an unusual set of skills, and reached an answer the rest of us couldn’t.",
       "claimsBlock": {
         "believe": "Genius requires a special brain. Most people simply do not have what it takes.",
-        "evidence": "Genius is the ordinary machinery on an extraordinary training path. Uncommon interests build uncommon scaffolding, which produces solutions others cannot reach. The rarity is in the path, not the brain."
+        "evidence": "Uncommon interests build uncommon skills, and uncommon skills reach uncommon answers. The rarity is in the path, not the hardware."
       },
       "evidence": [
         {
-          "text": "Ten thousand hours pointed at chess builds a mind that sees the board in a way no untrained mind can, not because the hardware is special but because the practice was uncommon. The same is true of physics, music, and art. Unusual scaffolding produces unusual reach.",
+          "text": "Ten thousand hours pointed at chess builds a mind that sees a board in a way no untrained mind can. The hardware was standard issue. The ten thousand hours were not. Point those hours somewhere nobody else is pointing them and you get answers nobody else can reach.",
           "cite": "Expertise research (Ericsson et al., 1993)"
         }
       ],
       "stories": [
         {
-          "text": "It stays rare for a sad reason. The Special Brain Story stops most people before they start, because if you believe genius is something you are born with, you never put in the training that would build it. The belief protects itself: believe it, and you never run the test that would prove it wrong."
+          "text": "It stays rare for a sad reason. The Special Brain Story stops most people before they start. If you believe genius is something you’re issued at birth, you never put in the training that would have built it, and the belief never gets tested."
         }
       ],
       "relations": [
@@ -1833,11 +1826,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book argues that what we call genius is a training path, not a birthright, and this station is where that lands.",
+      "bookRef": "The book argues that what we call genius is a training path rather than a birthright, and this is where that argument lands.",
       "transmissions": [],
       "next": {
         "target": "prediction-engine",
-        "reason": "There is one more capability the engine has that looks the most like magic. Meet the prediction engine."
+        "reason": "There’s one more thing the engine does that looks the most like magic. Go meet the prediction engine."
       },
       "contested": "Genius requires a special brain. Most people simply do not have what it takes. (The reader will resist the idea that the celebrated breakthroughs came from the same engine that built their walking, on an unusual path.)",
       "flow": [
@@ -1849,7 +1842,7 @@
             "Those stretches produced nothing unusual"
           ],
           "correct": 1,
-          "answer": "<p>Those stretches produced the most inventive periods of both lives, and both happened outside the institution. Take away the institutions that judge results, give a curious mind self-directed time on an unusual set of problems, and this is what can come out.</p>"
+          "answer": "<p>The most inventive stretches of both their lives.</p><p>And the pattern is so familiar it’s become a cliché. Newton left college at twenty-two for the family farm to chase his own interests, and came back having invented calculus. Darwin dropped out of medical school and spent five years on a ship collecting beetles. Emily Dickinson barely left her house for decades, writing in secret, and invented a poetic form nobody had seen. Miles Davis dropped out of Juilliard to play bebop in Harlem clubs.</p><p>Take away the institution that grades the output, give a curious mind self-directed time on an odd set of problems, and this is what can come out.</p>"
         },
         {
           "ask": "Darwin spent about eight years dissecting barnacles between the voyage and the great book, with no career reason to. Then his theory arrived. Was it reasoned out from first principles?",
@@ -1859,7 +1852,7 @@
             "The theory came to Darwin in a flash"
           ],
           "correct": 1,
-          "answer": "<p>Darwin assembled the theory. The theory that reorganized biology was a recombination of parts already sitting in other people’s fields, put together by a mind that had spent years building unusual skills. What looks like raw reasoning is almost always this: pieces you have automated, combined in an arrangement nobody has used, often by importing one from far away.</p>"
+          "answer": "<p>He assembled it.</p><p>The theory that reorganized biology was a recombination of parts already lying around in other people’s fields. Population pressure came from economics. Selection came from animal breeders. Darwin supplied eight years of barnacles and the eye to see how they fit.</p><p>What looks like raw reasoning is almost always this. Pieces you’ve automated, arranged in a way nobody has tried, often by hauling one in from very far away.</p>"
         },
         {
           "ask": "So what makes a breakthrough reachable for one person and not for the rest of us?",
@@ -1869,7 +1862,7 @@
             "Being in the right place makes the breakthrough reachable"
           ],
           "correct": 1,
-          "answer": "<p>The path makes the breakthrough reachable. Uncommon interests build uncommon skills, and uncommon skills reach uncommon answers. The machinery doing the building is the same machinery that built your reading.</p>"
+          "answer": "<p>The path they walked.</p><p>Uncommon interests build uncommon skills, and uncommon skills reach answers the rest of us can’t get to. The machinery doing the building is the same machinery that built your reading.</p>"
         },
         {
           "ask": "What about prodigies, the chess-obsessed five-year-old? Surely that is the special brain.",
@@ -1879,7 +1872,7 @@
             "Prodigies are a different species"
           ],
           "correct": 1,
-          "answer": "<p>What is remarkable about the prodigy is the obsession. Prodigies started early on the same path, with the same human limits as everyone else, and the ones who did later do great work did it after the years of building, like everyone who does great work.</p>"
+          "answer": "<p>Quite the opposite.</p><p>What stands out about a child prodigy is the interests, not the equipment. A five-year-old obsessed with chess instead of Pokémon is unusual. A ten-year-old fascinated by calculus instead of Minecraft is rare. Those obsessions are natural curiosity pointed somewhere odd, and natural curiosity is what feeds the Genius.</p><p>Prodigies also almost never go on to produce real breakthroughs, because breakthroughs need years of groundwork that a childhood is simply too short to lay.</p>"
         },
         {
           "ask": "So the belief: genius requires a special brain, and most people do not have what it takes. Why does uncommon genius stay uncommon, then?",
@@ -1889,7 +1882,7 @@
             "Uncommon genius stays uncommon because most people are lazy"
           ],
           "correct": 1,
-          "answer": "<p>Uncommon genius stays uncommon because of the belief. The rarity is in the path, and the path is rarely walked because a story told people it was not for them. Believe the story and you never run the test that would prove it wrong.</p>"
+          "answer": "<p>Because the belief gets there first.</p><p>The rarity is in the path, and the path stays unwalked because a story told people it wasn’t meant for them. Believe the story and you never run the one experiment that would prove it wrong.</p>"
         }
       ]
     },
