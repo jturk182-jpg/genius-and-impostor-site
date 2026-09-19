@@ -88,14 +88,14 @@
           "answer": "<p>And you can prove it. Spell a word out loud to Dennis and he knows it instantly, because now the word is arriving through his ears instead of his eyes. The reading machinery is fine. The road to it is shut.</p><p>Dennis is that blank at the podium, made permanent.</p><p>So what actually decides what you can do in a given moment? Two things. Everything you’ve built, and how much of it your brain will let you reach right now. Shut that second part down far enough and your performance goes with it, while the skill sits there untouched the whole time.</p>"
         },
         {
-          "ask": "Researchers taught people a number puzzle with a hidden shortcut that nobody was told about. Some then slept, some stayed awake, and everybody had the same training. Who found the shortcut?",
+          "ask": "Researchers taught people a number puzzle with a shortcut hidden in it that nobody was told about. Then half of them slept and half stayed awake. More than twice as many of the sleepers came back and spotted the shortcut. Both groups had the same training, and nobody was taught anything while they were asleep. So what did sleep change?",
           "choices": [
-            "About the same number in each group found the shortcut, since the training was the same",
-            "Far more of the people who slept found the shortcut",
-            "Far more of the people who stayed awake found the shortcut, because they kept working at it"
+            "Sleep added something the awake group never got. The sleepers knew more when they came back",
+            "Sleep didn’t change what anybody knew. It changed what they could get to",
+            "Sleep left them more alert, so they simply tried harder at the puzzle"
           ],
           "correct": 1,
-          "answer": "<p>More than twice as many. Same training, same puzzle, same skill sitting in both groups. The only difference was that one group had slept.</p><p>And this one runs in the happy direction. Nobody took anything away from the sleepers while they were out. A different brain state handed them something that had been out of reach a few hours earlier.</p>",
+          "answer": "<p>Nothing was added. The shortcut was sitting inside what both groups already knew, and one group could get to it.</p><p>Up to here, every example has been access going down. The podium takes your toast away. The stroke takes Dennis’s reading away. This one runs the other direction. A change of state handed these people something they couldn’t reach a few hours earlier.</p>",
           "cite": "Wagner et al., 2004 (sleep and insight)"
         },
         {
