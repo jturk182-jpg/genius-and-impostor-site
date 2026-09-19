@@ -863,7 +863,7 @@
       "contested": "The voice in my head that tells me what I am good at is honest self-knowledge. (The reader identifies with the narrator and will resist the idea that it is a specific brain system that invents reasons and manages reputation rather than reporting truth.)",
       "flow": [
         {
-          "chunk": "<p>Forty shoppers were asked to pick the best of four pairs of stockings laid out in a row. What nobody told them is that the four pairs were identical.</p><p>People overwhelmingly picked the pair on the right. Then the researchers asked why, and every shopper had an answer ready. The knit. The sheerness. The feel of the weave. Not one person mentioned where the pair was sitting on the table.</p><p>And when the researchers suggested that position in the row might have had something to do with it, the shoppers looked at them as though they were out of their minds.</p>",
+          "chunk": "<p>Forty shoppers were asked to pick the best of four pairs of stockings laid out in a row. What nobody told them is that the four pairs were identical.</p><p>Forty percent of them picked the pair on the far right and only twelve percent picked the one on the far left, with nearly three quarters choosing from the right-hand half of the table. Then the researchers asked why, and every shopper had an answer ready. The knit. The sheerness. The feel of the weave. Not one person mentioned where the pair was sitting on the table.</p><p>And when the researchers suggested that position in the row might have had something to do with it, the shoppers looked at them as though they were out of their minds.</p>",
           "cite": "Nisbett & Wilson, 1977"
         },
         {
@@ -2309,16 +2309,16 @@
       "lines": [
         "impostor"
       ],
-      "oneBreath": "Memory is not a recording you play back. It is a story your brain rebuilds each time, filling gaps with what should have been there. This is usually good enough, and it means you can remember things that never happened with complete confidence, including the story you tell about who you are.",
+      "oneBreath": "Memory isn’t a recording you play back. It’s a story your brain rebuilds every time you ask for it, filling the gaps with whatever should have been there. Which is usually good enough, and occasionally catastrophic, and never quite what you think it is.",
       "evidence": [
         {
-          "text": "Give people a themed list of words, say bed, rest, tired, dream, and later many will swear that sleep was on the list. It never was. Their brain reconstructed the theme so smoothly that it added the missing centerpiece and stamped it as a real memory, often with more confidence than the words that were actually there.",
+          "text": "Give people a themed list of words, say bed, rest, tired and dream, and a great many of them will later swear that sleep was on the list. Often with more confidence than they have about the words that actually were. The brain rebuilt the theme so smoothly that it supplied the missing centerpiece and stamped it as genuine.",
           "cite": "The DRM false-memory paradigm"
         }
       ],
       "stories": [
         {
-          "text": "The line I have always been bad at math runs on this exact machinery. It feels like a fact recalled from a lifetime of evidence. It is usually a story reconstructed from a few old moments, smoothed into a certainty that then goes looking for confirmation."
+          "text": "The line I have always been bad at math runs on this exact machinery. It feels like a fact recalled from a lifetime of evidence. It is a story, rebuilt from a handful of old moments and smoothed into a certainty that then goes looking for confirmation and finds it everywhere."
         }
       ],
       "relations": [
@@ -2334,11 +2334,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book uses the unreliable narrator to show that confidence is not evidence, and that the archive you trust is being edited.",
+      "bookRef": "The book uses the unreliable narrator to show that confidence is not evidence, and that the archive you are arguing from has been edited.",
       "transmissions": [],
       "next": {
         "target": "special-brain-story",
-        "reason": "See what the narrator builds when it edits a whole life. This is its masterpiece."
+        "reason": "Now go see what the narrator builds when it edits a whole life. This is its masterpiece."
       },
       "contested": "I remember what happened to me. Vivid memories are reliable, and the story of who I am is built from facts. (The reader will resist the idea that confident memories can be reconstructions, including the ones about themselves.)",
       "flow": [
@@ -2350,7 +2350,7 @@
             "I would not be sure either way whether sleep was on the list"
           ],
           "correct": 1,
-          "answer": "<p>Sleep was never on the list. In this experiment a large share of people confidently remember sleep, often with more certainty than the words that actually were on the list. The brain rebuilt the theme so smoothly that it added the missing centerpiece and stamped it as real.</p>",
+          "answer": "<p>It was never on the list.</p><p>And a great many people will swear that it was, often with more confidence than they have about the words that genuinely were there. Your brain rebuilt the theme so smoothly that it supplied the obvious missing centerpiece and stamped it genuine.</p>",
           "cite": "The DRM false-memory paradigm"
         },
         {
@@ -2361,7 +2361,7 @@
             "A memory is a file that fades"
           ],
           "correct": 1,
-          "answer": "<p>A memory is a reconstruction. Usually good enough, which is why the system persists. And the filling-in is not a bug. Memory did not evolve to archive your past. It evolved to predict your future, and a prediction machine keeps the gist and rebuilds the details on demand.</p>"
+          "answer": "<p>A reconstruction. Rebuilt fresh each time you ask for it.</p><p>Usually good enough, which is why the system survives. And the filling-in isn’t a bug, either. Memory didn’t evolve to archive your past. It evolved to predict your future, and a prediction machine keeps the gist and rebuilds the details on demand.</p>"
         },
         {
           "ask": "People are shown two faces and asked which is more attractive. By sleight of hand the experimenter returns the face they rejected and asks why they chose it. What happens?",
@@ -2371,7 +2371,7 @@
             "The people refuse to answer"
           ],
           "correct": 1,
-          "answer": "<p>Most people do not notice the switch, and they give reasons anyway. This is the narrator from the Impostor station again, now working on memory: it will explain a choice you did not make with the same confidence it explains the ones you did.</p>",
+          "answer": "<p>Most of them never notice, and they explain the choice anyway.</p><p>Confident, specific, detailed reasons for picking a face they had just rejected. This is the narrator from the Impostor station, now working on memory, and it will explain a choice you never made with exactly the same conviction it brings to the ones you did.</p>",
           "cite": "Choice blindness (Johansson & Hall, 2005)"
         },
         {
@@ -2382,7 +2382,7 @@
             "The line is an exaggeration"
           ],
           "correct": 1,
-          "answer": "<p>The line is a reconstruction, running on the exact machinery that put sleep on the list. And this one matters more than most, because the Special Brain Story is built out of rewritten memories of past failures. The narrator supplies the rewritten memories, and the story is built from them.</p>"
+          "answer": "<p>A reconstruction, running on the same machinery that put sleep on the list.</p><p>And this one costs more than most, because the Special Brain Story is built out of rewritten memories of old failures. The narrator supplies the rewrites. The story gets built out of them. Then the story picks what you attempt next, and the whole thing closes into a loop.</p>"
         },
         {
           "ask": "So the belief: I remember what happened to me, and the story of who I am is built from facts. What is the honest version?",
@@ -2392,7 +2392,7 @@
             "Only childhood memories are unreliable"
           ],
           "correct": 1,
-          "answer": "<p>Memory is rebuilt, all of it, including the story of who you are. Which is unsettling for a moment and then good news, because a story that was reconstructed can be reconstructed again.</p>"
+          "answer": "<p>Rebuilt. All of it, including the story of who you are.</p><p>Which is unsettling for about ten seconds and then turns out to be very good news. A story that was reconstructed once can be reconstructed again.</p>"
         }
       ]
     },
@@ -2409,28 +2409,28 @@
       "lines": [
         "bias"
       ],
-      "oneBreath": "Reasoning feels like the most general power the mind has, a logic engine you can point at anything. The brain has no such engine. What we call reasoning is trained pattern recognition, built like any other skill, which is why the exact same logic problem is easy in a familiar setting and nearly impossible in an abstract one. And because it is built, it can be taught.",
+      "oneBreath": "Reasoning feels like the most general power the mind has, a logic engine you can point at anything at all. Your brain has no such engine. What we call reasoning is pattern recognition trained in specific settings, which is why the same problem is easy in one wording and impossible in another.",
       "claimsBlock": {
         "believe": "Reasoning is a general faculty. Either you are a logical person or you are not.",
-        "evidence": "Reasoning is trained pattern recognition, not a general faculty. The proof is that the same logical problem is easy in one costume and hard in another. And because it is trained, a few minutes of the right practice measurably improves it."
+        "evidence": "Reasoning is a trained skill rather than a general faculty. Change the wording and performance collapses or soars, which a genuine logic engine could not do."
       },
       "evidence": [
         {
-          "text": "You have probably heard that the mind runs in two gears: a fast, automatic one, and a slow, careful reasoner that does the real thinking. That second gear gets treated as a general logic engine everyone is born with, the seat of what makes us smart. There is no such engine. When a person reasons cleanly through a formal argument, they are running a skill they were taught and practised, built the same way as chess or arithmetic. Careful reasoning is not a birthright. It is one more thing a mind can be trained to do.",
+          "text": "You have probably heard that the mind runs in two gears, a fast automatic one and a slow careful reasoner that does the real thinking. Test the second gear on an abstract logic puzzle and fewer than one person in ten gets it right, however long you give them.",
           "cite": "Reasoning as a built skill, not an innate faculty"
         },
         {
-          "text": "There is a famous logic puzzle that almost everyone fails when it is about letters and numbers on cards. Dress the identical puzzle up as a question about people breaking a rule, checking who is old enough to drink, and suddenly almost everyone gets it right. Same logic, different costume. The reasoning was never general.",
+          "text": "There’s a famous logic puzzle that almost everyone fails when it’s about letters and numbers on cards. Dress the identical puzzle up as a bartender checking who is old enough to drink and almost everyone gets it. Same logic, same structure, different wording. A general logic engine could not behave that way.",
           "cite": "The Wason selection task, abstract versus social versions"
         },
         {
-          "text": "The same problem is easy as a count of people and hard as a percentage, easy as a story and hard as a formula. If reasoning were one general faculty, the costume would not matter. It matters enormously, because what is really doing the work is pattern recognition trained in specific settings.",
+          "text": "The same problem is easy as a count of people and hard as a percentage, easy as a story and hard as a formula. Ask doctors about a medical test in percentages and most get it badly wrong. Ask them the identical question as a count of people out of a thousand and most get it right.",
           "cite": "Framing and frequency effects in reasoning"
         }
       ],
       "stories": [
         {
-          "text": "The hopeful part is that this cuts both ways. Because reasoning is a trained skill and not a fixed trait, you can teach it in minutes. Show someone the two moves that turn the hard costume into the easy one and their score on the next round climbs on the spot. Nobody's hardware changed. They just learned the pattern."
+          "text": "The hopeful part is that this cuts both ways. Because reasoning is a trained skill rather than a fixed trait, you can teach it. Show someone how to turn the hard wording into the easy one and their score climbs on the very next round, in minutes, with no new brain required."
         }
       ],
       "relations": [
@@ -2451,34 +2451,27 @@
         }
       ],
       "games": [],
-      "bookRef": "The book uses trained reasoning to take on the last stronghold of the general-intelligence story, the idea that logic itself is a raw gift.",
+      "bookRef": "The book takes on the last stronghold of the general-intelligence story here, which is the idea that logic is a faculty you either have or you don’t.",
       "transmissions": [],
       "next": {
         "target": "special-brain-story",
-        "reason": "You have watched every piece of the general-intelligence story come apart. Now face the story itself."
+        "reason": "You’ve watched every piece of the general-intelligence story come apart. Now go face the story itself."
       },
       "contested": "Reasoning is a general faculty. Either you are a logical person or you are not. (The reader will resist the idea that the one ability that most feels general is trained pattern recognition like everything else.)",
       "flow": [
         {
-          "ask": "You have probably heard that the mind runs in two gears: a fast, sloppy one, and a slow, careful reasoner that does the real thinking. Here is a test of the second gear. A famous logic puzzle about letters and numbers on four cards, checking a rule. What fraction of people get it right?",
-          "choices": [
-            "Most people get the card puzzle right",
-            "Fewer than one in ten people get the card puzzle right",
-            "About half of people get the card puzzle right"
-          ],
-          "correct": 1,
-          "answer": "<p>Fewer than one in ten get the card puzzle right. And these are not careless people. Given time, given care, the abstract version defeats almost everyone.</p>",
+          "chunk": "<p>You have probably heard that the mind runs in two gears. A fast, sloppy one, and a slow, careful reasoner that does the real thinking.</p><p>So let’s test the second gear. There’s a famous logic puzzle involving four cards with letters and numbers on them, where your job is to work out which cards you must turn over to check whether a rule holds. It is not a trick. The logic is simple and there is plenty of time.</p><p>Fewer than one person in ten gets it right. And these are not careless people. Given all the time and care in the world, the abstract version defeats very nearly everyone who tries it.</p>",
           "cite": "The Wason selection task"
         },
         {
-          "ask": "Now dress the identical puzzle up as a bartender checking who is old enough to drink. Same logic, same structure. What fraction get it right now?",
+          "ask": "Now take that identical puzzle and dress it up as a bartender checking who is old enough to drink. Which drinkers do you need to card? The logic underneath is exactly the same, the structure is exactly the same, and the cards are doing exactly the same job. This time almost everyone gets it right. So what does that swing tell you about reasoning?",
           "choices": [
-            "Still about one in ten get the bartender version right",
-            "Almost everyone gets the bartender version right",
-            "About half get the bartender version right"
+            "People try harder on the bar problem because it feels more useful to them",
+            "Reasoning isn’t general. It rides on patterns trained in familiar settings, so the wording decides whether you have the pattern or not",
+            "The bar version is secretly simpler logic than the card version"
           ],
           "correct": 1,
-          "answer": "<p>Almost everyone gets the bartender version right. Same logic, different wording. If reasoning were a general ability you could point at any problem, the wording could not matter. It matters enormously.</p>"
+          "answer": "<p>Same logic. Different wording. Enormous difference.</p><p>And that is the whole case, right there. If reasoning were a general ability you could aim at any problem, the wording could not possibly matter this much. It matters enormously, because what you’re actually running is a pattern you trained in a familiar setting, and the bar is familiar while the cards are not.</p>"
         },
         {
           "ask": "Ask doctors a question about a medical test in percentages and most get it badly wrong. Ask the identical question as a count of people, out of a thousand, and most get it right. What is doing the work when they get it right?",
@@ -2488,7 +2481,7 @@
             "Luck is doing the work"
           ],
           "correct": 1,
-          "answer": "<p>Trained pattern recognition is doing the work. The reasoning was never general. It rides on patterns built in specific settings, which is why the same problem is easy as a story and hard as a formula.</p>",
+          "answer": "<p>Trained pattern recognition, not better logic.</p><p>Counting actual people is something the mind has had practice with for a very long time. Percentages are a few hundred years old and nobody grew up doing them. So the reasoning was never general. It rides on patterns built in specific settings, which is exactly why the same problem is easy as a story and hard as a formula.</p>",
           "cite": "Gigerenzer, natural frequencies"
         },
         {
@@ -2499,7 +2492,7 @@
             "Chess is the problem machines still find hardest"
           ],
           "correct": 1,
-          "answer": "<p>The messy, automatic things are the hardest for machines. We built our schools and our tests around prizing the one kind of thinking a Victorian machine could already do, and treated the genuinely hard human abilities as the basics.</p>",
+          "answer": "<p>The messy, automatic things. The ones you do without noticing.</p><p>Formal logic, the thing we treat as the very summit of human intelligence, was running on a mechanical device in the 1860s. Reading a room is still hard for machines today.</p><p>We built our schools and our tests around prizing the one kind of thinking a Victorian machine could already do, and filed the genuinely difficult human abilities under basics.</p>",
           "cite": "Jevons’ Logical Piano"
         },
         {
@@ -2510,7 +2503,7 @@
             "The slow gear is checking the fast gear's work"
           ],
           "correct": 1,
-          "answer": "<p>The slow gear is building. That explains what a reasoning engine cannot: why the effort vanishes as you get good, why formal logic has to be laboriously taught rather than switched on, and why the same problem is easy in one wording and impossible in another.</p>"
+          "answer": "<p>Building.</p><p>That slow gear engages when a problem lands past the edge of what you’ve already built, and the effort you feel is what constructing a new pattern feels like from the inside.</p><p>Which explains three things a logic engine never could. Why the effort vanishes as you get good. Why formal logic has to be laboriously taught instead of simply switched on. And why the same problem is easy in one wording and impossible in another.</p>"
         },
         {
           "ask": "So the belief: reasoning is a general faculty, and either you are a logical person or you are not. What follows if reasoning is a trained skill instead?",
@@ -2520,7 +2513,7 @@
             "Even if reasoning is a trained skill, some people still cannot learn it"
           ],
           "correct": 1,
-          "answer": "<p>If reasoning is a trained skill, it can be taught, in minutes. Nobody gets a different brain in those minutes. They learn the pattern, the way they learned every other pattern they own. Which is the hopeful half of this station, and the reason it sits on the map at all.</p>"
+          "answer": "<p>It can be taught. In minutes.</p><p>Show someone how to turn the hard wording into the easy one and their score climbs on the very next round. Nobody got a different brain in those minutes. They learned a pattern, the same way they learned every other pattern they own.</p><p>That’s the hopeful half of this station, and the reason it’s on the map at all.</p>"
         }
       ]
     }
