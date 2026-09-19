@@ -1899,24 +1899,24 @@
       "lines": [
         "intelligence"
       ],
-      "oneBreath": "Intelligence is not one general thing you have more or less of. It is the ability to solve particular problems in particular places, built entirely by training in those places. A bat beats you at echolocation and you beat the bat at language, and neither of you is smarter in general, because there is no such thing as being smart in general.",
+      "oneBreath": "There is no such thing as being smart in general. Intelligence is the ability to solve particular problems in particular places, and it gets built by training in those places. Which is why it stubbornly refuses to travel.",
       "claimsBlock": {
         "believe": "Smart is smart. A genius in one field is generally a sharp person across the board.",
-        "evidence": "Intelligence is domain-specific and does not transfer. Being brilliant in one area buys you almost nothing in another, which is why we are perpetually surprised when brilliant people flounder outside their field."
+        "evidence": "Intelligence is contextual. It only makes sense in relation to specific problems and specific goals, and training in one domain barely helps in another."
       },
       "evidence": [
         {
-          "text": "Training in one domain barely helps in another. Chess training does not raise your math. Brain-training games make you better at the games and almost nothing else. If intelligence were one general resource, training any hard skill would lift everything. It does not, and that is the whole case.",
+          "text": "Training in one domain barely helps in another. Chess training does not raise your math scores. Brain-training games make you better at brain-training games and very little else. If intelligence were one general resource, that is not what we would find.",
           "cite": "Transfer failure (Sala & Gobet, 2017)"
         },
         {
-          "text": "We keep getting surprised when a brilliant physicist is hopeless outside physics, or a chess champion cannot manage daily life. The surprise is the giveaway. Under a general-intelligence story these are baffling flukes. Under domain-specificity they are exactly what you would expect.",
+          "text": "We keep being surprised when a brilliant physicist is hopeless outside physics, or a chess champion can’t manage his own life, or Newton loses a fortune in a market bubble. The surprise is the giveaway. Those cases are baffling under one picture of intelligence and entirely expected under the other.",
           "cite": "The recurring surprise; Fischer, Newton, and others"
         }
       ],
       "stories": [
         {
-          "text": "Put a world-class basketball player with no tennis experience against a well-trained fourth-grader and the child wins easily. Every physical advantage is real and none of it matters, because tennis is a trained skill and the athlete has not trained it. Hardware does not beat software."
+          "text": "Put a world-class basketball player with no tennis experience against a well-trained fourth-grader, and the child wins. Every physical advantage the athlete has is real, and none of it matters, because tennis is a trained skill and the athlete hasn’t trained it."
         }
       ],
       "relations": [
@@ -1937,11 +1937,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book calls this the bat argument, and uses it to show why reducing intelligence to a single score was a category mistake.",
+      "bookRef": "The book builds its working definition of intelligence here, and this is the station where it stops being a single number.",
       "transmissions": [],
       "next": {
         "target": "uncommon-genius",
-        "reason": "If intelligence is a trained path, then so is genius. Go back to where the path pays off."
+        "reason": "So what is the engine doing, moment to moment, that makes any of this work?"
       },
       "contested": "Smart is smart. A genius in one field is a sharp person across the board. (The reader holds a general-intelligence picture and will resist the idea that there is no such thing as being smart in general.)",
       "flow": [
@@ -1953,7 +1953,7 @@
             "The bat is more intelligent"
           ],
           "correct": 1,
-          "answer": "<p>The answer depends entirely on the problem. Asking who is smarter in general is like asking whether a submarine beats a helicopter at transportation. And the pattern holds across animals: a rat out-learns you at the statistics of foraging, a scrub jay remembers thousands of hiding places, a chimp beats adults at one memory task. If we had more of some general intelligence, our advantage would show up everywhere. It shows up in patches, and the patches match what each species needs to do to survive.</p>"
+          "answer": "<p>The question doesn’t really make sense, and it certainly doesn’t to me.</p><p>Are we better than bats at sharing thoughts through spoken language? Undoubtedly. At navigating a dark cave by sonar? I’m afraid that one goes to the bats, while we’d be concussed inside ten seconds.</p><p>So we have to concede that humans aren’t at the tippy top of the intelligence heap. But only because there is no heap. Asking whether one species is more intelligent than another is like asking whether a submarine is better at transportation than a helicopter.</p>"
         },
         {
           "ask": "Put a world-class basketball player with no tennis experience against a well-trained fourth-grader at tennis. Who wins?",
@@ -1963,7 +1963,7 @@
             "The athlete and the child are a close match"
           ],
           "correct": 1,
-          "answer": "<p>The child wins. A physical advantage does not beat a trained skill. And the same thing happens with minds: a chess champion cannot manage his own life, a brilliant physicist is hopeless outside physics, Newton lost a fortune in a market bubble. We are surprised every time.</p>"
+          "answer": "<p>The child, and not narrowly.</p><p>Every physical advantage the athlete has is completely real, and none of it matters, because tennis is a trained skill and the athlete hasn’t trained it.</p><p>The same thing happens with minds, and we act astonished every time. A chess champion can’t run his own life. A brilliant physicist is helpless outside physics. Newton lost a fortune in a market bubble.</p>"
         },
         {
           "ask": "That surprise is the giveaway. Under which picture of intelligence are those cases baffling flukes, and under which are they exactly what you would expect?",
@@ -1973,17 +1973,17 @@
             "The cases are expected under both pictures"
           ],
           "correct": 1,
-          "answer": "<p>The cases are baffling under the general picture and expected under the trained-skills picture. The fact that we keep being surprised means we are carrying the wrong picture.</p>"
+          "answer": "<p>Baffling under one picture. Completely expected under the other.</p><p>If intelligence is one general thing you have more or less of, the hopeless physicist makes no sense at all. If it’s a set of separately trained skills, he’s exactly what you’d predict. And the fact that we keep getting surprised tells you which picture we’re all walking around with.</p>"
         },
         {
-          "ask": "Now the cleanest test. If intelligence were one general resource, training any hard skill should lift everything else a little. What does the research on transfer actually find?",
+          "ask": "Here’s the cleanest test anyone has run. If intelligence were one general resource, then training any hard skill should lift everything else at least a little. Researchers have looked hard for that lift, and it barely exists. Chess training doesn’t raise your math. Brain-training games make you better at brain-training games. So what does the near-total absence of transfer tell you?",
           "choices": [
-            "The research finds a modest lift across the board from training any hard skill",
-            "The research finds almost no lift. Chess training does not raise your math, and brain-training games make you better at the games and almost nothing else",
-            "The research finds large lifts across the board"
+            "That the studies weren’t sensitive enough to detect a real but small general effect",
+            "That there is no general resource being trained. There are only specific skills, built in specific places",
+            "That transfer needs more training time than anyone has given it"
           ],
           "correct": 1,
-          "answer": "<p>The research finds almost no lift. Training in one domain barely helps in another, and that is the whole case in one finding. Intelligence is the ability to solve particular problems in particular places, built by training in those places.</p>",
+          "answer": "<p>There’s nothing general there to transfer.</p><p>That single finding carries most of the argument. Intelligence is the ability to solve particular problems in particular places, built by training in those places, and it doesn’t travel because there is no general thing to do the travelling.</p>",
           "cite": "Transfer failure (Sala & Gobet, 2017)"
         },
         {
@@ -1994,7 +1994,7 @@
             "Intelligence is mostly general with some specialties"
           ],
           "correct": 1,
-          "answer": "<p>Intelligence is domain-specific and built. Which also dissolves the idea of a generally superior brain, because there is no general thing for it to be superior at. There is what you have built, and where.</p>"
+          "answer": "<p>Domain-specific, and built.</p><p>Which also disposes of the generally superior brain, because there’s no general thing for such a brain to be superior at. There is only what you have built, and where you built it.</p>"
         }
       ]
     },
@@ -2011,14 +2011,14 @@
       "lines": [
         "intelligence"
       ],
-      "oneBreath": "Your brain is not sitting back and receiving the world. It is constantly guessing what comes next and checking the guess against what arrives. That constant prediction is why reading feels smooth, why you finish people's sentences, and why a wrong note makes you wince before you can think.",
+      "oneBreath": "Your brain isn’t sitting there receiving the world and then thinking about it. It’s running ahead of the world, guessing what comes next and checking the guess against what arrives. Understanding something mostly means predicting it correctly.",
       "evidence": [
         {
-          "text": "Give someone a sentence they have never seen and they can guess the next word fast and often right. That only works because the brain is running ahead of the words the whole time, generating what is likely and being ready for it. Comprehension is mostly successful prediction.",
+          "text": "Give someone a sentence they’ve never seen and they can guess the next word fast and often get it right. That only works one way. The brain has to be running ahead of the words the whole time, generating what’s likely and standing ready for it.",
           "cite": "Next-word prediction in reading"
         },
         {
-          "text": "A language model built by Anthropic learned everything it can do from training alone, by predicting the next piece of text over and over until capability fell out of the practice. That makes it an odd kind of proof of the book's whole thesis, capability built from training, made out of silicon.",
+          "text": "A language model built by Anthropic learned everything it can do from training alone, by predicting the next piece of text over and over until capability fell out of the practice. It’s an odd sort of proof of this whole map. Capability built from training, in a computer, working from a rough copy of this one part of you.",
           "cite": "Large language models as trained prediction"
         }
       ],
@@ -2036,11 +2036,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book uses prediction to explain fluency, and to make the surprising point that a trained machine is the thesis wearing a different body.",
+      "bookRef": "Prediction is how the book explains comprehension, expertise and the jolt you feel when something goes wrong.",
       "transmissions": [],
       "next": {
         "target": "capability-accessibility-model",
-        "reason": "You have toured the machinery. Now see the equation that governs when any of it actually shows up."
+        "reason": "Prediction runs on routes between parts of your brain. Go see what decides which routes are open."
       },
       "contested": "My brain receives the world and then thinks about it. (The reader will resist the idea that they are constantly guessing ahead, and that this guessing is what understanding is.)",
       "flow": [
@@ -2052,7 +2052,7 @@
             "You can guess the next word only for common phrases"
           ],
           "correct": 1,
-          "answer": "<p>Yes, you can guess it, and that only works one way: the brain is running ahead, generating what is likely and being ready for it, all the time. Comprehension is mostly successful prediction. That is why reading feels smooth and why you finish other people’s sentences.</p>"
+          "answer": "<p>You can, and you’re right most of the time.</p><p>Which only works one way. Your brain has to be running ahead of the words already, generating what’s likely and standing ready for it. Comprehension is mostly successful prediction, which is why reading feels smooth and why you keep finishing other people’s sentences for them.</p>"
         },
         {
           "ask": "Processing what your eyes see takes about eighty milliseconds. So what are you experiencing as now?",
@@ -2062,7 +2062,7 @@
             "You are experiencing the past"
           ],
           "correct": 1,
-          "answer": "<p>You are experiencing a prediction. Your brain does not record the world and hand you the recording. It builds a best guess of what is about to be there and shows you that, and it is usually right, which is why you never notice.</p>"
+          "answer": "<p>A prediction. A very good one.</p><p>Your brain doesn’t record the world and hand you the tape. It builds a best guess of what is about to be there and shows you that instead, and it’s right often enough that you have never once noticed.</p>"
         },
         {
           "ask": "One of the greatest hitters in baseball, who routinely hits ninety-five-mile-an-hour fastballs, could not touch a top softball pitcher throwing underhand from closer in. His measured reaction time is ordinary. So what was he doing all those years when he hit?",
@@ -2072,7 +2072,7 @@
             "The hitter was guessing"
           ],
           "correct": 1,
-          "answer": "<p>The hitter was predicting. There is not enough time to react to a fastball after it leaves the hand. Elite hitting is thousands of hours of learned prediction about one kind of pitcher, which is why a different kind of pitcher made him look like a beginner. The predictions are only good inside the domain that trained them.</p>",
+          "answer": "<p>Predicting, for years, at a very high level.</p><p>There isn’t enough time to react to a fastball after it leaves the hand. Nobody has reflexes that fast, including him. What elite hitting actually is, is thousands of hours of learned prediction about one specific kind of pitcher, which is exactly why a different kind of pitcher made one of the greatest hitters alive look like a beginner.</p><p>The predictions only work inside the domain that trained them.</p>",
           "cite": "Pujols versus Jennie Finch"
         },
         {
@@ -2083,7 +2083,7 @@
             "When a prediction is wrong, you lose confidence"
           ],
           "correct": 1,
-          "answer": "<p>When a prediction is wrong you get a jolt, and the jolt is the signal. A missed prediction is exactly the thing that tells the learning machinery what to fix, which ties this station straight to the Goldilocks Zone: learning is prediction being corrected, over and over, at the edge.</p>"
+          "answer": "<p>You wince, before you can think about it.</p><p>That jolt is the error signal, and it’s the same signal learning runs on. A missed prediction is precisely the thing that tells the machinery what needs fixing, which walks you straight back to the Goldilocks Zone. Learning is prediction getting corrected, over and over, right at the edge.</p>"
         },
         {
           "ask": "So the belief: my brain receives the world and then thinks about it. After all this, what is your brain actually doing, all day?",
@@ -2093,7 +2093,7 @@
             "Your brain is recording the world"
           ],
           "correct": 1,
-          "answer": "<p>Your brain is guessing and checking, all day. There is a machine built by Anthropic that learned everything it can do by predicting the next piece of text, over and over, until capability fell out of the practice. It is an odd kind of proof of this whole map: capability built from training, in a computer, and it has only a rough copy of this one part of you.</p>"
+          "answer": "<p>Guessing, and then checking the guess. All day, without a break.</p><p>There’s a machine built by Anthropic that learned everything it can do by predicting the next piece of text, over and over, until capability fell out of the practice. It makes for an odd sort of proof of this whole map. Capability built entirely from training, in a computer, working from a rough copy of this one part of you.</p>"
         }
       ]
     },
@@ -2110,20 +2110,20 @@
       "lines": [
         "access"
       ],
-      "oneBreath": "Your brain runs in different modes, and each mode connects a different set of your skills. Focused work, mind-wandering, sleep, panic, each one opens some routes and closes others. Change the mode and you change what you can reach, without changing a thing you know.",
+      "oneBreath": "Your brain runs in modes, and each mode connects a different set of the skills you own. Focused work. Mind-wandering. Sleep, and panic. Change the mode and you change what you can reach, without changing a single thing you know.",
       "evidence": [
         {
-          "text": "The answer that would not come at your desk arrives in the shower. Nothing new was learned in between. A different brain state simply opened a route to skills that the focused state kept closed. This is routing, felt from the inside.",
+          "text": "The answer that wouldn’t come at your desk arrives in the shower, and nothing new was learned in between. The word you couldn’t find at dinner turns up the next morning without being asked. Same knowledge, different mode, different reach.",
           "cite": "Insight during rest and mind-wandering"
         },
         {
-          "text": "Under real pressure, an expert can lose access to skills they have owned for years. The knowledge is all still there, provably, the moment the pressure lifts. High arousal changed the routing and cut the line to the automatic machinery.",
+          "text": "Under real pressure an expert can lose access to skills they’ve owned for years, and get them all back the moment the pressure lifts. The knowledge is provably still there a minute later. What high arousal did was change the routing, turning self-monitoring up and the automatic expert machinery down, which is the exact wrong mix for a practiced skill.",
           "cite": "Choking under pressure (Beilock & Carr, 2001)"
         }
       ],
       "stories": [
         {
-          "text": "The subway map again. Day service and night service run on the same tracks with the same trains, but a different set of stations is reachable depending on which schedule is live. Your skills are the stations. Your brain state is the schedule."
+          "text": "Think of a smartphone. Only some of the apps are open at any moment, and only some of the open ones can pass information to each other. What the phone can do right now has very little to do with what’s installed on it."
         }
       ],
       "relations": [
@@ -2144,11 +2144,11 @@
         }
       ],
       "games": [],
-      "bookRef": "Routing is the idea that lets the book explain choking, insight, sleep, and savants with one mechanism instead of four.",
+      "bookRef": "The book gives a whole chapter to mode shifting, and treats it as the most underused lever you have.",
       "transmissions": [],
       "next": {
         "target": "capability-accessibility-model",
-        "reason": "You have the access half. Now see the whole equation it lives in."
+        "reason": "Learning and state are two different doors into the same space. Go see the space."
       },
       "contested": "If I cannot reach it right now, I do not really have it. And when the answer comes in the shower, my subconscious must have kept working on it. (Two beliefs, and the reader is likely to hold both.)",
       "flow": [
@@ -2160,18 +2160,18 @@
             "You relaxed and got lucky"
           ],
           "correct": 1,
-          "answer": "<p>Your brain state changed. The background-worker story is comforting, but it raises more questions than it answers: what work, exactly, and why would it need you to stop trying? The simpler account fits better. The connection existed already. During focused effort your brain actively suppresses everything off-task, and when the answer is an off-task connection, the suppression is precisely what keeps it out. Step away and the filter relaxes. The insight arrives because the filter relaxed, not because hidden work finished.</p>",
+          "answer": "<p>Your brain state, and nothing else.</p><p>The background-worker story is comforting, but it raises more questions than it settles. What work, exactly? And why would that work need you to stop trying before it could finish?</p><p>The simpler account fits better. The connection was already there. During focused effort your brain actively suppresses everything off-task, and when the answer happens to be an off-task connection, that suppression is precisely what keeps it out of reach. Step away and the filter loosens. The insight arrives because the filter relaxed.</p>",
           "cite": "The incubation effect (Sio & Ormerod, 117 studies); disinhibition versus the unconscious"
         },
         {
-          "ask": "Put a jazz pianist in a scanner and have them improvise. What happens to the part of the brain that monitors and judges the self?",
+          "ask": "Put a jazz pianist in a scanner and have them improvise. The region that monitors and judges the self goes quiet, while the regions for self-generated action light up. The same thing shows up in freestyle rappers. Nothing was taught and nothing was practiced in that moment, and yet the playing gets more inventive. So what does that tell you about where creativity comes from?",
           "choices": [
-            "The self-monitoring part works harder, to keep the playing good",
-            "The self-monitoring part goes quiet, while the regions for self-generated action light up",
-            "Nothing changes in the self-monitoring part"
+            "Improvisation must use a separate creative faculty that only some people have",
+            "Nothing was added. Something was switched off, and capability that was already built came through",
+            "The pianists were simply more relaxed, and relaxation improves any performance"
           ],
           "correct": 1,
-          "answer": "<p>The self-monitoring part goes quiet. Nothing was added and nothing was trained in that moment. The creative state arrives exactly when the self-monitoring switches off. The same pattern shows up in freestyle rappers.</p>",
+          "answer": "<p>Nothing was added. Something got out of the way.</p><p>Everything that pianist played was already built, sitting there, fully paid for by years of practice. What changed is that the part of the brain whose job is to watch and judge you went quiet, and the playing came through.</p><p>Which is the whole idea in one scan. Creativity showing up the moment self-monitoring stops.</p>",
           "cite": "Limb, jazz improvisation imaging"
         },
         {
@@ -2182,7 +2182,7 @@
             "The pressure revealed that the skill was shaky all along"
           ],
           "correct": 1,
-          "answer": "<p>The pressure changed the routing. The knowledge is all still there, provably, a minute later. High arousal cut the line to the automatic machinery, and that happens through no choice of your own. The shower opens a route. The podium closes one. Same skills, different brain state.</p>",
+          "answer": "<p>It changed the routing.</p><p>All the knowledge is provably still in there, as you can demonstrate a minute later. What high arousal did was turn self-monitoring up and the automatic expert machinery down, which is the exact wrong mix for a skill that runs on its own.</p><p>The shower opens a route. The podium closes one. Same skills, different brain state, and no say from you either way.</p>",
           "cite": "Choking under pressure (Beilock & Carr, 2001)"
         },
         {
@@ -2193,7 +2193,7 @@
             "Yes, confidence was added in each case"
           ],
           "correct": 1,
-          "answer": "<p>Nothing was added in any of those cases. A suppressor came down and something already built became reachable. Which means you are already capable of more than you can currently reach, and what stands between you and it is usually something blocking access, not something missing.</p>"
+          "answer": "<p>Nothing was added in any of them.</p><p>A suppressor came down and something already built came online. Which means you are, right now, capable of more than you can currently reach, and what sits between you and it is usually something blocking the road rather than something missing from the map.</p>"
         },
         {
           "ask": "So the two beliefs. If I cannot reach it now I do not have it, and the shower answer came from my subconscious grinding away. After the pianist, the podium, and the singers, what is the honest picture?",
@@ -2203,7 +2203,7 @@
             "Neither belief holds, because it is all random"
           ],
           "correct": 1,
-          "answer": "<p>Your brain runs in modes. Focused work, mind-wandering, sleep, panic: each mode opens some routes and closes others. The subway map again: day service and night service run on the same tracks, but a different set of stations is reachable depending on which schedule is live. Your skills are the stations. Your brain state is the schedule.</p>"
+          "answer": "<p>Your brain runs in modes.</p><p>Focused work. Mind-wandering. Sleep, and panic. Each mode opens some routes and closes others, which is why the word you couldn’t dredge up at dinner arrives while you’re daydreaming in the shower the next morning.</p><p>It works like a phone. The same apps stay installed all day long, and what you can actually do with it depends entirely on which ones are open and talking to each other.</p>"
         }
       ]
     },
@@ -2220,10 +2220,10 @@
         "access",
         "machinery"
       ],
-      "oneBreath": "This is the full set of problems you can solve right now. It has two doors. One is learning, which permanently adds new skills. The other is changing your brain state, which reaches different combinations of the skills you already have. Both doors make the space bigger.",
+      "oneBreath": "Everything you can currently solve is land you have fenced off, and the fence moves two different ways. Learning digs up the posts and moves them outward. A change of brain state gets you to parts of the land you already own but couldn’t reach this morning.",
       "evidence": [
         {
-          "text": "Walking across your bedroom is inside your solution space. Playing a Rachmaninoff concerto is outside it, and only learning will bring it in. But an answer you could not reach at your desk might appear in the shower, which is the same skills reached through a different door.",
+          "text": "Walking across your bedroom is inside your solution space. Playing a Rachmaninoff concerto is outside it, and the only thing that would ever bring it inside is years of learning. That’s the first door, and it adds skills permanently, a layer at a time.",
           "cite": "The two paths to a larger solution space"
         }
       ],
@@ -2246,11 +2246,11 @@
         }
       ],
       "games": [],
-      "bookRef": "Solution space is how the book holds learning and brain state in one picture, the two independent ways to reach more.",
+      "bookRef": "The book describes your solution space as the land you’ve fenced off so far, and expanding it as stepping past the boundary to stake a new claim.",
       "transmissions": [],
       "next": {
         "target": "the-genius",
-        "reason": "One of the two doors is the learning engine itself. Go meet it."
+        "reason": "Your own narrator has opinions about where that fence sits. Go find out how reliable he is."
       },
       "contested": "What I can do is fixed by what I am. (The reader pictures their limits as a wall and will resist the idea that there are two separate ways to move it.)",
       "flow": [
@@ -2262,7 +2262,7 @@
             "The right mood would bring the concerto within reach"
           ],
           "correct": 1,
-          "answer": "<p>Learning, and nothing else, would bring the concerto within reach. Learning is the first door into the set of problems you can solve. It adds skills permanently, one layer at a time.</p>"
+          "answer": "<p>Learning. Years of it, and nothing else will do.</p><p>That’s the first door into the set of problems you can solve, and it works by adding skills permanently, one layer at a time. There is no shortcut and there never has been.</p>"
         },
         {
           "ask": "Now the answer you could not reach at your desk that arrives in the shower. That was inside the set the whole time, and you could not get at it. What brought it in?",
@@ -2272,7 +2272,7 @@
             "Rest brought the shower answer in"
           ],
           "correct": 1,
-          "answer": "<p>A change of brain state brought the shower answer in. That is the second door, and it is a different door from learning. Nothing was added. Something already built became reachable.</p>"
+          "answer": "<p>A change of brain state.</p><p>That’s the second door, and it’s a completely different door from learning. Nothing got added to you in the shower. A combination of skills you already owned simply became reachable.</p>"
         },
         {
           "ask": "So picture everything you can currently solve as land inside a fence. The Impostor and the Genius look at the same fence and see two different things. What are they?",
@@ -2282,7 +2282,7 @@
             "The Impostor sees a tall fence and the Genius sees a short one"
           ],
           "correct": 1,
-          "answer": "<p>The Impostor sees a wall, and the Genius sees a fence that moves. And the fence has two ways to move: learning moves the posts outward, and a change of brain state reaches parts of the land inside the fence that you could not get to before.</p>"
+          "answer": "<p>The Impostor sees a concrete wall, poured at birth.</p><p>The Genius sees a fence, and fences move. Learning digs up the posts and walks them outward. A change of state gets you into parts of the land you already own and couldn’t get to this morning.</p><p>Your solution space is simply the land you’ve fenced off so far. Expanding it means stepping past the boundary and staking a new claim.</p>"
         },
         {
           "ask": "So the belief: what I can do is fixed by what I am. How many doors are there, and how many of them are fixed?",
@@ -2292,7 +2292,7 @@
             "There are two doors, and one of them is fixed"
           ],
           "correct": 1,
-          "answer": "<p>There are two doors, and neither is fixed. Together they are exactly capability and access, the two halves of the performance equation, and you can change both.</p>"
+          "answer": "<p>Two doors, and neither one is fixed.</p><p>Learning and brain state. Taken together they are exactly capability and access, the two halves of what you can do at any given moment, and you can work on both of them starting today.</p>"
         }
       ]
     },
