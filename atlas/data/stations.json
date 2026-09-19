@@ -697,24 +697,24 @@
         "bias",
         "impostor"
       ],
-      "oneBreath": "The story says we are each born with a certain kind of brain, better or worse, and the job of a life is to find out which one you got and stay in your lane. It is everywhere, it feels like common sense, and the neuroscience does not support it.",
+      "oneBreath": "The story says you were handed a certain kind of brain at birth, better or worse than the next person’s, and that your job is to work out which one you got and stay in your lane. It’s everywhere, it feels like plain common sense, and there has never been a shred of evidence for it.",
       "claimsBlock": {
         "believe": "Some people are born with better brains. Your job is to figure out what kind you got.",
-        "evidence": "The machinery that produces skill is standard equipment in every intact brain. What differs is not the hardware but the training path it has been put through. The story feels true because believing it keeps you from ever running the test."
+        "evidence": "The machinery that builds skill is standard equipment in every intact brain. What differs between people is what that machinery has been asked to build."
       },
       "evidence": [
         {
-          "text": "Einstein's brain was studied about as thoroughly as any brain in history, and it was slightly below average in weight with no special structure anyone could find. He said it plainly himself, that he had no special talents and was only passionately curious. The most famous mind of the century sat in a boringly ordinary brain.",
+          "text": "Einstein’s brain was studied about as thoroughly as any brain in history, and it weighed a measly 1,230 grams, a little under average for a man. Decades of slicing and measuring turned up a few small oddities that plenty of ordinary brains also have, and nothing that explained anything at all. The most famous mind of the century sat in a boringly ordinary brain.",
           "cite": "Einstein's brain at autopsy; his own words"
         },
         {
-          "text": "The story is self-fulfilling, which is the dangerous part. If you believe the ability is fixed and you do not have it, you never do the training that would build it, and then the missing ability confirms the story. The belief arranges its own proof.",
+          "text": "The story is self-fulfilling, which is the dangerous part. Believe the ability is fixed and that you weren’t given it, and you never do the training that would have built it. Twenty years later the missing skill looks like proof the story was right all along.",
           "cite": "Fixed-mindset avoidance (Dweck)"
         }
       ],
       "stories": [
         {
-          "text": "IQ testing and ability tracking take this story and give it a number and a lane. A child gets sorted early, the sorting shapes what they are offered and what they attempt, and years later the outcome gets read as proof the sorting was right."
+          "text": "IQ testing and ability tracking take this story and hand it a number and a lane. A child gets sorted early, the sorting shapes what they’re offered, what they’re offered shapes what they build, and the whole loop closes so neatly that it looks like the number was right."
         }
       ],
       "relations": [
@@ -735,11 +735,11 @@
         }
       ],
       "games": [],
-      "bookRef": "This is the story the whole book is written against. Everything else is here to take it apart.",
+      "bookRef": "This is the story the whole book is written against. Everything else in it is there to take the story apart.",
       "transmissions": [],
       "next": {
         "target": "the-genius",
-        "reason": "You have seen the story that shrinks people. Now meet the engine it hides."
+        "reason": "You’ve seen the story that shrinks people. Now go meet the engine it hides."
       },
       "contested": "Some people are born with better brains, and the job of a life is to find out which one you got and stay in your lane. (This is the belief the whole book exists to overturn, and the one the reader is most likely to hold without knowing they hold it.)",
       "flow": [
@@ -751,17 +751,10 @@
             "The heart and the brain get that story"
           ],
           "correct": 1,
-          "answer": "<p>Only the brain gets that story. Of every organ in the body, it is the only one we say some people were issued a better version of. So the first question is not whether the story is true. It is why we tell it about this organ alone.</p>"
+          "answer": "<p>Only the brain.</p><p>Of every organ in your body, it’s the one and only one we talk about this way. Nobody has ever been told they have a second-rate pancreas and should manage their expectations accordingly.</p><p>So the first question isn’t whether the story is true. It’s why we tell it about this organ alone.</p>"
         },
         {
-          "ask": "Einstein’s brain was studied about as thoroughly as any brain in history. It weighed 1,230 grams, a little under the average for a man. Before you read on, what do you expect the examiners found?",
-          "choices": [
-            "The examiners found some clearly special structure in Einstein's brain",
-            "The examiners found nothing anyone could point to. Einstein's brain was ordinary",
-            "The examiners found a much larger brain than average"
-          ],
-          "correct": 1,
-          "answer": "<p>The examiners found nothing that held up. Decades of slicing and measuring Einstein’s brain turned up small oddities that other ordinary brains also have, and no structure that explained anything. The most famous mind of the century sat in a boringly ordinary brain.</p><p>He said it himself: no special talents, only passionately curious.</p>"
+          "chunk": "<p>When Einstein died in 1955, this was going to be the big moment. We were finally going to learn something about the neurobiology of being a smarty-pants. Maybe we’d even find a special molecule in there, manufacture it, and shove it in a pill.</p><p>The analysis began the way all of them do, by putting the brain on a scale. The leading formula at the time was that more brain means more smarts, so everyone expected something north of 2,000 grams. The average adult male brain runs 1,300 to 1,400.</p><p>It read 1,230 grams. The poster child for genius had a smaller than average brain.</p><p>So the pathologists brushed off their egos and went to the microscopes, where the special bits were surely hiding. Seventy years later, nobody has found them. A few small oddities turned up that plenty of ordinary brains also have, and not one structure that explained a thing.</p>"
         },
         {
           "ask": "So where did the story come from, if not from looking at brains?",
@@ -771,7 +764,7 @@
             "The special brain story came from IQ testing"
           ],
           "correct": 1,
-          "answer": "<p>The story came from before anyone could look at a brain. The idea that each head comes with a fixed ration of some mental stuff, and that your job is to find out how much you got, is older than any way of looking inside a skull. Now that we can look, we keep trying to fit the old story to what we actually find.</p>"
+          "answer": "<p>Long before anyone could look at a brain at all.</p><p>The idea that each head comes with a fixed ration of some mental stuff, and that your job is to find out how much you got, is older than any means of looking inside a skull. Now that we can look, we keep trying to make what we find fit the old story.</p>"
         },
         {
           "ask": "Here is the part that makes the story dangerous. Suppose you believe you are not a math person. What do you do about math?",
@@ -781,7 +774,7 @@
             "If you believe you are not a math person, nothing about your behavior changes"
           ],
           "correct": 1,
-          "answer": "<p>You avoid math. Then years later the missing skill looks like proof the story was right. The belief creates its own evidence. It explains every failure in advance, so nobody bothers to change how the thing is taught, and the failures keep coming.</p>",
+          "answer": "<p>You avoid it, and who could blame you.</p><p>Then twenty years go by, the skill you never built is missing, and the missing skill looks like proof the story was right. The belief manufactures its own evidence. It explains every failure in advance, so nobody bothers to ask whether the teaching was any good, and the failures keep right on coming.</p>",
           "cite": "Fixed-mindset avoidance (Dweck)"
         },
         {
@@ -792,10 +785,10 @@
             "What differs is luck"
           ],
           "correct": 1,
-          "answer": "<p>What differs is the training path. The machinery that builds skill is standard equipment in every intact brain. What differs between people is what that machinery has been asked to build. And the special brain story feels true mostly because believing it keeps you from ever trying, and trying is the only thing that could prove it wrong.</p>"
+          "answer": "<p>The training path.</p><p>The machinery that builds skill is standard equipment in every intact brain. What differs between people is what that machinery has been asked to build, and how long it was asked for.</p><p>The story survives because believing it keeps you from ever running the one test that could prove it wrong.</p>"
         },
         {
-          "chunk": "<p>If any of this made you bristle, notice that. The story ranks minds, with yours somewhere on the list, and part of you gets its sense of status from that position. The discomfort is that part defending its position. It tells you nothing about whether the story is true.</p>"
+          "chunk": "<p>If any of that made you bristle, notice it.</p><p>The story ranks minds, and yours is somewhere on the list. Part of you draws its sense of standing from that position, and that part doesn’t give up its spot without a fight. The discomfort is real. It just doesn’t tell you anything about whether the story is true.</p>"
         }
       ]
     },
@@ -812,24 +805,24 @@
       "lines": [
         "impostor"
       ],
-      "oneBreath": "There is a part of your brain whose job is to narrate you, to keep a running story of who you are and what you are capable of. It is very good at sounding certain and it is not built for accuracy. Its masterpiece is the lie that your potential is fixed.",
+      "oneBreath": "There’s a part of your brain whose whole job is to narrate you, keeping a running story of who you are and what you’re capable of. It is superb at sounding certain and it was never built for accuracy. Its story about your limits is the most expensive thing it does.",
       "claimsBlock": {
         "believe": "The voice in my head that tells me what I am good at is just honest self-knowledge.",
-        "evidence": "That voice is a specific brain system built for managing your reputation to others, not for telling you the truth about yourself. It narrates confidently and it confabulates freely, and its story about your limits is the most costly thing it does."
+        "evidence": "The narrator is a specific brain system that produces confident explanations whether or not it has the facts. It is not a reliable witness about you."
       },
       "evidence": [
         {
-          "text": "In split-brain patients, when one half of the brain acts for a reason the talking half cannot know, the talking half never says “I have no idea.” It instantly makes up a confident reason. This is the narrator caught in the act, inventing an explanation and fully believing it.",
+          "text": "In split-brain patients, when one half of the brain acts for a reason the talking half cannot possibly know, the talking half never once says I have no idea. It invents a reason on the spot and believes it completely. That is the narrator caught with its hands in the till.",
           "cite": "Split-brain confabulation (Gazzaniga)"
         },
         {
-          "text": "The narrator does not only explain the past, it shapes the future. Tell a child once that they are not a math person and the story can install itself and then run the next twenty years of choices, steering them away from numbers until the avoidance looks like proof.",
+          "text": "The narrator doesn’t only explain your past, it steers your future. Tell a child once that they’re not a math person and the story can install itself for life, filtering what they try from then on. The avoidance then poses as proof.",
           "cite": "Self-verification and identity (Swann; Dweck)"
         }
       ],
       "stories": [
         {
-          "text": "Sarah gets a 64 on a math quiz at seven. Her mother tells her she is not a math person, more of a creative type. By thirty-four Sarah has not touched anything with numbers in twenty years. The quiz is long forgotten. The story it started is still running her life."
+          "text": "Sarah gets a 64 on a math quiz at seven years old. Her mother tells her not everyone is good at math, that she’s more of a creative type, that it’s her gift. Sarah is thirty-four now. She works in marketing, which she’s naturally good at because she’s creative and not analytical, and she hasn’t attempted anything with numbers in it beyond splitting a dinner check in over twenty years. To her it feels no different from having brown eyes."
         }
       ],
       "relations": [
@@ -861,23 +854,16 @@
           "blurb": "See how your hours actually split between the engine and the narrator, and get a field manual for the narrator's favorite tricks."
         }
       ],
-      "bookRef": "The Impostor is one of the two title characters. The book is where you meet him in full and learn how he works.",
+      "bookRef": "The Impostor is one of the two title characters. The book is where you meet him properly and learn how he operates.",
       "transmissions": [],
       "next": {
         "target": "unreliable-narrator",
-        "reason": "The narrator's most useful trick is editing your memory. See how the archive gets rewritten."
+        "reason": "The narrator’s most useful trick is editing your memory. Go see how the archive gets rewritten."
       },
       "contested": "The voice in my head that tells me what I am good at is honest self-knowledge. (The reader identifies with the narrator and will resist the idea that it is a specific brain system that invents reasons and manages reputation rather than reporting truth.)",
       "flow": [
         {
-          "ask": "Forty shoppers were asked to pick the best of four pairs of stockings laid out in a row. The pairs were identical. Most picked the one on the right. Asked why, what do you think they said?",
-          "choices": [
-            "The shoppers said they could not tell the pairs apart",
-            "The shoppers gave confident reasons about the fabric, the knit, the sheerness. Nobody mentioned position",
-            "The shoppers said the pair on the right was closest to them"
-          ],
-          "correct": 1,
-          "answer": "<p>The shoppers gave confident reasons about the stockings themselves. When the researchers asked whether position in the row might have mattered, people looked at them as if they were mad. The actual cause, position, was invisible to the shoppers, so the part of the mind that explains things supplied a plausible reason and believed it.</p>",
+          "chunk": "<p>Forty shoppers were asked to pick the best of four pairs of stockings laid out in a row. What nobody told them is that the four pairs were identical.</p><p>People overwhelmingly picked the pair on the right. Then the researchers asked why, and every shopper had an answer ready. The knit. The sheerness. The feel of the weave. Not one person mentioned where the pair was sitting on the table.</p><p>And when the researchers suggested that position in the row might have had something to do with it, the shoppers looked at them as though they were out of their minds.</p>",
           "cite": "Nisbett & Wilson, 1977"
         },
         {
@@ -888,7 +874,7 @@
             "The talking half goes silent"
           ],
           "correct": 1,
-          "answer": "<p>The talking half makes up a reason, instantly, and never says I don’t know. This is the narrator caught in the act: a system in your brain whose job is to produce an explanation, whether or not it has the facts.</p>",
+          "answer": "<p>It makes one up. Instantly, fluently, and with total conviction.</p><p>The talking half has no access whatsoever to why the other half did what it did, and it never once says so. Same machine as the stockings, now with the wiring exposed. This is a system whose job is to produce an explanation, and it will produce one whether or not it has the facts.</p>",
           "cite": "Split-brain confabulation (Gazzaniga)"
         },
         {
@@ -899,17 +885,17 @@
             "The voice is repeating what teachers told you"
           ],
           "correct": 1,
-          "answer": "<p>The voice is narrating. It was built to keep a running story of you, mainly for managing how you look to other people, and it is very good at sounding certain. Accuracy was never its job.</p>"
+          "answer": "<p>Narrating. Exactly the way it narrated the stockings.</p><p>It was built to keep a running story of you, largely for managing how you look to other people, and it is very, very good at sounding certain. Accuracy was never in the job description.</p>"
         },
         {
-          "ask": "Sarah gets a 64 on a math quiz at seven. Her mother says she is not a math person, more of a creative type. What is Sarah doing with numbers at thirty-four?",
+          "ask": "Sarah got a 64 on a math quiz at seven. Her mother told her that not everyone is good at math and that she’s more of a creative type. Sarah is thirty-four now, and she hasn’t touched anything numerical beyond splitting a dinner check in over twenty years. She’d tell you she’s terrible at math, and it feels to her no different from having brown eyes. The quiz itself she forgot decades ago. So what has been running Sarah’s life for twenty-seven years?",
           "choices": [
-            "Sarah is fine with numbers at thirty-four. She got over the quiz",
-            "Sarah does nothing with numbers at thirty-four. She has not touched them in twenty years, and the quiz is long forgotten",
-            "Sarah became an accountant to prove her mother wrong"
+            "Her genuine lack of ability with numbers, which the quiz simply revealed",
+            "The story that started that afternoon, which kept steering her away from numbers long after the quiz was forgotten",
+            "Her mother, who kept discouraging her"
           ],
           "correct": 1,
-          "answer": "<p>Sarah does nothing with numbers, and has not for twenty years. The quiz is forgotten. The story it started is still running her life, because the narrator does not only explain the past. It steers the future. You filter what you attempt to match the story, and the avoidance then looks like proof the story was right.</p>"
+          "answer": "<p>A story. One sentence, said kindly, in a car, on the way to the dentist.</p><p>The quiz is long gone. The story it started is still picking what Sarah attempts, and every year she doesn’t attempt anything with numbers in it makes the story look more obviously true. That’s the part that ought to worry us. The narrator doesn’t just explain your past. It picks your future.</p>"
         },
         {
           "ask": "So the belief: that voice is just honest self-knowledge. After the stockings, the split brain, and Sarah, what is it?",
@@ -919,7 +905,7 @@
             "The voice is your conscience"
           ],
           "correct": 1,
-          "answer": "<p>The voice is a narrator, not a reliable witness. The book calls it the Impostor, and the first move against it is to stop mistaking it for you. Give it a small, slightly ridiculous name if that helps. It is much easier to roll your eyes at a voice you no longer think is yourself.</p>"
+          "answer": "<p>A narrator, and not a reliable one.</p><p>The book calls him the Impostor, and the first real move against him is to stop mistaking him for yourself. Give him a small and faintly ridiculous name if it helps. It is a great deal easier to roll your eyes at a voice you’ve stopped believing is you.</p>"
         }
       ]
     },
@@ -935,16 +921,16 @@
       "lines": [
         "genius"
       ],
-      "oneBreath": "There is an engine in you that built every skill you have without ever asking your permission. It learned to walk and talk and recognize faces while you were busy being a child. It runs on curiosity, it does not care about status, and it is still here.",
+      "oneBreath": "There’s an engine in you that built every skill you’ve got without ever asking your permission. It learned to walk and talk and read faces while you were busy being a child. It runs on curiosity, it has no interest at all in grades, and it never left.",
       "evidence": [
         {
-          "text": "A two-year-old learns language with no lessons, no grammar drills, no one explaining the rules. The engine simply extracts the pattern from the flood of speech around it and builds a working grammar. Nobody taught it. It taught itself, the way it teaches you everything before you are old enough to take credit.",
+          "text": "A two-year-old learns language with no lessons, no grammar drills and nobody explaining a single rule. The engine pulls the pattern straight out of the flood of speech in the room and builds a working grammar, mistakes and all. Goed. Foots. Nobody ever said those words to the child. The child worked out the rule and then applied it everywhere.",
           "cite": "First language acquisition"
         }
       ],
       "stories": [
         {
-          "text": "The answer that shows up in the shower, the problem that solves itself overnight, the name that surfaces the moment you stop reaching for it. That is the engine working while the narrator is out of the way. It never needed you to be trying."
+          "text": "The answer that shows up in the shower. The problem that solves itself overnight. The name that surfaces the moment you stop reaching for it. In every one of those cases the engine did the work, and it did it while you weren’t directing traffic."
         }
       ],
       "relations": [
@@ -976,11 +962,11 @@
           "blurb": "Find out how much of your day is already Genius-led, and where the engine is getting crowded out."
         }
       ],
-      "bookRef": "The Genius is the other title character, the hero of the book. This is the engine the whole argument is trying to hand back to you.",
+      "bookRef": "The Genius is the other title character, and the hero of the book. This is the engine the whole argument is trying to hand back to you.",
       "transmissions": [],
       "next": {
         "target": "adult-learning",
-        "reason": "The engine built every skill you have while you were a child. Here is the news that it never left."
+        "reason": "The engine built every skill you have while you were a child. Here’s the news that it never left."
       },
       "contested": "Learning is something that has to be done to you, by a teacher, with effort. (The reader will resist the idea that the most advanced learning they ever did ran with no instruction at all, and that the same engine is still running.)",
       "flow": [
@@ -992,17 +978,17 @@
             "School taught you those, over many years"
           ],
           "correct": 1,
-          "answer": "<p>Nobody taught you those. A two-year-old learns language with no lessons and no one explaining a single rule. The learning machinery in the child’s brain simply pulls the pattern out of the flood of speech around it and builds a working grammar, mistakes and all. Goed. Foots. Nobody ever said those. The child inferred the rule and then over-applied it.</p><p>The most impressive learning most humans ever do happens with no lessons at all.</p>"
+          "answer": "<p>Nobody taught you any of them.</p><p>A two-year-old learns language with no lessons and nobody explaining a single rule. The machinery pulls the pattern straight out of the flood of speech in the room and builds a working grammar, mistakes and all. Goed. Foots. Nobody ever said those words to the child. The child worked out the rule and then applied it everywhere, which is a far more impressive thing to do than memorize a list.</p><p>The most advanced learning most humans ever do happens with no lessons at all.</p>"
         },
         {
-          "ask": "Preschoolers were handed a toy with several hidden functions. Some were shown one function first, as a lesson. Some were handed the toy with no instruction. Which group discovered more of what the toy could do?",
+          "ask": "Preschoolers were handed a toy with several hidden functions in it. Some were shown one function first, as a little lesson. Some were handed the toy with nothing said at all. The children who got no lesson went on to discover far more of what the toy could do. So what did the lesson do to the children who got one?",
           "choices": [
-            "The children who got the lesson discovered more of the toy's functions",
-            "The children who got no instruction discovered more. The lesson shut down their search",
-            "Both groups discovered about the same number of functions"
+            "The lesson bored them, so they lost interest in the toy",
+            "The lesson answered the question for them, so they did the one thing they were shown and stopped looking",
+            "The lesson confused them, because one function made the others harder to find"
           ],
           "correct": 1,
-          "answer": "<p>The children with no lesson discovered more, by a wide margin. The taught children did the one thing they were shown and stopped. The lesson narrowed the exploring that children do on their own.</p>",
+          "answer": "<p>It answered the question, and the search closed.</p><p>The taught children did the thing they were shown and stopped. The untaught children had no reason to stop, so they kept going and found more.</p><p>So a lesson is not a free addition. Teaching a child one answer can cost you every answer they would have found on their own.</p>",
           "cite": "Bonawitz et al., 2011"
         },
         {
@@ -1013,7 +999,7 @@
             "The shower answer and the overnight solution only happen to creative people"
           ],
           "correct": 1,
-          "answer": "<p>In every case the learning machinery did the work, and it did not need you trying. It never has. That machinery runs on curiosity, it does not care about grades or status, and it built everything you are proudest of while you were busy being a child.</p>"
+          "answer": "<p>The engine did the work, and it did it while you weren’t directing traffic.</p><p>It never needed you trying. It never has. It runs on curiosity, it couldn’t care less about grades or status, and it built everything you’re proudest of back when you were too young to take any credit for it.</p>"
         },
         {
           "ask": "So here is the belief. Learning is something a teacher does to you, with effort. What does the record of your own life say?",
@@ -1023,7 +1009,7 @@
             "The record says it depends on the subject"
           ],
           "correct": 1,
-          "answer": "<p>You are self-taught at exactly the things you are best at. Adults are not useless, but their job was never to instruct. It was to provide the conditions, and the learning machinery did the rest.</p><p>The book calls that machinery the Genius. It has not retired. It is running right now, and every station on this map is about how it works.</p>"
+          "answer": "<p>That you’re self-taught at precisely the things you’re best at.</p><p>The adults weren’t useless, but their job was never to install anything. Their job was to supply the conditions, and the engine handled the rest.</p><p>The book calls that engine the Genius. It hasn’t retired. It’s running right now, and every station on this map is about how it works.</p>"
         }
       ]
     },
@@ -1041,24 +1027,24 @@
       "lines": [
         "genius"
       ],
-      "oneBreath": "Your brain does not lose the ability to change when you grow up. It changes less because less needs changing, and we read that as the door closing. It has not closed. Start learning something hard again and the machinery that builds skill comes back.",
+      "oneBreath": "Your brain doesn’t lose the ability to change when you grow up. It changes less because less needs changing, and we read that as the door closing. It hasn’t closed. Start learning something genuinely hard again and the machinery comes back.",
       "claimsBlock": {
         "believe": "You cannot teach an old dog new tricks. The time for learning was childhood.",
-        "evidence": "Adults change less because less needs changing, not because the ability is gone. The learning machinery stays available your whole life, and it gets easier again the more you use it."
+        "evidence": "Every reason adult change slows down is something other than a lost ability. The engine that built everything you know is the same engine in your head right now."
       },
       "evidence": [
         {
-          "text": "Adults do rewire less, and every reason for it is something other than a lost ability. Most of what you need is already built, so there is less to redo. Reworking a rich, working network is riskier than shaping a blank one. And an old habit is always sitting there as the easy shortcut. None of that is a closed door.",
+          "text": "Adults do rewire less, and every reason for it is something other than a lost ability. Most of what you need is already built, so there’s less to redo. Reworking a rich working network costs more than shaping a blank one. And the old way is always sitting right there as the easy shortcut. Those are all reasons change is slower. Not one of them says it’s gone.",
           "cite": "Why adult change slows (the four illusions)"
         },
         {
-          "text": "The learning machinery itself responds to use. Keep learning and it stays in tune and new things come easier. Go years without and it stiffens, which then feels like proof you have aged out of it. Pick it back up and it returns, at any age.",
+          "text": "The learning machinery itself responds to use. Keep learning and it stays in tune and new things come easier. Go years without and it stiffens, which feels exactly like proof that you’ve aged out. Pick something hard back up and the stiffness goes.",
           "cite": "Plasticity is itself plastic (Merzenich; Pascual-Leone)"
         }
       ],
       "stories": [
         {
-          "text": "The old teaching was that the adult brain sets like concrete. That was the dogma, and it was wrong. The brain that learned everything you already know is the same brain sitting in your head right now."
+          "text": "For most of the twentieth century the teaching was that the adult brain sets like concrete. If you hadn’t learned to throw a slider or mastered Mandarin by thirty, you’d missed your window. Your potential came with an expiration date. That was the dogma, and it was wrong."
         }
       ],
       "relations": [
@@ -1079,11 +1065,11 @@
         }
       ],
       "games": [],
-      "bookRef": "The book gives a full stretch of the argument to why the adult brain never stopped being able to learn.",
+      "bookRef": "The book gives a full chapter to why the adult brain never stopped being able to learn.",
       "transmissions": [],
       "next": {
         "target": "genius-led-learning",
-        "reason": "The engine is still yours. Now see how it actually wants to be used."
+        "reason": "The engine is still yours. Now go see how it actually wants to be used."
       },
       "contested": "You cannot teach an old dog new tricks. The time for learning was childhood, and the adult brain has set. (The reader may have accepted this about themselves already, which is exactly why it has to be reasoned out of rather than told.)",
       "flow": [
@@ -1095,7 +1081,7 @@
             "The dogma was never really believed"
           ],
           "correct": 1,
-          "answer": "<p>The dogma lost. The adult brain changes when something demands it, and the same man who wrote fixed, ended, immutable also wrote that every man can become the sculptor of his own brain. The second line turned out to be the true one.</p>",
+          "answer": "<p>It lost, and it lost on the evidence.</p><p>Merzenich sewed two of a monkey’s fingers together for a few weeks, then separated them and remapped the brain. The two finger maps had merged into one. An adult brain had rearranged itself to match a new reality, which according to the dogma was flatly impossible.</p><p>The results were met with great skepticism. Even ridicule. And the evidence kept piling up anyway. The same man who wrote fixed, ended, immutable also wrote that every man can become the sculptor of his own brain. The second line turned out to be the true one.</p>",
           "cite": "Merzenich; Pascual-Leone"
         },
         {
@@ -1107,7 +1093,7 @@
             "None of these three reasons means the ability to change has been lost"
           ],
           "correct": 3,
-          "answer": "<p>None of those three reasons means the ability has been lost. Every reason adult change slows is something other than a lost ability. Less needs changing. Changing a working system is costlier. The old way is always sitting there. Those are reasons change is slower in adults, and not one of them says the ability to change is gone.</p>"
+          "answer": "<p>Not one of them.</p><p>Less needs changing. Changing a working system costs more than building a fresh one. The old way is always sitting there as the easy shortcut. Every one of those is a reason change runs slower in adults, and not one of them is a reason it can’t happen.</p>"
         },
         {
           "ask": "Now the part that cuts both ways. If you go years without learning anything hard, and then try, it feels stiff. What is that stiffness?",
@@ -1117,7 +1103,7 @@
             "The stiffness is just being out of practice, which is different from a change in the brain"
           ],
           "correct": 1,
-          "answer": "<p>The stiffness means the learning machinery went unmaintained. The brain keeps up what is demanded of it and lets the rest go, and that applies to the learning system as much as to anything it learns. The less you learn, the harder learning gets. That feels like proof the ability is gone. But the same rule runs in reverse.</p>"
+          "answer": "<p>The learning machinery went unmaintained.</p><p>Your brain keeps up whatever gets demanded of it and lets the rest go, and that applies to the learning system itself just as much as to anything it learns. So the less you learn, the harder learning gets, and that feels like proof the ability has expired.</p><p>But the same rule runs in reverse.</p>"
         },
         {
           "ask": "So pick it back up. Learn something genuinely hard again. What happens to the stiffness?",
@@ -1127,7 +1113,7 @@
             "The stiffness gets worse"
           ],
           "correct": 1,
-          "answer": "<p>The stiffness goes. The ability to change is itself something that gets stronger with use. Keep the learning system in use and new things come easier.</p>"
+          "answer": "<p>It goes away.</p><p>The ability to change is itself a thing that gets stronger with use. Keep the learning system working and new things start coming easier, at any age you like.</p>"
         },
         {
           "ask": "So, the belief. You cannot teach an old dog new tricks, and the time for learning was childhood. After the monkey, the four reasons, and the stiffness that reverses, what is the honest version?",
@@ -1137,7 +1123,7 @@
             "Whether the old-dog belief is true depends on the person"
           ],
           "correct": 1,
-          "answer": "<p>The learning machinery that built everything you know is the same machinery in your head right now. And much of what gets called normal cognitive aging looks less like decay and more like the brain responding, exactly as designed, to a drop in what is being asked of it. Retirement, routine, and comfort withdraw the demands, and then we treat the result as unavoidable decline, at exactly the age when people finally have the freedom to make magnificent new demands of themselves.</p>"
+          "answer": "<p>Adults change less because less needs changing.</p><p>The engine that built everything you know is the same engine sitting in your head right now. And a great deal of what gets called normal cognitive aging looks far less like decay than like a brain responding, exactly as designed, to a drop in what’s being asked of it. Retirement, routine and comfort withdraw the demands. Then we call the result inevitable, at precisely the age when people finally have the freedom to make magnificent new demands of themselves.</p>"
         }
       ]
     },
