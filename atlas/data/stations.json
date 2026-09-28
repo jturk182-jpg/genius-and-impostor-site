@@ -1253,6 +1253,9 @@
           "answer": "<p>It tells you that walking and talking are built by the same underlying learning process.</p><p>You learn simple pieces, practice them until they run on their own, combine them into bigger pieces, and then repeat the cycle. That’s how every skill you have was built, from walking to reading to math. The book calls it progressive composition.</p>"
         },
         {
+          "chunk": "<video src=\"media/progressive-composition-stack.mp4\" poster=\"media/progressive-composition-stack.jpg\" autoplay muted playsinline preload=\"auto\" aria-label=\"Animation: lines build letters, letters build a word, words build a sentence. Beside it, banjo finger moves build rolls, licks and a tune, and chess pieces build groups, patterns and a position.\" title=\"Tap to replay\" onclick=\"this.currentTime=0;this.play()\" style=\"display:block;width:100%;max-width:min(100%,52vh);margin:0 auto;height:auto;border:1px solid var(--rule,#e0dcd4);border-radius:4px;background:#fafaf8;cursor:pointer\"></video>"
+        },
+        {
           "ask": "At eighteen months, a typical child can use about ten words, enough to make five to ten different sentences. By age five, the same child knows about three thousand words and could make around fifty billion different sentences. Vocabulary grew about three hundred times. Why did the number of possible sentences grow by billions?",
           "choices": [
             "Because older children have bigger brains",
