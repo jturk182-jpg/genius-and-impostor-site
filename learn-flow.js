@@ -160,6 +160,18 @@ window.LearnFlow = (function () {
     }
 
     function wire() {
+      /* Animations start from the top once they are actually on screen, so a clip
+         below a card's text doesn't play out before the reader scrolls to it. */
+      mount.querySelectorAll('video[data-play-visible]').forEach(function (v) {
+        if (!('IntersectionObserver' in window)) { v.play().catch(function () {}); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { v.currentTime = 0; v.play().catch(function () {}); io.disconnect(); }
+          });
+        }, { threshold: 0.6 });
+        /* Wait for the card's scroll reset to settle before judging what's on screen. */
+        setTimeout(function () { if (v.isConnected) io.observe(v); }, 700);
+      });
       var choices = mount.querySelectorAll('.lf-choice');
       choices.forEach(function (b) {
         b.addEventListener('click', function () {
