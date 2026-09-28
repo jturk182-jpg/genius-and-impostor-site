@@ -1569,6 +1569,9 @@
           "cite": "Ericsson, Chase & Faloon, 1980"
         },
         {
+          "chunk": "<video src=\"media/bottleneck-chunking-reading.mp4\" poster=\"media/bottleneck-chunking-reading.jpg\" autoplay muted playsinline preload=\"auto\" aria-label=\"Animation: one look at a time. At first each look takes in a single line of a letter. With practice, one look takes in a whole letter, then a whole word, which holds all twelve lines of THINK.\" title=\"Tap to replay\" onclick=\"this.currentTime=0;this.play()\" style=\"display:block;width:100%;max-width:min(100%,52vh);margin:0 auto;height:auto;border:1px solid var(--rule,#e0dcd4);border-radius:4px;background:#fafaf8;cursor:pointer\"></video>"
+        },
+        {
           "ask": "Imagine a physicist whose working memory scores are in the top 5 percent, and who has never played chess. He plays a fifth-grader whose working memory and attention scores are below average for her age. She has played chess since she was five, and she ranks among the top three players her age in her state. Who wins?",
           "choices": [
             "The physicist, because he can hold more in his head",
