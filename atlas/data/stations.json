@@ -61,7 +61,7 @@
         "target": "routing-architecture",
         "reason": "What decides which of your skills you can reach at a given moment?"
       },
-      "contested": "If you have a skill, you have it. Being good at something means you can do it when it counts. (The reader will not want to accept that their skill and their ability to reach it are two separate things.)",
+      "contested": "Your capabilities are fixed, always accessible, and observable. (The reader will not want to accept that what they can do depends on their brain state as well as on what they’ve learned, so some abilities can stay hidden.)",
       "flow": [
         {
           "ask": "You know your best friend’s phone number, or a line from a song you have sung a hundred times. Now picture standing up to give a toast, and your mind going blank on it. Five minutes later, sitting down, it comes flooding back. When your mind went “blank,” what actually happened to what you were going to say?",
@@ -88,9 +88,9 @@
           "answer": "<p>Dennis still has all of the neural machinery needed to read. But because of the stroke, visual information can’t get into that machinery. This is similar to what happens when your mind “goes blank” - what you need still exists in your brain, you just can’t get to it.</p>"
         },
         {
-          "ask": "Researchers taught people a number puzzle with a shortcut hidden in it that nobody was told about. Then half of them slept and half stayed awake. More than twice as many of the sleepers came back and spotted the shortcut. Both groups had the same training, and nobody was taught anything while they were asleep. So what did sleep change?",
+          "ask": "Researchers taught people a number puzzle with a shortcut hidden in it that nobody was told about. Then one group slept, while two other groups stayed awake. The sleepers were more than twice as likely to come back and spot the shortcut. All three groups had the same training, and nobody was taught anything while they were asleep. So what did sleep change?",
           "choices": [
-            "Sleep added something the awake group never got. The sleepers knew more when they came back",
+            "Sleep added something the awake groups never got. The sleepers knew more when they came back",
             "Sleep didn't change what anybody knew. It changed what they could get to",
             "Sleep left them more alert, so they tried harder at the puzzle"
           ],
@@ -99,14 +99,14 @@
           "cite": "Wagner et al., 2004 (sleep and insight)"
         },
         {
-          "ask": "We assume that the knowledge and skills we’ve acquired are always accessible. And that what we’re capable of doesn’t change over the course of the day. But given what we’ve reviewed so far, does that hold up?",
+          "ask": "We assume that the knowledge and skills we’ve acquired are always accessible. And that what we’re capable of doesn’t change over the course of the day. And that if we had an ability, we’d know about it. But given what we’ve reviewed so far, does that hold up?",
           "choices": [
             "Yes, the belief holds. Real skill shows up when it matters",
             "No. Having a skill and being able to reach that skill in the moment are two different things",
             "The belief holds for physical skills but not for mental ones"
           ],
           "correct": 1,
-          "answer": "<p>What you are capable of at any moment depends on two things. First, what you’ve learned up until that point. And second, what your brain can access.</p>"
+          "answer": "<p>What you are capable of at any moment depends on two things. First, what you’ve learned up until that point. And second, what your brain can access.</p><p>That also means some of what you’ve learned can stay hidden, if you’re never in a brain state that lets it surface. Most of the people who stayed awake in the sleep study had everything they needed to find the shortcut, and they didn’t find it. If that test had been their only try, nobody would have known they could, including them.</p>"
         },
         {
           "chunk": "<p>Think of a smartphone loaded up with apps. Navigation, photo editing, translation, music streaming. Each one can do whatever its code lets it do.</p><p>But having the app on your phone isn’t enough. For the app to be useful, you must be able to get information into it.</p><p>A Spanish translation app can't help you find a bathroom in Acapulco if you can't open it.</p><p>The same is true with your brain. Only your brain wrote the code for every one of its apps. That’s the learning process.</p>"
@@ -941,7 +941,7 @@
             "The record says it depends on the subject"
           ],
           "correct": 1,
-          "answer": "<p>The evidence shows that you're self-taught at precisely the things you're best at.</p><p>As a child, you learned the core human cognitive abilities without formal lessons. The adults weren't useless, but their job was never to install anything. Their job was to supply the conditions that allowed your learning engine to build your knowledge and skills.</p><p>That engine is your Genius. It's still with you right now, and every station on this map is about how it works.</p>"
+          "answer": "<p>The evidence shows that you're self-taught at precisely the things you're best at.</p><p>As a child, you learned the core human cognitive abilities without formal lessons. The adults weren't useless, but their job was never to install anything. Their job was to help create an environment that allowed your learning engine to build your knowledge and skills.</p><p>That engine is your Genius. It's still with you right now, and every station on this map is about how it works.</p>"
         }
       ]
     },
@@ -1010,29 +1010,35 @@
           "cite": "Ramón y Cajal, Degeneration and Regeneration of the Nervous System"
         },
         {
-          "ask": "In the 1980s, the neuroscientist Michael Merzenich mapped the area of a monkey’s brain that receives sensation from its fingers. Each finger has its own patch of brain, sitting next to the patch for the finger beside it. His team then surgically joined two of the monkey’s fingers so they moved as one. Several weeks later, they mapped the brain again. The patches for the two joined fingers had merged into one. What does that tell you about the adult brain?",
+          "ask": "In the 1980s, neuroscientist Michael Merzenich mapped the area of an adult monkey’s brain that receives sensation from its fingers. Each finger has its own patch of brain, sitting next to the patch for the finger beside it. His team then surgically joined two of the monkey’s fingers so they moved as one. Several weeks later, they mapped the brain again. The patches for the two joined fingers had merged into one. What does that tell you about the adult brain?",
           "choices": [
-            "The adult brain rebuilt its map to match how the hand was now being used",
+            "The adult brain rewired its map to match how the hand was now being used",
             "The surgery damaged that part of the monkey’s brain",
             "Monkey brains can change as adults, but human brains can’t"
           ],
           "correct": 0,
-          "answer": "<p>The adult brain can change. The monkey’s brain had rebuilt its map to match the new shape of its hand, which the prevailing view said was impossible.</p><p>The results were met with great skepticism, and even ridicule. But experiment after experiment confirmed them.</p>",
+          "answer": "<p>The adult brain can change. The monkey’s brain had rewired its map to match the new shape of its hand, which the prevailing view said was impossible.</p><p>These results were initially met with skepticism. But experiment after experiment, including ones performed in humans, confirmed unequivocally that the adult brain is plastic.</p>",
           "cite": "Merzenich and colleagues, 1980s"
         },
         {
-          "chunk": "<p>The same turned out to be true in people. In 1995, Alvaro Pascual-Leone and his colleagues mapped the area of the brain that controls the fingers in a group of adults. The volunteers then practiced a short five-finger sequence on a keyboard every day for five days. Each day, the area of the brain controlling those fingers grew larger.</p><p>A second group only imagined playing the sequence, without moving their fingers. Their brain maps grew too, from practice that happened only in their heads.</p>",
-          "cite": "Pascual-Leone et al., 1995"
-        },
-        {
-          "ask": "The evidence that adult brains can change is overwhelming. And yet it often feels like learning gets harder with age. A newborn has almost no skills, so a young child’s brain is building new networks every day. What’s different about an adult’s brain?",
+          "ask": "A newborn’s brain has almost no model of the world yet. It can’t predict what a face will do next, what happens when a cup tips over, or what the sounds of speech mean. So its model is wrong about almost everything, and it rewires itself every day. By adulthood, your brain has built a model of the world that predicts what happens around you almost all the time. Your brain has also learned to control your body well. What does that mean for how much the adult brain rewires itself?",
           "choices": [
-            "Adult brain cells have grown too old to form new connections",
-            "Most of the skills an adult needs every day are already built",
-            "Adults have lost the curiosity that drives children to learn"
+            "Nothing, because the brain rewires at the same rate for life",
+            "It should rewire much less, because a model that works gives the brain little reason to change",
+            "It should stop rewiring for good, because the model is finished"
           ],
           "correct": 1,
-          "answer": "<p>An adult already has most of the skills they need to get through a normal day, so there’s less that needs changing. Your brain rebuilds its networks when your current skills aren’t enough for what you’re trying to do. Once the skills you need are in place, it has no reason to keep rebuilding them.</p><p>The book describes seven reasons that learning seems to get harder with age, and this is the first. None of the seven is a permanent loss of the ability to change.</p>"
+          "answer": "<p>It should rewire much less. Your brain changes its wiring when its model of the world turns out to be wrong, or not good enough for what you’re trying to do. A newborn’s model is wrong all the time, so a young child’s brain is changing constantly. An adult’s model works almost all the time, so there’s much less that needs changing.</p><p>But the Genius never stops checking whether your brain’s maps and skills are still accurate and still good enough. That’s what Merzenich’s monkey showed. When its old finger map stopped matching its hand, its adult brain rewired the map. Adults change less because less needs changing, not because the brain has lost its ability to change.</p>"
+        },
+        {
+          "ask": "Suppose that years ago you taught yourself a golf swing that slices the ball far to the right, and you’ve hit thousands of balls with it since. Now you want to hit the ball straight. Why is learning a straight swing now harder than it would have been in the first place?",
+          "choices": [
+            "Because your body is older now",
+            "Because the slicing swing now runs automatically",
+            "Because golf gets harder the more you play it"
+          ],
+          "correct": 1,
+          "answer": "<p>Because the slicing swing now runs automatically. Once a skill is automated, it becomes your brain’s default, so every time you step up to the ball, your brain switches the old swing on. To learn the new swing, you first have to keep the old one from running.</p><p>The common name for an automated skill you don’t want is a bad habit, and after a few decades of learning, every adult has a few. That’s one reason learning can feel harder as an adult. The difficulty comes from a skill your brain has already built. The same learning process that automated the slice can automate a straight swing.</p>"
         },
         {
           "ask": "If you stopped walking tomorrow, your leg muscles would begin to shrink, and walking would get harder. Your body doesn’t spend energy maintaining what it isn’t using. Rewiring the brain also depends on its own biological machinery. What happens to that machinery when you stop learning new things?",
@@ -1042,17 +1048,7 @@
             "It gets stronger from the rest"
           ],
           "correct": 1,
-          "answer": "<p>It weakens. When you stop learning, your brain stops maintaining the machinery it uses to rewire itself, so the same effort produces less change. The book describes this as plasticity itself being plastic: the less we learn, the harder learning becomes, and the more we learn, the easier it gets, at any age.</p>"
-        },
-        {
-          "ask": "The old saying is that you can’t teach an old dog new tricks. Given the monkey’s brain map and the adults who practiced the finger sequence, does the saying hold up for human brains?",
-          "choices": [
-            "The saying holds. Those experiments are exceptions, and adult brains are mostly fixed",
-            "The saying doesn’t hold. The adult brain keeps its ability to change, and it changes when it has something new to learn",
-            "The saying holds for people past middle age"
-          ],
-          "correct": 1,
-          "answer": "<p>The saying doesn’t hold up. Your brain keeps its capacity for learning throughout your life. When an adult brain stops changing, it’s usually because it isn’t being given new things to learn.</p><p>The learning engine that built your skills as a child, which the book calls your Genius, is still there, and it builds skills the same way at forty as it did at four.</p>"
+          "answer": "<p>It weakens. When you stop learning, your brain stops maintaining the machinery it uses to rewire itself, so the same effort produces less change. In other words, plasticity itself is plastic: the less we learn, the harder learning becomes, and the more we learn, the easier it gets, no matter your age.</p>"
         }
       ]
     },
@@ -1070,7 +1066,7 @@
       "lines": [
         "genius"
       ],
-      "oneBreath": "There are two ways to learn, and they are nowhere near equally effective. Genius-led learning is driven by curiosity, built through your own exploration, and guided by ongoing feedback. Impostor-led learning is driven by grades and status, and relies on receiving information and being tested on it later. The first builds knowledge and skill that lasts. The second mostly produces knowledge that is shallow and quickly forgotten.",
+      "oneBreath": "There are two ways to learn, and they have very different success rates. Genius-led learning is driven by curiosity, with the goal of real understanding. Impostor-led learning is driven by status, with the goal of getting the grade. The first builds knowledge and skill that lasts. The second mostly produces knowledge that is shallow and temporary.",
       "claimsBlock": {
         "believe": "Learning is what happens in school. You take the class, you pass the test, you know it.",
         "evidence": "Learning that sticks is curiosity-driven, hands-on and feedback-rich. School mostly runs the other way, and the results show up in what people actually keep."
@@ -1164,7 +1160,7 @@
             "Passing the test means you learned the parts you got right"
           ],
           "correct": 1,
-          "answer": "<p>Passing a test doesn’t mean you learned it. It shows that you could produce the answers on the day of the test, and knowledge built for a grade mostly fades once the test is over.</p><p>Knowledge that lasts gets built the way you learned the things you taught yourself: out of curiosity, by doing, with feedback all along the way. The book calls this Genius-led learning, and the grade-driven kind Impostor-led learning.</p>"
+          "answer": "<p>Passing a test doesn’t mean you learned it. It shows that you could produce the answers on the day of the test, and knowledge built for a grade mostly fades once the test is over.</p><p>Knowledge that lasts gets built the way you learned the things you taught yourself: out of curiosity, by doing, with feedback all along the way.</p>"
         }
       ]
     },
@@ -1240,17 +1236,17 @@
             "Because children are taught nouns first in school"
           ],
           "correct": 1,
-          "answer": "<p>Because children only learn to say the words they understand, and nouns are the easiest to understand. A noun names a concrete object that a child can see and touch. A verb names an action, which is harder to picture.</p><p>Adjectives and adverbs come later because each one describes another word. An adjective describes a thing, so a child needs nouns first. An adverb describes how an action is done, so a child needs verbs first.</p>"
+          "answer": "<p>Because children learn to say the words they understand, and nouns are the easiest to understand. A noun names a concrete object that a child can see and touch. A verb names an action, which is harder to picture.</p><p>Adjectives and adverbs come later because each one describes another word. An adjective describes a thing, so a child needs nouns first. An adverb describes how an action is done, so a child needs verbs first.</p>"
         },
         {
           "ask": "Walking and talking are very different skills, but in both, each new skill is built on the ones before it. What does that tell you about how skills are built?",
           "choices": [
             "Walking and talking are each built by their own separate process",
-            "Walking and talking are built by the same underlying learning process",
+            "Walking and talking are built by a similar underlying learning process",
             "The resemblance between walking and talking is a coincidence"
           ],
           "correct": 1,
-          "answer": "<p>It tells you that walking and talking are built by the same underlying learning process.</p><p>You learn simple pieces, practice them until they run on their own, combine them into bigger pieces, and then repeat the cycle. That’s how every skill you have was built, from walking to reading to math. The book calls it progressive composition.</p>"
+          "answer": "<p>It tells you that walking and talking are built by a similar underlying learning process.</p><p>You learn simple pieces, practice them until they run on their own, combine them into bigger pieces, and then repeat the cycle. That’s how every skill you have was built, from walking to reading to math. This is the process of progressive composition.</p>"
         },
         {
           "chunk": "<p>With a physical skill like walking, you can watch the pieces come together. With skills like reading or chess, all of that building happens inside your head where no one can see it, so it’s natural to think those skills are built some other way. But they’re built in the same way.</p><p>When you learned to read, you combined lines into letters, letters into words, and words into sentences. A banjo player combines single finger strokes into short patterns called rolls, rolls into musical phrases called licks, and licks into whole tunes. A chess player learns how each chess piece moves, then how a few pieces work together, then whole positions. In each case, the next skill can only be built once the one before it runs on its own.</p><video src=\"media/progressive-composition-stack.mp4?v=2\" poster=\"media/progressive-composition-stack.jpg?v=2\" data-play-visible muted playsinline preload=\"auto\" aria-label=\"Animation: lines build letters, letters build a word, words build a sentence. Beside it, banjo finger strokes build rolls, licks and a tune, and chess pieces build groups, patterns and a position.\" title=\"Tap to replay\" onclick=\"this.currentTime=0;this.play()\" style=\"display:block;width:100%;max-width:min(100%,46vh);margin:0 auto;height:auto;border:1px solid var(--rule,#e0dcd4);border-radius:4px;background:#fafaf8;cursor:pointer\"></video>"
@@ -1273,7 +1269,7 @@
             "People skip steps in physical skills but not in mental ones"
           ],
           "correct": 1,
-          "answer": "<p>Nobody skips the steps. Expertise in any domain is built from simpler skills, and each one depends on the skills below it. Some people move through the steps faster, because they practice more or practice at the right level of difficulty, but everyone who reaches mastery goes through every step.</p><p>The book describes the Genius as a structural engineer. You can’t build the penthouse of a skyscraper before you’ve poured the concrete for the lobby, because each floor rests on the floors below it.</p>"
+          "answer": "<p>Nobody skips the steps. Expertise in any domain is built from simpler skills, and each one depends on the skills below it. Some people move through the steps earlier or faster, because they get a head start, they practice more or practice at the right level of difficulty, but everyone who reaches mastery goes through every step.</p><p>The Genius is a structural engineer, building the neural networks that support your cognitive skills. And you can’t build the penthouse of a skyscraper before you’ve poured the concrete for the lobby, because each floor rests on the floors below it.</p>"
         }
       ]
     },
@@ -1355,11 +1351,11 @@
           "ask": "Research on how people learn best has found a sweet spot for how often you should succeed while you practice. Based on what you’ve just seen, which range makes the most sense?",
           "choices": [
             "Close to 100 percent, so you learn to do it right",
-            "Between about 60 and 85 percent",
+            "Between about 50 and 85 percent",
             "Below 25 percent, so the practice stays challenging"
           ],
           "correct": 1,
-          "answer": "<p>Between about 60 and 85 percent, which means succeeding most of the time, but not every time. That gives your brain enough errors to signal that change is needed, and enough successes to show which patterns should become permanent.</p><p>In the Goldilocks Zone, practice isn’t so easy that you’re bored, or so hard that you’re frustrated.</p>",
+          "answer": "<p>Between about 50 and 85 percent, which means succeeding most of the time, but not every time. That gives your brain enough errors to signal that change is needed, and enough successes to show which patterns should become permanent.</p><p>In the Goldilocks Zone, practice isn’t so easy that you’re bored, or so hard that you’re frustrated.</p>",
           "cite": "Wilson et al., 2019 (optimal success rate near 85 percent)"
         },
         {
@@ -1397,7 +1393,7 @@
       "lines": [
         "machinery"
       ],
-      "oneBreath": "Much of what you know, you learned without realizing it, and you can’t put it into words. Your brain picks up patterns from experience and builds them into skills without anyone teaching you the rules. When we don’t see that learning happen, we call the result a gift.",
+      "oneBreath": "Much of what you know, you learned without realizing it, and you can’t put it into words. You may not even realize you know it. Your brain picks up patterns from experience and builds them into skills without anyone teaching you the rules. When we don’t see that learning happen, we usually call the result a “gift”.",
       "evidence": [
         {
           "text": "You say big red barn and never red big barn, and you have never once thought about why. English has a strict order for stacking adjectives and almost nobody can state it, including people who follow it flawlessly all day long.",
@@ -1443,7 +1439,7 @@
         "target": "automaticity",
         "reason": "How do practiced skills come to run without conscious effort?"
       },
-      "contested": "If I know something, I can explain it. And people who pick things up without instruction were born with a gift.",
+      "contested": "If I know something, I can explain it (and I know that I know it). And people who pick things up without instruction were born with a gift.",
       "flow": [
         {
           "ask": "Read these two phrases: “a big red barn” and “a red big barn.” One sounds right and the other sounds wrong. Can you state the rule that tells you which is which?",
@@ -1531,7 +1527,7 @@
         {
           "target": "trained-reasoning",
           "type": "sibling of",
-          "justification": "Memory for digits and skill at logic both look like inborn capacities, and both turn out to be built through learning."
+          "justification": "A good memory and skill at logic both look like inborn capacities, and both turn out to depend on patterns built through learning."
         }
       ],
       "games": [
@@ -1558,48 +1554,37 @@
           "chunk": "<p>How many random digits can you repeat back after hearing them read once? For most people, it’s about seven, and that’s only because we can repeat the digits to ourselves and group them. On its own, the conscious mind can hold only about four items at a time, a limit the book calls the conscious bottleneck.</p>"
         },
         {
-          "ask": "In a famous study, an ordinary college student spent about 230 hours over twenty months practicing repeating back strings of random digits. He was a competitive runner, and he learned to hear groups of digits as running times, so “3492” became a single item: a near-record mile time of 3 minutes and 49.2 seconds. His digit span rose from seven to seventy-nine. Then the researchers tested him on random letters instead of digits. What do you think happened?",
+          "ask": "Read this string of twelve letters once, then look away and try to say it back: A B F I M S B I U I A C. Now try this one: F B I C I A U S A I B M. Both strings use the same twelve letters, three times what your conscious mind can hold. Why is the second one so much easier?",
           "choices": [
-            "His letter span was also around seventy-nine, because his memory had grown",
-            "His letter span was still about six, because his running-time method only worked on digits",
-            "His letter span landed somewhere in between"
+            "You’d already had one try, so the second string got the benefit of practice",
+            "You read the second string as four abbreviations you already know, so there are only four things to hold",
+            "The second string has a rhythm that makes it easier to say"
           ],
           "correct": 1,
-          "answer": "<p>His letter span was about six, the same as before he started. His memory capacity hadn’t grown at all. What he had built was a way of grouping digits into meaningful chunks, using running times he already knew. Each chunk took up one slot in his memory, so he could hold far more digits in the same small space.</p><p>That method only worked on digits. Letters don’t look like running times, so with letters he was back to one item per slot.</p>",
-          "cite": "Ericsson, Chase & Faloon, 1980"
+          "answer": "<p>You read the second string as four abbreviations you already know: FBI, CIA, USA, and IBM. So instead of twelve letters, you only had to hold four items, which is right at the limit of the conscious bottleneck.</p><p>Each abbreviation is a chunk, a group of items your brain has learned to treat as one. Your memory capacity was the same for both strings.</p>"
         },
         {
-          "chunk": "<p>When you learned to read, you did what the runner did with digits. You learned to treat a group of small things as a single item. At first, a letter was just a set of lines, and each line was a separate item for your conscious mind. With practice, you built networks in your brain that recognize a whole letter as a single item, and then a whole word.</p><p>Now a word like THINK is a single item, even though it’s made of twelve lines. Your conscious mind still takes in only one item at a time and holds only about four. What learning changes is how much each item contains.</p><video src=\"media/bottleneck-chunking-reading.mp4?v=2\" poster=\"media/bottleneck-chunking-reading.jpg\" data-play-visible muted playsinline preload=\"auto\" aria-label=\"Animation: at first each line of a letter is a separate item. With practice, a whole letter becomes one item, then a whole word. The word THINK becomes one item made of twelve lines.\" title=\"Tap to replay\" onclick=\"this.currentTime=0;this.play()\" style=\"display:block;width:100%;max-width:min(100%,46vh);margin:0 auto;height:auto;border:1px solid var(--rule,#e0dcd4);border-radius:4px;background:#fafaf8;cursor:pointer\"></video>"
+          "chunk": "<p>You’ve been building chunks like these since you learned to read. At first, a letter was just a set of lines, and each line was a separate item for your conscious mind. With practice, you built networks in your brain that recognize a whole letter as a single item, and then a whole word.</p><p>Now a word like THINK is a single item, even though it’s made of twelve lines. Your conscious mind still takes in only one item at a time and holds only about four. What learning changes is how much each item contains.</p><video src=\"media/bottleneck-chunking-reading.mp4?v=2\" poster=\"media/bottleneck-chunking-reading.jpg\" data-play-visible muted playsinline preload=\"auto\" aria-label=\"Animation: at first each line of a letter is a separate item. With practice, a whole letter becomes one item, then a whole word. The word THINK becomes one item made of twelve lines.\" title=\"Tap to replay\" onclick=\"this.currentTime=0;this.play()\" style=\"display:block;width:100%;max-width:min(100%,46vh);margin:0 auto;height:auto;border:1px solid var(--rule,#e0dcd4);border-radius:4px;background:#fafaf8;cursor:pointer\"></video>"
         },
         {
-          "ask": "Imagine a physicist whose working memory scores are in the top 5 percent, and who has never played chess. He plays a fifth-grader whose working memory and attention scores are below average for her age. She has played chess since she was five, and she ranks among the top three players her age in her state. Who wins?",
+          "ask": "Now imagine giving the second string to a ten-year-old who reads well but has never heard of the FBI, the CIA, or IBM. How would they do with it?",
           "choices": [
-            "The physicist, because he can hold more in his head",
-            "The fifth-grader",
-            "It would be a close match"
+            "As well as you, because it’s the same twelve letters",
+            "Not much better than with the first string, because to them most of it is random letters",
+            "Better than you, because the meanings wouldn’t distract them"
           ],
           "correct": 1,
-          "answer": "<p>The fifth-grader wins easily. She has spent years building chess patterns into her expert networks, so she recognizes familiar positions and good moves at a glance. The physicist has none of those patterns, so a larger working memory doesn’t help him.</p><p>Working memory is one of the brain’s basic resources. Resources help, but they can’t solve problems on their own. What solves problems is the skill you’ve built through learning.</p>"
+          "answer": "<p>Not much better than with the first string. They’d spot USA, but without the other three abbreviations stored in their brain, they have ten items to hold: nine separate letters plus USA. That’s more than twice what the conscious mind can manage.</p><p>A chunk only works if you’ve learned it. That’s why experts can remember far more inside their own field, with the same capacity as everyone else, and why that advantage disappears when they step outside it.</p>"
         },
         {
-          "ask": "IQ tests include tasks like repeating back strings of digits, and IQ scores are most closely linked to working memory. Given the runner and the young chess player, what do those scores mostly measure?",
+          "ask": "IQ tests include tasks like repeating back strings of digits, and IQ scores are most closely linked to working memory. Given the two strings of letters, what do those scores mostly measure?",
           "choices": [
             "How intelligent a person is across every area of life",
             "Basic resources like working memory, which help with learning but aren’t intelligence",
             "How hard a person tried on the day of the test"
           ],
           "correct": 1,
-          "answer": "<p>IQ scores mostly reflect basic resources like working memory, which help with learning but aren’t intelligence. The runner shows how little those resources decide. With a learned pattern, his digit span went from seven to seventy-nine while his memory capacity stayed exactly the same.</p><p>Intelligence is your ability to solve problems in a given domain, and that ability is built through learning.</p>"
-        },
-        {
-          "ask": "Here is the belief, then: people with great memories were born with more room in their heads. Does the runner’s letter span support that?",
-          "choices": [
-            "Great memories come from a larger capacity people are born with",
-            "Great memories come from learned patterns that pack more into each item",
-            "Great memories come from a larger inborn capacity, plus practice"
-          ],
-          "correct": 1,
-          "answer": "<p>The runner’s letter span shows the opposite. Great memories come from learning. The conscious bottleneck is small for everyone. Experts don’t have more room. What they have is learned patterns that let them treat a whole group of things as a single item.</p><p>That’s why an expert’s memory advantage disappears outside their field, the way the runner’s did when the digits turned into letters.</p>"
+          "answer": "<p>IQ scores mostly reflect basic resources like working memory, which help with learning but aren’t intelligence. While there’s a small amount of variation in these resources from one person to the next, they pale in comparison to what we can achieve through learning, as the two strings of letters show.</p><p>Knowing four abbreviations let you hold twelve letters in a space that holds about four.</p>"
         }
       ]
     },
@@ -1617,7 +1602,7 @@
         "machinery",
         "intelligence"
       ],
-      "oneBreath": "The skills you use without thinking, like walking across a room, understanding speech, and recognizing faces, are solutions to some of the most complex problems a brain ever faces. We don’t call them genius only because nearly everyone has them. The book calls this common genius.",
+      "oneBreath": "The skills you use without thinking, like walking across a room, understanding speech, and recognizing faces, are solutions to some of the most complex problems a brain ever faces. We don’t call them genius only because nearly everyone has them.",
       "claimsBlock": {
         "believe": "Real intelligence is rare. Walking and talking are just basic things everybody can do.",
         "evidence": "Easy does not mean simple. The feats we dismiss as basic are the most sophisticated things any mind does, and they run on the same machinery as everything we do call genius."
@@ -1671,17 +1656,17 @@
             "Because nobody tried hard enough to program them"
           ],
           "correct": 1,
-          "answer": "<p>Because they solve some of the most complex problems a brain ever faces. They feel easy because we’ve automated them so completely that we don’t feel any of the work. As the book puts it, easy does not equal simple.</p><p>The computer scientists made the same mistake the rest of us make: they judged how complex a skill is by how hard it feels to do.</p>"
+          "answer": "<p>Because they solve some of the most complex problems a brain ever faces. They feel easy because we’ve automated them so completely that we don’t feel any of the work. Easy does not equal simple.</p><p>The computer scientists made the same mistake the rest of us make: they judged how complex a skill is by how hard it feels to do.</p>"
         },
         {
-          "ask": "Think back to your first time behind the wheel, when talking while you drove was impossible. Now you’re driving home with an old friend in the passenger seat, and you talk the whole way. To pull that off, you’re tracking the cars around you, obeying traffic signals, and adjusting your speed, while also decoding speech, following the story, catching jokes, and choosing what to say. Productivity experts often say humans can’t multitask. How does that fit with your drive home?",
+          "ask": "Think back to your first time behind the wheel, when talking while you drove was impossible. Now you’re driving home while having a conversation with a friend in the passenger seat. To pull that off, you’re tracking the cars around you, obeying traffic signals, and adjusting your speed, while also decoding speech, following the story, tracking tone of voice, and choosing what to say. Productivity experts often say humans can’t multitask. How does that fit with your drive home?",
           "choices": [
             "It fits. This isn’t really multitasking",
-            "It doesn’t fit. This is multitasking at a very high level, made possible by skills that run automatically",
+            "It doesn’t fit. This is an extraordinary feat of multitasking, made possible by skills that run automatically and in parallel",
             "It only works because driving is easy"
           ],
           "correct": 1,
-          "answer": "<p>This is multitasking at a very high level. It’s possible because both driving and conversation run in expert networks that don’t need your conscious attention. It took computer scientists decades to get machines to do even one of those things.</p><p>There was a time you couldn’t do either one. You built every one of those skills through learning.</p>"
+          "answer": "<p>This is an extraordinary feat of multitasking. It’s possible because both driving and conversation run in expert networks that don’t need your conscious attention. It took computer scientists decades to get machines to do even one of those things.</p><p>There was a time you couldn’t do either one. You built every one of those skills through learning.</p>"
         },
         {
           "ask": "Walking, talking, and recognizing faces solve some of the hardest problems a brain faces. So why doesn’t anyone call a toddler a genius?",
@@ -1691,7 +1676,7 @@
             "Because toddlers are born able to do it"
           ],
           "correct": 1,
-          "answer": "<p>Because it isn’t rare. When we call something genius, we usually mean two things: it solved a very difficult problem, and few other people could have done it. Walking, talking, and recognizing faces easily pass the first test. They fail only the second, because nearly everyone can do them.</p><p>If only one person on earth could talk or recognize faces, we would call that person a genius. The book calls these skills common genius.</p>"
+          "answer": "<p>Because it isn’t rare. When we call something genius, we usually mean two things: it solved a very difficult problem, and few other people could have done it. Walking, talking, and recognizing faces easily pass the first test. They fail only the second, because nearly everyone can do them.</p><p>If only one person on earth could talk or recognize faces, we would call that person a genius.</p>"
         },
         {
           "ask": "Real intelligence, the thinking goes, is rare, and walking and talking are basic skills anyone can do. Which view fits Moravec’s Paradox and the drive home?",
@@ -1771,7 +1756,7 @@
             "Very little, because unusual paths rarely lead anywhere"
           ],
           "correct": 1,
-          "answer": "<p>An unusual set of skills. Because his learning path was unique, the set of problems his brain could solve was unique too. His discoveries only came within reach after that learning had been done. Before then, they were impossible for his brain, as they would be for anyone’s.</p><p>The book puts it this way: what separates uncommon genius from common genius is uniqueness, not complexity.</p>"
+          "answer": "<p>An unusual set of skills. Because his learning path was unique, the set of problems his brain could solve was unique too. His discoveries only came within reach after that learning had been done. Before then, they were impossible for his brain, as they would be for anyone’s.</p><p>What separates uncommon genius from common genius is uniqueness, not complexity.</p>"
         },
         {
           "ask": "When plague closed Cambridge in 1665, Isaac Newton, then twenty-two, went home to his family’s farm, studied on his own, and invented calculus. Charles Darwin dropped out of medical school and spent five years on a ship collecting specimens. Emily Dickinson barely left her house for decades, and invented a new form of poetry. What do these three have in common?",
@@ -1798,7 +1783,7 @@
           "choices": [
             "Their genius came from special brains, and the unusual paths were a side effect",
             "Their genius came from unusual learning paths, built by the same learning process everyone has",
-            "Their genius came from special brains plus hard work"
+            "Their genius came from copious amounts of ginkgo biloba"
           ],
           "correct": 1,
           "answer": "<p>Their genius came from where their curiosity led them. The learning process that built your everyday skills is the same one that built Einstein’s discoveries. What made his work uncommon was the path his curiosity took, and the unique set of skills that path built.</p>"
@@ -1862,17 +1847,17 @@
         "target": "uncommon-genius",
         "reason": "Where do the achievements we call genius come from?"
       },
-      "contested": "Smart is smart. Someone brilliant in one field is sharp across the board.",
+      "contested": "People are smart because of the amount of intelligence, or smart juice, in their brains. Someone brilliant in one field is sharp across the board.",
       "flow": [
         {
-          "ask": "Jack and Jill both run out of toothpaste. Jill drives to the nearest drugstore and is home in twenty minutes. Jack drives around, turning wherever he feels like it, finds a store ninety minutes later, gets lost on the way back, and gets home five hours after he left. Both came home with toothpaste. Whose behavior was more intelligent?",
+          "ask": "A London cab driver and a tourist in a rental car both need to drive from Paddington Station to the Tower of London. The cab driver is there in half an hour. The tourist, working from a paper map, takes an hour and a half after several wrong turns. Both of them got there. Whose solution showed more intelligence?",
           "choices": [
-            "Neither, since both got the toothpaste",
-            "Jill’s, because she solved the problem far more efficiently",
-            "Jack’s, because he explored more"
+            "Neither, since both of them reached the Tower",
+            "The cab driver’s, because it reached the goal far more efficiently",
+            "The tourist’s, because it took more thinking"
           ],
           "correct": 1,
-          "answer": "<p>Jill’s. Both of them reached the goal, but Jill’s solution used far less time, gas, and effort. That’s what intelligence is: how well you solve problems to reach your goals. More effective and more efficient solutions demonstrate more intelligence.</p>"
+          "answer": "<p>The cab driver’s. Both of them reached the goal, but the cab driver’s solution used far less time and effort. That’s what intelligence is: how well you solve problems to reach your goals. More effective and more efficient solutions demonstrate more intelligence.</p><p>And the cab driver built that intelligence. To get a license, London cab drivers spend three to four years learning the roughly 25,000 streets in the center of the city, a test known as the Knowledge.</p>"
         },
         {
           "ask": "Humans are far better than bats at sharing thoughts through spoken language. Bats are far better than humans at navigating a dark cave by echolocation. So which is more intelligent?",
@@ -1882,7 +1867,7 @@
             "Neither. Each is more intelligent at its own problems"
           ],
           "correct": 2,
-          "answer": "<p>Neither. Humans are more intelligent at sharing thoughts, and bats are more intelligent at navigating in the dark. Intelligence isn’t one general quality that a person or a species has more or less of across the board.</p><p>As the book puts it, asking whether one species is more intelligent than another is like asking whether a submarine is better at “transportation” than a helicopter.</p>"
+          "answer": "<p>Neither. Humans are more intelligent at sharing thoughts, and bats are more intelligent at navigating in the dark. Intelligence isn’t one general quality that a person or a species has more or less of across the board.</p><p>Asking whether one species is more intelligent than another is like asking whether a submarine is better at “transportation” than a helicopter.</p>"
         },
         {
           "ask": "IQ reduces intelligence to a single number meant to rank everyone from least to most intelligent. Given the bats and the humans, what’s the problem with that?",
@@ -1892,17 +1877,17 @@
             "The number just needs to be measured more carefully"
           ],
           "correct": 1,
-          "answer": "<p>The problem is that intelligence depends on the problem being solved, so it can’t be reduced to one score, any more than you can rank a submarine and a helicopter on a single scale. An IQ score reflects how well someone solves the particular kinds of problems on the test, at the time they take it.</p><p>Humans are also the only animals who could score well on an IQ test, because we designed the test around the kinds of problems humans are good at. A bat would fail it, even though bats solve problems no human can.</p>"
+          "answer": "<p>The problem is that intelligence depends on the problem being solved, so it can’t be reduced to one score. An IQ score reflects how well someone solves the particular kinds of problems on the test, at the time they take it.</p><p>Humans are also the only animals who could score well on an IQ test, because we designed the test around the kinds of problems humans are good at. A bat would fail it, even though bats solve problems no human can.</p>"
         },
         {
-          "ask": "We assume that someone brilliant in one field will be sharp in every field. Think of the physicist from The Bottleneck and Chunking station, who lost at chess to a fifth-grader. Think of the bats and the humans, each far better at its own problems. Does brilliance carry over from one field to another?",
+          "ask": "We assume that someone brilliant in one field will be sharp in every field. In 1993, Michael Jordan, the best basketball player in the world, retired from basketball to play professional baseball. He spent the 1994 season in the minor leagues, batted .202, and never made it to the major leagues. Does brilliance carry over from one field to another?",
           "choices": [
             "Brilliance carries over. A brilliant person is sharp in every field",
             "Brilliance stays in the field where it was built",
             "Brilliance mostly carries over, with a few exceptions"
           ],
           "correct": 1,
-          "answer": "<p>Brilliance stays in the field where it was built. The physicist’s years of physics did nothing for him at the chessboard. Intelligence is always specific to a domain, and it’s built by learning in that domain. An expert in one field is a beginner in every field they haven’t studied.</p><p>That’s why we’re so often surprised when a brilliant scientist makes poor decisions about money, or a chess champion struggles to run their own life. Those cases are exactly what you’d expect when intelligence is built one domain at a time.</p>"
+          "answer": "<p>Brilliance stays in the field where it was built. Jordan brought speed, strength, and a lifetime of athletic training to baseball, and those helped. But hitting a baseball is its own problem, and the skills that solve it are built by years of hitting baseballs. Intelligence is always specific to a domain, and it’s built by learning in that domain. An expert in one field is a beginner in every field they haven’t studied.</p><p>That’s why we’re so often surprised when a brilliant scientist makes poor decisions about money, or a chess champion struggles to run their own life. Those cases are exactly what you’d expect when intelligence is built one domain at a time.</p>"
         }
       ]
     },
@@ -2062,7 +2047,7 @@
             "It was a lucky guess"
           ],
           "correct": 1,
-          "answer": "<p>Sleep changed how information flowed through his brain. Mendeleev had spent years building the knowledge he needed. What he still needed was to connect that knowledge in a new way, and the pattern of brain activity during sleep made those connections possible. The sleepers in the number-puzzle study from the Capability-Accessibility Model station showed the same thing. Sleep didn’t change what they knew. It changed what they could get to.</p><p>The book calls each of these patterns of brain activity a routing architecture. Each mode your brain operates in, from focused work to sleep, has its own routing architecture.</p>"
+          "answer": "<p>Sleep changed how information flowed through his brain. Mendeleev had spent years building the knowledge he needed. What he still needed was to connect that knowledge in a new way, and the pattern of brain activity during sleep made those connections possible. Sleep didn’t change what he knew. It changed what his brain could get to.</p><p>The book calls each of these patterns of brain activity a routing architecture. Each mode your brain operates in, from focused work to sleep, has its own routing architecture.</p>"
         },
         {
           "chunk": "<p>The book compares this to a subway system. During the day, one set of stations and tracks is open. At night, a different set opens, and you can reach places you couldn’t get to during the day.</p><p>Your brain works the same way. Focused work, mind-wandering, and sleep each open some routes between brain regions and close others. The knowledge in your brain stays the same. What changes is which parts of it can connect.</p>"
@@ -2325,7 +2310,7 @@
         {
           "target": "bottleneck-chunking",
           "type": "sibling of",
-          "justification": "Logic puzzles show the same thing as the runner’s digit memory: an ability that seems inborn depends on patterns built through learning."
+          "justification": "Logic puzzles show the same thing as the letter strings in The Bottleneck and Chunking station: an ability that seems inborn depends on patterns built through learning."
         },
         {
           "target": "introspective-bias",
