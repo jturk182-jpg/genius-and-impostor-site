@@ -1368,6 +1368,7 @@ const LOCAL_HOST = (function () {
          h === '::1' || h.endsWith('.local');
 })();
 const DEV = LOCAL_HOST && new URLSearchParams(location.search).has('dev');
+var SHARE_CARDS = false;   /* share cards off for launch (JT, 2026-10-16) */
 
 /* ================================================================
    2. STORAGE
@@ -3078,7 +3079,8 @@ function renderResults(opts) {
       '<div class="btn-row"><a class="btn" href="ayumu-training.html">Go to the Training Room</a></div>';
   }
 
-  html += '<h2 class="t-section" style="margin-top:40px;">Share your results</h2>' +
+  /* Share cards are off for launch (JT, 2026-10-16). Set SHARE_CARDS = true to bring them back. */
+  if (SHARE_CARDS) html += '<h2 class="t-section" style="margin-top:40px;">Share your results</h2>' +
     '<div class="btn-row">' +
     '<button class="btn primary" id="btn-to-share">Make a card to share</button>' +
     '</div>';
@@ -3094,7 +3096,7 @@ function renderResults(opts) {
   el.innerHTML = html;
   renderTeamHuman(rec);
   document.getElementById('btn-to-nine').addEventListener('click', startNine);
-  document.getElementById('btn-to-share').addEventListener('click', () => { pickDefaultShareKind(); renderShare(); showView('view-share'); });
+  if (SHARE_CARDS) document.getElementById('btn-to-share').addEventListener('click', () => { pickDefaultShareKind(); renderShare(); showView('view-share'); });
 }
 
 /* ================================================================
