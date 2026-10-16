@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a><a class="linechip" style="background:#4f7d3a" href="index.html#line-intelligence">The Intelligence Line</a></div>
     <h1 class="station">Everyday Genius</h1>
     <p class="lead">The skills you use without thinking, like walking across a room, understanding speech, and recognizing faces, are solutions to some of the most complex problems a brain ever faces. We don’t call them genius only because nearly everyone has them.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>When computer scientists started trying to build thinking machines in the mid-twentieth century, they assumed that the problems humans find hardest, like chess and math, would be the hardest to program. Those turned out to be the easy ones. Pocket calculators have existed since the 1970s, and a computer beat the world chess champion in 1997.</p><p>What turned out to be hard were skills every toddler has, like walking across a cluttered room without falling and recognizing a face from any angle. Robots still struggle with tasks like folding laundry. This is known as Moravec’s Paradox.</p><p class=\"lf-cite\">Moravec’s Paradox</p>"},{"ask":"Why would the skills that feel easiest to us turn out to be the hardest to program?","choices":["Because computers are bad at anything physical","Because those skills are extremely complex, and they only feel easy because we’ve mastered them so completely","Because nobody tried hard enough to program them"],"correct":1,"answer":"<p>Because they solve some of the most complex problems a brain ever faces. They feel easy because we’ve automated them so completely that we don’t feel any of the work. Easy does not equal simple.</p><p>The computer scientists made the same mistake the rest of us make: they judged how complex a skill is by how hard it feels to do.</p>"},{"ask":"Think back to your first time behind the wheel, when talking while you drove was impossible. Now you’re driving home while having a conversation with a friend in the passenger seat. To pull that off, you’re tracking the cars around you, obeying traffic signals, and adjusting your speed, while also decoding speech, following the story, tracking tone of voice, and choosing what to say. Productivity experts often say humans can’t multitask. How does that fit with your drive home?","choices":["It fits. This isn’t really multitasking","It doesn’t fit. This is an extraordinary feat of multitasking, made possible by skills that run automatically and in parallel","It only works because driving is easy"],"correct":1,"answer":"<p>This is an extraordinary feat of multitasking. It’s possible because both driving and conversation run in expert networks that don’t need your conscious attention. It took computer scientists decades to get machines to do even one of those things.</p><p>There was a time you couldn’t do either one. You built every one of those skills through learning.</p>"},{"ask":"Walking, talking, and recognizing faces solve some of the hardest problems a brain faces. So why doesn’t anyone call a toddler a genius?","choices":["Because what toddlers do isn’t actually difficult","Because nearly every toddler can do it, so it isn’t rare","Because toddlers are born able to do it"],"correct":1,"answer":"<p>Because it isn’t rare. When we call something genius, we usually mean two things: it solved a very difficult problem, and few other people could have done it. Walking, talking, and recognizing faces easily pass the first test. They fail only the second, because nearly everyone can do them.</p><p>If only one person on earth could talk or recognize faces, we would call that person a genius.</p>"},{"ask":"Real intelligence, the thinking goes, is rare, and walking and talking are basic skills anyone can do. Which view fits Moravec’s Paradox and the drive home?","choices":["Intelligence shows up only in rare achievements like chess and advanced math","The everyday skills everyone has are some of the most intelligent things a brain does","Everyday skills are complex, but they don’t count as intelligence"],"correct":1,"answer":"<p>The everyday skills everyone has are some of the most intelligent things a brain does. They solve extraordinarily difficult problems, and they were built by the same learning process that produces every achievement we call genius.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("everyday-genius", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

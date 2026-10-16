@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#6a4a95" href="index.html#line-genius">The Genius Line</a></div>
     <h1 class="station">The Genius</h1>
     <p class="lead">There's an engine in you that built every skill you've got without ever being told how. It learned to walk and talk and read faces while you were busy being a child. It runs on curiosity, it has no interest at all in grades, and it never left.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
@@ -128,11 +128,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Think about the hardest things you can do. Understand speech in a noisy room. Read faces. Walk. Speak a language with its grammar and idioms. Who taught you those?","choices":["Parents and teachers taught you those, mostly","Nobody taught you those. You built every one of them before anyone could have taught you","School taught you those, over many years"],"correct":1,"answer":"<p>Nobody taught you any of them.</p><p>A two-year-old learns language with no lessons and nobody explaining a single rule. Your brain finds the patterns straight out of the flood of speech in the room, reverse engineers the entire system, and builds it from scratch in their own brain.</p><p>The most advanced learning most humans ever do happens with no lessons at all.</p>"},{"ask":"In an experiment, preschoolers were handed a toy with several hidden functions in it. Some were shown one function first, as a little lesson. Some were just handed the toy with nothing said at all. The children who got no lesson went on to discover far more of what the toy could do. So what did the lesson do to the children who got one?","choices":["The lesson bored them, so they lost interest in the toy","The lesson answered the question for them, so they did the one thing they were shown and stopped looking","The lesson confused them, because one function made the others harder to find"],"correct":1,"answer":"<p>The lesson answered the question, and the search closed.</p><p>The taught children did the thing they were shown and assumed that was it. The untaught children followed their curiosity to discover, so they kept going and found more.</p><p class=\"lf-cite\">Bonawitz et al., 2011</p>"},{"ask":"We tend to think that learning is something that involves teachers, classrooms, and formal instruction. What does the record of your own life say?","choices":["The record says the belief is true. Everything I know, I was taught","The record says the things I am best at, I taught myself, outside of the classroom","The record says it depends on the subject"],"correct":1,"answer":"<p>The evidence shows that you're self-taught at precisely the things you're best at.</p><p>As a child, you learned the core human cognitive abilities without formal lessons. The adults weren't useless, but their job was never to install anything. Their job was to help create an environment that allowed your learning engine to build your knowledge and skills.</p><p>That engine is your Genius. It's still with you right now, and every station on this map is about how it works.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("the-genius", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

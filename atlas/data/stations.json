@@ -111,7 +111,8 @@
         {
           "chunk": "<p>Think of a smartphone loaded up with apps. Navigation, photo editing, translation, music streaming. Each one can do whatever its code lets it do.</p><p>But having the app on your phone isn’t enough. For the app to be useful, you must be able to get information into it.</p><p>A Spanish translation app can't help you find a bathroom in Acapulco if you can't open it.</p><p>The same is true with your brain. Only your brain wrote the code for every one of its apps. That’s the learning process.</p>"
         }
-      ]
+      ],
+      "opener": "If you know how to do something, can you always do it?"
     },
     {
       "id": "automaticity",
@@ -256,7 +257,8 @@
           "answer": "<p>Both are examples of high level intelligence. How the wiring got there doesn’t change that, nor does the fact that they can be performed fast and “automatically.”</p>"
         }
       ],
-      "contested": "Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing."
+      "contested": "Automatic means mindless. The real thinking is the slow, effortful kind you can feel yourself doing.",
+      "opener": "What happens in your brain when you get good at something?"
     },
     {
       "id": "effort-inversion",
@@ -361,7 +363,8 @@
           "correct": 1,
           "answer": "<p>Our intuitions here are wrong. Effortlessness is a sign of mastery, not simplicity.</p><p>Easy doesn't mean it’s simple, it means it can run without conscious control. We only get this right when the skill is one we can actually watch, like juggling, and we get it wrong just about everywhere else.</p><p>Michelangelo said it best: “If people knew how hard I worked to get my mastery, it wouldn’t seem so wonderful at all.”</p>"
         }
-      ]
+      ],
+      "opener": "When something feels effortless to you, what does that tell you about how hard it is?"
     },
     {
       "id": "automaticity-blindness",
@@ -460,7 +463,8 @@
         {
           "chunk": "<p>You've already experienced this process from start to finish with reading. You remember sounding out c-a-t, slowly, every bit of it effortful and conscious. Now you can't look at a word and not read it.</p><p>The whole process dropped out of your awareness the moment you got good. That's what learning does to every motor, perceptual, or mental skill you've ever built.</p>"
         }
-      ]
+      ],
+      "opener": "How much of your brain’s work can you actually feel?"
     },
     {
       "id": "introspective-bias",
@@ -552,7 +556,8 @@
           "correct": 1,
           "answer": "<p>IQ tests measure the kind of thinking you can feel yourself doing, because the part that felt effortless seemed ordinary and insignificant. Any task that most people could perform with minimal conscious effort was excluded.</p>"
         }
-      ]
+      ],
+      "opener": "How would you figure out how your own mind works?"
     },
     {
       "id": "competence-inversion",
@@ -646,7 +651,8 @@
         {
           "chunk": "<p>Even Einstein’s mental achievements are viewed like this. We see the finished insight and attribute it to a special brain, ignoring the years of work required to build the expert networks that could find it.</p>"
         }
-      ]
+      ],
+      "opener": "How can you tell when someone is thinking hard?"
     },
     {
       "id": "special-brain-story",
@@ -752,7 +758,8 @@
           "correct": 1,
           "answer": "<p>Our learning path is what determines what our brains are capable of, because our capabilities are built through learning.</p>"
         }
-      ]
+      ],
+      "opener": "Why do you think some people are so much better at things than others?"
     },
     {
       "id": "the-impostor",
@@ -849,7 +856,8 @@
           "correct": 1,
           "answer": "<p>It’s concocting a story, just like it did with the stockings.</p><p>It was built to keep a running story of you, largely for managing how you look to other people, and it is very, very good at sounding certain. Accuracy was never in the job description.</p><p>This narrator is your Impostor, and he’s in every brain.</p>"
         }
-      ]
+      ],
+      "opener": "When you pick one thing over another, how do you know why you picked it?"
     },
     {
       "id": "the-genius",
@@ -943,7 +951,8 @@
           "correct": 1,
           "answer": "<p>The evidence shows that you're self-taught at precisely the things you're best at.</p><p>As a child, you learned the core human cognitive abilities without formal lessons. The adults weren't useless, but their job was never to install anything. Their job was to help create an environment that allowed your learning engine to build your knowledge and skills.</p><p>That engine is your Genius. It's still with you right now, and every station on this map is about how it works.</p>"
         }
-      ]
+      ],
+      "opener": "Which of your skills took the most lessons to learn?"
     },
     {
       "id": "adult-learning",
@@ -1050,7 +1059,8 @@
           "correct": 1,
           "answer": "<p>It weakens. When you stop learning, your brain stops maintaining the machinery it uses to rewire itself, so the same effort produces less change. In other words, plasticity itself is plastic: the less we learn, the harder learning becomes, and the more we learn, the easier it gets, no matter your age.</p>"
         }
-      ]
+      ],
+      "opener": "What’s the last new skill you started learning as an adult?"
     },
     {
       "id": "genius-led-learning",
@@ -1162,7 +1172,8 @@
           "correct": 1,
           "answer": "<p>Passing a test doesn’t mean you learned it. It shows that you could produce the answers on the day of the test, and knowledge built for a grade mostly fades once the test is over.</p><p>Knowledge that lasts gets built the way you learned the things you taught yourself: out of curiosity, by doing, with feedback all along the way.</p>"
         }
-      ]
+      ],
+      "opener": "Does passing a test mean you learned something?"
     },
     {
       "id": "progressive-composition",
@@ -1271,7 +1282,8 @@
           "correct": 1,
           "answer": "<p>Nobody skips the steps. Expertise in any domain is built from simpler skills, and each one depends on the skills below it. Some people move through the steps earlier or faster, because they get a head start, they practice more or practice at the right level of difficulty, but everyone who reaches mastery goes through every step.</p><p>The Genius is a structural engineer, building the neural networks that support your cognitive skills. And you can’t build the penthouse of a skyscraper before you’ve poured the concrete for the lobby, because each floor rests on the floors below it.</p>"
         }
-      ]
+      ],
+      "opener": "When you learned to read, what did you learn first?"
     },
     {
       "id": "goldilocks-zone",
@@ -1378,7 +1390,8 @@
           "correct": 1,
           "answer": "<p>Practice that goes perfectly builds very little. The mistakes you make at the edge of your ability are the signal that tells your brain to build new networks.</p><p>Babies work this way without being told. When rolling over is in a baby’s Goldilocks Zone, the baby works at it relentlessly, failing again and again until it’s learned, and then moves on to the next skill.</p>"
         }
-      ]
+      ],
+      "opener": "How often should you get it right when you practice something?"
     },
     {
       "id": "implicit-learning",
@@ -1481,7 +1494,8 @@
           "correct": 1,
           "answer": "<p>Neither belief holds up. A large share of what you know was learned implicitly, and you use it every day without being able to explain it. What we call talent is the result of the same kind of learning, built from exposure that nobody counted as practice.</p><p>Every healthy brain comes equipped to learn this way, and abilities are what that learning builds.</p>"
         }
-      ]
+      ],
+      "opener": "Can you know something without being able to explain it?"
     },
     {
       "id": "bottleneck-chunking",
@@ -1586,7 +1600,8 @@
           "correct": 1,
           "answer": "<p>IQ scores mostly reflect basic resources like working memory, which help with learning but aren’t intelligence. While there’s a small amount of variation in these resources from one person to the next, they pale in comparison to what we can achieve through learning, as the two strings of letters show.</p><p>Knowing four abbreviations let you hold twelve letters in a space that holds about four.</p>"
         }
-      ]
+      ],
+      "opener": "How do people with great memories remember so much?"
     },
     {
       "id": "everyday-genius",
@@ -1688,7 +1703,8 @@
           "correct": 1,
           "answer": "<p>The everyday skills everyone has are some of the most intelligent things a brain does. They solve extraordinarily difficult problems, and they were built by the same learning process that produces every achievement we call genius.</p>"
         }
-      ]
+      ],
+      "opener": "What’s the most complicated thing you did today?"
     },
     {
       "id": "uncommon-genius",
@@ -1788,7 +1804,8 @@
           "correct": 1,
           "answer": "<p>Their genius came from where their curiosity led them. The learning process that built your everyday skills is the same one that built Einstein’s discoveries. What made his work uncommon was the path his curiosity took, and the unique set of skills that path built.</p>"
         }
-      ]
+      ],
+      "opener": "What do you picture when you hear the word genius?"
     },
     {
       "id": "domain-specific-intelligence",
@@ -1889,7 +1906,8 @@
           "correct": 1,
           "answer": "<p>Brilliance stays in the field where it was built. Jordan brought speed, strength, and a lifetime of athletic training to baseball, and those helped. But hitting a baseball is its own problem, and the skills that solve it are built by years of hitting baseballs. Intelligence is always specific to a domain, and it’s built by learning in that domain. An expert in one field is a beginner in every field they haven’t studied.</p><p>That’s why we’re so often surprised when a brilliant scientist makes poor decisions about money, or a chess champion struggles to run their own life. Those cases are exactly what you’d expect when intelligence is built one domain at a time.</p>"
         }
-      ]
+      ],
+      "opener": "Think of the smartest person you know. Are they smart at everything?"
     },
     {
       "id": "prediction-engine",
@@ -1978,7 +1996,8 @@
           "correct": 1,
           "answer": "<p>Prediction came first. Your brain is constantly predicting what’s about to happen, based on what it has learned, and correcting itself when it’s wrong. Understanding a sentence, hitting a ball, and climbing stairs all depend on predictions built through learning.</p>"
         }
-      ]
+      ],
+      "opener": "When someone tosses you a ball, when do your hands start moving?"
     },
     {
       "id": "routing-architecture",
@@ -2084,7 +2103,8 @@
           "correct": 1,
           "answer": "<p>Trying harder can keep you stuck. What you can do at any moment depends on what you’ve learned and on the mode your brain is in, because each mode gives you access to a different part of what you know. Trying harder keeps your brain in the focused mode. Stepping away, resting, or sleeping can shift it into a mode that reaches the answer.</p><p>Many of history’s most productive thinkers built mode shifts into their days. Charles Darwin spent a few focused hours at his desk each morning, then walked his gravel “thinking path.” Beethoven walked for hours in nature, where ideas for his compositions often came to him.</p>"
         }
-      ]
+      ],
+      "opener": "Have you ever had the answer to a problem come to you after you’d stopped thinking about it?"
     },
     {
       "id": "solution-space",
@@ -2169,7 +2189,8 @@
           "correct": 1,
           "answer": "<p>What you’re capable of isn’t fixed. It depends on two things you can change: what you’ve learned, and what your brain can access in its current mode. Learning moves the fence outward. Shifting modes lets you reach more of the land inside it.</p>"
         }
-      ]
+      ],
+      "opener": "What’s something you can’t do yet that you’d like to be able to do?"
     },
     {
       "id": "unreliable-narrator",
@@ -2262,7 +2283,8 @@
           "correct": 1,
           "answer": "<p>The voice that explains you often doesn’t know the real causes. It tells a story about your choices and your abilities either way. The book calls that voice the Impostor.</p><p>Its stories about what you can’t do are no more reliable than its stories about why you picked a face.</p>"
         }
-      ]
+      ],
+      "opener": "If you were a judge deciding whether to grant parole, what would you base your decision on?"
     },
     {
       "id": "trained-reasoning",
@@ -2380,7 +2402,8 @@
           "correct": 1,
           "answer": "<p>Reasoning is a skill, built by the same learning process as walking, reading, and everything else you do. It depends on the patterns you’ve learned, which is why the same people found identical logic easy in one form and hard in another.</p>"
         }
-      ]
+      ],
+      "opener": "Where do you think people’s ability to reason comes from?"
     }
   ]
 }

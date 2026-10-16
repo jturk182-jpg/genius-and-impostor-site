@@ -77,15 +77,20 @@
   .card-hook { font-size:16px; color:var(--muted); line-height:1.5; }
 
   /* map door */
-  .mapdoor { display:block; text-decoration:none; border:1px solid var(--rule); border-radius:5px; overflow:hidden; background:#fff; transition:border-color .2s; }
+  .mapdoor { display:block; border:1px solid var(--rule); border-radius:5px; overflow:hidden; background:#fff; transition:border-color .2s; }
   .mapdoor:hover { border-color:var(--parchment-line); }
-  .mapdoor:hover .mapdoor-go { color:var(--red); }
-  .mapdoor-vis { background:#fff; padding:22px 10px 8px; }
+  .mapdoor a { text-decoration:none; color:inherit; }
+  .mapdoor-vis { display:block; background:#fff; padding:22px 10px 8px; }
+  .mapdoor-cap h2 a:hover { color:var(--red); }
+  .mapdoor-actions { display:flex; flex-wrap:wrap; align-items:center; gap:14px 22px; margin-top:18px; }
+  .mapdoor-try { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; background:var(--ink); color:#fafaf8; border:0; border-radius:3px; padding:11px 18px; cursor:pointer; }
+  .mapdoor-try:hover { background:var(--red); }
+  .mapdoor .mapdoor-go:hover { color:var(--red); }
   .mapdoor-vis svg { display:block; width:100%; height:auto; }
   .mapdoor-cap { padding:20px 26px 24px; border-top:1px solid var(--rule); }
   .mapdoor-cap h2 { font-size:23px; font-weight:600; letter-spacing:-.01em; }
   .mapdoor-cap p { font-size:17px; color:var(--muted); margin-top:6px; }
-  .mapdoor-go { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:14px; display:inline-block; transition:color .2s; }
+  .mapdoor-go { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); display:inline-block; transition:color .2s; }
 
   /* book shelf */
   .book { display:flex; gap:24px; align-items:center; }
@@ -117,6 +122,8 @@
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.55; }
 </style>
   <script src="launched.js"></script>
+  <script src="learn-flow.js" defer></script>
+  <script src="atlas/cards.js" defer></script>
 </head>
 <body>
 <div class="shell">
@@ -267,8 +274,8 @@
   <!-- MAP DOOR -->
   <section class="sec">
     <h2 class="sec-eyebrow">The Map</h2>
-    <a class="mapdoor" href="atlas/index.html">
-      <div class="mapdoor-vis">
+    <div class="mapdoor">
+      <a class="mapdoor-vis" href="atlas/index.html" aria-label="Open The Map">
         <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <!-- evocative slice of the real subway map, in the line palette -->
           <path d="M40 60 H300 Q320 60 320 80 V150" fill="none" stroke="#c0503f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -289,13 +296,16 @@
             <circle cx="470" cy="190" r="6" stroke="#a34a72" stroke-width="4"/>
           </g>
         </svg>
-      </div>
+      </a>
       <div class="mapdoor-cap">
-        <h2>Discover how your mind actually works</h2>
+        <h2><a href="atlas/index.html">Discover how your mind actually works</a></h2>
         <p>The big ideas from the book are laid out like a subway map, one station for each idea. Tap a station, answer a few questions, and you'll figure out the idea for yourself before it's explained. Each station takes a few minutes.</p>
-        <span class="mapdoor-go">Open The Map &rarr;</span>
+        <div class="mapdoor-actions">
+          <button class="mapdoor-try" id="map-try" type="button">Try one station: Automaticity</button>
+          <a class="mapdoor-go" href="atlas/index.html">See the whole Map &rarr;</a>
+        </div>
       </div>
-    </a>
+    </div>
   </section>
 
   <!-- BOOK SHELF -->
@@ -380,6 +390,13 @@
         });
     });
   })();
+</script>
+<script>
+  /* A taste of the Map: one station's cards open right here (JT, 2026-10-16).
+     Links on its last card lead into the full Map. */
+  document.getElementById('map-try').addEventListener('click', function () {
+    if (window.AtlasCards) AtlasCards.open('automaticity', { base: 'atlas/' });
+  });
 </script>
 </body>
 </html>

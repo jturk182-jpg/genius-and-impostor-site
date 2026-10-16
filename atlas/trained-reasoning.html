@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#b8843a" href="index.html#line-bias">The Bias Line</a></div>
     <h1 class="station">Trained Reasoning</h1>
     <p class="lead">Reasoning feels like a general ability you can apply to anything. But the same logic problem can be easy in one form and nearly impossible in another. Reasoning depends on the patterns you’ve learned, which makes it a skill like any other, built through learning.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Here’s a famous logic puzzle. Four cards lie on a table, showing A, D, 4, and 7. Each card has a letter on one side and a number on the other. The rule is: if a card has a vowel on one side, it has an even number on the other side. Which cards do you need to turn over to check whether the rule is being followed?","choices":["A and 4","A and 7","A only","All four cards"],"correct":1,"answer":"<p>A and 7. If the A has an odd number on the back, the rule is broken. If the 7 has a vowel on the back, the rule is broken too. The 4 doesn’t matter, because the rule says nothing about what must be on the back of an even number.</p><p>Most people choose A and 4. In study after study, fewer than one in ten people get this right.</p><p class=\"lf-cite\">The Wason selection task, 1966</p>"},{"ask":"Now try the same puzzle in a different form. You’re a bartender checking a rule: if someone is drinking beer, they must be over 21. Four people are at the bar. One is drinking beer, one is drinking soda, one is 25, and one is 16. Whose drink or age do you need to check?","choices":["The beer drinker and the 16-year-old","The beer drinker and the 25-year-old","Everyone at the bar"],"correct":0,"answer":"<p>The beer drinker and the 16-year-old. Most people get this version right almost immediately. In studies, about three out of four people solve it.</p><p>It’s the same logical structure as the card puzzle. The beer drinker is the A, and the 16-year-old is the 7.</p><p class=\"lf-cite\">Griggs &amp; Cox, 1982</p>"},{"ask":"The logic of the two puzzles is identical. So why is one so much easier than the other?","choices":["The letters and numbers in the card puzzle are confusing to look at","We’ve learned patterns for situations like checking who’s allowed to drink, but not for abstract letters and numbers","People try harder on the bar puzzle"],"correct":1,"answer":"<p>Because reasoning depends on patterns we’ve learned in specific situations. Most adults have plenty of experience with rules about who’s allowed to do what, so the bar puzzle matches patterns their brains have already built. Abstract letters and numbers match nothing they’ve learned, so they have to work the problem out slowly with the conscious mind, where most people get it wrong.</p>"},{"ask":"The card puzzle felt like hard, careful thinking. The bar puzzle felt easy. We usually treat slow, effortful reasoning as the highest form of thinking. Given what you’ve just seen, what is that effort a sign of?","choices":["That you’re using your intelligence at full power","That you’ve run into a problem your brain hasn’t built the patterns to solve yet","That the problem is impossible"],"correct":1,"answer":"<p>It’s a sign that you’ve run into a problem your brain hasn’t built the patterns for yet. Effortful reasoning is what happens when the conscious mind has to handle a problem on its own, because no expert network is available to do it.</p><p>With practice, those patterns get built, and the same kind of problem starts to feel easy. That’s also why formal logic has to be learned step by step, like any other skill.</p>"},{"ask":"The common view is that reasoning is a general ability, and some people are logical and others aren’t. The same people found identical logic hard in one form and easy in another. Knowing that, what’s the reality?","choices":["Reasoning is a general ability. Logical people can reason well about anything","Reasoning is built from learned patterns, like every other skill, and it can be trained","Some people are born more logical, and training helps a little"],"correct":1,"answer":"<p>Reasoning is a skill, built by the same learning process as walking, reading, and everything else you do. It depends on the patterns you’ve learned, which is why the same people found identical logic easy in one form and hard in another.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("trained-reasoning", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

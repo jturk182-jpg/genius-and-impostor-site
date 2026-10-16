@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#3a6ea5" href="index.html#line-access">The Access Line</a><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a></div>
     <h1 class="station">Solution Space</h1>
     <p class="lead">Your solution space is the set of problems you can currently solve. The book pictures it as land inside a fence. Learning moves the fence outward, and shifting your brain’s mode lets you reach more of the land inside it.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>The book describes everything you can currently do as a piece of land surrounded by a fence. Everything inside the fence is your solution space: the problems you’ve already learned to solve.</p><p>Reading this sentence is inside the fence. So are walking across your bedroom, making toast, and telling a bus from a bicycle. Playing Rachmaninoff’s Third Piano Concerto is probably outside it.</p>"},{"ask":"If you wanted to bring the Rachmaninoff concerto inside your fence, what would it take?","choices":["A different brain","Years of learning to play the piano","Believing you can do it"],"correct":1,"answer":"<p>Years of learning to play the piano. The skills needed to play that concerto don’t exist in your brain yet, so for now it’s outside the fence, as it would be for anyone who hasn’t learned to play.</p><p>Learning is the only way to move the fence outward.</p>"},{"ask":"Your fence marks the problems you can solve today. What does it tell you about what you’re capable of learning?","choices":["The fence shows the limit of what you’ll ever be able to learn","The fence tells you nothing about what you can learn. It shows where your learning has brought you so far","The fence shows how much natural talent you have"],"correct":1,"answer":"<p>It tells you nothing about that. It shows where your learning has brought you so far, not how far it can go.</p><p>The Impostor looks at that fence and sees a concrete wall, fixed at birth by your genes. That’s the Special Brain Story. The Genius built the fence through learning, and more learning moves it.</p>"},{"chunk":"<p>Moving the fence isn’t the only way to do more. In the sleep study from the Capability-Accessibility Model station, the sleepers found a hidden shortcut without being taught anything new. The shortcut was inside their fence all along. Sleep shifted their brains into a mode that could reach it.</p><p>At any given moment, your brain can reach only part of your solution space, depending on the mode it’s in.</p>"},{"ask":"Many people believe that what they can do is fixed by who they are. What do the fence and the sleep study say?","choices":["Capability is fixed. Some things are beyond certain people","Capability changes. It depends on what you’ve learned and what you can access, and both can change","Capability grows with learning, but only up to a point"],"correct":1,"answer":"<p>What you’re capable of isn’t fixed. It depends on two things you can change: what you’ve learned, and what your brain can access in its current mode. Learning moves the fence outward. Shifting modes lets you reach more of the land inside it.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("solution-space", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

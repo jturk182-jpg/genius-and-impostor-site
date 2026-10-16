@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#b8843a" href="index.html#line-bias">The Bias Line</a></div>
     <h1 class="station">Introspective Bias</h1>
     <p class="lead">We built our whole picture of thinking out of the one part of our mind that we feel, which is slow conscious deliberation. Everything the mind does automatically is invisible from the inside, so we ignored it altogether.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Imagine writing a complete theory of how digestion works without ever studying the stomach or the intestines. Or a theory of blood circulation without ever studying the heart or blood vessels. What would you call those theories?","choices":["Those theories would likely be incomplete but useful","Those theories are almost guaranteed to be wrong.","As long as they feel right, those theories are likely to be right."],"correct":1,"answer":"<p>Theories of digestion and circulation that are written without studying the organs that perform those functions are virtually guaranteed to be wrong.</p><p>And yet that describes the first theories of human intelligence - the ones that still influence how most people think about it today. A hundred years of serious work on what makes people smart, and you could become a world expert in the field without ever once thinking about a neuron. We built an entire model of a biological function without regard to the organ that produces it.</p>"},{"ask":"So where did that model of human intelligence come from, if not the brain? What was the evidence the people building it actually had?","choices":["The model of intelligence came from brain scans, from the start","The model of intelligence came from what thinking feels like, plus tests based on those feelings","The model of intelligence came from animal studies"],"correct":1,"answer":"<p>It came from what thinking feels like to us.</p><p>Slow, deliberate, effortful problem solving is the part of our mind we can feel. So we assumed that was the part doing the best work, and the part that made us special. Everything else got left out of the definition.</p>"},{"ask":"You already know something about that inside view from the last few stations. The most complex problems our brain solves, like reading, recognizing a face, or walking a cluttered room, feel effortless. So if you build a theory of the mind from what you can feel, what do you leave out?","choices":["A theory built from what you can feel leaves out a few edge cases","A theory built from what you can feel leaves out almost everything the mind does, including all of its most extraordinary feats","A theory built from what you can feel leaves out only the physical skills"],"correct":1,"answer":"<p>You leave out almost the entire mind, including all of its most extraordinary feats.</p><p>The part you can feel is the small, slow, effortful part. The rest, which is very nearly everything, happens where introspection can't reach. So the theory mistook the one tiny lit corner for the whole house.</p>"},{"ask":"Now consider the kinds of problems that are used on an IQ test, which was first created over a century ago. Puzzles, sequences, remembering digits. They are chosen because they feel hard. What does that tell us about how it’s defining “intelligence”?","choices":["Puzzles and digit spans are used because they’re the hardest tasks","IQ tests measure the part of the mind that people could feel","IQ tests measure everything the mind does"],"correct":1,"answer":"<p>IQ tests measure the kind of thinking you can feel yourself doing, because the part that felt effortless seemed ordinary and insignificant. Any task that most people could perform with minimal conscious effort was excluded.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("introspective-bias", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a></div>
     <h1 class="station">Implicit Learning</h1>
     <p class="lead">Much of what you know, you learned without realizing it, and you can’t put it into words. You may not even realize you know it. Your brain picks up patterns from experience and builds them into skills without anyone teaching you the rules. When we don’t see that learning happen, we usually call the result a “gift”.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
@@ -128,11 +128,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Read these two phrases: “a big red barn” and “a red big barn.” One sounds right and the other sounds wrong. Can you state the rule that tells you which is which?","choices":["Yes. I could explain the rule easily","No. I know which one is right, but I can’t say why","No, because there isn’t a rule"],"correct":1,"answer":"<p>Most people can’t. English puts adjectives in a strict order: opinion, then size, age, shape, color, origin, material, and purpose. That’s why “a lovely little old green French whittling knife” sounds normal, and any other order sounds wrong.</p><p>Almost nobody is taught this rule, and yet native speakers follow it almost without error.</p>"},{"ask":"If nobody taught you the rule, and you can’t state it, how did it get into your brain?","choices":["You were born knowing it","Your brain worked out the pattern from hearing thousands of examples, without you noticing","You learned it in school and forgot the lesson"],"correct":1,"answer":"<p>Your brain worked it out from years of hearing English spoken. It detected the pattern in thousands of examples and built it into your language networks, all without your awareness.</p><p>This is called implicit learning: learning that happens without awareness, and produces knowledge you can use but can’t put into words. Much of what you know about language, faces, movement, and social life was learned this way.</p>"},{"ask":"Every healthy child learns to speak their native language, grammar and all, without formal lessons. Nobody ever says a child has a “talent for English.” But when a child picks out songs on the piano or takes to numbers without being taught, we call it a gift. What’s the difference between the two?","choices":["Language is simple for the brain, while music and math are complex","There’s no difference in how they’re learned, but we don’t see the exposure behind the second one","Language is built into the brain at birth, while music and math aren’t"],"correct":1,"answer":"<p>There’s no difference in how they’re learned. Learning a language and picking out songs on the piano both come from the same kind of implicit learning, driven by what the child pays attention to. Nobody calls a child’s English a gift, because every child learns a language. We call the piano a gift because fewer children do it, and we don’t see the hours of exposure that built it.</p><p>When we can’t see how a skill was learned, it looks like it came from nowhere. That’s why implicit learning is so easy to mistake for talent.</p>"},{"ask":"We tend to believe two things: if we know something, we can explain it, and people who pick up skills without instruction were born with a gift. What do the barn and the child at the piano say about those beliefs?","choices":["Both beliefs hold. Knowledge you can’t explain isn’t real, and gifts are real","Neither belief holds. Much of what we know was learned without awareness, and what looks like a gift is learning nobody saw","The first belief holds, but the second doesn’t"],"correct":1,"answer":"<p>Neither belief holds up. A large share of what you know was learned implicitly, and you use it every day without being able to explain it. What we call talent is the result of the same kind of learning, built from exposure that nobody counted as practice.</p><p>Every healthy brain comes equipped to learn this way, and abilities are what that learning builds.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("implicit-learning", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

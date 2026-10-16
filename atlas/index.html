@@ -98,21 +98,14 @@
   .station { cursor:pointer; }
   .station:hover .station-label, .station:focus .station-label { fill:var(--red); }
   .station:focus { outline:none; }
+  /* finished stations fill in */
+  .station.done circle:nth-of-type(2) { fill:var(--ink); }
+  .lv-done { font-family:var(--mono); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); border:1px solid var(--rule); border-radius:2px; padding:1px 6px; margin-left:8px; }
   .mapline { transition:opacity .2s; }
   .map.dim .mapline { opacity:0.16; }
   .map.dim .mapline.lit { opacity:0.95; }
   .map.dim .station { opacity:0.35; }
   .map.dim .station.lit { opacity:1; }
-  /* preview card */
-  .preview { position:sticky; bottom:0; margin-top:14px; border:1px solid var(--rule); border-radius:4px; background:var(--parchment); padding:20px 22px; display:none; }
-  .preview.on { display:block; }
-  .preview-name { font-size:22px; font-weight:600; margin-bottom:6px; }
-  .preview-breath { font-size:16px; color:var(--muted); line-height:1.5; margin-bottom:16px; }
-  .preview-actions { display:flex; flex-wrap:wrap; gap:10px; }
-  .preview-btn { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:9px 16px; border-radius:3px; }
-  .preview-enter { background:var(--ink); color:#fafaf8; }
-  .preview-play { background:var(--red); color:#fff; }
-  .preview-close { background:transparent; color:var(--muted); border:1px solid var(--rule); cursor:pointer; }
   /* legend */
   .legend { margin-top:34px; display:grid; grid-template-columns:1fr; gap:2px; }
   @media (min-width:600px){ .legend { grid-template-columns:1fr 1fr; gap:2px 28px; } }
@@ -156,7 +149,7 @@
   <main class="shell-main">
     <div class="atlas-hero">
       <h1 class="atlas-title">The Map</h1>
-      <p class="atlas-sub">A map of the ideas from the book. Each station is a concept, and each line is a route you can ride from one idea to the next. Tap a station to look inside.</p>
+      <p class="atlas-sub">A map of the ideas in The Genius and the Impostor. Each station is one idea, and each line is a route you can ride from one idea to the next. Tap a station to start.</p>
     </div>
 
     <div class="viewtoggle" role="tablist">
@@ -290,15 +283,6 @@
     </g>
         </svg>
       </div>
-      <div class="preview" id="preview">
-        <div class="preview-name" id="pv-name"></div>
-        <div class="preview-breath" id="pv-breath"></div>
-        <div class="preview-actions">
-          <a class="preview-btn preview-enter" id="pv-enter" href="#">Enter station &rarr;</a>
-          <a class="preview-btn preview-play" id="pv-play" href="#" hidden>Play the game</a>
-          <button class="preview-btn preview-close" id="pv-close" type="button">Close</button>
-        </div>
-      </div>
       <p class="note">First-draft map. Every connection here is a claim about how the ideas relate, and the topology is still up for a vetting pass. The line re-routing toggle (focused service vs. rest service) is coming in a later version.</p>
 
       <div class="legend"><a class="leg" id="line-genius" href="#" data-line="genius"><span class="leg-swatch" style="background:#6a4a95"></span><span class="leg-name">The Genius Line</span><span class="leg-sub">the learning engine</span></a><a class="leg" id="line-impostor" href="#" data-line="impostor"><span class="leg-swatch" style="background:#a34a72"></span><span class="leg-name">The Impostor Line</span><span class="leg-sub">the inner narrator</span></a><a class="leg" id="line-machinery" href="#" data-line="machinery"><span class="leg-swatch" style="background:#c0503f"></span><span class="leg-name">The Machinery Line</span><span class="leg-sub">how capability gets built</span></a><a class="leg" id="line-access" href="#" data-line="access"><span class="leg-swatch" style="background:#3a6ea5"></span><span class="leg-name">The Access Line</span><span class="leg-sub">how capability gets reached</span></a><a class="leg" id="line-bias" href="#" data-line="bias"><span class="leg-swatch" style="background:#b8843a"></span><span class="leg-name">The Bias Line</span><span class="leg-sub">why we got it backwards</span></a><a class="leg" id="line-intelligence" href="#" data-line="intelligence"><span class="leg-swatch" style="background:#4f7d3a"></span><span class="leg-name">The Intelligence Line</span><span class="leg-sub">what intelligence actually is</span></a></div>
@@ -309,43 +293,43 @@
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:#6a4a95"></span><span class="lv-name">The Genius Line</span><span class="lv-sub">the learning engine</span></summary>
       <ol class="lv-stops">
-        <li><a href="the-genius.html"><span class="lv-stop-name">The Genius</span><span class="lv-tick">play</span></a></li><li><a href="adult-learning.html"><span class="lv-stop-name">Adult Learning</span></a></li><li><a href="genius-led-learning.html"><span class="lv-stop-name">Genius-Led Learning</span></a></li><li><a href="automaticity.html"><span class="lv-stop-name">Automaticity</span><span class="lv-tick">play</span></a></li>
+        <li><a data-station="the-genius" href="#the-genius"><span class="lv-stop-name">The Genius</span><span class="lv-tick" data-game="diagnostic">play</span></a></li><li><a data-station="adult-learning" href="#adult-learning"><span class="lv-stop-name">Adult Learning</span></a></li><li><a data-station="genius-led-learning" href="#genius-led-learning"><span class="lv-stop-name">Genius-Led Learning</span></a></li><li><a data-station="automaticity" href="#automaticity"><span class="lv-stop-name">Automaticity</span><span class="lv-tick" data-game="unstoppable-reader">play</span></a></li>
       </ol>
     </details>
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:#a34a72"></span><span class="lv-name">The Impostor Line</span><span class="lv-sub">the inner narrator</span></summary>
       <ol class="lv-stops">
-        <li><a href="the-impostor.html"><span class="lv-stop-name">The Impostor</span><span class="lv-tick">play</span></a></li><li><a href="unreliable-narrator.html"><span class="lv-stop-name">The Unreliable Narrator</span></a></li><li><a href="special-brain-story.html"><span class="lv-stop-name">The Special Brain Story</span></a></li>
+        <li><a data-station="the-impostor" href="#the-impostor"><span class="lv-stop-name">The Impostor</span><span class="lv-tick" data-game="diagnostic">play</span></a></li><li><a data-station="unreliable-narrator" href="#unreliable-narrator"><span class="lv-stop-name">The Unreliable Narrator</span></a></li><li><a data-station="special-brain-story" href="#special-brain-story"><span class="lv-stop-name">The Special Brain Story</span></a></li>
       </ol>
     </details>
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:#c0503f"></span><span class="lv-name">The Machinery Line</span><span class="lv-sub">how capability gets built</span></summary>
       <ol class="lv-stops">
-        <li><a href="goldilocks-zone.html"><span class="lv-stop-name">The Goldilocks Zone</span></a></li><li><a href="progressive-composition.html"><span class="lv-stop-name">Progressive Composition</span></a></li><li><a href="implicit-learning.html"><span class="lv-stop-name">Implicit Learning</span><span class="lv-tick">play</span></a></li><li><a href="automaticity.html"><span class="lv-stop-name">Automaticity</span><span class="lv-tick">play</span></a></li><li><a href="bottleneck-chunking.html"><span class="lv-stop-name">The Bottleneck and Chunking</span><span class="lv-tick">play</span></a></li><li><a href="everyday-genius.html"><span class="lv-stop-name">Everyday Genius</span></a></li><li><a href="uncommon-genius.html"><span class="lv-stop-name">Uncommon Genius</span></a></li><li><a href="solution-space.html"><span class="lv-stop-name">Solution Space</span></a></li>
+        <li><a data-station="goldilocks-zone" href="#goldilocks-zone"><span class="lv-stop-name">The Goldilocks Zone</span></a></li><li><a data-station="progressive-composition" href="#progressive-composition"><span class="lv-stop-name">Progressive Composition</span></a></li><li><a data-station="implicit-learning" href="#implicit-learning"><span class="lv-stop-name">Implicit Learning</span><span class="lv-tick" data-game="secret-grammar">play</span></a></li><li><a data-station="automaticity" href="#automaticity"><span class="lv-stop-name">Automaticity</span><span class="lv-tick" data-game="unstoppable-reader">play</span></a></li><li><a data-station="bottleneck-chunking" href="#bottleneck-chunking"><span class="lv-stop-name">The Bottleneck and Chunking</span><span class="lv-tick" data-game="bottleneck">play</span></a></li><li><a data-station="everyday-genius" href="#everyday-genius"><span class="lv-stop-name">Everyday Genius</span></a></li><li><a data-station="uncommon-genius" href="#uncommon-genius"><span class="lv-stop-name">Uncommon Genius</span></a></li><li><a data-station="solution-space" href="#solution-space"><span class="lv-stop-name">Solution Space</span></a></li>
       </ol>
     </details>
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:#3a6ea5"></span><span class="lv-name">The Access Line</span><span class="lv-sub">how capability gets reached</span></summary>
       <ol class="lv-stops">
-        <li><a href="routing-architecture.html"><span class="lv-stop-name">Routing Architecture</span></a></li><li><a href="capability-accessibility-model.html"><span class="lv-stop-name">The Capability-Accessibility Model</span></a></li><li><a href="solution-space.html"><span class="lv-stop-name">Solution Space</span></a></li>
+        <li><a data-station="routing-architecture" href="#routing-architecture"><span class="lv-stop-name">Routing Architecture</span></a></li><li><a data-station="capability-accessibility-model" href="#capability-accessibility-model"><span class="lv-stop-name">The Capability-Accessibility Model</span></a></li><li><a data-station="solution-space" href="#solution-space"><span class="lv-stop-name">Solution Space</span></a></li>
       </ol>
     </details>
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:#b8843a"></span><span class="lv-name">The Bias Line</span><span class="lv-sub">why we got it backwards</span></summary>
       <ol class="lv-stops">
-        <li><a href="automaticity-blindness.html"><span class="lv-stop-name">Automaticity Blindness</span></a></li><li><a href="effort-inversion.html"><span class="lv-stop-name">Effort Inversion</span><span class="lv-tick">play</span></a></li><li><a href="competence-inversion.html"><span class="lv-stop-name">Competence Inversion</span></a></li><li><a href="introspective-bias.html"><span class="lv-stop-name">Introspective Bias</span></a></li><li><a href="trained-reasoning.html"><span class="lv-stop-name">Trained Reasoning</span></a></li><li><a href="special-brain-story.html"><span class="lv-stop-name">The Special Brain Story</span></a></li>
+        <li><a data-station="automaticity-blindness" href="#automaticity-blindness"><span class="lv-stop-name">Automaticity Blindness</span></a></li><li><a data-station="effort-inversion" href="#effort-inversion"><span class="lv-stop-name">Effort Inversion</span><span class="lv-tick" data-game="unstoppable-reader">play</span></a></li><li><a data-station="competence-inversion" href="#competence-inversion"><span class="lv-stop-name">Competence Inversion</span></a></li><li><a data-station="introspective-bias" href="#introspective-bias"><span class="lv-stop-name">Introspective Bias</span></a></li><li><a data-station="trained-reasoning" href="#trained-reasoning"><span class="lv-stop-name">Trained Reasoning</span></a></li><li><a data-station="special-brain-story" href="#special-brain-story"><span class="lv-stop-name">The Special Brain Story</span></a></li>
       </ol>
     </details>
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:#4f7d3a"></span><span class="lv-name">The Intelligence Line</span><span class="lv-sub">what intelligence actually is</span></summary>
       <ol class="lv-stops">
-        <li><a href="everyday-genius.html"><span class="lv-stop-name">Everyday Genius</span></a></li><li><a href="uncommon-genius.html"><span class="lv-stop-name">Uncommon Genius</span></a></li><li><a href="domain-specific-intelligence.html"><span class="lv-stop-name">Domain-Specific Intelligence</span></a></li><li><a href="prediction-engine.html"><span class="lv-stop-name">The Prediction Engine</span></a></li>
+        <li><a data-station="everyday-genius" href="#everyday-genius"><span class="lv-stop-name">Everyday Genius</span></a></li><li><a data-station="uncommon-genius" href="#uncommon-genius"><span class="lv-stop-name">Uncommon Genius</span></a></li><li><a data-station="domain-specific-intelligence" href="#domain-specific-intelligence"><span class="lv-stop-name">Domain-Specific Intelligence</span></a></li><li><a data-station="prediction-engine" href="#prediction-engine"><span class="lv-stop-name">The Prediction Engine</span></a></li>
       </ol>
     </details>
     </div>
 
     <div class="routes-head">Curated routes</div>
-    <details class="route"><summary><span class="route-name">Start here</span><span class="route-blurb">Five stops, from the everyday genius you already have to the practice that grows it.</span></summary><div class="route-stops">Everyday Genius &rarr; Automaticity &rarr; Effort Inversion &rarr; The Impostor &rarr; The Goldilocks Zone</div><a class="route-start" href="everyday-genius.html">Start riding &rarr;</a></details><details class="route"><summary><span class="route-name">The IQ route</span><span class="route-blurb">For the skeptic. The case against IQ, evidence first.</span></summary><div class="route-stops">Trained Reasoning &rarr; The Bottleneck and Chunking &rarr; Domain-Specific Intelligence &rarr; The Special Brain Story</div><a class="route-start" href="trained-reasoning.html">Start riding &rarr;</a></details><details class="route"><summary><span class="route-name">The performance route</span><span class="route-blurb">For the practitioner. Why you choke under pressure, and how to get the access back.</span></summary><div class="route-stops">Routing Architecture &rarr; The Capability-Accessibility Model &rarr; Solution Space &rarr; The Impostor &rarr; The Goldilocks Zone</div><a class="route-start" href="routing-architecture.html">Start riding &rarr;</a></details>
+    <details class="route"><summary><span class="route-name">Start here</span><span class="route-blurb">Five stops, from the everyday genius you already have to the practice that grows it.</span></summary><div class="route-stops">Everyday Genius &rarr; Automaticity &rarr; Effort Inversion &rarr; The Impostor &rarr; The Goldilocks Zone</div><a class="route-start" data-station="everyday-genius" href="#everyday-genius">Start riding &rarr;</a></details><details class="route"><summary><span class="route-name">The IQ route</span><span class="route-blurb">For the skeptic. The case against IQ, evidence first.</span></summary><div class="route-stops">Trained Reasoning &rarr; The Bottleneck and Chunking &rarr; Domain-Specific Intelligence &rarr; The Special Brain Story</div><a class="route-start" data-station="trained-reasoning" href="#trained-reasoning">Start riding &rarr;</a></details><details class="route"><summary><span class="route-name">The performance route</span><span class="route-blurb">For the practitioner. Why you choke under pressure, and how to get the access back.</span></summary><div class="route-stops">Routing Architecture &rarr; The Capability-Accessibility Model &rarr; Solution Space &rarr; The Impostor &rarr; The Goldilocks Zone</div><a class="route-start" data-station="routing-architecture" href="#routing-architecture">Start riding &rarr;</a></details>
   </main>
   
   <footer class="foot">
@@ -363,6 +347,8 @@
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
 </div>
+<script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
   var MAP = {"capability-accessibility-model":{"name":"The Capability-Accessibility Model","breath":"What you are capable of at any given moment is determined by two separate things: the knowledge and skills you’ve built through learning, and the knowledge and skills you can actually access at that moment.","game":null},"automaticity":{"name":"Automaticity","breath":"Practice something enough times and you can do without “thinking.” It runs on its own, fast, in the background, while your attention is elsewhere. This process isn’t a shortcut around thinking, but the only way real thinking can ever happen.","game":{"name":"The Unstoppable Reader","url":"../unstoppable-reader.html","blurb":"Try to look at a word and not read it. You will find that you cannot, because reading now starts on its own."}},"effort-inversion":{"name":"Effort Inversion","breath":"We watch somebody struggle and decide the task must be hard. We watch somebody breeze through it and decide it must be easy. But the reverse is almost always what’s actually true. Struggle is what beginning looks like and ease is what mastery looks like.","game":{"name":"The Unstoppable Reader","url":"../unstoppable-reader.html","blurb":"The part of the task that felt like nothing was the sophisticated part. This game makes you feel that directly."}},"automaticity-blindness":{"name":"Automaticity Blindness","breath":"Once a skill runs on its own, you can't feel it working. You only notice the effortful parts of your own mind, so the automatic parts go silent and start to feel like nothing at all, right at the moment they're doing the best and most advanced work you do.","game":null},"introspective-bias":{"name":"Introspective Bias","breath":"We built our whole picture of thinking out of the one part of our mind that we feel, which is slow conscious deliberation. Everything the mind does automatically is invisible from the inside, so we ignored it altogether.","game":null},"competence-inversion":{"name":"Competence Inversion","breath":"When you're learning, thinking is slow and effortful, so that's what we all decided real thinking must be. We look at an expert whose thinking has gone fast and smooth and call it natural ability.","game":null},"special-brain-story":{"name":"The Special Brain Story","breath":"The story says you were handed a certain kind of brain at birth, better or worse than the next person's, and that your job is to work out which one you got and stay in your lane. It's everywhere, it feels like plain common sense, and there has never been a shred of evidence for it.","game":null},"the-impostor":{"name":"The Impostor","breath":"There's a part of your brain whose whole job is to narrate you, keeping a running story of who you are and what you're capable of. But that story is a fabrication.","game":{"name":"The Genius Diagnostic","url":"../diagnostic.html","blurb":"See how your hours actually split between the engine and the narrator, and get a field manual for the narrator's favorite tricks."}},"the-genius":{"name":"The Genius","breath":"There's an engine in you that built every skill you've got without ever being told how. It learned to walk and talk and read faces while you were busy being a child. It runs on curiosity, it has no interest at all in grades, and it never left.","game":{"name":"The Genius Diagnostic","url":"../diagnostic.html","blurb":"Find out how much of your day is already Genius-led, and where the engine is getting crowded out."}},"adult-learning":{"name":"Adult Learning","breath":"Your brain keeps its ability to change for your whole life. Adult brains change less mainly because less needs changing, and the more you keep learning, the easier learning stays.","game":null},"genius-led-learning":{"name":"Genius-Led Learning","breath":"There are two ways to learn, and they have very different success rates. Genius-led learning is driven by curiosity, with the goal of real understanding. Impostor-led learning is driven by status, with the goal of getting the grade. The first builds knowledge and skill that lasts. The second mostly produces knowledge that is shallow and temporary.","game":null},"progressive-composition":{"name":"Progressive Composition","breath":"Every skill gets built the same way. You learn simple pieces, practice them until they run on their own, and then combine them into bigger pieces and repeat. The book calls this progressive composition, and it’s how walking, talking, reading, and math all get built.","game":null},"goldilocks-zone":{"name":"The Goldilocks Zone","breath":"Learning happens in a specific range of difficulty: hard enough that you fail some of the time, and easy enough that you succeed most of the time. The book calls this the Goldilocks Zone. Practice there should feel challenging, but attainable.","game":null},"implicit-learning":{"name":"Implicit Learning","breath":"Much of what you know, you learned without realizing it, and you can’t put it into words. You may not even realize you know it. Your brain picks up patterns from experience and builds them into skills without anyone teaching you the rules. When we don’t see that learning happen, we usually call the result a “gift”.","game":{"name":"The Secret Grammar","url":"../secret-grammar.html","blurb":"Ace rounds of adjective ordering instantly, then try to state the rule you just used. You will not be able to."}},"bottleneck-chunking":{"name":"The Bottleneck and Chunking","breath":"Your conscious mind can hold only a few items at once, and that limit is small for everyone. Experts don’t have a larger capacity. Through learning, they pack more meaning into each item, and that skill only works in the area where they built it.","game":{"name":"The Bottleneck","url":"../bottleneck.html","blurb":"Remember strings of letters for four seconds, then find out why the same letters were easy or impossible depending on their order."}},"everyday-genius":{"name":"Everyday Genius","breath":"The skills you use without thinking, like walking across a room, understanding speech, and recognizing faces, are solutions to some of the most complex problems a brain ever faces. We don’t call them genius only because nearly everyone has them.","game":null},"uncommon-genius":{"name":"Uncommon Genius","breath":"The breakthroughs we celebrate come from the same learning process that built your everyday skills. What makes them uncommon is the learning path. Someone spends years following an unusual curiosity, builds an unusual set of skills, and reaches solutions nobody else could.","game":null},"domain-specific-intelligence":{"name":"Domain-Specific Intelligence","breath":"Intelligence is the ability to solve problems to reach your goals, and it’s always specific to the problems you’ve learned to solve. There’s no general quality that makes a person smart at everything, and no single scale that ranks people from least to most intelligent.","game":null},"prediction-engine":{"name":"The Prediction Engine","breath":"Your brain doesn’t just take in what’s happening and then react to it. It constantly predicts what’s about to happen, based on everything it has learned, and checks those predictions against what actually happens. Much of what we call skill is prediction built through learning.","game":null},"routing-architecture":{"name":"Routing Architecture","breath":"Your brain operates in different modes, like focused work, mind-wandering, and sleep. Each mode changes which parts of the brain can communicate. The book calls the pattern of connections in each mode its routing architecture. Changing modes changes what you can reach, without changing anything you know.","game":null},"solution-space":{"name":"Solution Space","breath":"Your solution space is the set of problems you can currently solve. The book pictures it as land inside a fence. Learning moves the fence outward, and shifting your brain’s mode lets you reach more of the land inside it.","game":null},"unreliable-narrator":{"name":"The Unreliable Narrator","breath":"The part of your brain that explains your choices often doesn’t have access to the real reasons for them. It produces a believable story, and you believe it too. The same narrator also tells you what you can and can’t do, and it’s just as unreliable about that.","game":null},"trained-reasoning":{"name":"Trained Reasoning","breath":"Reasoning feels like a general ability you can apply to anything. But the same logic problem can be easy in one form and nearly impossible in another. Reasoning depends on the patterns you’ve learned, which makes it a skill like any other, built through learning.","game":null}};
   var LINES = [{"id":"genius","stations":["the-genius","adult-learning","genius-led-learning","automaticity"]},{"id":"impostor","stations":["the-impostor","unreliable-narrator","special-brain-story"]},{"id":"machinery","stations":["goldilocks-zone","progressive-composition","implicit-learning","automaticity","bottleneck-chunking","everyday-genius","uncommon-genius","solution-space"]},{"id":"access","stations":["routing-architecture","capability-accessibility-model","solution-space"]},{"id":"bias","stations":["automaticity-blindness","effort-inversion","competence-inversion","introspective-bias","trained-reasoning","special-brain-story"]},{"id":"intelligence","stations":["everyday-genius","uncommon-genius","domain-specific-intelligence","prediction-engine"]}];
@@ -379,29 +365,31 @@
   tabList.onclick = function(){ show('list'); };
   if (window.matchMedia('(max-width:600px)').matches) show('list');
 
-  // station preview
-  var preview = document.getElementById('preview');
-  var pvName = document.getElementById('pv-name'), pvBreath = document.getElementById('pv-breath');
-  var pvEnter = document.getElementById('pv-enter'), pvPlay = document.getElementById('pv-play');
-  function openStation(id){
-    var d = MAP[id]; if(!d) return;
-    pvName.textContent = d.name;
-    pvBreath.textContent = d.breath;
-    pvEnter.setAttribute('href', id + '.html');
-    /* The play button only shows for a launched game (launched.js gates
-       static links on load; this one is set after, so it checks itself). */
-    var slug = d.game ? d.game.url.split('/').pop().split('.')[0] : null;
-    if (d.game && (!window.launched || window.launched(slug))){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
-    else { pvPlay.hidden = true; }
-    preview.classList.add('on');
-    preview.scrollIntoView({behavior:'smooth', block:'nearest'});
-  }
-  document.getElementById('pv-close').onclick = function(){ preview.classList.remove('on'); undim(); };
+  // A station opens its cards right here (JT, 2026-10-16). Links inside the
+  // cards to other stations open those stations here too, and #station-id in
+  // the address opens one on arrival, so old and shared links still work.
+  function clearHash(){ if (history.replaceState) history.replaceState(null, '', location.pathname + location.search); }
+  function openStation(id){ if (window.ATLAS_CARDS && ATLAS_CARDS[id]) AtlasCards.open(id, { base: '', inPlace: true, onClose: clearHash }); }
   Array.prototype.forEach.call(document.querySelectorAll('.station'), function(g){
-    function act(){ openStation(g.getAttribute('data-id')); }
+    function act(){ var id = g.getAttribute('data-id'); if (history.replaceState) history.replaceState(null, '', '#' + id); openStation(id); }
     g.addEventListener('click', act);
     g.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } });
   });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-station]'), function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); var id = a.getAttribute('data-station'); if (history.replaceState) history.replaceState(null, '', '#' + id); openStation(id); });
+  });
+  function paintDone(){
+    var d = AtlasCards.done();
+    d.forEach(function(id){
+      var g = document.querySelector('.station[data-id="'+id+'"]'); if (g) g.classList.add('done');
+      Array.prototype.forEach.call(document.querySelectorAll('.lv-stops a[data-station="'+id+'"]'), function(a){ if (!a.querySelector('.lv-done')) a.querySelector('.lv-stop-name').insertAdjacentHTML('afterend', '<span class="lv-done">done</span>'); });
+    });
+  }
+  AtlasCards.onDone = paintDone;
+  paintDone();
+  var fromHash = (location.hash || '').replace('#', '');
+  if (fromHash && ATLAS_CARDS[fromHash]) openStation(fromHash);
+  window.addEventListener('hashchange', function(){ var id = (location.hash || '').replace('#',''); if (ATLAS_CARDS[id]) openStation(id); });
 
   // legend highlight a line
   var svg = document.querySelector('svg.map');
