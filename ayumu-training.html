@@ -546,6 +546,10 @@
     }
 
     .stage-prompt.alert { color: var(--red); font-weight: 700; }
+    /* The status line under the board is gone (JT, 2026-10-16: distracting,
+       serves no purpose); the intro cards carry the instructions. */
+    .stage-prompt { display: none; }
+    .stage-foot { justify-content: flex-end; }
 
     .stage-quit {
       flex: none;
@@ -916,8 +920,8 @@
         <div id="signin-box"></div>
         <div id="intro-status"></div>
         <div class="btn-row" id="intro-doors" style="margin-top: 24px;">
-          <button class="btn primary" id="btn-go-flash">Train the timed game</button>
-          <button class="btn primary" id="btn-go-nine">Train the nine</button>
+          <button class="btn primary" id="btn-go-flash">Train the flash game</button>
+          <button class="btn primary" id="btn-go-nine">Train the memory game</button>
           <a class="btn ghost" data-game="ayumu-test" href="ayumu-test.html">The Ayumu Test</a>
         </div>
         <div class="pref-row">
@@ -1078,8 +1082,8 @@ const NINE_STAGE_NS = [3, 4, 5, 6, 7, 8, 9];
 const TRACKS = {
   flash: {
     key: 'flash',
-    name: 'The timed game',
-    short: 'Timed',
+    name: 'The flash game',
+    short: 'Flash game',
     steps: [].concat.apply([], FLASH_STAGE_NS.map(n => FLASH_STAGE_HOLDS.map(h => ({ n, h })))),
     standard: 'Ayumu’s 210 milliseconds',
     stepLabel: st => st.n + ' numbers at ' + comma(st.h) + 'ms',
@@ -1087,8 +1091,8 @@ const TRACKS = {
   },
   nine: {
     key: 'nine',
-    name: 'The nine',
-    short: 'The nine',
+    name: 'The memory game',
+    short: 'Memory game',
     steps: [].concat.apply([], NINE_STAGE_NS.map(n => NINE_STAGE_TARGETS.map(t => ({ n, h: null, t })))),
     standard: 'Ayumu’s two thirds of a second',
     stepLabel: st => st.n + ' numbers, first tap within ' + secs(st.t),
@@ -2044,7 +2048,7 @@ function nineBarsSVG(rec) {
   ];
 
   let g = '<text x="' + L + '" y="12"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted +
-          '">TIME TAKEN BEFORE COMMITTING TO THE 1</text>';
+          '">TIME LOOKING BEFORE TAPPING THE 1</text>';
 
   rows.forEach((r, i) => {
     const mid = T + i * (rowH + gap) + rowH / 2;
@@ -2065,7 +2069,7 @@ function nineBarsSVG(rec) {
          (inside ? '#fff' : r.color) + '">' + secs(r.ms) + '</text>';
   });
 
-  const label = 'Ayumu commits to the first number in about ' + secs(AYUMU_COMMIT_MS) + '. ' +
+  const label = 'Ayumu taps the 1 after looking for about ' + secs(AYUMU_COMMIT_MS) + '. ' +
     (mine === null ? 'You have no clean run yet.' : 'Your fastest clean run is ' + secs(mine) + '.');
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
@@ -2194,7 +2198,7 @@ async function runTrackSession(kind) {
       if (r.clean) clean++;
       if (r.clean && r.ms !== null && (fastest === null || r.ms < fastest)) fastest = r.ms;
       if (kind === 'nine' && r.clean && !r.pass && trials < SET_TRIES) {
-        setPrompt('All correct, but ' + secs(r.ms) + ' is slower than the ' + secs(step.t) + ' target. Try committing sooner.', false);
+        setPrompt('All correct, but ' + secs(r.ms) + ' is slower than the ' + secs(step.t) + ' target. Try tapping the 1 sooner.', false);
         await wait(1100);
       }
     }
@@ -2332,7 +2336,7 @@ function renderTrack(kind) {
     '<h1 class="t-title" id="training-title">' + esc(def.name) + '</h1>';
 
   if (kind === 'flash') {
-    html += '<p class="t-body">This is Ayumu’s timed game, built up one number at a time. Each stage is one number count, starting at three. Inside a stage the flash gets shorter with every set you pass, from a full second down to Ayumu’s 210 milliseconds, and only once you land that count at his speed does the next stage add a number and start slow again. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
+    html += '<p class="t-body">This is Ayumu’s flash game, built up one number at a time. Each stage is one number count, starting at three. Inside a stage the flash gets shorter with every set you pass, from a full second down to Ayumu’s 210 milliseconds, and only once you land that count at his speed does the next stage add a number and start slow again. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
   } else {
     if (MOUSE_DEVICE) {
       html += '<p class="t-quiet" style="margin-bottom:14px;">This track is best played on a phone or tablet. With a mouse, the time it takes to move the pointer counts against you, and Ayumu’s standard is tight.</p>';
@@ -2391,8 +2395,8 @@ function renderTrack(kind) {
 
   html += '<h2 class="t-section" style="margin-top:44px;">The other track</h2>' +
     '<p class="t-body">' + (kind === 'flash'
-      ? 'The nine is Ayumu’s other game, and it trains a different thing: committing fast instead of taking in a flash. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.'
-      : 'The timed game is Ayumu’s other game, and it trains a different thing: taking in a flash instead of committing fast. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.') + '</p>' +
+      ? 'The memory game is Ayumu’s other game, and it trains a different thing: tapping the 1 quickly instead of taking in a flash. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.'
+      : 'The flash game is Ayumu’s other game, and it trains a different thing: taking in a flash instead of tapping the 1 quickly. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.') + '</p>' +
     '<div class="btn-row">' +
     '<button class="btn ghost" id="btn-track-other">Switch to ' + esc(trackDef(other).name.toLowerCase()) + '</button>' +
     '<button class="btn ghost" id="btn-track-home">Back to the start</button>' +
@@ -2617,7 +2621,7 @@ function renderShare() {
     '<p class="t-body">Two cards, one for each of Ayumu’s records. Pick the one you’d like to share.</p>' +
     '<div class="rung-list" role="group" aria-label="Choose a card" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border:0;margin:0 0 18px;">' +
     tab('flash', 'The five-number score') +
-    tab('nine', 'The nine, on the clock') +
+    tab('nine', 'The memory game') +
     '</div>' +
     '<canvas class="share-preview" id="share-canvas" aria-label="Preview of your share card"></canvas>' +
     '<div class="btn-row">' +
@@ -2896,7 +2900,7 @@ function renderIntroStatus() {
 
   /* The room is behind the sign-in. Signed out, the page explains what is
      here and asks for an email; the doors only appear once you are in. */
-  copy.innerHTML = '<p class="t-body">Ayumu practiced his game about five hundred times before anyone wrote a paper about him. This is where you practice yours. There are two tracks, one for each of his games: the timed game, and the nine. Each one adds a number only once you have met Ayumu’s own standard at the count before, so when you reach the top, you are at his level.</p>' +
+  copy.innerHTML = '<p class="t-body">Ayumu practiced his game about five hundred times before anyone wrote a paper about him. This is where you practice yours. There are two tracks, one for each of his games: the flash game and the memory game. Each one adds a number only once you have met Ayumu’s own standard at the count before, so when you reach the top, you are at his level.</p>' +
     (signedIn
       ? '<p class="t-body">Pick one track and train it consistently. Switching back and forth slows both down, so stay on one until it is complete.</p>'
       : '<p class="t-body">Your progress is saved to your email address, so you can pick up on any phone or computer. Sign in below to open the room.</p>');

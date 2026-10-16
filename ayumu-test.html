@@ -586,6 +586,10 @@
     }
 
     .stage-prompt.alert { color: var(--red); font-weight: 700; }
+    /* The status line under the board is gone (JT, 2026-10-16: distracting,
+       serves no purpose); the intro cards carry the instructions. */
+    .stage-prompt { display: none; }
+    .stage-foot { justify-content: flex-end; }
 
     .stage-quit {
       flex: none;
@@ -1186,13 +1190,13 @@
 
       <!-- ============ RETURNING ============ -->
       <section class="view" id="view-return" aria-labelledby="return-title">
-        <p class="t-eyebrow">A memory game</p>
+        <p class="t-eyebrow">The Ayumu Test</p>
         <h1 class="t-title" id="return-title">Welcome back</h1>
         <div id="return-body"></div>
         <div class="btn-row" style="margin-top: 30px;">
           <button class="btn primary" id="btn-walk-from-return" hidden>See the explanation</button>
-          <button class="btn primary" id="btn-flash-from-return">Battle Ayumu again</button>
-          <button class="btn" id="btn-nine-from-return">Try the nine</button>
+          <button class="btn primary" id="btn-flash-from-return">Play the flash game again</button>
+          <button class="btn" id="btn-nine-from-return">Play the memory game</button>
           <button class="btn ghost" id="btn-results-from-return">Your Ayumu score</button>
         </div>
         <p class="t-quiet" style="margin-top:18px;">Want to start from the very beginning, as if you had never played? <button type="button" class="inline-link" id="btn-return-reset" style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">Clear my results and start over</button></p>
@@ -2008,6 +2012,7 @@ function setHud(left, mid, right) {
 }
 
 function setPrompt(text, alert) {
+  /* Kept as a hook, but the line is hidden: see .stage-prompt. */
   const el = document.getElementById('prompt');
   el.textContent = text;
   el.classList.toggle('alert', !!alert);
@@ -2307,7 +2312,7 @@ async function runNineSession(opts) {
   /* "Redemption" only makes sense after losing the timed round (flow audit,
      2026-10-16): someone who beat Ayumu, or who has not played the timed
      round yet, gets a plain label. */
-  const label = !store.attempt ? 'The nine' : (beatFlash() ? 'Ayumu’s other game' : 'Your shot at redemption');
+  const label = (!store.attempt || beatFlash()) ? 'The memory game' : 'Your shot at redemption';
   const msgs = [
     store.attempt ? 'This time, all nine numbers appear at once, and they stay on the screen.' : 'In this game, all nine numbers appear at once, and they stay on the screen.',
     store.attempt ? 'There’s no flash. Look at them for as long as you like.' : 'Nothing flashes. Look at them for as long as you like.',
@@ -2324,7 +2329,7 @@ async function runNineSession(opts) {
 
   const results = [];
   for (let i = 0; i < NINE_TRIES; i++) {
-    setHud('THE NINE', 'GO ' + (i + 1) + ' / ' + NINE_TRIES, 'ALL NINE');
+    setHud('THE MEMORY GAME', 'GO ' + (i + 1) + ' / ' + NINE_TRIES, 'ALL NINE');
     const t = await runNineTrial();
     if (aborted || !t) break;
     results.push(t);
@@ -2444,8 +2449,8 @@ async function runAttempt(resume) {
   let target = ATTEMPT_EXTENDED;
 
   if (!resume) {
-    const go = await chat({ label: 'Ayumu’s version', title: 'Five numbers, for a fifth of a second' }, [
-      'This round is exactly what Ayumu does, at exactly his speed.',
+    const go = await chat({ label: 'The flash game', title: 'Five numbers, for a fifth of a second' }, [
+      'This is the flash game, played exactly the way Ayumu plays it.',
       'Five numbers will show for 210 milliseconds, about a fifth of a second, and then go blank.',
       'You get ten tries.',
       'If the numbers vanish before you’ve even seen them, don’t worry. They’re meant to be that fast.',
@@ -2464,7 +2469,7 @@ async function runAttempt(resume) {
 
   while (valid < target && attempts < target + MAX_REPLACEMENTS) {
     attempts++;
-    setHud('AYUMU’S VERSION', 'TRY ' + (valid + 1) + ' / ' + target, FLASH_N + ' · ' + FLASH_HOLD + 'MS');
+    setHud('THE FLASH GAME', 'TRY ' + (valid + 1) + ' / ' + target, FLASH_N + ' · ' + FLASH_HOLD + 'MS');
     const t = await runTrial(FLASH_N, FLASH_HOLD, { reveal: false });
     if (aborted || !t) return null;
     rec.log.push(t);
@@ -2602,7 +2607,7 @@ function nineBarsSVG(rec) {
   ];
 
   let g = '<text x="' + L + '" y="12"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted +
-          '">TIME TAKEN BEFORE COMMITTING TO THE 1</text>';
+          '">TIME LOOKING BEFORE TAPPING THE 1</text>';
 
   rows.forEach((r, i) => {
     const mid = T + i * (rowH + gap) + rowH / 2;
@@ -2623,7 +2628,7 @@ function nineBarsSVG(rec) {
          (inside ? '#fff' : r.color) + '">' + secs(r.ms) + '</text>';
   });
 
-  const label = 'Ayumu commits to the first number in about ' + secs(AYUMU_COMMIT_MS) + '. ' +
+  const label = 'Ayumu taps the 1 after looking for about ' + secs(AYUMU_COMMIT_MS) + '. ' +
     (mine === null ? 'You have no clean run yet.' : 'Your fastest clean run is ' + secs(mine) + '.');
   return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
 }
@@ -2698,7 +2703,7 @@ function renderNine(opts) {
 
   const mine = rec.bestMs;
   const beat = mine !== null && mine <= AYUMU_COMMIT_MS;
-  let html = '<p class="t-eyebrow">All nine · you set the clock</p>';
+  let html = '<p class="t-eyebrow">The memory game</p>';
 
   html += '<h1 class="t-headline" id="nine-headline">' + (mine === null
     ? 'Getting all nine is the first hurdle.'
@@ -2708,7 +2713,7 @@ function renderNine(opts) {
   html += '<p class="score-line"><b>' + rec.perfects + ' of ' + rec.tries + '</b> clean runs' +
     (nineFlow && sit ? '' : (sit ? ' · this sitting <b>' + sit.perfects + ' of ' + sit.tries + '</b>' : '')) + '</p>';
 
-  html += '<div class="t-label' + (beat ? ' red' : '') + '">Commit time' + (beat ? ' · you matched him' : '') + '</div>' +
+  html += '<div class="t-label' + (beat ? ' red' : '') + '">Time before tapping the 1' + (beat ? ' · you matched him' : '') + '</div>' +
     '<div class="chart-panel">' + nineBarsSVG(rec) + '</div>' +
     '<p class="chart-note">The numbers stay on the screen until you touch the 1, so this is a time you chose for yourself rather than one the game imposed on you. Ayumu starts in well under a second and almost always gets all nine.</p>';
 
@@ -2719,13 +2724,13 @@ function renderNine(opts) {
       : 'Take as long as you like, land one clean run, and then start working on your time. ') +
       'Once you have a time on the board, you will see how it compares with Ayumu’s.';
   } else if (beat) {
-    nineLine = 'Amazing! Ayumu commits to the 1 in about two thirds of a second and almost never misses, and you matched him, which makes you a rare human specimen.';
+    nineLine = 'Amazing! Ayumu taps the 1 after about two thirds of a second and almost never misses, and you matched him, which makes you a rare human specimen.';
   } else {
     const ratio = mine / AYUMU_COMMIT_MS;
     const faster = ratio >= 1.95
       ? (ratio >= 10 ? Math.round(ratio) : Math.round(ratio * 10) / 10) + ' times faster than your best'
       : (ratio >= 1.15 ? Math.round((ratio - 1) * 100) + '% faster than your best' : 'just a little faster than your best');
-    nineLine = 'So here is the news. Ayumu commits to the 1 in about <strong>two thirds of a second</strong>, which is ' + faster +
+    nineLine = 'So here is the news. Ayumu taps the 1 after about <strong>two thirds of a second</strong>, which is ' + faster +
       ', and he still gets all nine almost every time. ' + (nineFlow
         ? 'The next time you play, try tapping the 1 a little sooner on each go until you find the point where it falls apart. '
         : 'Now see if you can close that gap. Tap the 1 a little sooner on each go until you find the point where it falls apart. ') +
@@ -2754,7 +2759,7 @@ function renderNine(opts) {
       '<button class="btn' + (walkNext ? '' : ' primary') + '" id="btn-nine-again">Go again</button>' +
       (store.attempt
         ? '<button class="btn" id="btn-nine-to-results">Your five-number score</button>'
-        : '<button class="btn" id="btn-nine-to-flash">Try the timed version</button>') +
+        : '<button class="btn" id="btn-nine-to-flash">Play the flash game</button>') +
       '<a class="btn ghost" href="ayumu-science.html">Why he wins</a>' +
       '</div>';
   }
@@ -3079,7 +3084,7 @@ function renderResults(opts) {
   const beatAyumu = rec.acc >= AYUMU_ACC;
   const zero = rec.hits === 0;
 
-  let html = '<p class="t-eyebrow">Five numbers · 210 milliseconds</p>';
+  let html = '<p class="t-eyebrow">The flash game · five numbers at 210 milliseconds</p>';
 
   if (rec.trials === 0) {
     /* Every try was thrown out on timing, so there is no score to give. */
@@ -3144,17 +3149,17 @@ function renderResults(opts) {
     if (store.nine && store.nine.tries) {
       /* Played the Nine before the timed round: don't pitch it again. */
       html += '<h2 class="t-section" style="margin-top:40px;">What just happened</h2>' +
-        '<p class="t-body">You’ve played both of Ayumu’s games now. Tap below to see what your scores mean.</p>' +
+        '<p class="t-body">You’ve played both of Ayumu’s games now, the flash game and the memory game. Tap below to see what your scores mean.</p>' +
         '<div class="btn-row">' +
         '<button class="btn primary" id="btn-flow-skip">See what just happened</button>' +
-        '<button class="btn ghost" id="btn-flow-nine">Play the nine again</button>' +
+        '<button class="btn ghost" id="btn-flow-nine">Play the memory game again</button>' +
         '</div>';
     } else {
-      html += '<h2 class="t-section" style="margin-top:40px;">' + (beatAyumu ? 'Ayumu’s other game' : 'Your shot at redemption') + '</h2>' +
-        '<p class="t-body">Ayumu has a second game. All nine numbers stay on the screen until you tap the 1.</p>' +
+      html += '<h2 class="t-section" style="margin-top:40px;">' + (beatAyumu ? 'The memory game' : 'Your shot at redemption') + '</h2>' +
+        '<p class="t-body">Ayumu has a second game, the memory game. All nine numbers stay on the screen until you tap the 1.</p>' +
         '<p class="t-body">It times how long you look before tapping the 1, and you’ll see how you compare with him.</p>' +
         '<div class="btn-row">' +
-        '<button class="btn primary" id="btn-flow-nine">' + (beatAyumu ? 'Play Ayumu’s second game' : 'Claim my shot at redemption') + '</button>' +
+        '<button class="btn primary" id="btn-flow-nine">' + (beatAyumu ? 'Play the memory game' : 'Claim my shot at redemption') + '</button>' +
         '<button class="btn ghost" id="btn-flow-skip">Skip ahead to what just happened</button>' +
         '</div>';
     }
@@ -3179,20 +3184,20 @@ function renderResults(opts) {
      The full pitch only shows for someone who declined it on the way. */
   const nine = store.nine;
   if (nine && nine.tries) {
-    html += '<h2 class="t-section" style="margin-top:40px;">The Nine</h2>' +
-      '<p class="t-body">Ayumu’s other record is the nine: all nine numbers on the screen, and he commits to the 1 in about <strong>two thirds of a second</strong>.' +
+    html += '<h2 class="t-section" style="margin-top:40px;">The memory game</h2>' +
+      '<p class="t-body">In the memory game, Ayumu taps the 1 after about <strong>two thirds of a second</strong>.' +
       (nine.bestMs !== null
         ? ' Your best clean run: <strong>' + secs(nine.bestMs) + '</strong>.'
         : ' You don’t have a clean run on the board yet.') + '</p>' +
       '<div class="chart-panel">' + nineBarsSVG(nine) + '</div>' +
       '<div class="btn-row">' +
-      '<button class="btn primary" id="btn-to-nine">Play the nine again</button>' +
+      '<button class="btn primary" id="btn-to-nine">Play the memory game again</button>' +
       '</div>';
   } else {
-    html += '<h2 class="t-section" style="margin-top:40px;">' + (beatAyumu ? 'Ayumu’s other game' : 'Your shot at redemption') + '</h2>' +
-      '<p class="t-body">You haven’t played Ayumu’s second game yet. All nine numbers stay on the screen until you tap the 1.</p>' +
+    html += '<h2 class="t-section" style="margin-top:40px;">' + (beatAyumu ? 'The memory game' : 'Your shot at redemption') + '</h2>' +
+      '<p class="t-body">Ayumu has a second game, the memory game, and you haven’t played it yet. All nine numbers stay on the screen until you tap the 1.</p>' +
       '<div class="btn-row">' +
-      '<button class="btn primary" id="btn-to-nine">' + (beatAyumu ? 'Play Ayumu’s second game' : 'Claim my shot at redemption') + '</button>' +
+      '<button class="btn primary" id="btn-to-nine">' + (beatAyumu ? 'Play the memory game' : 'Claim my shot at redemption') + '</button>' +
       '</div>';
   }
 
@@ -3436,7 +3441,7 @@ function renderShare() {
     '<p class="t-body">Two cards, one for each of Ayumu’s records. Pick the one you’d like to share.</p>' +
     '<div class="rung-list" role="group" aria-label="Choose a card" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border:0;margin:0 0 18px;">' +
     tab('flash', 'The five-number score') +
-    tab('nine', 'The nine, on the clock') +
+    tab('nine', 'The memory game') +
     '</div>' +
     '<canvas class="share-preview" id="share-canvas" aria-label="Preview of your share card"></canvas>' +
     '<div class="btn-row">' +
@@ -3762,10 +3767,10 @@ function boot() {
   const rec = store.attempt;
   if (!rec) { showView('view-intro'); return; }
 
-  let body = '<p class="t-body">Last time, you got <strong>' + pct(rec.acc) + '%</strong> at Ayumu’s setting: five numbers, 210 milliseconds. He gets about 80%.</p>';
+  let body = '<p class="t-body">Last time, you got <strong>' + pct(rec.acc) + '%</strong> on the flash game. Ayumu gets about 80%.</p>';
   if (store.nine && store.nine.bestMs !== null) {
-    body += '<p class="t-body">On the nine, your fastest clean run is <strong>' + secs(store.nine.bestMs) +
-      '</strong>. Ayumu commits in about ' + secs(AYUMU_COMMIT_MS) + '.</p>';
+    body += '<p class="t-body">On the memory game, your fastest clean run is <strong>' + secs(store.nine.bestMs) +
+      '</strong>. Ayumu taps the 1 after about ' + secs(AYUMU_COMMIT_MS) + '.</p>';
   }
   const unfinished = !store.revealSeen;
   if (unfinished) body += '<p class="t-body">You haven’t seen the whole explanation of your score yet.</p>';
