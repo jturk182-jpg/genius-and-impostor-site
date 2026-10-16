@@ -127,7 +127,7 @@ window.AyumuExplanation = (function () {
             ? 'You are already level with a chimpanzee who has practiced this for years, and the people who kept practicing went further still. '
             : 'The people who practiced this game got much closer to Ayumu, and some of them caught him. ') +
           'The book this site is built around, The Genius and the Impostor, is about exactly this: how every extraordinary ability gets built, Ayumu’s included.' +
-          (ctx.training ? '\n\nIf you want to train your brain to try to beat Ayumu, there’s a program here that’s just for that.' : ''),
+          (ctx.training ? '\n\n<strong>If you want to train your brain to try to beat Ayumu, there’s a program here that’s just for that.</strong>' : ''),
         signup: !!ctx.training }
     ];
   }
