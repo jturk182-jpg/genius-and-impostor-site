@@ -11,3 +11,8 @@
   from = "/toolkit"
   to = "/"
   status = 301
+
+[[redirects]]
+  from = "/book"
+  to = "/book.html"
+  status = 200

@@ -1,0 +1,3064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Ayumu Training Room — GeniusAndImpostor.com</title>
+  <meta name="description" content="How far can practice take you? Train at Ayumu’s game one step at a time, and keep your progress on every device you play on.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ================================================================
+       SHARED FURNITURE — lifted verbatim from diagnostic.html.
+       Keep the two copies in sync by hand until there is a reason to
+       factor them into a real stylesheet (build-context §2: no build step).
+       ================================================================ */
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #fafaf8;
+      --ink: #1a1a1a;
+      --red: #c44b3a;
+      --muted: #666;
+      --rule: #e0dcd4;
+      --parchment: #f1ebde;
+      --parchment-line: #d6cfc2;
+      --parchment-margin: #c44b3a;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --mono: 'Space Mono', 'Courier New', monospace;
+    }
+
+    /* High-contrast mode. Nothing in the game or the charts is distinguished
+       by hue alone, so this only has to raise luminance contrast. */
+    body.hc {
+      --bg: #ffffff;
+      --ink: #000000;
+      --red: #a3271a;
+      --muted: #2e2e2e;
+      --rule: #767676;
+      --parchment: #ffffff;
+      --parchment-line: #000000;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--serif);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 600px) {
+      .shell { padding: 0 40px; }
+    }
+
+    .shell-main {
+      flex: 1;
+      padding: 48px 0 64px;
+    }
+
+    .tool-mast {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .tool-mast-home {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .tool-mast-home:hover { color: var(--red); }
+
+    .tool-mast-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .t-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .t-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 7vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .t-subtitle {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3.6vw, 22px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--muted);
+      margin: -6px 0 22px;
+    }
+
+    .t-headline {
+      font-family: var(--serif);
+      font-size: clamp(26px, 5.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .t-section {
+      font-family: var(--serif);
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .t-body {
+      font-family: var(--serif);
+      font-size: clamp(17px, 3.2vw, 19px);
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+
+    .t-body:last-child { margin-bottom: 0; }
+
+    .t-quiet {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+
+    .t-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .t-label.red { color: var(--red); }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--red);
+      background: transparent;
+      border: 1.5px solid var(--red);
+      padding: 12px 24px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover, .btn:focus-visible {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn.primary {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn.primary:hover, .btn.primary:focus-visible {
+      background: #a83c2d;
+      border-color: #a83c2d;
+    }
+
+    .btn.ghost {
+      color: var(--muted);
+      border-color: var(--rule);
+    }
+
+    .btn.ghost:hover, .btn.ghost:focus-visible {
+      background: transparent;
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* The signed-in progress panel on the intro. */
+    .status-rows { margin-top: 4px; }
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      align-items: baseline;
+      padding: 10px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .status-row:first-child { border-top: 0; padding-top: 2px; }
+    .status-key {
+      flex: 0 0 118px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .status-val { flex: 1 1 200px; font-family: var(--serif); font-size: 16px; line-height: 1.45; color: var(--ink); }
+    .status-val b { font-weight: 700; }
+    .status-foot {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .status-foot button { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
+
+    .parchment-card {
+      background: var(--parchment);
+      padding: 30px 28px 26px;
+      position: relative;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.07);
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          transparent,
+          transparent 27px,
+          var(--parchment-line) 27px,
+          var(--parchment-line) 28px
+        );
+      background-size: 100% 28px;
+      background-position: 0 20px;
+      margin: 28px 0;
+    }
+
+    body.hc .parchment-card {
+      background-image: none;
+      border: 1px solid var(--ink);
+      box-shadow: none;
+    }
+
+    .parchment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 1.5px;
+      background: var(--parchment-margin);
+      opacity: 0.3;
+    }
+
+    .parchment-card .card-header {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-stamp {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      padding: 2px 6px;
+      transform: rotate(-2deg);
+      opacity: 0.7;
+    }
+
+    .tool-footer {
+      border-top: 1px solid var(--rule);
+      padding: 36px 0 48px;
+      text-align: center;
+    }
+
+    .tool-footer-cover {
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+
+    .tool-footer-cover img {
+      width: 92px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+      transition: transform 0.2s;
+    }
+
+    .tool-footer-cover:hover img { transform: translateY(-2px); }
+
+    .tool-footer-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.7;
+      margin-bottom: 14px;
+    }
+
+    .tool-footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-footer-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .tool-footer-links a:hover { color: var(--red); }
+
+    .tool-footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.5;
+      margin-top: 18px;
+    }
+
+    /* ================================================================
+       TOOL-SPECIFIC — The Ayumu Test
+       ================================================================ */
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    a.inline-link {
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    a.inline-link:hover { border-bottom-color: var(--red); }
+
+    .spec-list {
+      list-style: none;
+      margin: 18px 0 26px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .spec-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .spec-list li b {
+      color: var(--ink);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .pref-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .pref-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .pref-toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--red);
+      cursor: pointer;
+    }
+
+    /* ---------- THE PLAY LAYER ----------
+       Fixed full-viewport, outside .shell. On a phone the board needs every
+       pixel, and the surrounding page furniture is noise during a trial. */
+    .play-layer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: var(--bg);
+      flex-direction: column;
+      padding:
+        max(10px, env(safe-area-inset-top))
+        max(10px, env(safe-area-inset-right))
+        max(10px, env(safe-area-inset-bottom))
+        max(10px, env(safe-area-inset-left));
+    }
+
+    .play-layer.active { display: flex; }
+
+    .stage {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .stage-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px 2px 10px;
+      flex: none;
+    }
+
+    .stage-hud .hud-mid { color: var(--ink); }
+
+    .stage-field {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      touch-action: manipulation;
+    }
+
+    #board {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: pointer;
+    }
+
+    #board:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: -2px;
+    }
+
+    .stage-foot {
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 2px 2px;
+      min-height: 46px;
+    }
+
+    .stage-prompt {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      line-height: 1.5;
+      /* Three lines reserved, so a longer prompt never resizes the board
+         mid-round; the canvas above is measured once per round. */
+      min-height: calc(3 * 1.5em);
+    }
+
+    .stage-prompt.alert { color: var(--red); font-weight: 700; }
+
+    .stage-quit {
+      flex: none;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--rule);
+      padding: 3px 1px;
+      cursor: pointer;
+    }
+
+    .stage-quit:hover { color: var(--red); border-bottom-color: var(--red); }
+
+    /* ---------- the interstitial card, drawn over the board ---------- */
+    .stage-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      overflow-y: auto;
+    }
+
+    .stage-overlay.active { display: flex; }
+
+    .overlay-inner {
+      max-width: 460px;
+      width: 100%;
+    }
+
+    .overlay-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 6vw, 32px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .overlay-body {
+      font-family: var(--serif);
+      font-size: clamp(16px, 3.4vw, 18px);
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .overlay-body p { margin-bottom: 14px; }
+    .overlay-body p:last-child { margin-bottom: 0; }
+
+    .overlay-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 26px;
+      margin: 18px 0 6px;
+      padding: 14px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .overlay-stat {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .overlay-stat b {
+      display: block;
+      font-size: 21px;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin-top: 2px;
+    }
+
+    .overlay-stat.red b { color: var(--red); }
+
+    .overlay-inner .btn-row { margin-top: 24px; }
+
+    /* ---------- reveal: multiple-choice answer rows ---------- */
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .choice {
+      text-align: left;
+      font-family: var(--serif);
+      font-size: clamp(15px, 3.2vw, 17px);
+      line-height: 1.4;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid var(--rule);
+      border-radius: 6px;
+      padding: 15px 18px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+
+    .choice:hover, .choice:focus-visible {
+      border-color: var(--red);
+      background: #fdfbf7;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    /* Once a guess is in: the right answer gets a solid outline and a tick,
+       a wrong pick gets struck through, and the rest fade back. */
+    .choice:disabled { cursor: default; transform: none; }
+    .choice.correct { border: 2px solid var(--ink); background: #fff; font-weight: 700; }
+    .choice.correct::before { content: "\2713\00a0"; }
+    .choice.wrong { border-color: var(--red); color: var(--red); text-decoration: line-through; background: #fff; }
+    .choice.dim { opacity: 0.45; }
+
+    .choice-back {
+      align-self: flex-start;
+      background: none;
+      border: 0;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 10px 4px 0;
+    }
+    .choice-back:hover, .choice-back:focus-visible { color: var(--ink); outline: none; }
+
+    .verdict {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .verdict.ok { color: var(--ink); }
+    .verdict.miss { color: var(--red); }
+
+    /* ---------- results: you vs Ayumu ---------- */
+    .chart-panel {
+      border: 1px solid var(--rule);
+      background: #fff;
+      padding: 18px 14px 14px;
+      margin: 8px 0 0;
+    }
+
+    body.hc .chart-panel { border-color: var(--ink); }
+
+    .chart-svg {
+      width: 100%;
+      max-width: 460px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .chart-note {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      margin: 16px 0 30px;
+    }
+
+    .score-line {
+      font-family: var(--mono);
+      font-size: clamp(13px, 3vw, 15px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .score-line b { color: var(--ink); }
+
+    .reveal-beats p {
+      font-family: var(--serif);
+      font-size: clamp(17px, 3.2vw, 19px);
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+
+    /* The mirror beat is the most important paragraph here, so it gets to
+       look different from the ones around it. */
+    .reveal-beats p.beat-mirror {
+      font-size: clamp(19px, 3.8vw, 22px);
+      line-height: 1.6;
+      font-weight: 600;
+      border-left: 3px solid var(--red);
+      padding-left: 20px;
+      margin: 34px 0;
+    }
+
+    details.timing {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin: 32px 0;
+      padding: 14px 0;
+    }
+
+    details.timing summary {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details.timing summary::-webkit-details-marker { display: none; }
+    details.timing summary::before { content: '+ '; color: var(--red); }
+    details.timing[open] summary::before { content: '– '; }
+
+    .timing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .timing-table th {
+      text-align: left;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 6px 10px 6px 0;
+      border-bottom: 1px solid var(--ink);
+      white-space: nowrap;
+    }
+
+    .timing-table td {
+      padding: 6px 10px 6px 0;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .timing-table td.flag { color: var(--red); }
+    .timing-table tr.excluded td { color: var(--muted); text-decoration: line-through; }
+    .timing-table tr.excluded td.flag { text-decoration: none; }
+
+    /* ---------- training room ---------- */
+    .rung-strip {
+      display: flex;
+      gap: 3px;
+      margin: 6px 0 14px;
+      align-items: flex-end;
+      height: 40px;
+    }
+
+    .rung-pip { flex: 1; background: var(--rule); min-width: 4px; }
+    .rung-pip.done { background: var(--ink); }
+    .rung-pip.here { background: var(--red); }
+
+    .rung-list {
+      border-top: 1px solid var(--rule);
+      margin: 14px 0 6px;
+    }
+
+    .rung-row {
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 52px;
+      padding: 10px 10px 10px 8px;
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--rule);
+      border-left: 3px solid transparent;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .rung-row:hover { background: var(--parchment); }
+    .rung-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+    .rung-row .rung-n { font-size: 10px; color: var(--muted); letter-spacing: 0.05em; }
+    .rung-row .rung-hold { color: var(--muted); font-size: 11px; letter-spacing: 0.06em; }
+
+    .rung-row .rung-tag {
+      display: block;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .rung-row.current { background: var(--parchment); border-left-color: var(--red); }
+    .rung-row.current .rung-n, .rung-row.current .rung-tag { color: var(--red); }
+
+    /* Reads as "further ahead than you have been", not as "locked". */
+    .rung-row.beyond .rung-desc, .rung-row.beyond .rung-hold { opacity: 0.72; }
+
+    .ladder-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-top: 8px;
+    }
+
+    .ladder-table th {
+      text-align: left;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 6px 12px 6px 0;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .ladder-table td { padding: 7px 12px 7px 0; border-bottom: 1px solid var(--rule); }
+
+    .share-preview {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.14);
+    }
+
+  </style>
+  <script src="launched.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="tool-mast">
+      <a class="tool-mast-home" href="index.html">GeniusAndImpostor.com</a>
+      <span class="tool-mast-name">The Ayumu Training Room</span>
+    </header>
+
+    <main class="shell-main" id="main">
+      <noscript>
+        <p class="t-body">This one needs JavaScript switched on, because the game has to control what your screen does down to a few thousandths of a second. The story behind it reads perfectly well without: <a class="inline-link" href="ayumu-science.html">meet Ayumu here</a>.</p>
+      </noscript>
+
+      <!-- ============ INTRO ============ -->
+      <section class="view" id="view-intro" aria-labelledby="intro-title">
+        <h1 class="t-title" id="intro-title">How far can practice take you?</h1>
+        <p class="t-subtitle">The Ayumu Training Room</p>
+        <div id="intro-copy"></div>
+        <div id="signin-box"></div>
+        <div id="intro-status"></div>
+        <div class="btn-row" id="intro-doors" style="margin-top: 24px;">
+          <button class="btn primary" id="btn-go-flash">Train the timed game</button>
+          <button class="btn primary" id="btn-go-nine">Train the nine</button>
+          <a class="btn ghost" data-game="ayumu-test" href="ayumu-test.html">The Ayumu Test</a>
+        </div>
+        <div class="pref-row">
+          <label class="pref-toggle"><input type="checkbox" id="pref-hc"> Higher contrast</label>
+          <span class="t-quiet">Works best on a screen you can hold still, turned up bright.</span>
+        </div>
+      </section>
+
+      <!-- ============ TRAINING ROOM ============ -->
+      <section class="view" id="view-training" aria-labelledby="training-title">
+        <div id="training-body"></div>
+      </section>
+
+      <!-- ============ SHARE ============ -->
+      <section class="view" id="view-share" aria-labelledby="share-title">
+        <div id="share-body"></div>
+      </section>
+    </main>
+
+    <!-- SHARED: cross-tool footer (build-context §2b). Mirror any change here
+         into diagnostic.html and every future tool page. -->
+    <footer class="tool-footer">
+      <a class="tool-footer-cover" href="book.html" aria-label="The Genius and the Impostor, the book">
+        <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
+      </a>
+      <div class="tool-footer-label">While you’re here</div>
+      <div class="tool-footer-links">
+        <a href="book.html">The Genius and the Impostor</a>
+        <a data-game="diagnostic" href="diagnostic.html">The Genius Diagnostic</a>
+        <a data-game="unstoppable-reader" href="unstoppable-reader.html">The Unstoppable Reader</a>
+        <a data-game="secret-grammar" href="secret-grammar.html">The Secret Grammar</a>
+        <a data-game="ayumu-test" href="ayumu-science.html">The science behind this game</a>
+      </div>
+      <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
+    </footer>
+  </div>
+
+  <!-- ============ PLAY LAYER (outside the shell, deliberately) ============ -->
+  <div class="play-layer" id="view-play">
+    <div class="stage">
+      <div class="stage-hud">
+        <span id="hud-left"></span>
+        <span class="hud-mid" id="hud-mid"></span>
+        <span id="hud-right"></span>
+      </div>
+      <div class="stage-field" id="field">
+        <canvas id="board" tabindex="0" role="application"
+                aria-label="Memory board. Numbers appear briefly, then turn into blank tiles. Use the arrow keys to move between tiles and Enter to choose one, smallest number first."></canvas>
+        <div class="stage-overlay" id="overlay">
+          <div class="overlay-inner">
+            <div class="t-label" id="ov-label"></div>
+            <h2 class="overlay-title" id="ov-title"></h2>
+            <div class="overlay-body" id="ov-body"></div>
+            <div class="btn-row" id="ov-actions"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stage-foot">
+        <p class="stage-prompt" id="prompt" aria-live="polite"></p>
+        <button class="stage-quit" id="btn-quit">Stop</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+'use strict';
+
+/* ================================================================
+   Copy voice-passed 2026-09-02 (plain, conversational, no clipped
+   fragments) ahead of release. The reveal (revealSteps) and the
+   share-card dare lines remain JT’s to finish in his own voice.
+   ================================================================ */
+
+/* ================================================================
+   1. CONSTANTS
+   ================================================================ */
+
+/* ────────────────────────────────────────────────────────────────
+   TWO TASKS, BOTH REAL (restructured 2026-07-29, JT).
+
+   Inoue & Matsuzawa 2007 ran two DIFFERENT paradigms, and earlier
+   builds of this tool merged them into one condition that nobody has
+   ever been measured on (nine numerals at a fixed 210ms). That was
+   harder than either real task and could not honestly be labelled
+   "Ayumu’s condition". Both are now built separately and faithfully:
+
+   1. THE FLASH — five numerals, FIXED exposure (650/430/210ms), then
+      everything masks at once. Ayumu ~80% and flat across all three
+      durations; the nine human subjects 20-40% at 210ms. This is the
+      scored, comparable round and the spine of the reveal.
+
+   2. THE NINE — all nine numerals, SELF-PACED. They stay visible until
+      you touch the 1, and only then do the other eight mask. So the
+      player closes their own study window by committing to that first
+      tap. Ayumu: above 80% correct with a first-touch latency of about
+      0.67s. That is the target, and it is a TIME, not an exposure.
+
+   Do not re-merge these. "Nine at a fixed 210ms" is not a chimp
+   condition and must never be labelled as one.
+   ──────────────────────────────────────────────────────────────── */
+
+/* Task 1: the Flash */
+const FLASH_N = 5;
+const FLASH_HOLD = 210;
+const AYUMU_ACC = 0.80;      /* Inoue & Matsuzawa 2007, flat across holds */
+const HUMAN_LOW = 0.20;      /* the study’s human range at 210ms */
+const HUMAN_HIGH = 0.40;
+
+/* Task 2: the Nine. Ayumu’s first-touch latency, in milliseconds. */
+const NINE_N = 9;
+const AYUMU_COMMIT_MS = 670;
+
+/* Warm-up. Enough to learn the rules and nothing more. */
+const WARMUP = [3, 4, 5];
+const WARMUP_HOLD = 1500;
+
+/* The scored attempt at the Flash, Ayumu’s real 210ms condition. Ten goes
+   for everyone (JT, 2026-08-09): one flat denominator, no mid-round
+   extension, so the try counter never changes shape. */
+const ATTEMPT_EXTENDED = 10;
+
+/* The Nine: how many self-paced goes in one sitting. */
+const NINE_TRIES = 5;
+
+/* A flagged trial is replaced rather than scored (spec §7, timing honesty).
+   Capped so a device that cannot hold a frame budget still finishes. */
+const MAX_REPLACEMENTS = 4;
+
+/* ────────────────────────────────────────────────────────────────
+   THE TWO TRACKS (JT, 2026-09-14). One machine, two ladders.
+
+   Each track is a ladder of STAGES, one per number count, and you only
+   leave a stage by meeting Ayumu's standard at that count:
+     timed  stages of 3, 4, then 5 numbers. Inside a stage the flash
+            shortens step by step (1000 → 650 → 430 → 290 → 210ms); pass
+            the set at 210ms and the next stage adds a number, starting
+            slow again. (JT, 2026-09-14: "each stage is a progression
+            until 210ms is reached.")
+     nine   stages of 3 → … → 9 numbers, self-paced. Inside a stage the
+            first-tap target tightens (1.5s → 1.0s → 0.67s, his commit
+            time); a go passes only if it is clean AND the first tap beats
+            the current target. Pass the set at 0.67s and the next stage
+            adds a number, starting back at 1.5s. (JT, 2026-09-16: two
+            pieces of mastery, the order and the speed, trained together.)
+   A set is SET_TRIES goes. Pass STEP_UP of a set and you move up a step.
+   A step once unlocked is never taken away: at STEP_DOWN or worse the set
+   card OFFERS a drop back one step, and the player decides (JT,
+   2026-09-14: "don't force it"). Reaching the top step
+   and passing COMPLETE_SETS sets in a row there is "done": the timed track
+   stops at five at 210ms (Ayumu's own condition; going beyond him adds
+   nothing to the argument), the nine stops at nine. Players pick a track
+   and are told to stay on it.
+   ──────────────────────────────────────────────────────────────── */
+const FLASH_STAGE_HOLDS = [1000, 650, 430, 290, FLASH_HOLD];
+const FLASH_STAGE_NS = [3, 4, 5];
+const NINE_STAGE_TARGETS = [1500, 1000, AYUMU_COMMIT_MS];
+const NINE_STAGE_NS = [3, 4, 5, 6, 7, 8, 9];
+const TRACKS = {
+  flash: {
+    key: 'flash',
+    name: 'The timed game',
+    short: 'Timed',
+    steps: [].concat.apply([], FLASH_STAGE_NS.map(n => FLASH_STAGE_HOLDS.map(h => ({ n, h })))),
+    standard: 'Ayumu’s 210 milliseconds',
+    stepLabel: st => st.n + ' numbers at ' + comma(st.h) + 'ms',
+    passWord: 'remembered'
+  },
+  nine: {
+    key: 'nine',
+    name: 'The nine',
+    short: 'The nine',
+    steps: [].concat.apply([], NINE_STAGE_NS.map(n => NINE_STAGE_TARGETS.map(t => ({ n, h: null, t })))),
+    standard: 'Ayumu’s two thirds of a second',
+    stepLabel: st => st.n + ' numbers, first tap within ' + secs(st.t),
+    passWord: 'clean and fast enough'
+  }
+};
+const SET_TRIES = 6;
+const SETS_PER_SESSION = 3;
+const STEP_UP = 0.80;        /* pass rate that earns the next step */
+const STEP_DOWN = 0.34;      /* pass rate at which dropping back is offered */
+const COMPLETE_SETS = 2;     /* passes in a row at the top step = done */
+
+/* A mouse has to travel to the tiles; a thumb is already over them. On
+   mouse-driven screens the tiles are drawn smaller and packed closer, in a
+   smaller box, so that travel is short. Touch screens are untouched:
+   pointer:coarse never matches here, so every touch value below is the
+   original. */
+const MOUSE_DEVICE = (function () {
+  try { return window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(pointer: coarse)').matches; }
+  catch (e) { return false; }
+})();
+
+/* Layout. The whole non-overlap guarantee rests on these plus planGrid(). */
+const MIN_TILE = MOUSE_DEVICE ? 30 : 44;   /* touch: never smaller than a comfortable target */
+const MAX_TILE = MOUSE_DEVICE ? 40 : 78;
+const TILE_GAP = MOUSE_DEVICE ? 8 : 12;    /* guaranteed minimum clearance between tiles */
+
+/* Dev hooks are a cheat surface (window.__ayumu includes a solver), so ?dev=1
+   only does anything on a local host. On the live domain the flag is inert and
+   the hooks are never installed. */
+const LOCAL_HOST = (function () {
+  const h = location.hostname;
+  return h === '' || h === 'localhost' || h === '127.0.0.1' || h === '[::1]' ||
+         h === '::1' || h.endsWith('.local');
+})();
+const DEV = LOCAL_HOST && new URLSearchParams(location.search).has('dev');
+
+/* ================================================================
+   2. STORAGE
+   ================================================================ */
+
+const STORE_KEY = 'giAyumuTraining.v1';
+
+function blankTrack() { return { rung: 0, sessions: [], topStreak: 0, completedAt: null }; }
+
+function blankStore() {
+  return {
+    tracks: { flash: blankTrack(), nine: blankTrack() },
+    prefs: { hc: false }
+  };
+}
+
+function normalizeStore(s) {
+  if (!s || typeof s !== 'object') return null;
+  if (!s.tracks || typeof s.tracks !== 'object') s.tracks = {};
+  ['flash', 'nine'].forEach(k => {
+    const t = s.tracks[k] || (s.tracks[k] = blankTrack());
+    if (!Array.isArray(t.sessions)) t.sessions = [];
+    if (typeof t.rung !== 'number') t.rung = 0;
+    if (typeof t.topStreak !== 'number') t.topStreak = 0;
+    if (t.completedAt === undefined) t.completedAt = null;
+  });
+  if (!s.prefs) s.prefs = { hc: false };
+  return s;
+}
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return null;
+    return normalizeStore(JSON.parse(raw));
+  } catch (e) {
+    return null;
+  }
+}
+
+let store = loadStore() || blankStore();
+
+function saveStore() {
+  store.savedAt = new Date().toISOString();
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  } catch (e) { /* private mode: the visit still works, it just won’t persist */ }
+  if (typeof pushProgress === 'function') pushProgress();
+}
+
+/* ================================================================
+   4. SMALL HELPERS
+   ================================================================ */
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+function pct(x) { return Math.round(x * 100); }
+function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* 1500 -> "1,500". Prose wants the comma; mono readouts do not. */
+function comma(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+function shuffled(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function fmtDate(iso) {
+  return new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+function fmtDateShort(iso) {
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function colors() {
+  const cs = getComputedStyle(document.body);
+  const get = n => cs.getPropertyValue(n).trim();
+  return {
+    bg: get('--bg'), ink: get('--ink'), red: get('--red'), muted: get('--muted'),
+    rule: get('--rule'), parchment: get('--parchment'), line: get('--parchment-line')
+  };
+}
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  document.getElementById('view-play').classList.remove('active');
+  document.body.classList.remove('playing');
+  window.scrollTo(0, 0);
+}
+
+function showPlay() {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-play').classList.add('active');
+  document.body.classList.add('playing');
+}
+
+function applyPrefs() {
+  document.body.classList.toggle('hc', !!store.prefs.hc);
+  ['pref-hc', 'pref-hc-2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = !!store.prefs.hc;
+  });
+}
+
+/* ================================================================
+   5. FRAME CALIBRATION
+
+   Everything about honest timing depends on knowing this display’s frame
+   interval. Measured as the median of a short rAF burst, remeasured before
+   each run because a laptop can change refresh rate mid-session.
+   ================================================================ */
+
+let frameDur = 1000 / 60;
+let frameDurMeasured = false;
+
+/* Browsers suspend rAF entirely in a background tab, so every timed path
+   here needs a way out that does not depend on a frame ever arriving. */
+function calibrateFrames(samples) {
+  const want = samples || 26;
+  return new Promise(resolve => {
+    const ts = [];
+    let settled = false;
+    const done = ok => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(bail);
+      frameDurMeasured = ok;
+      resolve(ok);
+    };
+    const bail = setTimeout(() => done(false), 1500);
+    function step(t) {
+      ts.push(t);
+      if (ts.length <= want) { requestAnimationFrame(step); return; }
+      const deltas = [];
+      for (let i = 1; i < ts.length; i++) deltas.push(ts[i] - ts[i - 1]);
+      deltas.sort((a, b) => a - b);
+      const med = deltas[Math.floor(deltas.length / 2)];
+      /* Guard against a burst measured while the tab was throttled. */
+      if (med > 2 && med < 60) { frameDur = med; done(true); } else { done(false); }
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* ================================================================
+   6. THE BOARD
+
+   MOBILE IS THE CONSTRAINT (spec §7). Nine touch targets that never overlap
+   on a phone is solved structurally rather than by retrying random
+   placements:
+
+     - the field is divided into a grid of cells
+     - each number gets its own cell, chosen at random
+     - inside its cell a tile is jittered, but confined to the cell inset by
+       TILE_GAP/2 on every side
+
+   A tile therefore cannot leave its cell, two tiles never share a cell, and
+   any two tiles are at least TILE_GAP apart. Non-overlap is a property of
+   the construction, not something to test for.
+   ================================================================ */
+
+const board = document.getElementById('board');
+const ctx = board.getContext('2d');
+
+let field = { w: 0, h: 0, grid: null, dpr: 1 };
+let trial = null;
+let phase = 'idle';    /* idle | ready | numbers | respond | reveal */
+
+/* Every tile must keep room to wander inside its own cell. Without this
+   the tile grows until it fills the cell, jitter drops to zero, and the
+   board snaps to a visible lattice: it stops looking like the scattered
+   array in the experiment, and worse, a regular grid can be chunked
+   ("top row, three across") which is an easier and different task. */
+const MIN_JITTER = MOUSE_DEVICE ? 10 : 18;
+
+function planGrid(w, h) {
+  let best = null;
+  for (let cols = 3; cols <= 7; cols++) {
+    for (let rows = 3; rows <= 7; rows++) {
+      const cells = cols * rows;
+      if (cells < 12) continue;
+      const raw = Math.min(w / cols, h / rows) - TILE_GAP - MIN_JITTER;
+      if (raw < MIN_TILE) continue;
+      const tile = Math.min(raw, MAX_TILE);
+      /* Big tiles matter most, but a sparse board matters too: nine numbers
+         in a dozen cells looks like a full grid and leaks positions. */
+      const score = tile + Math.min(cells, 30) * 1.2;
+      if (!best || score > best.score) best = { cols, rows, tile, cells, score };
+    }
+  }
+  if (!best) {
+    /* Viewport too small for the preferred rules. Keep playing anyway. */
+    const cols = 3, rows = 4;
+    const tile = Math.max(30, Math.min(w / cols, h / rows) - 6);
+    best = { cols, rows, tile, cells: cols * rows, score: 0 };
+  }
+  return best;
+}
+
+/* THE PLAY BOX (added 2026-07-29, JT).
+
+   The canvas fills the viewport, but the numerals are confined to a
+   centred box inside it. Reason: the tool’s own argument is that at
+   210ms you get ONE fixation, so an array spread over a whole 375x812
+   phone forces the eye to travel and quietly adds a motor problem the
+   experiment never had. Ayumu worked on a compact touchscreen where the
+   whole array sat inside a single glance.
+
+   Constraining this makes the comparison MORE faithful, not easier.
+
+   Sizing: aim for a square, since a fixation is round rather than
+   letterboxed, capped so it cannot outgrow one comfortable glance and
+   floored so nine tiles still fit at a tappable size. The box is
+   centred, which also keeps the array near the fixation dot. */
+const PLAY_BOX_MAX = MOUSE_DEVICE ? 230 : 420;   /* touch: about one glance at arm’s length */
+const PLAY_BOX_MIN = MOUSE_DEVICE ? 200 : 260;   /* touch: below this, 9 tiles stop being tappable */
+
+function layoutField() {
+  const rect = document.getElementById('field').getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  const availW = Math.max(180, rect.width);
+  const availH = Math.max(180, rect.height);
+
+  /* Square where there is room; never wider or taller than what’s there. */
+  let box = Math.min(availW, availH, PLAY_BOX_MAX);
+  if (box < PLAY_BOX_MIN) box = Math.min(availW, availH, PLAY_BOX_MIN);
+
+  field.w = availW;
+  field.h = availH;
+  field.pw = Math.min(availW, box);
+  field.ph = Math.min(availH, box);
+  /* Centred horizontally; nudged slightly above centre vertically so the
+     board sits where the eye already is rather than behind the thumb. */
+  field.ox = (availW - field.pw) / 2;
+  field.oy = (availH - field.ph) * 0.42;
+  field.dpr = dpr;
+  field.grid = planGrid(field.pw, field.ph);
+  board.width = Math.round(availW * dpr);
+  board.height = Math.round(availH * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function makeTrial(n) {
+  const g = field.grid;
+  /* Grid spans the PLAY BOX, not the whole canvas, and every tile is
+     offset into it. Non-overlap still comes from the cell confinement:
+     one numeral per cell, jittered only within its own cell inset by
+     half the gap, so the guarantee is unchanged by the inset. */
+  const cellW = field.pw / g.cols;
+  const cellH = field.ph / g.rows;
+  const size = g.tile;
+  const jx = Math.max(0, cellW - size - TILE_GAP);
+  const jy = Math.max(0, cellH - size - TILE_GAP);
+  const cells = shuffled(Array.from({ length: g.cols * g.rows }, (_, i) => i)).slice(0, n);
+  /* Faithful to I&M: the numerals are a random subset of 1-9, not always
+     1..n. So a five-numeral trial might be {2,4,5,7,9}, and you must read
+     the actual numbers to touch them in ascending order rather than lean
+     on knowing they run 1 to five. `order` is that ascending sequence;
+     `step` walks it; `next` is the value expected right now. (At n=9 the
+     subset is the whole set, so the Nine is still 1 through 9.) */
+  const chosen = shuffled([1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, n);
+  const order = chosen.slice().sort((a, b) => a - b);
+  const items = cells.map((cell, i) => {
+    const cx = cell % g.cols, cy = Math.floor(cell / g.cols);
+    return {
+      value: chosen[i],
+      x: field.ox + cx * cellW + TILE_GAP / 2 + Math.random() * jx,
+      y: field.oy + cy * cellH + TILE_GAP / 2 + Math.random() * jy,
+      s: size,
+      taken: false,
+      wrong: false
+    };
+  });
+
+  /* Centre the array on the fixation dot (JT, 2026-09-14). Which cells stay
+     empty is random, so left alone the array's centre wanders off the dot
+     and a numeral can sit out in a corner the eye is not parked on. Sliding
+     the whole array so its middle lands on the dot keeps the randomness of
+     the positions relative to each other while the dot always marks the
+     middle of what is about to appear. Tiles cannot overlap after a
+     uniform shift, and the shift is clamped so nothing leaves the box. */
+  const minX = Math.min.apply(null, items.map(it => it.x));
+  const maxX = Math.max.apply(null, items.map(it => it.x + it.s));
+  const minY = Math.min.apply(null, items.map(it => it.y));
+  const maxY = Math.max.apply(null, items.map(it => it.y + it.s));
+  let dx = (field.ox + field.pw / 2) - (minX + maxX) / 2;
+  let dy = (field.oy + field.ph / 2) - (minY + maxY) / 2;
+  dx = Math.max(field.ox - minX, Math.min(field.ox + field.pw - maxX, dx));
+  dy = Math.max(field.oy - minY, Math.min(field.oy + field.ph - maxY, dy));
+  items.forEach(it => { it.x += dx; it.y += dy; });
+
+  return { items, order, step: 0, next: order[0], total: n, done: false, failed: false, errorAt: null };
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawTile(it, style) {
+  const r = Math.max(3, it.s * 0.07);
+  roundRect(it.x, it.y, it.s, it.s, r);
+  if (style.fill) { ctx.fillStyle = style.fill; ctx.fill(); }
+  if (style.stroke) {
+    ctx.strokeStyle = style.stroke;
+    ctx.lineWidth = style.width || 1.5;
+    ctx.stroke();
+  }
+  if (style.text != null) {
+    ctx.fillStyle = style.textColor;
+    ctx.font = '700 ' + Math.round(it.s * (style.textScale || 0.46)) + 'px "Space Mono", "Courier New", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    /* Space Mono sits slightly high in its em box; nudge for optical centring. */
+    ctx.fillText(String(style.text), it.x + it.s / 2, it.y + it.s / 2 + it.s * 0.02);
+  }
+}
+
+let kbFocus = -1;
+let usingKeyboard = false;
+
+function render() {
+  const c = colors();
+  ctx.clearRect(0, 0, field.w, field.h);
+
+  if (phase === 'ready') {
+    /* Centre of the PLAY BOX, so the eye is already parked where the
+       numerals are about to appear. A dot somewhere else would cost the
+       player a saccade they do not have time for. */
+    ctx.fillStyle = c.muted;
+    ctx.beginPath();
+    ctx.arc(field.ox + field.pw / 2, field.oy + field.ph / 2, 4, 0, Math.PI * 2);
+    ctx.fill();
+    return;
+  }
+
+  if (!trial || phase === 'idle') return;
+
+  trial.items.forEach((it, i) => {
+    if (it.wrong) {
+      drawTile(it, { fill: c.red, stroke: c.red, text: it.value, textColor: '#fff', width: 2 });
+      return;
+    }
+    if (it.taken) {
+      drawTile(it, { fill: null, stroke: c.rule, text: null, width: 1 });
+      return;
+    }
+    /* FAITHFUL TO THE EXPERIMENT (JT, 2026-07-29): during exposure the
+       numerals stand alone on the background, with no tile around them.
+       The tiles ARE the mask, and they only exist after the numerals
+       are taken away. Drawing a box during exposure would pre-segment
+       the locations for you, which is help the real task never gave,
+       and it would blunt the moment the mask lands. */
+    if (phase === 'numbers' || phase === 'study') {
+      drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.ink, textScale: 0.62 });
+    } else if (phase === 'reveal') {
+      if (trial.failed && trial.expected === it.value) {
+        drawTile(it, { fill: null, stroke: c.ink, width: 2.5, text: it.value, textColor: c.ink, textScale: 0.62 });
+      } else {
+        drawTile(it, { fill: null, stroke: null, text: it.value, textColor: c.muted, textScale: 0.62 });
+      }
+    } else {
+      drawTile(it, { fill: c.parchment, stroke: c.line, text: null });
+    }
+    if (usingKeyboard && (phase === 'respond' || phase === 'study') && i === kbFocus) {
+      ctx.strokeStyle = c.ink;
+      ctx.lineWidth = 2.5;
+      roundRect(it.x - 5, it.y - 5, it.s + 10, it.s + 10, 6);
+      ctx.stroke();
+    }
+  });
+}
+
+/* ================================================================
+   7. HOW LONG THE NUMBERS WERE ACTUALLY THERE
+
+   performance.now() via rAF callback timestamps, never setTimeout.
+
+   Both the number draw and the blank-tile draw are issued inside a rAF
+   callback, so both appear on screen one vsync after their callback fires.
+   That constant offset cancels, which makes the difference between the two
+   callback timestamps a sound estimate of how long the numbers were really
+   on the glass.
+
+   A try counts only if the measured flash landed within one frame of the
+   target and no frame was dropped during it. Anything else is flagged and
+   replaced rather than quietly scored.
+   ================================================================ */
+
+function expose(holdMs) {
+  return new Promise(resolve => {
+    let onset = null, shown = null, prev = 0, maxDelta = 0, hiddenDuring = false, settled = false;
+    const deltas = [];
+    const onVis = () => { if (document.hidden) hiddenDuring = true; };
+    document.addEventListener('visibilitychange', onVis);
+
+    const finish = r => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(bail);
+      document.removeEventListener('visibilitychange', onVis);
+      resolve(r);
+    };
+
+    /* If frames stop arriving mid-flash there is no honest measurement to be
+       had and no frame on which to draw the blanks. Give up on the try
+       rather than leaving someone staring at a board that never changes. */
+    const bail = setTimeout(() => {
+      finish({ measured: -1, drift: 0, maxDelta: -1, valid: false, reason: 'frames stalled' });
+    }, holdMs + 2000);
+
+    /* WHAT GETS MEASURED (reworked 2026-08-09, after the try counter kept
+       stalling on replaced trials):
+
+       The numerals do not reach the glass in the callback that draws them;
+       they are presented one vsync later, at roughly the timestamp of the
+       NEXT callback. So the clock starts at that next callback ("shown"),
+       not at the draw. The old code started at the draw, which meant a slow
+       first frame (fonts and canvas warming up on the first few trials of a
+       session) inflated the measurement and tripped the skipped-frame flag,
+       and several tries in a row got thrown out and replaced while the
+       counter sat still.
+
+       Two consequences of measuring from presentation:
+       1. The flash is timed by what the eye could actually see: mask-issue
+          plus one cadence, minus numeral presentation. Within one frame of
+          210ms counts; anything else is flagged, same doctrine as before.
+       2. A late frame in the middle of the flash is NOT flagged: the
+          numerals are a static image, and a skipped compositor frame of a
+          static image changes nothing on the glass. What a mid-flash stall
+          CAN do is push the mask late, and the drift check catches exactly
+          that. maxDelta is still recorded in the log for transparency.
+
+       Cadence is the median frame delta observed during this trial, because
+       adaptive displays (ProMotion) shift between 120Hz and 60Hz at will and
+       the startup calibration goes stale; a steady 60Hz flash within a frame
+       of target is exactly as legitimate as a 120Hz one. */
+    function step(ts) {
+      if (onset === null) {
+        phase = 'numbers';
+        render();
+        onset = ts;
+        prev = ts;
+        requestAnimationFrame(step);
+        return;
+      }
+      if (shown === null) {
+        shown = ts;   /* the numerals' frame has just been presented */
+        prev = ts;
+        requestAnimationFrame(step);
+        return;
+      }
+      const d = ts - prev;
+      if (d > maxDelta) maxDelta = d;
+      deltas.push(d);
+      prev = ts;
+      const sorted = deltas.slice().sort((a, b) => a - b);
+      const cadence = sorted[Math.floor(sorted.length / 2)] || frameDur;
+      const visible = ts - shown;
+
+      /* Issue the mask on the frame that lands the presented duration
+         nearest the target: masking now presents at roughly one more
+         cadence, so compare that outcome against waiting one more frame. */
+      if (visible + cadence * 1.5 >= holdMs) {
+        phase = 'respond';
+        render();
+        const measured = visible + cadence;
+        const drift = measured - holdMs;
+        finish({
+          measured: measured,
+          drift: drift,
+          maxDelta: maxDelta,
+          valid: !hiddenDuring && Math.abs(drift) <= cadence + 1,
+          reason: hiddenDuring ? 'screen went away' : (Math.abs(drift) > cadence + 1 ? 'off target' : null)
+        });
+        return;
+      }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* The run is gated on a successful calibration. A game that promises a fifth
+   of a second should refuse to score anything when it cannot check what the
+   screen is actually doing. */
+async function ensureTiming() {
+  while (true) {
+    const ok = await calibrateFrames();
+    if (ok) return true;
+    const choice = await card({
+      label: 'One moment',
+      title: 'This screen will not tell us its timing',
+      body: '<p>The whole game rests on flashing the numbers for an exact number of milliseconds, so it will not pretend to score a round it cannot time properly.</p>' +
+            '<p>Browsers go quiet about timing when a tab is sitting in the background, so this usually just means this page is not the one you are looking at. Bring it to the front and try again.</p>',
+      actions: [
+        { text: 'Try again', value: 'retry', primary: true },
+        { text: 'Go back', value: 'quit', ghost: true }
+      ]
+    });
+    if (aborted || choice !== 'retry') return false;
+  }
+}
+
+/* ================================================================
+   8. ONE TRY
+   ================================================================ */
+
+let aborted = false;
+let resolveTap = null;
+
+function hitTest(px, py) {
+  let best = null, bestD = Infinity;
+  trial.items.forEach((it, i) => {
+    if (it.taken) return;
+    const pad = 5;
+    if (px >= it.x - pad && px <= it.x + it.s + pad && py >= it.y - pad && py <= it.y + it.s + pad) {
+      const dx = px - (it.x + it.s / 2), dy = py - (it.y + it.s / 2);
+      const d = dx * dx + dy * dy;
+      if (d < bestD) { bestD = d; best = i; }
+    }
+  });
+  return best;
+}
+
+/* 'study' is the Nine’s self-paced window: numerals are still on screen
+   and the first touch is what closes it, so taps must be live there too. */
+function acceptingTaps() {
+  return (phase === 'respond' || phase === 'study') && resolveTap;
+}
+
+board.addEventListener('pointerdown', e => {
+  if (!acceptingTaps()) return;
+  usingKeyboard = false;
+  /* Map the tap through the canvas's real on-screen size. The canvas is
+     sized once per round; if anything around it changes height afterwards
+     the browser scales the drawing, and an unscaled tap would land above
+     or below the tile it was aimed at (JT's phone, 2026-09-14). */
+  const r = board.getBoundingClientRect();
+  const sx = r.width ? field.w / r.width : 1;
+  const sy = r.height ? field.h / r.height : 1;
+  const i = hitTest((e.clientX - r.left) * sx, (e.clientY - r.top) * sy);
+  if (i !== null) resolveTap(i);
+});
+
+board.addEventListener('keydown', e => {
+  if (!acceptingTaps()) return;
+  const live = trial.items.map((it, i) => ({ it, i })).filter(o => !o.it.taken);
+  if (!live.length) return;
+
+  if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+    e.preventDefault();
+    usingKeyboard = true;
+    if (kbFocus < 0 || trial.items[kbFocus].taken) { kbFocus = live[0].i; render(); return; }
+    resolveTap(kbFocus);
+    return;
+  }
+
+  const dirs = { ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+  if (!dirs[e.key]) return;
+  e.preventDefault();
+  usingKeyboard = true;
+  if (kbFocus < 0 || trial.items[kbFocus].taken) { kbFocus = live[0].i; render(); return; }
+
+  const cur = trial.items[kbFocus];
+  const cx = cur.x + cur.s / 2, cy = cur.y + cur.s / 2;
+  const [dx, dy] = dirs[e.key];
+  let pick = null, pickScore = Infinity;
+  live.forEach(o => {
+    if (o.i === kbFocus) return;
+    const ox = o.it.x + o.it.s / 2 - cx, oy = o.it.y + o.it.s / 2 - cy;
+    const along = ox * dx + oy * dy;
+    if (along <= 1) return;                       /* wrong side */
+    const across = Math.abs(ox * dy - oy * dx);   /* perpendicular offset */
+    const score = along + across * 1.6;           /* prefer straight ahead */
+    if (score < pickScore) { pickScore = score; pick = o.i; }
+  });
+  if (pick !== null) { kbFocus = pick; render(); }
+});
+
+function nextTap() {
+  return new Promise(res => { resolveTap = res; });
+}
+
+function setHud(left, mid, right) {
+  document.getElementById('hud-left').textContent = left;
+  document.getElementById('hud-mid').textContent = mid;
+  document.getElementById('hud-right').textContent = right;
+}
+
+function setPrompt(text, alert) {
+  const el = document.getElementById('prompt');
+  el.textContent = text;
+  el.classList.toggle('alert', !!alert);
+}
+
+/* showReveal: after a try ends, briefly put the numbers back so you can see
+   what the board actually was. That is a learning aid, so it runs in the
+   the Training Room. It is withheld during the scored
+   attempt to keep those three tries independent of each other. */
+async function runTrial(numerals, hold, opts) {
+  const showReveal = opts && opts.reveal;
+  trial = makeTrial(numerals);
+  kbFocus = -1;
+
+  /* A dot to look at first, held for a slightly random length of time so the
+     flash cannot be anticipated. */
+  phase = 'ready';
+  render();
+  setPrompt('Watch the screen. The numbers are about to appear.');
+  await wait(600 + Math.random() * 350);
+  if (aborted) return null;
+
+  const timing = await expose(hold);
+  if (aborted) return null;
+
+  /* Nothing was legibly shown, so there is nothing to answer. */
+  if (timing.reason === 'frames stalled') {
+    phase = 'idle';
+    render();
+    return {
+      numerals: numerals, hold: hold, success: false, errorAt: null, reached: 0,
+      measured: -1, drift: 0, maxDelta: -1, valid: false, reason: 'frames stalled'
+    };
+  }
+
+  setPrompt('Now tap where they were, smallest number first. There’s no rush.');
+
+  while (!trial.done && !trial.failed) {
+    const i = await nextTap();
+    resolveTap = null;
+    if (aborted) return null;
+    const it = trial.items[i];
+    if (it.value === trial.next) {
+      it.taken = true;
+      trial.step++;
+      if (trial.step >= trial.total) trial.done = true;
+      else trial.next = trial.order[trial.step];
+      render();
+    } else {
+      trial.failed = true;
+      trial.errorAt = trial.step + 1;   /* ordinal position, not the value */
+      trial.expected = trial.next;      /* the tile that should have been tapped */
+      it.wrong = true;
+      render();
+      await wait(420);
+    }
+  }
+
+  const success = trial.done && !trial.failed;
+  setPrompt(success ? 'You got it.' : 'That one got away from you at number ' + trial.errorAt + '. Here is where they all were.', !success);
+
+  if (showReveal || !success) {
+    /* Put the numbers back. After a miss the wrong tap stays red and the
+       tile that was actually next is outlined, so the player can see
+       exactly what happened and trust that the game is working (JT,
+       2026-09-03: confirm the mistake, reassure them the app is right). */
+    phase = 'reveal';
+    trial.items.forEach(it => { it.taken = false; if (success) it.wrong = false; });
+    render();
+    await wait(success ? 1100 : 1500);
+  } else {
+    await wait(620);
+  }
+  if (aborted) return null;
+
+  phase = 'idle';
+  render();
+
+  return {
+    numerals: numerals,
+    hold: hold,
+    success: success,
+    errorAt: trial.errorAt,
+    reached: trial.step,
+    measured: Math.round(timing.measured * 10) / 10,
+    drift: Math.round(timing.drift * 10) / 10,
+    maxDelta: Math.round(timing.maxDelta * 10) / 10,
+    valid: timing.valid,
+    reason: timing.reason
+  };
+}
+
+/* ================================================================
+   9. OVERLAY CARDS
+   ================================================================ */
+
+let resolveCard = null;
+
+function card(spec) {
+  return new Promise(resolve => {
+    resolveCard = resolve;
+    document.getElementById('ov-label').textContent = spec.label || '';
+    document.getElementById('ov-title').textContent = spec.title || '';
+    document.getElementById('ov-body').innerHTML = spec.body || '';
+    const actions = document.getElementById('ov-actions');
+    actions.innerHTML = '';
+    if (spec.choices) {
+      /* Multiple-choice: stacked, full-width, sentence-case option rows.
+         Resolves with the chosen index. */
+      actions.className = 'choices';
+      spec.choices.forEach((text, i) => {
+        const b = document.createElement('button');
+        b.className = 'choice';
+        b.textContent = text;
+        b.addEventListener('click', () => {
+          if (resolveCard !== resolve) return;
+          const finish = () => {
+            document.getElementById('overlay').classList.remove('active');
+            resolveCard = null;
+            resolve(i);
+          };
+          if (typeof spec.correct !== 'number') { finish(); return; }
+          /* Show the verdict on the card itself for a beat: the right row
+             gets a tick, a wrong pick is struck through, the rest fade. */
+          actions.querySelectorAll('.choice').forEach((el, j) => {
+            el.disabled = true;
+            el.classList.add(j === spec.correct ? 'correct' : (j === i ? 'wrong' : 'dim'));
+          });
+          setTimeout(finish, i === spec.correct ? 900 : 1400);
+        });
+        actions.appendChild(b);
+      });
+      if (spec.back) {
+        const bk = document.createElement('button');
+        bk.className = 'choice-back';
+        bk.textContent = 'Back';
+        bk.addEventListener('click', () => {
+          if (resolveCard !== resolve) return;
+          document.getElementById('overlay').classList.remove('active');
+          resolveCard = null;
+          resolve('back');
+        });
+        actions.appendChild(bk);
+      }
+    } else {
+      actions.className = 'btn-row';
+      (spec.actions || [{ text: 'Carry on', value: 'go', primary: true }]).forEach(a => {
+        const b = document.createElement('button');
+        b.className = 'btn' + (a.primary ? ' primary' : (a.ghost ? ' ghost' : ''));
+        b.textContent = a.text;
+        b.addEventListener('click', () => {
+          document.getElementById('overlay').classList.remove('active');
+          resolveCard = null;
+          resolve(a.value);
+        });
+        actions.appendChild(b);
+      });
+    }
+    document.getElementById('overlay').classList.add('active');
+    const first = actions.querySelector('button');
+    if (first) first.focus();
+  });
+}
+
+function statsHTML(list) {
+  return '<div class="overlay-stats">' + list.map(s =>
+    '<div class="overlay-stat' + (s.red ? ' red' : '') + '">' + esc(s.label) + '<b>' + esc(s.value) + '</b></div>'
+  ).join('') + '</div>';
+}
+
+function secs(ms) { return (ms / 1000).toFixed(2) + 's'; }
+
+/* ================================================================
+   9b. TASK 2: THE NINE (self-paced)
+
+   Ayumu’s nine-numeral paradigm. All nine stay on screen until the
+   subject touches the 1; the other eight mask at that instant. So the
+   measured quantity is a COMMIT TIME, not an exposure: how long you
+   let yourself look before closing your own window. Ayumu committed in
+   about 0.67s and still finished the sequence above 80% of the time.
+
+   Timing note: the clock starts on the rAF timestamp of the frame that
+   presented the numerals and stops on the pointer event, so it measures
+   what the player actually experienced. This one does not need the
+   frame-accuracy machinery the Flash needs, because it is a reaction
+   window rather than a controlled exposure.
+   ================================================================ */
+
+async function runNineTrial(n) {
+  trial = makeTrial(n || NINE_N);
+  kbFocus = -1;
+
+  phase = 'ready';
+  render();
+  setPrompt('Get ready.');
+  await wait(600 + Math.random() * 350);
+  if (aborted) return null;
+
+  /* Present, and start the clock on the frame that actually showed them. */
+  let onset = null;
+  await new Promise(res => requestAnimationFrame(ts => {
+    phase = 'study';
+    render();
+    onset = ts;
+    res();
+  }));
+  if (aborted) return null;
+
+  setPrompt('Take your time looking, then tap the lowest number. The moment you do, the rest will hide.');
+
+  let commitMs = null;
+  while (!trial.done && !trial.failed) {
+    const i = await nextTap();
+    resolveTap = null;
+    if (aborted) return null;
+    const it = trial.items[i];
+
+    if (commitMs === null) {
+      /* The first touch closes the study window, whatever it lands on.
+         The Nine is the full 1-9, so order[0] is the 1, but read it off
+         `order` rather than hard-coding in case that ever changes. */
+      commitMs = performance.now() - onset;
+      phase = 'respond';
+      if (it.value === trial.order[0]) {
+        it.taken = true;
+        trial.step = 1;
+        trial.next = trial.order[1];
+        render();
+        setPrompt('Now tap the rest in order, from memory. Take all the time you like.');
+      } else {
+        trial.failed = true;
+        trial.errorAt = 1;
+        it.wrong = true;
+        render();
+        await wait(420);
+      }
+      continue;
+    }
+
+    if (it.value === trial.next) {
+      it.taken = true;
+      trial.step++;
+      if (trial.step >= trial.total) trial.done = true;
+      else trial.next = trial.order[trial.step];
+      render();
+    } else {
+      trial.failed = true;
+      trial.errorAt = trial.step + 1;
+      it.wrong = true;
+      render();
+      await wait(420);
+    }
+  }
+
+  const success = trial.done && !trial.failed;
+  setPrompt(success ? 'All ' + trial.items.length + ', and you committed in ' + secs(commitMs) + '.' : 'You lost it at number ' + trial.errorAt + '.', !success);
+
+  /* Always show the board back: this task is meant to be learnable. */
+  phase = 'reveal';
+  trial.items.forEach(it => { it.wrong = false; it.taken = false; });
+  render();
+  await wait(1100);
+  if (aborted) return null;
+
+  phase = 'idle';
+  render();
+  return { success: success, commitMs: Math.round(commitMs), errorAt: trial.errorAt };
+}
+
+/* ================================================================
+   10. THE WARM-UP, THEN AYUMU
+   ================================================================ */
+
+const WARMUP_CARDS = {
+  3: {
+    label: 'Learning the rules',
+    title: 'Three numbers, nice and slow',
+    body: '<p>In this game, numbers will briefly appear on the screen, each one sitting on its own little tile. Watch carefully where each number lands, because after a moment the numbers will disappear and the tiles will turn blank. Your job is then to tap the tiles in the order of the numbers that were on them, starting with the smallest and working your way up.</p><p>The numbers themselves are random, so pay attention to what they are: you might get a 2, a 6 and a 9. If you tap one out of order, that try ends and you simply get another go. We will start with just three numbers, and nothing is being scored yet.</p>'
+  },
+  4: {
+    label: 'Warm-up',
+    title: 'Now four',
+    body: '<p>This is the same idea as before, except now there are four numbers on the screen instead of three. Watch where they land, wait for the tiles to go blank, and then tap them in order from smallest to largest.</p>'
+  },
+  5: {
+    label: 'Warm-up',
+    title: 'Five, and then the real thing',
+    body: '<p>Now you will try five numbers, which is how many Ayumu sees. This is the last warm-up round, so take your time with it. Once you have the hang of five, we will speed things up to his pace.</p>'
+  }
+};
+
+function nineBarsSVG(rec) {
+  const W = 380, H = 150;
+  const L = 8, R = 14, T = 26, rowH = 44, gap = 14;
+  const barX = 92, barW = W - barX - R;
+  const c = colors();
+  const mono = ' font-family="Space Mono, monospace"';
+  const mine = rec.bestMs;
+  /* Scale to whichever is slower, so both bars always fit and the
+     comparison stays readable however far off the pace you are. */
+  const top = Math.max(AYUMU_COMMIT_MS, mine === null ? AYUMU_COMMIT_MS : mine) * 1.15;
+
+  const rows = [
+    { name: 'AYUMU', ms: AYUMU_COMMIT_MS, color: c.red },
+    { name: 'YOU', ms: mine, color: c.ink }
+  ];
+
+  let g = '<text x="' + L + '" y="12"' + mono + ' font-size="9" font-weight="700" fill="' + c.muted +
+          '">TIME TAKEN BEFORE COMMITTING TO THE 1</text>';
+
+  rows.forEach((r, i) => {
+    const mid = T + i * (rowH + gap) + rowH / 2;
+    g += '<text x="' + L + '" y="' + (mid + 4) + '"' + mono +
+         ' font-size="9" font-weight="700" fill="' + c.muted + '">' + r.name + '</text>';
+    g += '<line x1="' + barX + '" y1="' + mid + '" x2="' + (barX + barW) + '" y2="' + mid +
+         '" stroke="' + c.rule + '" stroke-width="1"/>';
+    if (r.ms === null) {
+      g += '<text x="' + (barX + 4) + '" y="' + (mid + 5) + '"' + mono +
+           ' font-size="10" fill="' + c.muted + '">no clean run yet</text>';
+      return;
+    }
+    const w = Math.max(3, barW * (r.ms / top));
+    g += '<rect x="' + barX + '" y="' + (mid - 11) + '" width="' + w + '" height="22" fill="' + r.color + '"/>';
+    const inside = w > 74;
+    g += '<text x="' + (inside ? barX + w - 8 : barX + w + 8) + '" y="' + (mid + 5) + '"' + mono +
+         ' font-size="13" font-weight="700" text-anchor="' + (inside ? 'end' : 'start') + '" fill="' +
+         (inside ? '#fff' : r.color) + '">' + secs(r.ms) + '</text>';
+  });
+
+  const label = 'Ayumu commits to the first number in about ' + secs(AYUMU_COMMIT_MS) + '. ' +
+    (mine === null ? 'You have no clean run yet.' : 'Your fastest clean run is ' + secs(mine) + '.');
+  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
+}
+
+/* The commit-time curve: your best time each sitting, dropping toward
+   Ayumu’s line. Sittings with no clean run are skipped rather than plotted
+   as a spike. Lower is better, so the axis runs fast at the top. */
+/* ================================================================
+   14. THE TRAINING ROOM
+   ================================================================ */
+
+/* How hard a setting is, along both axes at once. Adding a number is worth
+   roughly as much as halving the flash, which is what the 1.5 is doing.
+   Needed because the map runs out to 2 seconds while the ladder starts at 1,
+   so comparing hold against hold alone would call every slow success a
+   beginner. */
+function track(kind) { return store.tracks[kind]; }
+function trackDef(kind) { return TRACKS[kind]; }
+function trackTop(kind) { return TRACKS[kind].steps.length - 1; }
+function trackRung(kind) {
+  const r = track(kind).rung;
+  return Math.max(0, Math.min(trackTop(kind), typeof r === 'number' ? r : 0));
+}
+function trackStep(kind, rung) { return TRACKS[kind].steps[rung]; }
+/* Stage = number count; where this rung sits inside it (for the timed track's sub-steps). */
+function stageInfo(kind, rung) {
+  const st = TRACKS[kind].steps[rung];
+  const same = TRACKS[kind].steps.filter(x => x.n === st.n);
+  const stages = [...new Set(TRACKS[kind].steps.map(x => x.n))];
+  return { n: st.n, stage: stages.indexOf(st.n) + 1, stages: stages.length, sub: same.indexOf(st) + 1, subs: same.length };
+}
+function trackComplete(kind) { return !!track(kind).completedAt; }
+function rungLabel(kind, i) { return TRACKS[kind].stepLabel(TRACKS[kind].steps[i]); }
+
+/* Highest step where a set has ever been passed, for "your best so far". */
+function bestPassedRung(kind) {
+  let best = null;
+  track(kind).sessions.forEach(sn => sn.sets.forEach(st => {
+    if (st.trials && st.passes / st.trials >= STEP_UP && (best === null || st.rung > best)) best = st.rung;
+  }));
+  return best;
+}
+function bestPassedN(kind) { const r = bestPassedRung(kind); return r === null ? null : trackStep(kind, r).n; }
+
+/* Fastest clean commit at the full nine, for the share card. */
+function bestNineMs() {
+  let best = null;
+  track('nine').sessions.forEach(sn => sn.sets.forEach(st => {
+    if (st.n === NINE_N && st.fastest !== null && (best === null || st.fastest < best)) best = st.fastest;
+  }));
+  return best;
+}
+
+/* One go on a track. Returns {valid, pass, clean, ms} or null on quit. */
+async function runTrackGo(kind, step) {
+  const n = step.n;
+  if (kind === 'flash') {
+    const t = await runTrial(n, step.h, { reveal: true });
+    if (!t) return null;
+    return { valid: t.valid, pass: !!(t.valid && t.success), clean: !!t.success, ms: null };
+  }
+  const r = await runNineTrial(n);
+  if (!r) return null;
+  return { valid: true, pass: !!(r.success && r.commitMs <= step.t), clean: !!r.success, ms: r.commitMs };
+}
+
+function trackIntroBody(kind, step, first) {
+  const n = step.n;
+  if (kind === 'flash') {
+    const atAyumu = step.h === FLASH_HOLD;
+    return '<p>' + n + ' numbers will flash up for ' + comma(step.h) + ' milliseconds' +
+      (atAyumu ? ', which is exactly how long Ayumu gets,' : ',') + ' and then turn blank. Tap where they were, smallest first.</p>' +
+      '<p>You get ' + SET_TRIES + ' goes in this set. Land ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and ' +
+      (atAyumu ? 'you have done ' + n + ' numbers at Ayumu’s speed, so the next stage adds a number and starts slow again.' : 'the next set shortens the flash.') +
+      ' If a set goes badly, you will be offered the step below, but nothing is ever taken away.</p>';
+  }
+  const atAyumu = step.t === AYUMU_COMMIT_MS;
+  return '<p>' + n + ' numbers appear on the screen and stay there until you tap the lowest one. Then the rest turn blank and you tap them in order from memory.</p>' +
+    (MOUSE_DEVICE && first ? '<p class="t-quiet">Best on a phone or tablet: with a mouse, moving the pointer counts against your time.</p>' : '') +
+    '<p>A go counts as a pass only if you get every number right <em>and</em> your first tap comes within ' + secs(step.t) +
+    (atAyumu ? ', which is Ayumu’s time.' : '.') + ' You get ' + SET_TRIES + ' goes in this set. Pass ' + Math.ceil(SET_TRIES * STEP_UP) + ' of them and ' +
+    (atAyumu ? 'you have done ' + n + ' numbers at Ayumu’s pace, so the next stage adds a number and starts with a gentler time again.' : 'the next set asks for a faster first tap.') +
+    ' If a set goes badly, you will be offered the step below, but nothing is ever taken away.</p>';
+}
+
+async function runTrackSession(kind) {
+  const def = trackDef(kind);
+  const t = track(kind);
+  aborted = false;
+  showPlay();
+  layoutField();
+  if (kind === 'flash' && !await ensureTiming()) return null;
+  await document.fonts.ready;
+
+  const session = { date: new Date().toISOString(), startRung: trackRung(kind), sets: [] };
+  let sets = 0;
+  let justCompleted = false;
+
+  while (true) {
+    const rung = trackRung(kind);
+    const step = trackStep(kind, rung);
+    const n = step.n;
+    const si = stageInfo(kind, rung);
+
+    const go = await card({
+      label: def.name + ' · stage ' + si.stage + ' of ' + si.stages + (si.subs > 1 ? ' · step ' + si.sub + ' of ' + si.subs : ''),
+      title: rungLabel(kind, rung),
+      body: trackIntroBody(kind, step, sets === 0),
+      actions: [
+        { text: sets === 0 ? 'Go' : 'Next set', value: 'go', primary: true },
+        { text: 'That is enough for today', value: 'stop', ghost: true }
+      ]
+    });
+    if (aborted || go !== 'go') break;
+
+    let trials = 0, attempts = 0, passes = 0, clean = 0, fastest = null;
+    while (trials < SET_TRIES && attempts < SET_TRIES + MAX_REPLACEMENTS) {
+      attempts++;
+      setHud(def.short.toUpperCase() + ' · STAGE ' + si.stage, 'GO ' + (trials + 1) + ' / ' + SET_TRIES,
+        kind === 'flash' ? n + ' · ' + step.h + 'MS' : n + ' · ' + secs(step.t));
+      const r = await runTrackGo(kind, step);
+      if (aborted || !r) { session.aborted = true; break; }
+      if (!r.valid) { setPrompt('The screen hiccuped, so that one does not count.', true); await wait(900); continue; }
+      trials++;
+      if (r.pass) passes++;
+      if (r.clean) clean++;
+      if (r.clean && r.ms !== null && (fastest === null || r.ms < fastest)) fastest = r.ms;
+      if (kind === 'nine' && r.clean && !r.pass && trials < SET_TRIES) {
+        setPrompt('All correct, but ' + secs(r.ms) + ' is slower than the ' + secs(step.t) + ' target. Try committing sooner.', false);
+        await wait(1100);
+      }
+    }
+    if (aborted) break;
+
+    const rate = trials ? passes / trials : 0;
+    session.sets.push({ rung, n, h: step.h, t: step.t, passes, trials, clean, fastest, rate });
+    sets++;
+
+    let moved = 'held';
+    const top = trackTop(kind);
+    if (rate >= STEP_UP) {
+      if (rung < top) { t.rung = rung + 1; moved = 'up'; t.topStreak = 0; }
+      else {
+        t.topStreak = (t.topStreak || 0) + 1;
+        if (t.topStreak >= COMPLETE_SETS && !t.completedAt) { t.completedAt = new Date().toISOString(); justCompleted = true; }
+        moved = 'top';
+      }
+    } else {
+      if (rung === top) t.topStreak = 0;
+      /* A hard set never demotes on its own; it puts the step below on the
+         card as a choice. */
+      if (rate <= STEP_DOWN && rung > 0) moved = 'offer';
+    }
+    saveStore();
+
+    let movedCopy;
+    if (moved === 'up') {
+      const next = trackStep(kind, trackRung(kind));
+      movedCopy = next.n > n
+        ? 'You did ' + n + ' numbers at Ayumu’s ' + (kind === 'flash' ? 'speed' : 'pace') + ', so the next stage adds a number and starts ' + (kind === 'flash' ? 'slow' : 'with a gentler time') + ' again: ' + rungLabel(kind, trackRung(kind)) + '.'
+        : (kind === 'flash'
+          ? 'You passed that one, so the next set shortens the flash: ' + rungLabel(kind, trackRung(kind)) + '.'
+          : 'You passed that one, so the next set asks for a faster first tap: ' + rungLabel(kind, trackRung(kind)) + '.');
+    }
+    else if (moved === 'offer') movedCopy = 'That one was a stretch. You can stay here and have another go, or drop back to ' + rungLabel(kind, rung - 1) + ' for a set or two. Training works best when the setting is just a little too hard, so either is a fair choice, and you will not lose the step you have unlocked.';
+    else if (moved === 'top') movedCopy = justCompleted
+      ? 'That is two sets in a row at Ayumu’s level. You have completed this track.'
+      : 'That is the top step, passed. Pass it once more in a row and the track is complete.';
+    else movedCopy = 'You are staying here for now. This is the useful zone, where the setting is hard enough to be worth doing and easy enough to land.';
+    if (sets >= SETS_PER_SESSION && !justCompleted) {
+      movedCopy += ' That is a full session. The improvement happens between sessions, while your brain settles what you just did, so come back tomorrow rather than pushing on.';
+    }
+
+    const stats = kind === 'flash'
+      ? [{ label: 'Remembered', value: passes + ' / ' + trials },
+         { label: 'Numbers', value: String(n), red: moved === 'up' && trackStep(kind, trackRung(kind)).n > n },
+         { label: 'Flash', value: comma(step.h) + 'ms', red: moved === 'up' && trackStep(kind, trackRung(kind)).n === n }]
+      : [{ label: 'All correct', value: clean + ' / ' + trials },
+         { label: 'Within ' + secs(step.t) + ' too', value: passes + ' / ' + trials, red: moved === 'up' || moved === 'top' },
+         { label: 'Fastest clean', value: fastest === null ? '—' : secs(fastest) }];
+
+    const more = await card({
+      label: justCompleted ? 'Track complete' : 'Set ' + sets + ' done',
+      title: justCompleted
+        ? 'You are at Ayumu’s level.'
+        : passes + ' of ' + trials + ' ' + def.passWord + '.',
+      body: statsHTML(stats) + '<p style="margin-top:16px;">' + esc(movedCopy) + '</p>',
+      actions: moved === 'offer'
+        ? [{ text: 'Stay here', value: 'go', primary: true },
+           { text: 'Drop back to ' + trackStep(kind, rung - 1).n + ' numbers' + (kind === 'flash' ? ' at ' + comma(trackStep(kind, rung - 1).h) + 'ms' : ''), value: 'down' },
+           { text: 'Done for today', value: 'stop', ghost: true }]
+        : (sets >= SETS_PER_SESSION || justCompleted)
+          ? [{ text: 'One more set', value: 'go' }, { text: 'Done for today', value: 'stop', primary: true }]
+          : [{ text: 'Next set', value: 'go', primary: true }, { text: 'Done for today', value: 'stop', ghost: true }]
+    });
+    justCompleted = false;
+    if (aborted) break;
+    if (more === 'down') { t.rung = rung - 1; saveStore(); continue; }
+    if (more !== 'go') break;
+  }
+
+  if (session.sets.length) {
+    session.endRung = trackRung(kind);
+    t.sessions.push(session);
+    saveStore();
+  }
+  return session;
+}
+
+/* The step reached per visit, as a line. Marks the visit the track was
+   completed on. */
+function trackCurveSVG(kind) {
+  const def = trackDef(kind);
+  const t = track(kind);
+  const sessions = t.sessions;
+  if (!sessions.length) return '';
+  const c = colors();
+  const W = 380, H = 230, L = 58, R = 22, T = 30, B = 46;
+  const plotW = W - L - R, plotH = H - T - B;
+  const n = sessions.length;
+  const maxR = def.steps.length - 1;
+  const x = i => L + (n === 1 ? plotW / 2 : plotW * (i / (n - 1)));
+  const y = r => T + plotH * (1 - r / maxR);
+  const clampX = v => Math.max(L + 40, Math.min(W - R - 40, v));
+  const mono = ' font-family="Space Mono, monospace"';
+  const doneIdx = t.completedAt ? sessions.findIndex(sn => sn.date >= t.completedAt || sn.sets.some(st => st.rung === maxR && st.rate >= STEP_UP)) : -1;
+
+  let g = '';
+  def.steps.forEach((st, r) => {
+    const lastOfStage = r === maxR || def.steps[r + 1].n !== st.n;
+    if (!lastOfStage) return;
+    g += '<line x1="' + L + '" y1="' + y(r) + '" x2="' + (W - R) + '" y2="' + y(r) + '" stroke="' + c.rule + '" stroke-width="1"/>';
+    g += '<text x="' + (L - 8) + '" y="' + (y(r) + 4) + '" text-anchor="end"' + mono +
+         ' font-size="9" fill="' + (r === maxR ? c.red : c.muted) + '">' + st.n + (r === maxR ? ' ★' : '') + '</text>';
+  });
+  const reached = sessions.map(sn => Math.max.apply(null, sn.sets.map(st => st.rung)));
+  g += '<polyline points="' + reached.map((r, i) => x(i) + ',' + y(r)).join(' ') + '" fill="none" stroke="' + c.ink + '" stroke-width="2.5"/>';
+  reached.forEach((r, i) => {
+    const mark = i === doneIdx;
+    g += '<circle cx="' + x(i) + '" cy="' + y(r) + '" r="' + (mark ? 6 : 4.5) + '" fill="' + (mark ? c.red : c.ink) + '" stroke="#fff" stroke-width="1.5"/>';
+    g += '<text x="' + x(i) + '" y="' + (H - B + 20) + '" text-anchor="middle"' + mono +
+         ' font-size="9" fill="' + c.muted + '">' + esc(fmtDateShort(sessions[i].date)) + '</text>';
+    if (mark) g += '<text x="' + clampX(x(i)) + '" y="' + (y(r) - 13) + '" text-anchor="middle"' + mono +
+         ' font-size="9" font-weight="700" fill="' + c.red + '">AYUMU’S LEVEL</text>';
+  });
+  g += '<line x1="' + L + '" y1="' + (H - B) + '" x2="' + (W - R) + '" y2="' + (H - B) + '" stroke="' + c.ink + '" stroke-width="1.5"/>';
+  const label = 'The step you reached on each visit to ' + def.name.toLowerCase() + ': ' + reached.map(r => rungLabel(kind, r)).join('; ') + '.';
+  return '<svg class="chart-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(label) + '">' + g + '</svg>';
+}
+
+let currentTrack = 'flash';
+
+function renderTrack(kind) {
+  currentTrack = kind || currentTrack;
+  kind = currentTrack;
+  const def = trackDef(kind);
+  const t = track(kind);
+  const rung = trackRung(kind);
+  const sessions = t.sessions;
+  const other = kind === 'flash' ? 'nine' : 'flash';
+  const el = document.getElementById('training-body');
+
+  let html = '<p class="t-eyebrow">' + esc(def.standard) + ', every step</p>' +
+    '<h1 class="t-title" id="training-title">' + esc(def.name) + '</h1>';
+
+  if (kind === 'flash') {
+    html += '<p class="t-body">This is Ayumu’s timed game, built up one number at a time. Each stage is one number count, starting at three. Inside a stage the flash gets shorter with every set you pass, from a full second down to Ayumu’s 210 milliseconds, and only once you land that count at his speed does the next stage add a number and start slow again. When you can land five numbers at 210 milliseconds two sets in a row, you have reached the level he was measured at, and the track is complete.</p>';
+  } else {
+    if (MOUSE_DEVICE) {
+      html += '<p class="t-quiet" style="margin-bottom:14px;">This track is best played on a phone or tablet. With a mouse, the time it takes to move the pointer counts against you, and Ayumu’s standard is tight.</p>';
+    }
+    html += '<p class="t-body">This is Ayumu’s nine, built up one number at a time. Each stage is one number count, starting at three. The numbers stay on the screen until you tap the lowest one, and a go only counts if you get them all right <em>and</em> your first tap beats the current target. Inside a stage that target tightens with every set you pass, from a second and a half down to Ayumu’s two thirds of a second, and only once you land that count at his pace does the next stage add a number and start with a gentler time again. When you can do all nine at his pace two sets in a row, the track is complete.</p>';
+  }
+
+  if (t.completedAt) {
+    html += '<div class="parchment-card">' +
+      '<div class="card-header"><span>Track complete</span><span class="card-stamp">Ayumu’s level</span></div>' +
+      '<p class="t-body">On ' + esc(fmtDate(t.completedAt)) + ' you passed the top step twice in a row, which is the standard Ayumu was measured at. You can keep training here to hold it, or switch to the other track.</p>' +
+      '</div>';
+  }
+
+  /* How the program works: the learning-science framing, once, above the
+     button. JT's own copy (2026-09-16); the book links to the site's book page. */
+  html += '<div class="parchment-card">' +
+    '<div class="card-header"><span>How this program works</span><span class="card-stamp">The method</span></div>' +
+    '<p class="t-body">As discussed in the book <a class="inline-link" href="book.html"><em>The Genius and the Impostor</em></a>, building the brain’s capabilities is simply a matter of providing the right learning path. This program is designed to provide you that path. The progression adapts to your current capabilities, so that you practice at the edge of what you are currently capable of. At that edge, you’re making enough mistakes to stimulate the brain to change, but enough wins to demonstrate what a successful attempt looks like.</p>' +
+    '<p class="t-body">By doing so, you’ll be giving your brain what it needs to rewire in between sessions. In this way, by practicing for several minutes a day, you’ll likely make consistent progress towards closing in on Ayumu’s performance.</p>' +
+    '</div>';
+
+  html += '<h2 class="t-section">Where you are</h2>';
+  let pips = '';
+  def.steps.forEach((st, i) => {
+    pips += '<div class="rung-pip ' + (i < rung ? 'done' : (i === rung ? 'here' : '')) + '" style="height:' + Math.round(30 + 70 * (i / (def.steps.length - 1))) + '%"></div>';
+  });
+  const si = stageInfo(kind, rung);
+  html += '<div class="rung-strip" role="img" aria-label="Step ' + (rung + 1) + ' of ' + def.steps.length + '">' + pips + '</div>' +
+    '<p class="score-line">Stage <b>' + si.stage + ' / ' + si.stages + '</b>' + (si.subs > 1 ? ' · step <b>' + si.sub + ' / ' + si.subs + '</b>' : '') + ' · <b>' + esc(rungLabel(kind, rung)) + '</b>' +
+    (rung === trackTop(kind) && t.topStreak && !t.completedAt ? ' · <b>' + t.topStreak + ' of ' + COMPLETE_SETS + '</b> passes at the top' : '') + '</p>';
+
+  html += '<div class="btn-row"><button class="btn primary" id="btn-track-start">' +
+    (sessions.length ? 'Start a session' : 'Start your first session') + '</button></div>' +
+    '<p class="t-quiet" style="margin-top:16px;">' + SETS_PER_SESSION + ' sets of ' + SET_TRIES + ' goes, a few minutes. Stop whenever you like; the ladder remembers where you are.</p>';
+
+  if (sessions.length) {
+    html += '<h2 class="t-section" style="margin-top:44px;">Your progress</h2>' +
+      '<div class="t-label">Step reached, each visit</div>' +
+      '<div class="chart-panel">' + trackCurveSVG(kind) + '</div>';
+    if (kind === 'nine') {
+      const best = bestNineMs();
+      html += '<div class="chart-panel" style="margin-top:12px;">' + nineBarsSVG({ bestMs: best }) + '</div>' +
+        '<p class="chart-note">Your fastest clean run at all nine against Ayumu’s. It only starts filling in once you reach the top step.</p>';
+    }
+    html += '<h2 class="t-section" style="margin-top:40px;">Every visit</h2>' +
+      '<table class="ladder-table"><thead><tr><th>Date</th><th>Sets</th><th>Reached</th><th>Best set</th></tr></thead><tbody>';
+    sessions.slice().reverse().forEach(sn => {
+      const bestRate = Math.max.apply(null, sn.sets.map(st => st.rate));
+      html += '<tr><td>' + esc(fmtDateShort(sn.date)) + '</td><td>' + sn.sets.length + '</td>' +
+        '<td>' + esc(rungLabel(kind, sn.endRung != null ? sn.endRung : sn.startRung)) + '</td>' +
+        '<td>' + pct(bestRate) + '%</td></tr>';
+    });
+    html += '</tbody></table>';
+  }
+
+  html += '<h2 class="t-section" style="margin-top:44px;">The other track</h2>' +
+    '<p class="t-body">' + (kind === 'flash'
+      ? 'The nine is Ayumu’s other game, and it trains a different thing: committing fast instead of taking in a flash. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.'
+      : 'The timed game is Ayumu’s other game, and it trains a different thing: taking in a flash instead of committing fast. It works best to stay on one track until it is complete, so only switch if you mean to stay there for a while.') + '</p>' +
+    '<div class="btn-row">' +
+    '<button class="btn ghost" id="btn-track-other">Switch to ' + esc(trackDef(other).name.toLowerCase()) + '</button>' +
+    '<button class="btn ghost" id="btn-track-home">Back to the start</button>' +
+    '</div>';
+
+  el.innerHTML = html;
+  document.getElementById('btn-track-start').addEventListener('click', () => startTrack(kind));
+  document.getElementById('btn-track-other').addEventListener('click', () => { renderTrack(other); showView('view-training'); });
+  document.getElementById('btn-track-home').addEventListener('click', () => { boot(); });
+}
+
+/* ================================================================
+   15. SHARE CARD
+   ================================================================ */
+
+/* ⚠️ PLACEHOLDER. Spec §6 marks these lines as JT’s to write. All four.
+   The card carries a dare by default, but a dare that says a chimpanzee beat
+   you reads as a lie on the card of somebody who just went past him. So the
+   line flips to a brag, per card, whenever that card’s own record is a win:
+   the Flash at Ayumu’s 80%, the Nine at his 0.67s commit. Each card is judged
+   on its own task, so beating the Nine does not put a brag on the Flash card. */
+const SHARE_LINES = {
+  flash: {
+    dare: 'I lost to a chimpanzee. You will likely lose, too.',
+    brag: 'I beat Ayumu at five numbers in a fifth of a second! Your turn.'
+  },
+  nine: {
+    dare: 'I lost to a chimpanzee. You will likely lose, too.',
+    brag: 'I caught Ayumu on all nine numbers. Your turn.'
+  }
+};
+
+function beatFlash() { return trackComplete('flash'); }
+function beatNine() { return trackComplete('nine'); }
+
+function shareTagline(kind) {
+  const set = kind === 'nine' ? SHARE_LINES.nine : SHARE_LINES.flash;
+  const won = kind === 'nine' ? beatNine() : beatFlash();
+  return won ? set.brag : set.dare;
+}
+
+/* The Flash card: your five-number score against Ayumu’s 80%. */
+function flashShareLines() {
+  const best = bestPassedRung('flash');
+  if (trackComplete('flash')) return { big: ['Ayumu: five in 210ms.', 'Me: five in 210ms.'], sub: 'THE AYUMU TRAINING ROOM' };
+  if (best !== null) { const st = trackStep('flash', best); return { big: ['Ayumu: five in 210ms.', 'Me so far: ' + st.n + ' in ' + comma(st.h) + 'ms.'], sub: 'THE AYUMU TRAINING ROOM' }; }
+  return { big: ['Ayumu: five in 210ms.', 'Can you?'], sub: 'THE AYUMU TRAINING ROOM' };
+}
+
+/* The Nine card: your fastest clean commit against Ayumu’s 0.67s. */
+function nineShareLines() {
+  const best = bestNineMs();
+  if (best !== null) {
+    return { big: ['Ayumu: ' + secs(AYUMU_COMMIT_MS) + '.', 'Me: ' + secs(best) + '.'], sub: 'ALL NINE, FROM MEMORY' };
+  }
+  const r = bestPassedRung('nine');
+  if (r !== null) { const st = trackStep('nine', r); return { big: ['Ayumu: all nine in ' + secs(AYUMU_COMMIT_MS) + '.', 'Me so far: ' + st.n + ' within ' + secs(st.t) + '.'], sub: 'THE AYUMU TRAINING ROOM' }; }
+  return { big: ['Ayumu: all nine in', secs(AYUMU_COMMIT_MS) + '.'], sub: 'ALL NINE, FROM MEMORY' };
+}
+
+/* Default card used where a single card is expected. */
+function shareLines() { return flashShareLines(); }
+
+function wrapText(g, text, x, y, maxW, lineH) {
+  const words = text.split(' ');
+  let line = '', yy = y;
+  words.forEach(word => {
+    const test = line ? line + ' ' + word : word;
+    if (g.measureText(test).width > maxW && line) {
+      g.fillText(line, x, yy);
+      yy += lineH;
+      line = word;
+    } else {
+      line = test;
+    }
+  });
+  if (line) g.fillText(line, x, yy);
+  return yy;
+}
+
+function drawShareCard(canvas, w, h, kind) {
+  kind = kind || 'flash';
+  const c = { bg: '#fafaf8', ink: '#1a1a1a', red: '#c44b3a', muted: '#666', rule: '#e0dcd4' };
+  const tall = h > w;
+  const dpr = 2;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  const g = canvas.getContext('2d');
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  g.fillStyle = c.bg;
+  g.fillRect(0, 0, w, h);
+
+  const pad = tall ? w * 0.11 : w * 0.075;
+  const cw = w - pad * 2;
+  const lines = kind === 'nine' ? nineShareLines() : flashShareLines();
+
+  g.textAlign = 'left';
+  g.textBaseline = 'alphabetic';
+
+  let y = tall ? h * 0.14 : h * 0.15;
+  g.fillStyle = c.muted;
+  g.font = '700 ' + Math.round(w * (tall ? 0.024 : 0.018)) + 'px "Space Mono", monospace';
+  g.fillText(lines.sub, pad, y);
+
+  y += tall ? h * 0.06 : h * 0.095;
+  g.fillStyle = c.ink;
+  const bigSize = Math.round(w * (tall ? 0.088 : 0.055));
+  g.font = '700 ' + bigSize + 'px "Source Serif 4", Georgia, serif';
+  lines.big.forEach((ln, i) => {
+    g.fillStyle = i === 0 ? c.red : c.ink;
+    g.fillText(ln, pad, y);
+    y += bigSize * 1.16;
+  });
+
+  let vizBottom;
+  if (kind === 'nine') {
+    /* Two time bars, yours against his, scaled to the slower of the two. */
+    const mine = bestNineMs();
+    const top = Math.max(AYUMU_COMMIT_MS, mine || AYUMU_COMMIT_MS) * 1.15;
+    const vTop = y + (tall ? h * 0.05 : h * 0.045);
+    const barH = tall ? h * 0.05 : h * 0.06, rowGap = tall ? h * 0.055 : h * 0.07;
+    const barX = pad + cw * 0.14, barW = cw * 0.86;
+    [['AYUMU', AYUMU_COMMIT_MS, c.red], ['ME', mine, c.ink]].forEach((r, i) => {
+      const yy = vTop + i * rowGap;
+      g.fillStyle = c.muted;
+      g.font = '700 ' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
+      g.textAlign = 'left';
+      g.fillText(r[0], pad, yy + barH * 0.72);
+      if (r[1] === null) {
+        g.fillStyle = c.muted;
+        g.font = '' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
+        g.fillText('no clean run yet', barX, yy + barH * 0.72);
+      } else {
+        const bw = Math.max(w * 0.01, barW * (r[1] / top));
+        g.fillStyle = r[2];
+        g.fillRect(barX, yy, bw, barH);
+        g.font = '700 ' + Math.round(w * (tall ? 0.024 : 0.016)) + 'px "Space Mono", monospace';
+        g.fillText(secs(r[1]), barX + bw + w * 0.012, yy + barH * 0.72);
+      }
+    });
+    g.textAlign = 'left';
+    vizBottom = vTop + 2 * rowGap;
+  } else {
+    /* The timed ladder, drawn small: one row per stage, five boxes per row
+       for the five flash lengths, filled as far as the player has passed.
+       The last box of the last row is Ayumu's own condition. */
+    const def = TRACKS.flash;
+    const passed = bestPassedRung('flash');
+    const stages = FLASH_STAGE_NS, holds = FLASH_STAGE_HOLDS;
+    const top0 = y + (tall ? h * 0.035 : h * 0.03);
+    const gapPx = Math.max(2, w * 0.006);
+    const labelW = cw * 0.22;
+    const boxW = (cw - labelW - gapPx * (holds.length - 1)) / holds.length;
+    const rowH = Math.min(boxW, (tall ? h * 0.26 : h * 0.30) / stages.length - gapPx);
+    g.font = '700 ' + Math.round(w * (tall ? 0.02 : 0.014)) + 'px "Space Mono", monospace';
+    stages.forEach((n, ri) => {
+      const yy = top0 + ri * (rowH + gapPx * 3);
+      g.textAlign = 'left';
+      g.fillStyle = c.muted;
+      g.fillText(n + ' NUMBERS', pad, yy + rowH * 0.66);
+      holds.forEach((hold, ci) => {
+        const rung = def.steps.findIndex(st => st.n === n && st.h === hold);
+        const x = pad + labelW + ci * (boxW + gapPx);
+        const isAyumu = (n === FLASH_N && hold === FLASH_HOLD);
+        if (passed !== null && rung <= passed) {
+          g.fillStyle = isAyumu ? c.red : c.ink;
+          g.fillRect(x, yy, boxW, rowH);
+        } else {
+          g.strokeStyle = isAyumu ? c.red : c.rule;
+          g.lineWidth = isAyumu ? Math.max(2, w * 0.0035) : 1;
+          g.strokeRect(x, yy, boxW, rowH);
+        }
+      });
+    });
+    const ladderBottom = top0 + stages.length * (rowH + gapPx * 3);
+    g.fillStyle = c.muted;
+    g.font = '' + Math.round(w * (tall ? 0.019 : 0.013)) + 'px "Space Mono", monospace';
+    g.textAlign = 'left';
+    g.fillText('FLASH GETS SHORTER →', pad + labelW, ladderBottom + w * (tall ? 0.03 : 0.02));
+    g.textAlign = 'right';
+    g.fillStyle = c.red;
+    g.fillText('AYUMU', pad + cw, ladderBottom + w * (tall ? 0.03 : 0.02));
+    g.textAlign = 'left';
+    vizBottom = ladderBottom;
+  }
+
+  let dy = vizBottom + (tall ? h * 0.085 : h * 0.11);
+  g.fillStyle = c.ink;
+  const dSize = Math.round(w * (tall ? 0.042 : 0.026));
+  g.font = '600 ' + dSize + 'px "Source Serif 4", Georgia, serif';
+  wrapText(g, shareTagline(kind), pad, dy, cw, dSize * 1.3);
+
+  g.fillStyle = c.muted;
+  g.font = '700 ' + Math.round(w * (tall ? 0.022 : 0.015)) + 'px "Space Mono", monospace';
+  g.textAlign = 'right';
+  g.fillText('GENIUSANDIMPOSTOR.COM', w - pad, h - pad * (tall ? 0.85 : 0.7));
+  g.textAlign = 'left';
+}
+
+let shareKind = 'flash';   /* which card is showing: 'flash' | 'nine' */
+
+/* Which card to open on. Called once on the way into the share view, never
+   from renderShare(), because renderShare() also runs on every toggle click
+   and would otherwise stomp the choice the player just made. Lead with the
+   Nine when catching Ayumu there is a genuine brag, or when the Nine is the
+   only task they have on the board. */
+function pickDefaultShareKind() {
+  shareKind = (beatNine() || (track('nine').sessions.length && !track('flash').sessions.length))
+    ? 'nine' : 'flash';
+}
+
+function renderShare() {
+  const el = document.getElementById('share-body');
+
+  const tab = (k, label) => '<button type="button" class="rung-row' + (shareKind === k ? ' current' : '') +
+    '" data-kind="' + k + '" style="grid-template-columns:1fr;justify-items:center;min-height:44px;" aria-pressed="' +
+    (shareKind === k) + '">' + label + '</button>';
+
+  el.innerHTML = '<p class="t-eyebrow">Something to share</p>' +
+    '<h1 class="t-title" id="share-title">Your card</h1>' +
+    '<p class="t-body">Two cards, one for each of Ayumu’s records. Pick the one you’d like to share.</p>' +
+    '<div class="rung-list" role="group" aria-label="Choose a card" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;border:0;margin:0 0 18px;">' +
+    tab('flash', 'The five-number score') +
+    tab('nine', 'The nine, on the clock') +
+    '</div>' +
+    '<canvas class="share-preview" id="share-canvas" aria-label="Preview of your share card"></canvas>' +
+    '<div class="btn-row">' +
+    '<button class="btn primary" id="btn-dl-story">Download for stories</button>' +
+    '<button class="btn" id="btn-dl-link">Download wide</button>' +
+    '<button class="btn ghost" id="btn-copy">Copy the link</button>' +
+    '</div>' +
+    '<p class="t-quiet" id="copy-status" style="margin-top:18px;">The tall one fits Instagram and X stories. The wide one is for link previews.</p>' +
+    '<div class="btn-row" style="margin-top:24px;">' +
+    '<button class="btn ghost" id="btn-share-back">Back to the tracks</button></div>';
+
+  const preview = document.getElementById('share-canvas');
+  preview.style.aspectRatio = '1080 / 1920';
+  drawShareCard(preview, 1080, 1920, shareKind);
+
+  function download(w, h, name) {
+    const cv = document.createElement('canvas');
+    drawShareCard(cv, w, h, shareKind);
+    cv.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(a.href);
+    });
+  }
+
+  el.querySelectorAll('.rung-row[data-kind]').forEach(b => {
+    b.addEventListener('click', () => { shareKind = b.dataset.kind; renderShare(); });
+  });
+  document.getElementById('btn-dl-story').addEventListener('click', () => download(1080, 1920, 'ayumu-test-' + shareKind + '-story.png'));
+  document.getElementById('btn-dl-link').addEventListener('click', () => download(1200, 630, 'ayumu-test-' + shareKind + '-card.png'));
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    const l = shareKind === 'nine' ? nineShareLines() : flashShareLines();
+    const text = shareTagline(shareKind) + ' ' + l.big.join(' ') + ' ' + location.origin + location.pathname;
+    const status = document.getElementById('copy-status');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        () => { status.textContent = 'Copied to your clipboard.'; },
+        () => { status.textContent = 'Copying did not work. Here it is: ' + text; }
+      );
+    } else {
+      status.textContent = 'Here it is: ' + text;
+    }
+  });
+  document.getElementById('btn-share-back').addEventListener('click', () => { renderTrack(currentTrack); showView('view-training'); });
+}
+
+/* ================================================================
+   16. ENTRY POINTS
+   ================================================================ */
+
+/* The reveal, one thought per tap (JT, 2026-08-09): a wall of paragraphs
+   gets skimmed, so each beat stands alone on a card and the reader clicks
+   through at their own pace. */
+async function startTrack(kind) {
+  await document.fonts.ready;
+  await runTrackSession(kind);
+  renderTrack(kind);
+  showView('view-training');
+}
+
+document.getElementById('btn-quit').addEventListener('click', () => {
+  aborted = true;
+  /* Release whichever promise the run is parked on, so the flow unwinds
+     instead of being left suspended behind the restored page. */
+  if (resolveTap) { const r = resolveTap; resolveTap = null; r(-1); }
+  if (resolveCard) { const r = resolveCard; resolveCard = null; r('quit'); }
+  document.getElementById('overlay').classList.remove('active');
+  phase = 'idle';
+  boot();
+});
+
+['pref-hc', 'pref-hc-2'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('change', e => {
+    store.prefs.hc = e.target.checked;
+    saveStore();
+    applyPrefs();
+    const active = document.querySelector('.view.active');
+    if (!active) return;
+    if (active.id === 'view-training') renderTrack(currentTrack);
+  });
+});
+
+document.getElementById('btn-go-flash').addEventListener('click', () => { renderTrack('flash'); showView('view-training'); });
+document.getElementById('btn-go-nine').addEventListener('click', () => { renderTrack('nine'); showView('view-training'); });
+
+/* Wipe everything this device remembers and go back to the first screen. */
+function resetEverything() {
+  store = blankStore();
+  try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+  saveStore();
+  boot();
+}
+
+/* ================================================================
+   SIGN-IN AND SAVED PROGRESS
+
+   A signed-in browser holds a token from training-signin.js. Every
+   saveStore() also sends the store to training-progress.js, and boot()
+   pulls it back, so progress follows the player between devices. Signed
+   out, everything still works; it just lives in this browser only.
+   ================================================================ */
+
+const TOKEN_KEY = 'giAyumuTraining.token';
+const PROGRESS_URL = '/.netlify/functions/training-progress';
+const SIGNIN_URL = '/.netlify/functions/training-signin';
+
+function getToken() { try { return localStorage.getItem(TOKEN_KEY) || null; } catch (e) { return null; } }
+function setToken(t) { try { if (t) localStorage.setItem(TOKEN_KEY, t); else localStorage.removeItem(TOKEN_KEY); } catch (e) {} }
+function tokenEmail(t) {
+  try { return atob(t.split('.')[0].replace(/-/g, '+').replace(/_/g, '/')); } catch (e) { return null; }
+}
+
+let syncState = 'idle';   /* idle | saving | saved | offline */
+let lastSavedAt = null;   /* when the saved copy was last written, from the server */
+let pushTimer = null;
+
+function hasProgress(st) {
+  if (!st || typeof st !== 'object') return false;
+  const tr = st.tracks || {};
+  return !!['flash', 'nine'].some(k => tr[k] && tr[k].sessions && tr[k].sessions.length);
+}
+
+/* Send the store up, a moment after the last change, so a burst of saves
+   inside a session becomes one request. If the page is hidden or closed
+   while a send is still waiting, it goes immediately (keepalive lets the
+   request outlive the tab), so locking a phone right after a set cannot
+   drop that set. */
+let pushPending = false;
+
+function flushProgress() {
+  if (!pushPending) return;
+  clearTimeout(pushTimer);
+  pushPending = false;
+  const token = getToken();
+  if (!token) return;
+  try {
+    fetch(PROGRESS_URL, {
+      method: 'PUT', keepalive: true,
+      headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' },
+      body: JSON.stringify({ store })
+    }).catch(() => {});
+  } catch (e) {}
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushProgress(); });
+window.addEventListener('pagehide', flushProgress);
+
+function pushProgress() {
+  const token = getToken();
+  if (!token) return;
+  clearTimeout(pushTimer);
+  syncState = 'saving';
+  pushPending = true;
+  pushTimer = setTimeout(async () => {
+    pushPending = false;
+    try {
+      const r = await fetch(PROGRESS_URL, {
+        method: 'PUT', keepalive: true,
+        headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' },
+        body: JSON.stringify({ store })
+      });
+      if (r.status === 401) { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); return; }
+      syncState = r.ok ? 'saved' : 'offline';
+      if (r.ok) { try { const j = await r.json(); if (j && j.updated_at) lastSavedAt = j.updated_at; } catch (e) {} }
+    } catch (e) { syncState = 'offline'; }
+    renderSignin();
+  }, 800);
+}
+
+/* Progress can never go backwards: the saved copy and this device's copy
+   are MERGED, track by track, keeping whichever has more sessions (ties go
+   to the newer save). The map keeps the best of both. A stale device can
+   therefore never overwrite a fresher one, whatever order things load in
+   (JT lost a day's progress to exactly that on 2026-09-16). */
+function mergeStores(local, remote) {
+  const out = blankStore();
+  const lAt = local && local.savedAt ? new Date(local.savedAt).getTime() : 0;
+  const rAt = remote && remote.savedAt ? new Date(remote.savedAt).getTime() : 0;
+  ['flash', 'nine'].forEach(k => {
+    const a = local && local.tracks && local.tracks[k] ? local.tracks[k] : blankTrack();
+    const b = remote && remote.tracks && remote.tracks[k] ? remote.tracks[k] : blankTrack();
+    const pick = a.sessions.length !== b.sessions.length ? (a.sessions.length > b.sessions.length ? a : b) : (lAt >= rAt ? a : b);
+    out.tracks[k] = JSON.parse(JSON.stringify(pick));
+    /* A completion recorded on either copy stands. */
+    if (!out.tracks[k].completedAt && (a.completedAt || b.completedAt)) out.tracks[k].completedAt = a.completedAt || b.completedAt;
+  });
+  out.prefs = (local && local.prefs) || (remote && remote.prefs) || { hc: false };
+  out.savedAt = new Date(Math.max(lAt, rAt) || Date.now()).toISOString();
+  return out;
+}
+
+async function pullProgress() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const r = await fetch(PROGRESS_URL, { headers: { authorization: 'Bearer ' + token } });
+    if (r.status === 401) { setToken(null); renderSignin(); renderIntroStatus(); return; }
+    if (!r.ok) { syncState = 'offline'; renderSignin(); return; }
+    const d = await r.json();
+    const remote = normalizeStore(d.store && typeof d.store === 'object' ? d.store : null);
+    if (remote && d.updated_at && !remote.savedAt) remote.savedAt = d.updated_at;
+    const before = JSON.stringify(store);
+    store = mergeStores(store, remote);
+    lastSavedAt = d.updated_at || null;
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) {}
+    applyPrefs();
+    syncState = 'saved';
+    /* If the merge added anything this device did not have, or the saved
+       copy was behind, send the merged copy up so both sides agree. */
+    if (!remote || JSON.stringify(store) !== JSON.stringify(remote) || before !== JSON.stringify(store)) pushProgress();
+  } catch (e) { syncState = 'offline'; }
+  renderSignin();
+  renderIntroStatus();
+}
+
+async function requestLink(email) {
+  const r = await fetch(SIGNIN_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ email })
+  });
+  if (r.ok) return 'sent';
+  if (r.status === 500) return 'unconfigured';
+  if (r.status === 400) return 'invalid';
+  return 'failed';
+}
+
+function renderSignin() {
+  const box = document.getElementById('signin-box');
+  if (!box) return;
+  const token = getToken();
+  if (token) {
+    /* Signed in: the progress panel (renderIntroStatus) carries the
+       signed-in line, so this box stays empty. */
+    box.innerHTML = '';
+    if (document.getElementById('intro-status')) renderIntroStatus();
+    return;
+  }
+  box.innerHTML =
+    '<div class="parchment-card">' +
+    '<div class="card-header"><span>Sign in to open the room</span></div>' +
+    '<p class="t-body">Enter your email and we will send you a sign-in link. Open it and the room unlocks, with your training saved as you play and following you to any phone or computer you open the link on.</p>' +
+    '<form id="signin-form" class="btn-row" style="margin-top:14px;">' +
+    '<input type="email" id="signin-email" placeholder="you@email.com" aria-label="Your email" required style="flex:1 1 220px;min-width:0;font-family:var(--serif);font-size:17px;padding:11px 14px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);">' +
+    '<button type="submit" class="btn primary" id="btn-signin">Send me a link</button>' +
+    '</form>' +
+    '<p class="t-quiet" id="signin-msg" style="margin-top:12px;min-height:16px;"></p>' +
+    '</div>';
+  const form = document.getElementById('signin-form');
+  const msg = document.getElementById('signin-msg');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = document.getElementById('signin-email').value.trim();
+    if (!email) return;
+    document.getElementById('btn-signin').disabled = true;
+    msg.textContent = 'Sending…';
+    const out = await requestLink(email);
+    if (out === 'sent') msg.textContent = 'Sent. Check your email for the link, and look in spam if it is not there in a minute.';
+    else if (out === 'invalid') msg.textContent = 'That does not look like an email address.';
+    else if (out === 'unconfigured') msg.textContent = 'Sign-in is not switched on yet.';
+    else msg.textContent = 'That did not go through. Please try again in a minute.';
+    document.getElementById('btn-signin').disabled = false;
+  });
+}
+
+function renderIntroStatus() {
+  const el = document.getElementById('intro-status');
+  const copy = document.getElementById('intro-copy');
+  const doors = document.getElementById('intro-doors');
+  if (!el) return;
+  const signedIn = !!getToken();
+
+  /* The room is behind the sign-in. Signed out, the page explains what is
+     here and asks for an email; the doors only appear once you are in. */
+  copy.innerHTML = '<p class="t-body">Ayumu practiced his game about five hundred times before anyone wrote a paper about him. This is where you practice yours. There are two tracks, one for each of his games: the timed game, and the nine. Each one adds a number only once you have met Ayumu’s own standard at the count before, so when you reach the top, you are at his level.</p>' +
+    (signedIn
+      ? '<p class="t-body">Pick one track and train it consistently. Switching back and forth slows both down, so stay on one until it is complete.</p>'
+      : '<p class="t-body">Your progress is saved to your email address, so you can pick up on any phone or computer. Sign in below to open the room.</p>');
+  if (doors) doors.style.display = signedIn ? '' : 'none';
+
+  let html = '';
+  if (signedIn) {
+    const email = tokenEmail(getToken()) || 'you';
+    let rows = '';
+    ['flash', 'nine'].forEach(k => {
+      const t = track(k), def = trackDef(k);
+      let val;
+      if (t.completedAt) val = '<b>Complete</b>, at Ayumu’s level, since ' + esc(fmtDate(t.completedAt)) + '.';
+      else if (!t.sessions.length) val = 'Not started. Your first session opens at ' + esc(rungLabel(k, 0)) + '.';
+      else {
+        const si = stageInfo(k, trackRung(k));
+        val = '<b>Stage ' + si.stage + ' of ' + si.stages + (si.subs > 1 ? ', step ' + si.sub + ' of ' + si.subs : '') + '</b> · ' + esc(rungLabel(k, trackRung(k))) +
+          ' · ' + t.sessions.length + ' session' + (t.sessions.length === 1 ? '' : 's') + ' so far';
+      }
+      rows += '<div class="status-row"><div class="status-key">' + esc(def.name) + '</div><div class="status-val">' + val + '</div></div>';
+    });
+
+    const saved = syncState === 'offline'
+      ? 'Saving is not working right now, so this visit is kept on this device only.'
+      : 'Your progress is saved as you play' + (syncState === 'saving' ? ' (saving…)' : '') + '.' +
+        (lastSavedAt ? ' Last saved ' + esc(fmtDate(lastSavedAt)) + '.' : '');
+    html += '<div class="parchment-card" style="margin-top:22px;">' +
+      '<div class="card-header"><span>Where you are</span><span class="card-stamp">Saved</span></div>' +
+      '<div class="status-rows">' + rows + '</div>' +
+      '<div class="status-foot">Signed in as ' + esc(email) + '. ' + saved +
+      ' <button type="button" id="btn-signout">Sign out</button>' +
+      (hasProgress(store) ? ' · <button type="button" id="btn-reset-all">Clear my progress and start over</button>' : '') +
+      '</div></div>';
+  }
+  el.innerHTML = html;
+  const out = document.getElementById('btn-signout');
+  if (out) out.addEventListener('click', () => { setToken(null); syncState = 'idle'; renderSignin(); renderIntroStatus(); });
+  const reset = document.getElementById('btn-reset-all');
+  if (reset) reset.addEventListener('click', () => {
+    if (!confirm('This clears every training session you have saved, on every device. Start over?')) return;
+    resetEverything();
+  });
+}
+
+/* Relayout the board if the viewport changes between tries. Never mid-try:
+   a resize during a try would move the tiles under somebody’s finger. */
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (!document.getElementById('view-play').classList.contains('active')) return;
+    if (phase === 'idle' || phase === 'ready') { layoutField(); render(); }
+  }, 200);
+});
+
+async function boot() {
+  applyPrefs();
+  const params = new URLSearchParams(location.search);
+
+  /* ?reset=1 wipes everything saved on this device and starts from the
+     first screen. */
+  if (params.get('reset') === '1') {
+    history.replaceState(null, '', location.pathname);
+    store = blankStore();
+    try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+    saveStore();
+  }
+
+  /* Arriving from the sign-in email: keep the token, tidy the address bar. */
+  if (params.get('token')) {
+    setToken(params.get('token'));
+    history.replaceState(null, '', location.pathname);
+  }
+
+  renderSignin();
+  renderIntroStatus();
+  showView('view-intro');
+  if (getToken()) await pullProgress();
+}
+
+/* Dev hooks. Used to drive the flow during development and verification.
+   Gated by DEV, which requires BOTH a local hostname and ?dev=1, so this block
+   never installs on the live domain no matter what is in the query string.
+   Includes a solver: do not relax that gate. */
+function Buffer_b64(s) { return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+
+if (DEV) {
+  window.__ayumu = {
+    state: () => ({
+      phase: phase, frameDur: frameDur, measured: frameDurMeasured, field: field,
+      rungs: { flash: trackRung('flash'), nine: trackRung('nine') }, bestNineMs: bestNineMs(),
+      next: trial ? trial.next : null,
+      kbFocus: kbFocus,
+      focusValue: (trial && kbFocus >= 0) ? trial.items[kbFocus].value : null,
+      tiles: trial ? trial.items.map(it => ({ v: it.value, cx: it.x + it.s / 2, cy: it.y + it.s / 2, taken: it.taken })) : null
+    }),
+    store: () => store,
+    reset: () => { store = blankStore(); saveStore(); boot(); },
+    /* Lay out and paint a board without running the timed flow, so the
+       geometry can be inspected where rAF is unavailable. */
+    demoBoard: (n, mode, taken) => {
+      showPlay();
+      layoutField();
+      trial = makeTrial(n || 9);
+      (taken || []).forEach(v => { const it = trial.items.find(o => o.value === v); if (it) it.taken = true; });
+      phase = mode || 'numbers';
+      render();
+      const g = field.grid;
+      let minGap = Infinity;
+      for (let i = 0; i < trial.items.length; i++) {
+        for (let j = i + 1; j < trial.items.length; j++) {
+          const a = trial.items[i], b = trial.items[j];
+          const dx = Math.max(0, Math.max(a.x - (b.x + b.s), b.x - (a.x + a.s)));
+          const dy = Math.max(0, Math.max(a.y - (b.y + b.s), b.y - (a.y + a.s)));
+          if (dx === 0 && dy === 0) minGap = -1;
+          else minGap = Math.min(minGap, Math.max(dx, dy));
+        }
+      }
+      return { cols: g.cols, rows: g.rows, cells: g.cells, tile: Math.round(g.tile * 10) / 10, minGap: Math.round(minGap * 10) / 10 };
+    },
+    solve: (missAt) => {
+      /* 'study' is the Nine’s self-paced window: the first tap lands there
+         and flips the phase to 'respond' for the remaining eight. */
+      if ((phase !== 'respond' && phase !== 'study') || !trial) return 'no live trial';
+      const order = trial.items.slice().sort((a, b) => a.value - b.value);
+      let step = 0;
+      const tick = () => {
+        if ((phase !== 'respond' && phase !== 'study') || !resolveTap) return;
+        if (step >= order.length) return;
+        const it = order[step];
+        if (missAt && step + 1 === missAt) {
+          const wrongOne = trial.items.find(o => !o.taken && o.value !== trial.next);
+          if (wrongOne) { resolveTap(trial.items.indexOf(wrongOne)); return; }
+        }
+        resolveTap(trial.items.indexOf(it));
+        step++;
+        setTimeout(tick, 30);
+      };
+      tick();
+      return 'solving';
+    },
+    seedSessions: (kind, n, complete) => {
+      kind = kind || 'flash';
+      const def = TRACKS[kind];
+      const out = [];
+      for (let i = 0; i < n; i++) {
+        const d = new Date(Date.now() - (n - i) * 86400000).toISOString();
+        const rung = Math.min(def.steps.length - 1, i);
+        out.push({ date: d, startRung: Math.max(0, rung - 1), endRung: rung,
+          sets: [{ rung, n: def.steps[rung].n, h: def.steps[rung].h, t: def.steps[rung].t, passes: 5, trials: 6, clean: 5, fastest: kind === 'nine' ? 640 : null, rate: 5 / 6 }] });
+      }
+      store.tracks[kind].sessions = out;
+      store.tracks[kind].rung = out[out.length - 1].endRung;
+      if (complete) store.tracks[kind].completedAt = new Date().toISOString();
+      saveStore();
+      return out.length;
+    },
+    signin: (email) => { setToken(Buffer_b64(email) + '.' + (Date.now() + 86400000) + '.dev'); renderSignin(); renderIntroStatus(); return 'signed in (dev token, will not sync)'; }
+  };
+}
+
+boot();
+</script>
+</body>
+</html>

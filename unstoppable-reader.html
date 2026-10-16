@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>The Unstoppable Reader — GeniusAndImpostor.com</title>
-  <meta name="description" content="Can you ignore what you read? A two minute experiment that proves you can't, and explains why that failure is the signature of mastery.">
+  <meta name="description" content="How much of your mind runs without you? A two minute experiment that catches a skill you cannot switch off.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -110,6 +110,15 @@
       font-weight: 700;
       line-height: 1.15;
       margin-bottom: 16px;
+    }
+
+    .t-subtitle {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3.6vw, 22px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--muted);
+      margin: -6px 0 22px;
     }
 
     .t-headline {
@@ -620,6 +629,7 @@
       .tool-mast, .tool-footer, .no-print, .btn, .btn-row { display: none !important; }
     }
   </style>
+  <script src="launched.js"></script>
 </head>
 <body>
   <div class="shell">
@@ -635,14 +645,14 @@
 
       <!-- ============ INTRO ============ -->
       <section class="view active" id="view-intro" aria-labelledby="intro-title">
-        <p class="t-eyebrow">A two minute experiment</p>
-        <h1 class="t-title" id="intro-title">The Unstoppable Reader</h1>
+        <h1 class="t-title" id="intro-title">How much of your mind runs without you?</h1>
+        <p class="t-subtitle">The Unstoppable Reader</p>
         <p class="t-body">In this game, a shape or a word will appear on the screen in one of four colors. All you have to do is tap the button that matches the <strong>color you see</strong>. Pay attention to the color and nothing else.</p>
         <p class="t-body">There are four short rounds, and the whole thing takes about two minutes. Go as fast as you can without guessing.</p>
         <div class="btn-row" style="margin-top: 32px;">
           <button class="btn primary" id="btn-start">Start</button>
+          <a class="btn ghost from-ayumu" style="display:none;" href="ayumu-test.html?show=results">Back to your Ayumu results</a>
         </div>
-        <p class="t-quiet" style="margin-top: 24px;">Everything runs on this device. Nothing is sent anywhere.</p>
       </section>
 
       <!-- ============ GAME ============ -->
@@ -713,7 +723,7 @@
 
         <div class="beat">
           <p class="t-label">Why none of it feels impressive</p>
-          <p class="t-body">And notice how strange it is that reading feels like nothing. Reading feels like nothing precisely because reading runs outside of consciousness. We only register the work we can feel, so the most sophisticated things our brains do are the things we never think about. This blind spot has a name in <a class="inline-link" href="index.html"><em>The Genius and the Impostor</em></a>: the Effort Inversion. Michelangelo supposedly said that if people knew how hard he had worked for his mastery, it wouldn&rsquo;t seem so wonderful at all. Your reading is the same kind of mastery: so well practiced that the effort has become invisible, even to you.</p>
+          <p class="t-body">And notice how strange it is that reading feels like nothing. Reading feels like nothing precisely because reading runs outside of consciousness. We only register the work we can feel, so the most sophisticated things our brains do are the things we never think about. This blind spot has a name in <a class="inline-link" href="book.html"><em>The Genius and the Impostor</em></a>: the Effort Inversion. Michelangelo supposedly said that if people knew how hard he had worked for his mastery, it wouldn&rsquo;t seem so wonderful at all. Your reading is the same kind of mastery: so well practiced that the effort has become invisible, even to you.</p>
           <p class="t-body">Sports make this blind spot easier to see, because in sports the training is visible. Nobody watches a beginner&rsquo;s wobbly tennis swing and calls it more athletic than a champion&rsquo;s smooth one. With mental skills, the skilled part runs invisibly, so the skilled part gets none of the credit. Your slowdown in round 3 came from being extremely good at reading.</p>
         </div>
 
@@ -739,6 +749,7 @@
           <div class="btn-row">
             <button class="btn primary" id="btn-share">Save the share card</button>
             <button class="btn ghost" id="btn-replay">Play again</button>
+            <a class="btn ghost from-ayumu" style="display:none;" href="ayumu-test.html?show=results">Back to your Ayumu results</a>
           </div>
         </div>
       </section>
@@ -767,14 +778,15 @@
     <!-- SHARED: cross-tool footer. Add each new tool's link here and on every
          other tool page when it ships (build-context §2b). -->
     <footer class="tool-footer">
-      <a class="tool-footer-cover" href="index.html" aria-label="The Genius and the Impostor, the book">
+      <a class="tool-footer-cover" href="book.html" aria-label="The Genius and the Impostor, the book">
         <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
       </a>
       <div class="tool-footer-label">While you're here</div>
       <div class="tool-footer-links">
-        <a href="index.html">The Genius and the Impostor</a>
-        <a href="ayumu-test.html">The Ayumu Test</a>
-        <a href="diagnostic.html">The Genius Diagnostic</a>
+        <a href="book.html">The Genius and the Impostor</a>
+        <a data-game="ayumu-test" href="ayumu-test.html">The Ayumu Test</a>
+        <a data-game="diagnostic" href="diagnostic.html">The Genius Diagnostic</a>
+        <a data-game="secret-grammar" href="secret-grammar.html">The Secret Grammar</a>
       </div>
       <div class="tool-footer-copy">&copy; 2026 Josh Turknett</div>
     </footer>
@@ -1254,6 +1266,12 @@ document.getElementById('btn-endless-stop').addEventListener('click', () => {
 });
 
 /* ---------------- wiring ---------------- */
+
+/* Arrived from the Ayumu Test's explanation walk: show the way back, on
+   the intro and again beside the replay buttons at the end. */
+if (new URLSearchParams(location.search).get('from') === 'ayumu') {
+  document.querySelectorAll('.from-ayumu').forEach(a => { a.style.display = ''; });
+}
 
 document.getElementById('btn-start').addEventListener('click', startGame);
 document.getElementById('btn-replay').addEventListener('click', startGame);

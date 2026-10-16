@@ -144,7 +144,7 @@ const FOOTER = `
   <footer class="foot">
     <div class="foot-label">While you're here</div>
     <div class="foot-links">
-      <a href="../index.html">The Genius and the Impostor</a>
+      <a href="../book.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
       <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
       <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
