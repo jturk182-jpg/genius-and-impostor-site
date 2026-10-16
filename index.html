@@ -94,6 +94,11 @@
   .book-txt p { font-size:17px; color:var(--muted); margin-top:8px; }
   .book-txt a { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--red); text-decoration:none; margin-top:14px; display:inline-block; }
 
+  /* speaking */
+  .talk h2 { font-size:23px; font-weight:600; letter-spacing:-.01em; }
+  .talk p { font-size:17px; color:var(--muted); margin-top:8px; max-width:52ch; }
+  .talk a { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--red); text-decoration:none; margin-top:14px; display:inline-block; }
+
   /* newsletter */
   .news h2 { font-size:23px; font-weight:600; letter-spacing:-.01em; }
   .news p { font-size:17px; color:var(--muted); margin-top:6px; max-width:48ch; }
@@ -305,6 +310,13 @@
     </div>
   </section>
 
+  <!-- SPEAKING -->
+  <section class="sec talk">
+    <h2>Bring Josh to your organization.</h2>
+    <p>Josh gives keynotes and workshops on the ideas in the book: how the brain builds every skill you have, and how the stories we tell ourselves about what we're capable of can hold us back. Each talk is tailored to its audience, and every keynote includes live music.</p>
+    <a href="https://joshturknett.com/speaking">Book a talk &rarr;</a>
+  </section>
+
   <!-- NEWSLETTER -->
   <section class="sec news">
     <h2>New games are on the way.</h2>
@@ -326,6 +338,8 @@
       <a data-game="secret-grammar" href="secret-grammar.html">The Secret Grammar</a>
       <a data-game="diagnostic" href="diagnostic.html">The Genius Diagnostic</a>
       <a href="book.html">The Book</a>
+      <a href="https://joshturknett.com/speaking">Speaking</a>
+      <a href="https://joshturknett.com">About Josh</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -338,8 +352,8 @@
   });
 </script>
 <script>
-  // Newsletter signup. Posts to the subscribe function; shows a friendly
-  // confirmation either way so a visitor is never left hanging.
+  // Newsletter signup. Posts to the subscribe function, which records the
+  // signup in ActiveCampaign. Only a confirmed save says "you're on the list".
   (function () {
     var form = document.getElementById('newsForm');
     var email = document.getElementById('newsEmail');
@@ -357,10 +371,12 @@
         .then(function (r) { return r.ok; })
         .catch(function () { return false; })
         .then(function (ok) {
-          msg.textContent = ok
-            ? 'You are on the list. See you when the next one lands.'
-            : 'Got it. You are on the list.';
-          form.reset();
+          if (ok) {
+            msg.textContent = 'You are on the list. See you when the next one lands.';
+            form.reset();
+          } else {
+            msg.textContent = 'Your signup did not go through, so you are not on the list yet. Please try again in a minute.';
+          }
         });
     });
   })();
