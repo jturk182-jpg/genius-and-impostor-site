@@ -117,7 +117,7 @@ window.LearnFlow = (function () {
       var h = '<div class="lf-progress"><div class="lf-bar" style="width:' + progress() + '%"></div></div>';
       h += '<div class="lf-card">';
       if (step.ask && !answered) {
-        h += '<div class="lf-label">Question &middot; ' + (idx + 1) + ' of ' + total + '</div>';
+        h += '<div class="lf-label">' + (step.label ? esc(step.label) : 'Question &middot; ' + (idx + 1) + ' of ' + total) + '</div>';
         h += '<div class="lf-body"><p>' + step.ask + '</p></div>';
         h += '<div class="lf-choices">';
         step.choices.forEach(function (c, i) {
