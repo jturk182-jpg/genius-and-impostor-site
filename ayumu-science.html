@@ -311,8 +311,8 @@
 
       <div id="after" hidden>
         <div class="btn-row" style="margin-top: 8px;">
-          <a class="btn primary" href="ayumu-test.html?start=flash">Play the flash game again</a>
-          <a class="btn" href="ayumu-test.html?start=nine">Play the memory game again</a>
+          <a class="btn primary" id="play-flash" href="ayumu-test.html?start=flash">Play the flash game again</a>
+          <a class="btn" id="play-nine" href="ayumu-test.html?start=nine">Play the memory game again</a>
         </div>
 
       <h2 class="t-section">Where all this comes from</h2>
@@ -350,7 +350,14 @@
     (function () {
       /* The same explanation the game walks you through, from
          ayumu-explanation.js, worded for whatever this device has played. */
-      var steps = AyumuExplanation.toFlow(AyumuExplanation.steps(AyumuExplanation.contextFromStorage()));
+      var ctx = AyumuExplanation.contextFromStorage();
+      /* The same short cards as the game's walk, with the same label. */
+      var steps = AyumuExplanation.toFlow(AyumuExplanation.short(AyumuExplanation.steps(ctx)),
+        ctx.played ? 'What just happened' : 'Why Ayumu wins');
+      /* "Again" only for a game this device has actually played. */
+      var playFlash = document.getElementById('play-flash'), playNine = document.getElementById('play-nine');
+      if (playFlash) playFlash.textContent = ctx.played ? 'Play the flash game again' : 'Play the flash game';
+      if (playNine) playNine.textContent = ctx.playedNine ? 'Play the memory game again' : 'Play the memory game';
 
       LearnFlow.render(document.getElementById('flow'), steps, {
         doneLabel: 'Finish',

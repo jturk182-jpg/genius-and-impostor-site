@@ -132,6 +132,76 @@ window.AyumuExplanation = (function () {
     ];
   }
 
+  /* Shared by the game's walk and the science page, so both show the same
+     short cards (they diverged on 2026-10-16 when only the game was split). */
+  /* People do not read paragraphs (JT, 2026-10-16), so the explanation is cut
+     into cards of one or two sentences. JT's words are unchanged: this only
+     breaks them at sentence ends. A long question's lead-in becomes its own
+     card before the question, and a long answer continues on plain cards. */
+  function sentencesOf(html) {
+    var out = [];
+    var cur = '', i = 0;
+    while (i < html.length) {
+      var ch = html[i];
+      cur += ch;
+      if (ch === '.' || ch === '!' || ch === '?') {
+        var j = i + 1;
+        while (j < html.length && '”’"'.indexOf(html[j]) >= 0) { cur += html[j]; j++; }
+        if (html.substr(j, 9) === '</strong>') { cur += '</strong>'; j += 9; }
+        var k = j;
+        while (k < html.length && html[k] === ' ') k++;
+        if (k >= html.length || /^(<strong>)?[A-Z“‘"]/.test(html.slice(k, k + 10))) {
+          if (cur.trim()) out.push(cur.trim());
+          cur = ''; i = k; continue;
+        }
+        i = j; continue;
+      }
+      i++;
+    }
+    if (cur.trim()) out.push(cur.trim());
+    /* Keep <strong> balanced on every piece. */
+    var open = false;
+    return out.map(function (s) {
+      var piece = (open ? '<strong>' : '') + s;
+      var opens = (piece.match(/<strong>/g) || []).length, closes = (piece.match(/<\/strong>/g) || []).length;
+      open = opens > closes;
+      if (open) piece += '</strong>';
+      return piece;
+    });
+  }
+
+  function chunksOf(html) {
+    var paras = html.replace(/<\/p>\s*<p>/g, '\n\n').replace(/^\s*<p>/, '').replace(/<\/p>\s*$/, '').split('\n\n');
+    var out = [];
+    var words = function (s) { return s.replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length; };
+    paras.forEach(function (p) {
+      var cur = [];
+      sentencesOf(p).forEach(function (s) {
+        if (cur.length && (cur.length >= 2 || words(cur.join(' ')) + words(s) > 34)) { out.push(cur.join(' ')); cur = []; }
+        cur.push(s);
+      });
+      if (cur.length) out.push(cur.join(' '));
+    });
+    return out;
+  }
+
+  function short(raw) {
+    var out = [];
+    raw.forEach(function (st) {
+      if (st.beat) {
+        var chunks = chunksOf(st.beat.split('\n\n').map(function (x) { return '<p>' + x + '</p>'; }).join(''));
+        chunks.forEach(function (c, j) { out.push(j === chunks.length - 1 && st.signup ? { beat: c, signup: true } : { beat: c }); });
+        return;
+      }
+      var q = sentencesOf(st.ask);
+      if (q.length > 2) chunksOf('<p>' + q.slice(0, -1).join(' ') + '</p>').forEach(function (c) { out.push({ beat: c }); });
+      var ans = chunksOf(st.answer);
+      out.push(Object.assign({}, st, { ask: q.length > 2 ? q[q.length - 1] : st.ask, answer: '<p>' + ans[0] + '</p>' }));
+      ans.slice(1).forEach(function (c) { out.push({ beat: c }); });
+    });
+    return out;
+  }
+
   /* The Training Room email box, drawn under the last card by whichever
      player is rendering. Sends the sign-in link; nothing else. */
   function signupFormHTML() {
@@ -184,16 +254,17 @@ window.AyumuExplanation = (function () {
   }
 
   /* The same steps in the shape learn-flow.js renders. */
-  function toFlow(list) {
+  function toFlow(list, label) {
     return list.map(function (st) {
-      if (!st.beat) return st;
+      if (!st.beat) return label ? Object.assign({}, st, { label: label }) : st;
       var out = { chunk: st.beat.split('\n\n').map(function (p) { return '<p>' + p + '</p>'; }).join('') };
       if (st.signup) out.signup = true;
+      if (label) out.label = label;
       return out;
     });
   }
 
-  return { steps: steps, toFlow: toFlow, contextFromStorage: contextFromStorage,
+  return { steps: steps, short: short, toFlow: toFlow, contextFromStorage: contextFromStorage,
            signupFormHTML: signupFormHTML, wireSignupForm: wireSignupForm, injectStyles: injectStyles,
            AYUMU_ACC: AYUMU_ACC, AYUMU_COMMIT_MS: AYUMU_COMMIT_MS };
 })();

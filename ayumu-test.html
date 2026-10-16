@@ -2828,75 +2828,7 @@ function revealSteps() {
     nineBestMs: nine ? nine.bestMs : null,
     training: !!window.launched('ayumu-training')
   });
-  return shortCards(raw);
-}
-
-/* People do not read paragraphs (JT, 2026-10-16), so the explanation is cut
-   into cards of one or two sentences. JT's words are unchanged: this only
-   breaks them at sentence ends. A long question's lead-in becomes its own
-   card before the question, and a long answer continues on plain cards. */
-function sentencesOf(html) {
-  const out = [];
-  let cur = '', i = 0;
-  while (i < html.length) {
-    const ch = html[i];
-    cur += ch;
-    if (ch === '.' || ch === '!' || ch === '?') {
-      let j = i + 1;
-      while (j < html.length && '”’"'.indexOf(html[j]) >= 0) { cur += html[j]; j++; }
-      if (html.substr(j, 9) === '</strong>') { cur += '</strong>'; j += 9; }
-      let k = j;
-      while (k < html.length && html[k] === ' ') k++;
-      if (k >= html.length || /^(<strong>)?[A-Z“‘"]/.test(html.slice(k, k + 10))) {
-        if (cur.trim()) out.push(cur.trim());
-        cur = ''; i = k; continue;
-      }
-      i = j; continue;
-    }
-    i++;
-  }
-  if (cur.trim()) out.push(cur.trim());
-  /* Keep <strong> balanced on every piece. */
-  let open = false;
-  return out.map(s => {
-    let piece = (open ? '<strong>' : '') + s;
-    const opens = (piece.match(/<strong>/g) || []).length, closes = (piece.match(/<\/strong>/g) || []).length;
-    open = opens > closes;
-    if (open) piece += '</strong>';
-    return piece;
-  });
-}
-
-function chunksOf(html) {
-  const paras = html.replace(/<\/p>\s*<p>/g, '\n\n').replace(/^\s*<p>/, '').replace(/<\/p>\s*$/, '').split('\n\n');
-  const out = [];
-  const words = s => s.replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length;
-  paras.forEach(p => {
-    let cur = [];
-    sentencesOf(p).forEach(s => {
-      if (cur.length && (cur.length >= 2 || words(cur.join(' ')) + words(s) > 34)) { out.push(cur.join(' ')); cur = []; }
-      cur.push(s);
-    });
-    if (cur.length) out.push(cur.join(' '));
-  });
-  return out;
-}
-
-function shortCards(raw) {
-  const out = [];
-  raw.forEach(st => {
-    if (st.beat) {
-      const chunks = chunksOf(st.beat.split('\n\n').map(x => '<p>' + x + '</p>').join(''));
-      chunks.forEach((c, j) => out.push(j === chunks.length - 1 && st.signup ? { beat: c, signup: true } : { beat: c }));
-      return;
-    }
-    const q = sentencesOf(st.ask);
-    if (q.length > 2) chunksOf('<p>' + q.slice(0, -1).join(' ') + '</p>').forEach(c => out.push({ beat: c }));
-    const ans = chunksOf(st.answer);
-    out.push(Object.assign({}, st, { ask: q.length > 2 ? q[q.length - 1] : st.ask, answer: '<p>' + ans[0] + '</p>' }));
-    ans.slice(1).forEach(c => out.push({ beat: c }));
-  });
-  return out;
+  return AyumuExplanation.short(raw);
 }
 
 function timingTableHTML(rec) {
