@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Solution Space &mdash; The Map</title>
-<meta name="description" content="This is the full set of problems you can solve right now. It has two doors. One is learning, which permanently adds new skills. The other is changing your ">
+<meta name="description" content="Your solution space is the set of problems you can currently solve. The book pictures it as land inside a fence. Learning moves the fence outward, and shif">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#3a6ea5" href="index.html#line-access">The Access Line</a><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a></div>
     <h1 class="station">Solution Space</h1>
-    <p class="lead">This is the full set of problems you can solve right now. It has two doors. One is learning, which permanently adds new skills. The other is changing your brain state, which reaches different combinations of the skills you already have. Both doors make the space bigger.</p>
+    <p class="lead">Your solution space is the set of problems you can currently solve. The book pictures it as land inside a fence. Learning moves the fence outward, and shifting your brain’s mode lets you reach more of the land inside it.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">expanded by</span><a class="frag-target" href="progressive-composition.html">Progressive Composition</a><span class="frag-open">+</span></summary><div class="frag-why">Learning is the first door, and progressive composition is how learning adds to the space.</div></details><details class="frag-edge"><summary><span class="frag-rel">expanded by</span><a class="frag-target" href="routing-architecture.html">Routing Architecture</a><span class="frag-open">+</span></summary><div class="frag-why">Changing brain state is the second door, reaching new combinations of existing skill.</div></details><details class="frag-edge"><summary><span class="frag-rel">explained by</span><a class="frag-target" href="capability-accessibility-model.html">The Capability-Accessibility Model</a><span class="frag-open">+</span></summary><div class="frag-why">The space is exactly capability and access taken together, the two sides of the equation.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">expanded by</span><a class="frag-target" href="progressive-composition.html">Progressive Composition</a><span class="frag-open">+</span></summary><div class="frag-why">Learning adds to your solution space one skill at a time, each built on the ones before it.</div></details><details class="frag-edge"><summary><span class="frag-rel">expanded by</span><a class="frag-target" href="routing-architecture.html">Routing Architecture</a><span class="frag-open">+</span></summary><div class="frag-why">Shifting your brain’s mode lets you reach parts of your solution space that were out of reach.</div></details><details class="frag-edge"><summary><span class="frag-rel">explained by</span><a class="frag-target" href="capability-accessibility-model.html">The Capability-Accessibility Model</a><span class="frag-open">+</span></summary><div class="frag-why">What you can do right now depends on your solution space and how much of it you can access.</div></details>
       </div>
     </div>
-    <div class="book">Solution space is how the book holds learning and brain state in one picture, the two independent ways to reach more.</div>
-    <a class="next" href="the-genius.html"><div class="next-label">Next station</div><div class="next-name">The Genius &rarr;</div><div class="next-reason">One of the two doors is the learning engine itself. Go meet it.</div></a>
+    <div class="book">The book describes your solution space as the land you’ve fenced off so far, and learning as moving the fence posts outward.</div>
+    <a class="next" href="the-genius.html"><div class="next-label">Next station</div><div class="next-name">The Genius &rarr;</div><div class="next-reason">What built your solution space in the first place?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>Walking across your bedroom is inside your solution space. Playing a Rachmaninoff concerto is outside it, and only learning will bring it in. But an answer you could not reach at your desk might appear in the shower, which is the same skills reached through a different door.</p><p class=\"lf-cite\">The two paths to a larger solution space</p>"}];
+  var steps = [{"chunk":"<p>The book describes everything you can currently do as a piece of land surrounded by a fence. Everything inside the fence is your solution space: the problems you’ve already learned to solve.</p><p>Reading this sentence is inside the fence. So are walking across your bedroom, making toast, and telling a bus from a bicycle. Playing Rachmaninoff’s Third Piano Concerto is probably outside it.</p>"},{"ask":"If you wanted to bring the Rachmaninoff concerto inside your fence, what would it take?","choices":["A different brain","Years of learning to play the piano","Believing you can do it"],"correct":1,"answer":"<p>Years of learning to play the piano. The skills needed to play that concerto don’t exist in your brain yet, so for now it’s outside the fence, as it would be for anyone who hasn’t learned to play.</p><p>Learning is the only way to move the fence outward.</p>"},{"ask":"Your fence marks the problems you can solve today. What does it tell you about what you’re capable of learning?","choices":["The fence shows the limit of what you’ll ever be able to learn","The fence tells you nothing about what you can learn. It shows where your learning has brought you so far","The fence shows how much natural talent you have"],"correct":1,"answer":"<p>It tells you nothing about that. It shows where your learning has brought you so far, not how far it can go.</p><p>The Impostor looks at that fence and sees a concrete wall, fixed at birth by your genes. That’s the Special Brain Story. The Genius built the fence through learning, and more learning moves it.</p>"},{"chunk":"<p>Moving the fence isn’t the only way to do more. In the sleep study from the Capability-Accessibility Model station, the sleepers found a hidden shortcut without being taught anything new. The shortcut was inside their fence all along. Sleep shifted their brains into a mode that could reach it.</p><p>At any given moment, your brain can reach only part of your solution space, depending on the mode it’s in.</p>"},{"ask":"Many people believe that what they can do is fixed by who they are. What do the fence and the sleep study say?","choices":["Capability is fixed. Some things are beyond certain people","Capability changes. It depends on what you’ve learned and what you can access, and both can change","Capability grows with learning, but only up to a point"],"correct":1,"answer":"<p>What you’re capable of isn’t fixed. It depends on two things you can change: what you’ve learned, and what your brain can access in its current mode. Learning moves the fence outward. Shifting modes lets you reach more of the land inside it.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

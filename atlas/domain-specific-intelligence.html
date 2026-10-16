@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Domain-Specific Intelligence &mdash; The Map</title>
-<meta name="description" content="Intelligence is not one general thing you have more or less of. It is the ability to solve particular problems in particular places, built entirely by trai">
+<meta name="description" content="Intelligence is the ability to solve problems to reach your goals, and it’s always specific to the problems you’ve learned to solve. There’s no general qua">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#4f7d3a" href="index.html#line-intelligence">The Intelligence Line</a></div>
     <h1 class="station">Domain-Specific Intelligence</h1>
-    <p class="lead">Intelligence is not one general thing you have more or less of. It is the ability to solve particular problems in particular places, built entirely by training in those places. A bat beats you at echolocation and you beat the bat at language, and neither of you is smarter in general, because there is no such thing as being smart in general.</p>
+    <p class="lead">Intelligence is the ability to solve problems to reach your goals, and it’s always specific to the problems you’ve learned to solve. There’s no general quality that makes a person smart at everything, and no single scale that ranks people from least to most intelligent.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">explained by</span><a class="frag-target" href="bottleneck-chunking.html">The Bottleneck and Chunking</a><span class="frag-open">+</span></summary><div class="frag-why">Chunking only works in a trained domain, which is a clean mechanical reason intelligence stays domain-specific.</div></details><details class="frag-edge"><summary><span class="frag-rel">sibling of</span><a class="frag-target" href="trained-reasoning.html">Trained Reasoning</a><span class="frag-open">+</span></summary><div class="frag-why">Even reasoning, the most general-seeming ability, turns out to be domain-specific pattern skill.</div></details><details class="frag-edge"><summary><span class="frag-rel">opposes</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">If there is no general intelligence, the idea of a generally superior brain loses its meaning.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">explained by</span><a class="frag-target" href="bottleneck-chunking.html">The Bottleneck and Chunking</a><span class="frag-open">+</span></summary><div class="frag-why">Chunks only work in the domain where they were built.</div></details><details class="frag-edge"><summary><span class="frag-rel">sibling of</span><a class="frag-target" href="trained-reasoning.html">Trained Reasoning</a><span class="frag-open">+</span></summary><div class="frag-why">Even reasoning, the ability that seems most general, turns out to be specific to what we’ve learned.</div></details><details class="frag-edge"><summary><span class="frag-rel">opposes</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">If there’s no general intelligence, there’s no generally superior brain.</div></details>
       </div>
     </div>
-    <div class="book">The book calls this the bat argument, and uses it to show why reducing intelligence to a single score was a category mistake.</div>
-    <a class="next" href="uncommon-genius.html"><div class="next-label">Next station</div><div class="next-name">Uncommon Genius &rarr;</div><div class="next-reason">If intelligence is a trained path, then so is genius. Go back to where the path pays off.</div></a>
+    <div class="book">The book defines intelligence as the ability to solve problems to reach your goals, and shows why that ability is always specific to a domain.</div>
+    <a class="next" href="uncommon-genius.html"><div class="next-label">Next station</div><div class="next-name">Uncommon Genius &rarr;</div><div class="next-reason">Where do the achievements we call genius come from?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"A lot of people would say: “Smart is smart. A genius in one field is generally a sharp person across the board.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>Intelligence is domain-specific and does not transfer. Being brilliant in one area buys you almost nothing in another, which is why we are perpetually surprised when brilliant people flounder outside their field.</p>"},{"chunk":"<p>Training in one domain barely helps in another. Chess training does not raise your math. Brain-training games make you better at the games and almost nothing else. If intelligence were one general resource, training any hard skill would lift everything. It does not, and that is the whole case.</p><p class=\"lf-cite\">Transfer failure (Sala &amp; Gobet, 2017)</p>"},{"chunk":"<p>We keep getting surprised when a brilliant physicist is hopeless outside physics, or a chess champion cannot manage daily life. The surprise is the giveaway. Under a general-intelligence story these are baffling flukes. Under domain-specificity they are exactly what you would expect.</p><p class=\"lf-cite\">The recurring surprise; Fischer, Newton, and others</p>"},{"chunk":"<p>Put a world-class basketball player with no tennis experience against a well-trained fourth-grader and the child wins easily. Every physical advantage is real and none of it matters, because tennis is a trained skill and the athlete has not trained it. Hardware does not beat software.</p>"}];
+  var steps = [{"ask":"A London cab driver and a tourist in a rental car both need to drive from Paddington Station to the Tower of London. The cab driver is there in half an hour. The tourist, working from a paper map, takes an hour and a half after several wrong turns. Both of them got there. Whose solution showed more intelligence?","choices":["Neither, since both of them reached the Tower","The cab driver’s, because it reached the goal far more efficiently","The tourist’s, because it took more thinking"],"correct":1,"answer":"<p>The cab driver’s. Both of them reached the goal, but the cab driver’s solution used far less time and effort. That’s what intelligence is: how well you solve problems to reach your goals. More effective and more efficient solutions demonstrate more intelligence.</p><p>And the cab driver built that intelligence. To get a license, London cab drivers spend three to four years learning the roughly 25,000 streets in the center of the city, a test known as the Knowledge.</p>"},{"ask":"Humans are far better than bats at sharing thoughts through spoken language. Bats are far better than humans at navigating a dark cave by echolocation. So which is more intelligent?","choices":["Humans, because language is the harder problem","Bats, because echolocation is the harder problem","Neither. Each is more intelligent at its own problems"],"correct":2,"answer":"<p>Neither. Humans are more intelligent at sharing thoughts, and bats are more intelligent at navigating in the dark. Intelligence isn’t one general quality that a person or a species has more or less of across the board.</p><p>Asking whether one species is more intelligent than another is like asking whether a submarine is better at “transportation” than a helicopter.</p>"},{"ask":"IQ reduces intelligence to a single number meant to rank everyone from least to most intelligent. Given the bats and the humans, what’s the problem with that?","choices":["There’s no problem. A single number is a fair summary","Intelligence depends on the problem being solved, so no single number can capture it","The number just needs to be measured more carefully"],"correct":1,"answer":"<p>The problem is that intelligence depends on the problem being solved, so it can’t be reduced to one score. An IQ score reflects how well someone solves the particular kinds of problems on the test, at the time they take it.</p><p>Humans are also the only animals who could score well on an IQ test, because we designed the test around the kinds of problems humans are good at. A bat would fail it, even though bats solve problems no human can.</p>"},{"ask":"We assume that someone brilliant in one field will be sharp in every field. In 1993, Michael Jordan, the best basketball player in the world, retired from basketball to play professional baseball. He spent the 1994 season in the minor leagues, batted .202, and never made it to the major leagues. Does brilliance carry over from one field to another?","choices":["Brilliance carries over. A brilliant person is sharp in every field","Brilliance stays in the field where it was built","Brilliance mostly carries over, with a few exceptions"],"correct":1,"answer":"<p>Brilliance stays in the field where it was built. Jordan brought speed, strength, and a lifetime of athletic training to baseball, and those helped. But hitting a baseball is its own problem, and the skills that solve it are built by years of hitting baseballs. Intelligence is always specific to a domain, and it’s built by learning in that domain. An expert in one field is a beginner in every field they haven’t studied.</p><p>That’s why we’re so often surprised when a brilliant scientist makes poor decisions about money, or a chess champion struggles to run their own life. Those cases are exactly what you’d expect when intelligence is built one domain at a time.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

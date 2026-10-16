@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Bottleneck and Chunking &mdash; The Map</title>
-<meta name="description" content="The conscious mind can only hold a handful of things at once. That never changes. What changes with expertise is how much each thing holds. A master is not">
+<meta name="description" content="Your conscious mind can hold only a few items at once, and that limit is small for everyone. Experts don’t have a larger capacity. Through learning, they p">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,22 +94,22 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a></div>
     <h1 class="station">The Bottleneck and Chunking</h1>
-    <p class="lead">The conscious mind can only hold a handful of things at once. That never changes. What changes with expertise is how much each thing holds. A master is not remembering more items than you, they have learned to pack far more meaning into each one.</p>
+    <p class="lead">Your conscious mind can hold only a few items at once, and that limit is small for everyone. Experts don’t have a larger capacity. Through learning, they pack more meaning into each item, and that skill only works in the area where they built it.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
-      <a class="feelit" href="../ayumu-test.html"><div class="feelit-name">The Ayumu Test</div><div class="feelit-blurb">Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
+      <a class="feelit" data-game="bottleneck" href="../bottleneck.html"><div class="feelit-name">The Bottleneck</div><div class="feelit-blurb">Remember strings of letters for four seconds, then find out why the same letters were easy or impossible depending on their order.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a><a class="feelit" data-game="ayumu-test" href="../ayumu-test.html"><div class="feelit-name">The Ayumu Test</div><div class="feelit-blurb">Nine numbers flash for a fraction of a second and you try to tap them in order. A young chimpanzee will beat you, and the reason is training, not brains.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
     </div>
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">built on</span><a class="frag-target" href="automaticity.html">Automaticity</a><span class="frag-open">+</span></summary><div class="frag-why">Chunks form as patterns become automatic, so this is automaticity seen from the memory side.</div></details><details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="domain-specific-intelligence.html">Domain-Specific Intelligence</a><span class="frag-open">+</span></summary><div class="frag-why">Chunking only works inside a domain you have trained, which is why memory expertise does not transfer.</div></details><details class="frag-edge"><summary><span class="frag-rel">sibling of</span><a class="frag-target" href="trained-reasoning.html">Trained Reasoning</a><span class="frag-open">+</span></summary><div class="frag-why">Both are the IQ bridge, showing a measured ability is really trained pattern skill.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">built on</span><a class="frag-target" href="automaticity.html">Automaticity</a><span class="frag-open">+</span></summary><div class="frag-why">Chunks form as patterns become automatic.</div></details><details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="domain-specific-intelligence.html">Domain-Specific Intelligence</a><span class="frag-open">+</span></summary><div class="frag-why">Chunks only work in the domain where they were built, which is one reason intelligence is domain-specific.</div></details><details class="frag-edge"><summary><span class="frag-rel">sibling of</span><a class="frag-target" href="trained-reasoning.html">Trained Reasoning</a><span class="frag-open">+</span></summary><div class="frag-why">A good memory and skill at logic both look like inborn capacities, and both turn out to depend on patterns built through learning.</div></details>
       </div>
     </div>
-    <div class="book">The book uses the bottleneck and chunking to walk from working memory straight into why IQ measures the wrong thing.</div>
-    <a class="next" href="everyday-genius.html"><div class="next-label">Next station</div><div class="next-name">Everyday Genius &rarr;</div><div class="next-reason">You have seen how much the machinery packs into a moment. Now see how much of it you do without noticing.</div></a>
+    <div class="book">The book explains why IQ tests track basic resources like working memory, and why those resources matter far less than what we’ve learned.</div>
+    <a class="next" href="everyday-genius.html"><div class="next-label">Next station</div><div class="next-name">Everyday Genius &rarr;</div><div class="next-reason">How much does your brain do without you noticing?</div></a>
   </main>
   
   <footer class="foot">
@@ -116,10 +117,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -127,7 +129,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>Hold four seconds of random letters and you catch about seven. Hold four seconds of a sentence and you catch far more, maybe fifty. The exposure was identical and the raw capacity never moved. What changed is that the sentence arrives in meaningful chunks and the letters do not.</p><p class=\"lf-cite\">Chunking and exposure (from the book)</p>"},{"chunk":"<p>A man known as SF trained his digit span from the ordinary seven up to seventy-nine by learning to hear strings of numbers as running times he already knew. And his memory for random letters stayed at six the whole time. The general capacity never grew. He built one specific, trained skill.</p><p class=\"lf-cite\">Ericsson &amp; Chase, the SF study</p>"},{"chunk":"<p>This is the bridge to IQ. A span test measures how much you can hold before any training goes in. Expertise is defined by not needing that raw span, because the expert has learned to chunk. So the test measures the unlearned state and we have been calling it the ceiling.</p>"}];
+  var steps = [{"chunk":"<p>How many random digits can you repeat back after hearing them read once? For most people, it’s about seven, and that’s only because we can repeat the digits to ourselves and group them. On its own, the conscious mind can hold only about four items at a time, a limit the book calls the conscious bottleneck.</p>"},{"ask":"Read this string of twelve letters once, then look away and try to say it back: A B F I M S B I U I A C. Now try this one: F B I C I A U S A I B M. Both strings use the same twelve letters, three times what your conscious mind can hold. Why is the second one so much easier?","choices":["You’d already had one try, so the second string got the benefit of practice","You read the second string as four abbreviations you already know, so there are only four things to hold","The second string has a rhythm that makes it easier to say"],"correct":1,"answer":"<p>You read the second string as four abbreviations you already know: FBI, CIA, USA, and IBM. So instead of twelve letters, you only had to hold four items, which is right at the limit of the conscious bottleneck.</p><p>Each abbreviation is a chunk, a group of items your brain has learned to treat as one. Your memory capacity was the same for both strings.</p>"},{"chunk":"<p>You’ve been building chunks like these since you learned to read. At first, a letter was just a set of lines, and each line was a separate item for your conscious mind. With practice, you built networks in your brain that recognize a whole letter as a single item, and then a whole word.</p><p>Now a word like THINK is a single item, even though it’s made of twelve lines. Your conscious mind still takes in only one item at a time and holds only about four. What learning changes is how much each item contains.</p><video src=\"media/bottleneck-chunking-reading.mp4?v=2\" poster=\"media/bottleneck-chunking-reading.jpg\" data-play-visible muted playsinline preload=\"auto\" aria-label=\"Animation: at first each line of a letter is a separate item. With practice, a whole letter becomes one item, then a whole word. The word THINK becomes one item made of twelve lines.\" title=\"Tap to replay\" onclick=\"this.currentTime=0;this.play()\" style=\"display:block;width:100%;max-width:min(100%,46vh);margin:0 auto;height:auto;border:1px solid var(--rule,#e0dcd4);border-radius:4px;background:#fafaf8;cursor:pointer\"></video>"},{"ask":"Now imagine giving the second string to a ten-year-old who reads well but has never heard of the FBI, the CIA, or IBM. How would they do with it?","choices":["As well as you, because it’s the same twelve letters","Not much better than with the first string, because to them most of it is random letters","Better than you, because the meanings wouldn’t distract them"],"correct":1,"answer":"<p>Not much better than with the first string. They’d spot USA, but without the other three abbreviations stored in their brain, they have ten items to hold: nine separate letters plus USA. That’s more than twice what the conscious mind can manage.</p><p>A chunk only works if you’ve learned it. That’s why experts can remember far more inside their own field, with the same capacity as everyone else, and why that advantage disappears when they step outside it.</p>"},{"ask":"IQ tests include tasks like repeating back strings of digits, and IQ scores are most closely linked to working memory. Given the two strings of letters, what do those scores mostly measure?","choices":["How intelligent a person is across every area of life","Basic resources like working memory, which help with learning but aren’t intelligence","How hard a person tried on the day of the test"],"correct":1,"answer":"<p>IQ scores mostly reflect basic resources like working memory, which help with learning but aren’t intelligence. While there’s a small amount of variation in these resources from one person to the next, they pale in comparison to what we can achieve through learning, as the two strings of letters show.</p><p>Knowing four abbreviations let you hold twelve letters in a space that holds about four.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

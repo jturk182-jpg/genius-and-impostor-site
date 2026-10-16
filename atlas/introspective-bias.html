@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Introspective Bias &mdash; The Map</title>
-<meta name="description" content="We build our whole picture of thinking out of the only thing we can watch, which is effortful conscious deliberation. Everything the mind does automaticall">
+<meta name="description" content="We built our whole picture of thinking out of the one part of our mind that we feel, which is slow conscious deliberation. Everything the mind does automat">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#b8843a" href="index.html#line-bias">The Bias Line</a></div>
     <h1 class="station">Introspective Bias</h1>
-    <p class="lead">We build our whole picture of thinking out of the only thing we can watch, which is effortful conscious deliberation. Everything the mind does automatically is invisible to that view, so we left it out of the theory and mistook the small lit corner for the whole room.</p>
+    <p class="lead">We built our whole picture of thinking out of the one part of our mind that we feel, which is slow conscious deliberation. Everything the mind does automatically is invisible from the inside, so we ignored it altogether.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">causes</span><a class="frag-target" href="effort-inversion.html">Effort Inversion</a><span class="frag-open">+</span></summary><div class="frag-why">Reading effort as complexity is one product of modeling the mind only from what we can feel.</div></details><details class="frag-edge"><summary><span class="frag-rel">causes</span><a class="frag-target" href="competence-inversion.html">Competence Inversion</a><span class="frag-open">+</span></summary><div class="frag-why">Taking novice deliberation as the template for real thinking is the same bias applied to expertise.</div></details><details class="frag-edge"><summary><span class="frag-rel">feeds</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">A theory of intelligence built from the wrong vantage point is what made the Special Brain Story sound reasonable.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">causes</span><a class="frag-target" href="effort-inversion.html">Effort Inversion</a><span class="frag-open">+</span></summary><div class="frag-why">Judging difficulty by effort comes from modeling the mind on what we can feel.</div></details><details class="frag-edge"><summary><span class="frag-rel">causes</span><a class="frag-target" href="competence-inversion.html">Competence Inversion</a><span class="frag-open">+</span></summary><div class="frag-why">Treating a beginner’s deliberate thinking as the model for all thinking is the same bias applied to experts.</div></details><details class="frag-edge"><summary><span class="frag-rel">feeds</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">A theory of intelligence built without studying the brain made the Special Brain Story seem reasonable.</div></details>
       </div>
     </div>
-    <div class="book">In the book this is the umbrella that most of the other biases sit under. It is the deep reason we got the mind backwards.</div>
-    <a class="next" href="trained-reasoning.html"><div class="next-label">Next station</div><div class="next-name">Trained Reasoning &rarr;</div><div class="next-reason">The bias reaches its target when it dresses up as pure logic. See what reasoning really is.</div></a>
+    <div class="book">The book argues that this bias underlies most of our mistaken beliefs about intelligence.</div>
+    <a class="next" href="trained-reasoning.html"><div class="next-label">Next station</div><div class="next-name">Trained Reasoning &rarr;</div><div class="next-reason">Is reasoning really the general ability it feels like?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>This is why IQ tests measure what they measure. They test the kind of conscious, effortful problem-solving you can feel yourself doing, because that is the part of the mind that was visible to the people building the tests. The far larger automatic part was never on the table, because it cannot be introspected on.</p><p class=\"lf-cite\">Psychometrics built from conscious problem-solving</p>"},{"chunk":"<p>Watch a room try to explain away a chimpanzee beating them at a memory task. The scramble to reframe the result, to find a reason it does not count, is the bias happening live. People are protecting a model of intelligence built from their own inside view.</p><p class=\"lf-cite\">The chimp working-memory result (Inoue &amp; Matsuzawa, 2007)</p>"}];
+  var steps = [{"ask":"Imagine writing a complete theory of how digestion works without ever studying the stomach or the intestines. Or a theory of blood circulation without ever studying the heart or blood vessels. What would you call those theories?","choices":["Those theories would likely be incomplete but useful","Those theories are almost guaranteed to be wrong.","As long as they feel right, those theories are likely to be right."],"correct":1,"answer":"<p>Theories of digestion and circulation that are written without studying the organs that perform those functions are virtually guaranteed to be wrong.</p><p>And yet that describes the first theories of human intelligence - the ones that still influence how most people think about it today. A hundred years of serious work on what makes people smart, and you could become a world expert in the field without ever once thinking about a neuron. We built an entire model of a biological function without regard to the organ that produces it.</p>"},{"ask":"So where did that model of human intelligence come from, if not the brain? What was the evidence the people building it actually had?","choices":["The model of intelligence came from brain scans, from the start","The model of intelligence came from what thinking feels like, plus tests based on those feelings","The model of intelligence came from animal studies"],"correct":1,"answer":"<p>It came from what thinking feels like to us.</p><p>Slow, deliberate, effortful problem solving is the part of our mind we can feel. So we assumed that was the part doing the best work, and the part that made us special. Everything else got left out of the definition.</p>"},{"ask":"You already know something about that inside view from the last few stations. The most complex problems our brain solves, like reading, recognizing a face, or walking a cluttered room, feel effortless. So if you build a theory of the mind from what you can feel, what do you leave out?","choices":["A theory built from what you can feel leaves out a few edge cases","A theory built from what you can feel leaves out almost everything the mind does, including all of its most extraordinary feats","A theory built from what you can feel leaves out only the physical skills"],"correct":1,"answer":"<p>You leave out almost the entire mind, including all of its most extraordinary feats.</p><p>The part you can feel is the small, slow, effortful part. The rest, which is very nearly everything, happens where introspection can't reach. So the theory mistook the one tiny lit corner for the whole house.</p>"},{"ask":"Now consider the kinds of problems that are used on an IQ test, which was first created over a century ago. Puzzles, sequences, remembering digits. They are chosen because they feel hard. What does that tell us about how it’s defining “intelligence”?","choices":["Puzzles and digit spans are used because they’re the hardest tasks","IQ tests measure the part of the mind that people could feel","IQ tests measure everything the mind does"],"correct":1,"answer":"<p>IQ tests measure the kind of thinking you can feel yourself doing, because the part that felt effortless seemed ordinary and insignificant. Any task that most people could perform with minimal conscious effort was excluded.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

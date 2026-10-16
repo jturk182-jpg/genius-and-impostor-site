@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Genius-Led Learning &mdash; The Map</title>
-<meta name="description" content="There are two ways to learn and they are not equally good. One runs on curiosity, builds as it goes, and lives on feedback, which is how the Genius works. ">
+<meta name="description" content="There are two ways to learn, and they have very different success rates. Genius-led learning is driven by curiosity, with the goal of real understanding. I">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#6a4a95" href="index.html#line-genius">The Genius Line</a></div>
     <h1 class="station">Genius-Led Learning</h1>
-    <p class="lead">There are two ways to learn and they are not equally good. One runs on curiosity, builds as it goes, and lives on feedback, which is how the Genius works. The other runs on grades and approval, takes facts in passively, and tests only to score. School mostly runs the second one.</p>
+    <p class="lead">There are two ways to learn, and they have very different success rates. Genius-led learning is driven by curiosity, with the goal of real understanding. Impostor-led learning is driven by status, with the goal of getting the grade. The first builds knowledge and skill that lasts. The second mostly produces knowledge that is shallow and temporary.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">run by</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">Genius-led learning is just the Genius doing what it does when it is given room.</div></details><details class="frag-edge"><summary><span class="frag-rel">works with</span><a class="frag-target" href="goldilocks-zone.html">The Goldilocks Zone</a><span class="frag-open">+</span></summary><div class="frag-why">The steady feedback this kind of learning needs is the Goldilocks Zone, difficulty tuned so every attempt teaches something.</div></details><details class="frag-edge"><summary><span class="frag-rel">opposed by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">Impostor-led learning chases grades and approval, which is the Impostor running the classroom.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">run by</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">Genius-led learning is how the Genius learns when it’s free to follow curiosity.</div></details><details class="frag-edge"><summary><span class="frag-rel">works with</span><a class="frag-target" href="goldilocks-zone.html">The Goldilocks Zone</a><span class="frag-open">+</span></summary><div class="frag-why">Practice in the Goldilocks Zone gives the ongoing feedback that Genius-led learning depends on: enough failures to show what to change, and enough successes to show what to keep.</div></details><details class="frag-edge"><summary><span class="frag-rel">opposed by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">Impostor-led learning is driven by grades and status, which appeal to the Impostor.</div></details>
       </div>
     </div>
-    <div class="book">The book draws the line between the two modes of learning and shows how schooling trades the good one for the other.</div>
-    <a class="next" href="goldilocks-zone.html"><div class="next-label">Next station</div><div class="next-name">The Goldilocks Zone &rarr;</div><div class="next-reason">The feedback this learning runs on has a name and a number. Meet the zone.</div></a>
+    <div class="book">The book compares Genius-led and Impostor-led learning, and explains why traditional schooling relies on the second.</div>
+    <a class="next" href="goldilocks-zone.html"><div class="next-label">Next station</div><div class="next-name">The Goldilocks Zone &rarr;</div><div class="next-reason">How hard should practice be for learning to happen fastest?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"A lot of people would say: “Learning is what happens in school. You take the class, you pass the test, you know it.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>Real learning needs three things a classroom rarely gives: your own curiosity, active building, and steady feedback. Without them you get facts that fade, which is why you kept almost nothing from school and nearly everything you taught yourself.</p>"},{"chunk":"<p>Learning that lasts has three parts. The drive has to be yours, so you actually want it. You have to build the knowledge, not just receive it. And you need feedback often enough to correct as you go. A lecture followed by one exam supplies almost none of that.</p><p class=\"lf-cite\">The three ingredients of learning</p>"},{"chunk":"<p>Look at what you actually kept. Little from the classes you sat through, and a great deal from whatever you chased on your own. Same brain, two modes. What differed was whether the Genius or the Impostor was running the session.</p><p class=\"lf-cite\">Curiosity-driven versus status-driven learning</p>"},{"chunk":"<p>Da Vinci said it five centuries ago: study without desire spoils the memory, and it keeps nothing it takes in. Desire is not a bonus laid on top of learning. It is part of the machine.</p>"}];
+  var steps = [{"ask":"Think about what you learned in school, and compare it with something you learned on your own because you wanted to, like a sport, a hobby, or an instrument. Which do you remember and use better today?","choices":["What I learned in school","What I learned on my own","About the same"],"correct":1,"answer":"<p>For most people, it’s what they learned on their own. We forget most of what we studied in school, yet we can become masters of what we pursue outside it.</p><p>It’s the same brain in both cases. So the difference has to come from how the learning happened.</p>"},{"ask":"Research shows that effective learning needs three ingredients. First, intrinsic motivation, meaning you actually want to learn it. Second, active construction, meaning you build understanding by exploring and trying things yourself. Third, ongoing feedback, meaning you find out quickly whether each attempt worked. How well does a typical school class provide them?","choices":["It provides all three well","It provides one or two of them well","It provides very little of any of them"],"correct":2,"answer":"<p>Very little of any of them. In school, the subject is chosen for you, and the motivation comes from grades and rankings rather than from wanting to know. You mostly sit and receive information from lectures and textbooks instead of building it yourself. And feedback comes as tests every few weeks, designed to measure you rather than to help you improve.</p><p>The things you learned on your own had all three ingredients. You wanted to learn them, you learned by doing, and you could tell right away whether each attempt worked.</p>"},{"ask":"School motivates us mainly with grades, rankings, and the fear of getting answers wrong. Which part of you do those incentives appeal to: the part that wants to understand, or the part that cares about how you look to others?","choices":["The part that wants to understand","The part that cares about how you look to others","Both parts equally"],"correct":1,"answer":"<p>The part that cares about how you look to others, which the book calls the Impostor. Grades are a measure of status. Your Genius, the part of you that actually knows how to learn, doesn’t care about them. It’s driven by curiosity.</p><p>Research shows that learning for external rewards like grades also reduces natural curiosity over time. Leonardo da Vinci recognized the cost of learning without desire centuries ago: “Study without desire spoils the memory, and it retains nothing that it takes in.”</p>"},{"ask":"Compared with children, adults who face something new to learn tend to wait for instructions, look for the one right answer quickly, avoid trial and error, and give up when it gets hard. Where do these habits come from?","choices":["They come with getting older","They were learned, mostly in school","They’re part of an adult’s personality"],"correct":1,"answer":"<p>They were learned, mostly in school. For more than a decade, school rewarded exactly these habits: follow the instructions, find the right answer, avoid mistakes. So as adults, we keep using some of the least effective ways to learn.</p><p>Because these are learned habits, they can be replaced with the ones that work: following your curiosity, exploring, and learning through trial and error.</p>"},{"ask":"Most of us judge whether we’ve learned something by whether we passed the test. Think back to the subjects you studied for tests in school. Does passing the test mean you learned it?","choices":["Passing the test means the knowledge is built and will last","Passing the test shows you could produce the answers that day, and most of that knowledge fades","Passing the test means you learned the parts you got right"],"correct":1,"answer":"<p>Passing a test doesn’t mean you learned it. It shows that you could produce the answers on the day of the test, and knowledge built for a grade mostly fades once the test is over.</p><p>Knowledge that lasts gets built the way you learned the things you taught yourself: out of curiosity, by doing, with feedback all along the way.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

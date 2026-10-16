@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Capability-Accessibility Model &mdash; The Map</title>
-<meta name="description" content="What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let y">
+<meta name="description" content="What you are capable of at any given moment is determined by two separate things: the knowledge and skills you’ve built through learning, and the knowledge">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#3a6ea5" href="index.html#line-access">The Access Line</a></div>
     <h1 class="station">The Capability-Accessibility Model</h1>
-    <p class="lead">What you can do and what you can do right now are two different things. Performance is what you have learned multiplied by what your brain state will let you reach, and when the access drops to zero, the performance does too, no matter how much skill is sitting there.</p>
+    <p class="lead">What you are capable of at any given moment is determined by two separate things: the knowledge and skills you’ve built through learning, and the knowledge and skills you can actually access at that moment.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">built on</span><a class="frag-target" href="routing-architecture.html">Routing Architecture</a><span class="frag-open">+</span></summary><div class="frag-why">Routing is the R in the equation. It is the part that decides what you can currently reach.</div></details><details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">The set of problems you can solve right now is capability and access taken together.</div></details><details class="frag-edge"><summary><span class="frag-rel">hijacked by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">The Impostor works by changing your brain state under pressure, which is how a story in your head reaches down and lowers your access.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">built on</span><a class="frag-target" href="routing-architecture.html">Routing Architecture</a><span class="frag-open">+</span></summary><div class="frag-why">Access depends on routing: the pattern of brain activity that decides which parts of your brain can communicate at a given moment.</div></details><details class="frag-edge"><summary><span class="frag-rel">explains</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">What you can do right now depends on what’s inside your solution space and how much of it you can reach.</div></details><details class="frag-edge"><summary><span class="frag-rel">hijacked by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">Under pressure, the Impostor changes your brain state in ways that block access to skills you already have.</div></details>
       </div>
     </div>
-    <div class="book">This equation is the backbone of The Genius and the Impostor. The book is where the full case for it gets made, patient by patient.</div>
-    <a class="next" href="routing-architecture.html"><div class="next-label">Next station</div><div class="next-name">Routing Architecture &rarr;</div><div class="next-reason">The equation stands on one idea more than any other. Go see what routing actually is.</div></a>
+    <div class="book">Capability and accessibility are central ideas in The Genius and the Impostor. Dennis, from this station, is one of the patients in the book.</div>
+    <a class="next" href="routing-architecture.html"><div class="next-label">Next station</div><div class="next-name">Routing Architecture &rarr;</div><div class="next-reason">What decides which of your skills you can reach at a given moment?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"A lot of people would say: “If you have a skill, you have it. Being good at something means you can do it when it counts.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>Having a skill and being able to reach it in the moment are separate things. Performance is capability times access. Block the access and performance falls to zero while the skill stays completely intact.</p>"},{"chunk":"<p>There is a patient in the book, Dennis, who can write a sentence but then cannot read the sentence he just wrote. The machinery that recognizes words is fine, which you can prove by testing it a different way. What is broken is the wiring that carries what his eyes see over to the part of the brain that reads. The skill is there. The route to it is cut.</p><p class=\"lf-cite\">Alexia without agraphia (disconnection syndrome)</p>"},{"chunk":"<p>A rehearsed speaker steps up to the podium and their mind goes blank. Five minutes later, back in their seat, all of it comes flooding back. Nothing was lost. The stress of the moment changed which parts of the brain were talking to each other, and the words the speaker owned completely were, for a minute, out of reach.</p><p class=\"lf-cite\">The universal mind-blank; choking under pressure (Beilock &amp; Carr, 2001)</p>"},{"chunk":"<p>Researchers taught people a number puzzle that had a hidden shortcut nobody was told about. The people who then slept found the shortcut far more often than the people who stayed awake, with the same training behind both groups. Same skill, a different brain state, and a solution that was reachable from one state and not the other.</p><p class=\"lf-cite\">Wagner et al., 2004 (sleep and insight)</p>"},{"chunk":"<p>The subway map is the picture to keep. During the day one set of stations and tracks is open. At night a different set opens and closes. Same city, same rails, but where you can actually get to depends on which schedule is running right now.</p>"}];
+  var steps = [{"ask":"You know your best friend’s phone number, or a line from a song you have sung a hundred times. Now picture standing up to give a toast, and your mind going blank on it. Five minutes later, sitting down, it comes flooding back. When your mind went “blank,” what actually happened to what you were going to say?","choices":["For those five minutes it was gone","It was there the whole time, and something stood between you and it","It depends how nervous you were"],"correct":1,"answer":"<p>It was there the whole time. Nothing about your memory changed in five minutes. What changed was your brain state, and the state you were in could not reach the thing you own completely.</p><p>Which means that what you are capable of at any given moment is determined by two separate things: the knowledge and skills you’ve built through learning, and the knowledge and skills you can actually access at that moment.</p>"},{"chunk":"<p>There’s a patient in the book The Genius and the Impostor named Dennis who suffered a stroke. As a result, Dennis could still write a sentence but couldn’t read the sentence he just wrote. The stroke had cut the connections that carried what his eyes saw over to the part of his brain that reads.</p><p class=\"lf-cite\">Alexia without agraphia, a disconnection syndrome</p>"},{"ask":"So what does Dennis still have, and what has he lost?","choices":["Dennis has lost the ability to read. The stroke destroyed it","Dennis still has the ability to read. What he has lost is the connection between his eyes and the reading machinery","Dennis has lost both the ability to read and the connection to it"],"correct":1,"answer":"<p>Dennis still has all of the neural machinery needed to read. But because of the stroke, visual information can’t get into that machinery. This is similar to what happens when your mind “goes blank” - what you need still exists in your brain, you just can’t get to it.</p>"},{"ask":"Researchers taught people a number puzzle with a shortcut hidden in it that nobody was told about. Then one group slept, while two other groups stayed awake. The sleepers were more than twice as likely to come back and spot the shortcut. All three groups had the same training, and nobody was taught anything while they were asleep. So what did sleep change?","choices":["Sleep added something the awake groups never got. The sleepers knew more when they came back","Sleep didn't change what anybody knew. It changed what they could get to","Sleep left them more alert, so they tried harder at the puzzle"],"correct":1,"answer":"<p>Sleep produced an entirely different pattern of brain activity. That pattern allowed the brain to arrive at a solution that the waking brain could not.</p><p class=\"lf-cite\">Wagner et al., 2004 (sleep and insight)</p>"},{"ask":"We assume that the knowledge and skills we’ve acquired are always accessible. And that what we’re capable of doesn’t change over the course of the day. And that if we had an ability, we’d know about it. But given what we’ve reviewed so far, does that hold up?","choices":["Yes, the belief holds. Real skill shows up when it matters","No. Having a skill and being able to reach that skill in the moment are two different things","The belief holds for physical skills but not for mental ones"],"correct":1,"answer":"<p>What you are capable of at any moment depends on two things. First, what you’ve learned up until that point. And second, what your brain can access.</p><p>That also means some of what you’ve learned can stay hidden, if you’re never in a brain state that lets it surface. Most of the people who stayed awake in the sleep study had everything they needed to find the shortcut, and they didn’t find it. If that test had been their only try, nobody would have known they could, including them.</p>"},{"chunk":"<p>Think of a smartphone loaded up with apps. Navigation, photo editing, translation, music streaming. Each one can do whatever its code lets it do.</p><p>But having the app on your phone isn’t enough. For the app to be useful, you must be able to get information into it.</p><p>A Spanish translation app can't help you find a bathroom in Acapulco if you can't open it.</p><p>The same is true with your brain. Only your brain wrote the code for every one of its apps. That’s the learning process.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

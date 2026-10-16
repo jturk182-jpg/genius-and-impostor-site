@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Implicit Learning &mdash; The Map</title>
-<meta name="description" content="A lot of what you know, you cannot say. Your brain picks up patterns from sheer exposure and puts them to work without ever handing you the rule. You obey ">
+<meta name="description" content="Much of what you know, you learned without realizing it, and you can’t put it into words. You may not even realize you know it. Your brain picks up pattern">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,22 +94,22 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a></div>
     <h1 class="station">Implicit Learning</h1>
-    <p class="lead">A lot of what you know, you cannot say. Your brain picks up patterns from sheer exposure and puts them to work without ever handing you the rule. You obey grammar you were never taught and read situations you could not explain, because the knowledge went in below the level of words.</p>
+    <p class="lead">Much of what you know, you learned without realizing it, and you can’t put it into words. You may not even realize you know it. Your brain picks up patterns from experience and builds them into skills without anyone teaching you the rules. When we don’t see that learning happen, we usually call the result a “gift”.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
-      <a class="feelit" href="../secret-grammar.html"><div class="feelit-name">The Secret Grammar</div><div class="feelit-blurb">Ace rounds of adjective ordering instantly, then try to state the rule you just used. You will not be able to.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
+      <a class="feelit" data-game="secret-grammar" href="../secret-grammar.html"><div class="feelit-name">The Secret Grammar</div><div class="feelit-blurb">Ace rounds of adjective ordering instantly, then try to state the rule you just used. You will not be able to.</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>
     </div>
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">sibling of</span><a class="frag-target" href="automaticity.html">Automaticity</a><span class="frag-open">+</span></summary><div class="frag-why">Both are the Genius building skill outside awareness. This one is about knowledge you cannot report.</div></details><details class="frag-edge"><summary><span class="frag-rel">run by</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">Implicit learning is the engine acquiring things you never consciously studied.</div></details><details class="frag-edge"><summary><span class="frag-rel">opposes</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">It exposes the talent myth, because the ability that looks innate is a record of hidden training.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">sibling of</span><a class="frag-target" href="automaticity.html">Automaticity</a><span class="frag-open">+</span></summary><div class="frag-why">Implicit learning and automaticity both involve skills that run outside awareness. Implicit learning produces knowledge you can use but can’t explain.</div></details><details class="frag-edge"><summary><span class="frag-rel">run by</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">Implicit learning is the Genius building skills you never consciously studied.</div></details><details class="frag-edge"><summary><span class="frag-rel">opposes</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">Talent that seems innate is built through learning, and much of that learning is implicit, so nobody sees it happen.</div></details>
       </div>
     </div>
-    <div class="book">The book uses implicit learning to dismantle the talent myth. What looks like a gift is usually a hidden training history.</div>
-    <a class="next" href="automaticity.html"><div class="next-label">Next station</div><div class="next-name">Automaticity &rarr;</div><div class="next-reason">You have seen the engine acquire hidden knowledge. Now see what it does with the skills you do practice.</div></a>
+    <div class="book">The book explains how learning we don’t see gets mistaken for natural talent.</div>
+    <a class="next" href="automaticity.html"><div class="next-label">Next station</div><div class="next-name">Automaticity &rarr;</div><div class="next-reason">How do practiced skills come to run without conscious effort?</div></a>
   </main>
   
   <footer class="foot">
@@ -116,10 +117,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -127,7 +129,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>You say big red barn, never red big barn, and you have never once thought about why. English has a strict order for stacking adjectives and you follow it perfectly, yet almost nobody can state the rule. You learned it as a toddler from listening, and it works flawlessly while staying completely out of reach.</p><p class=\"lf-cite\">Adjective ordering; the royal order of adjectives</p>"},{"chunk":"<p>What we call talent is often a record of this. A person who seems to just get music or just read people has usually had thousands of hours of exposure that built the pattern without either them or us noticing the training happened.</p><p class=\"lf-cite\">Talent as accumulated implicit exposure</p>"},{"chunk":"<p>Tick-tock, never tock-tick. Ping-pong, never pong-ping. There is a rule about which vowel sound comes first in these pairs, you have followed it your whole life, and you almost certainly could not state it before now. That gap between using a rule and knowing it is the whole idea.</p>"}];
+  var steps = [{"ask":"Read these two phrases: “a big red barn” and “a red big barn.” One sounds right and the other sounds wrong. Can you state the rule that tells you which is which?","choices":["Yes. I could explain the rule easily","No. I know which one is right, but I can’t say why","No, because there isn’t a rule"],"correct":1,"answer":"<p>Most people can’t. English puts adjectives in a strict order: opinion, then size, age, shape, color, origin, material, and purpose. That’s why “a lovely little old green French whittling knife” sounds normal, and any other order sounds wrong.</p><p>Almost nobody is taught this rule, and yet native speakers follow it almost without error.</p>"},{"ask":"If nobody taught you the rule, and you can’t state it, how did it get into your brain?","choices":["You were born knowing it","Your brain worked out the pattern from hearing thousands of examples, without you noticing","You learned it in school and forgot the lesson"],"correct":1,"answer":"<p>Your brain worked it out from years of hearing English spoken. It detected the pattern in thousands of examples and built it into your language networks, all without your awareness.</p><p>This is called implicit learning: learning that happens without awareness, and produces knowledge you can use but can’t put into words. Much of what you know about language, faces, movement, and social life was learned this way.</p>"},{"ask":"Every healthy child learns to speak their native language, grammar and all, without formal lessons. Nobody ever says a child has a “talent for English.” But when a child picks out songs on the piano or takes to numbers without being taught, we call it a gift. What’s the difference between the two?","choices":["Language is simple for the brain, while music and math are complex","There’s no difference in how they’re learned, but we don’t see the exposure behind the second one","Language is built into the brain at birth, while music and math aren’t"],"correct":1,"answer":"<p>There’s no difference in how they’re learned. Learning a language and picking out songs on the piano both come from the same kind of implicit learning, driven by what the child pays attention to. Nobody calls a child’s English a gift, because every child learns a language. We call the piano a gift because fewer children do it, and we don’t see the hours of exposure that built it.</p><p>When we can’t see how a skill was learned, it looks like it came from nowhere. That’s why implicit learning is so easy to mistake for talent.</p>"},{"ask":"We tend to believe two things: if we know something, we can explain it, and people who pick up skills without instruction were born with a gift. What do the barn and the child at the piano say about those beliefs?","choices":["Both beliefs hold. Knowledge you can’t explain isn’t real, and gifts are real","Neither belief holds. Much of what we know was learned without awareness, and what looks like a gift is learning nobody saw","The first belief holds, but the second doesn’t"],"correct":1,"answer":"<p>Neither belief holds up. A large share of what you know was learned implicitly, and you use it every day without being able to explain it. What we call talent is the result of the same kind of learning, built from exposure that nobody counted as practice.</p><p>Every healthy brain comes equipped to learn this way, and abilities are what that learning builds.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Uncommon Genius &mdash; The Map</title>
-<meta name="description" content="The breakthroughs we celebrate come from the same engine that built your walking and your reading. The difference is the path. Someone spent years pointed ">
+<meta name="description" content="The breakthroughs we celebrate come from the same learning process that built your everyday skills. What makes them uncommon is the learning path. Someone ">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a><a class="linechip" style="background:#4f7d3a" href="index.html#line-intelligence">The Intelligence Line</a></div>
     <h1 class="station">Uncommon Genius</h1>
-    <p class="lead">The breakthroughs we celebrate come from the same engine that built your walking and your reading. The difference is the path. Someone spent years pointed at an unusual set of problems, which built an unusual set of skills, which reached an answer the rest of us could not.</p>
+    <p class="lead">The breakthroughs we celebrate come from the same learning process that built your everyday skills. What makes them uncommon is the learning path. Someone spends years following an unusual curiosity, builds an unusual set of skills, and reaches solutions nobody else could.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">same machinery as</span><a class="frag-target" href="everyday-genius.html">Everyday Genius</a><span class="frag-open">+</span></summary><div class="frag-why">Both run on automaticity and progressive composition. The only difference is how common the training path was.</div></details><details class="frag-edge"><summary><span class="frag-rel">blocked by</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">The Special Brain Story is the main reason uncommon genius stays rare, by stopping the training before it begins.</div></details><details class="frag-edge"><summary><span class="frag-rel">expands</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">An uncommon training path is exactly how you build an uncommon solution space.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">same machinery as</span><a class="frag-target" href="everyday-genius.html">Everyday Genius</a><span class="frag-open">+</span></summary><div class="frag-why">Common genius and uncommon genius are built by the same learning process. The difference is how unusual the learning path was.</div></details><details class="frag-edge"><summary><span class="frag-rel">blocked by</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">The Special Brain Story stops people before they follow an unusual curiosity far enough to build uncommon skills.</div></details><details class="frag-edge"><summary><span class="frag-rel">expands</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">An unusual learning path builds an unusual solution space.</div></details>
       </div>
     </div>
-    <div class="book">The book argues that what we call genius is a training path, not a birthright, and this station is where that lands.</div>
-    <a class="next" href="prediction-engine.html"><div class="next-label">Next station</div><div class="next-name">The Prediction Engine &rarr;</div><div class="next-reason">There is one more capability the engine has that looks the most like magic. Meet the prediction engine.</div></a>
+    <div class="book">The book argues that what we call genius comes from a learning path, and uses Einstein’s life as its central example.</div>
+    <a class="next" href="prediction-engine.html"><div class="next-label">Next station</div><div class="next-name">The Prediction Engine &rarr;</div><div class="next-reason">How does your brain use what it has learned to predict what comes next?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"A lot of people would say: “Genius requires a special brain. Most people simply do not have what it takes.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>Genius is the ordinary machinery on an extraordinary training path. Uncommon interests build uncommon scaffolding, which produces solutions others cannot reach. The rarity is in the path, not the brain.</p>"},{"chunk":"<p>Ten thousand hours pointed at chess builds a mind that sees the board in a way no untrained mind can, not because the hardware is special but because the practice was uncommon. The same is true of physics, music, and art. Unusual scaffolding produces unusual reach.</p><p class=\"lf-cite\">Expertise research (Ericsson et al., 1993)</p>"},{"chunk":"<p>It stays rare for a sad reason. The Special Brain Story stops most people before they start, because if you believe genius is something you are born with, you never put in the training that would build it. The belief protects itself: believe it, and you never run the test that would prove it wrong.</p>"}];
+  var steps = [{"chunk":"<p>Albert Einstein didn’t start speaking until around age two, and his parents and teachers worried about his speech for much of his childhood. Some of his teachers found him slow and dreamy, and he hated the rote drilling of his schools.</p><p>What he did have was curiosity. When he was five, his father showed him a compass, and he became fascinated by the invisible force that always pointed the needle north. He spent years thinking about the nature of light. At twenty-three, after failing to land a university job, he took an undemanding job as a patent clerk, which left him time to think about those questions every day.</p>"},{"ask":"Einstein spent those years reading papers, talking with other physicists, and working through thought experiments, and all of it built skills in his brain. The questions he was working on were ones almost nobody else was asking. What would you expect that path to produce?","choices":["The same skills other physicists of his time had","An unusual set of skills, able to solve problems nobody else could","Very little, because unusual paths rarely lead anywhere"],"correct":1,"answer":"<p>An unusual set of skills. Because his learning path was unique, the set of problems his brain could solve was unique too. His discoveries only came within reach after that learning had been done. Before then, they were impossible for his brain, as they would be for anyone’s.</p><p>What separates uncommon genius from common genius is uniqueness, not complexity.</p>"},{"ask":"When plague closed Cambridge in 1665, Isaac Newton, then twenty-two, went home to his family’s farm, studied on his own, and invented calculus. Charles Darwin dropped out of medical school and spent five years on a ship collecting specimens. Emily Dickinson barely left her house for decades, and invented a new form of poetry. What do these three have in common?","choices":["Each of them had an unusually powerful brain","Each of them followed their own curiosity down a path few others took","Each of them had excellent schooling"],"correct":1,"answer":"<p>Each of them followed their own curiosity. That created an unusual learning path, and an unusual learning path builds an unusual set of skills.</p><p>Many of the people we call geniuses learned this way, outside the schools and institutions of their time. What they have in common is how they learned.</p>"},{"ask":"What about child prodigies, like a five-year-old who plays chess at a very high level? Doesn’t that prove some brains are special from the start?","choices":["Yes. Prodigies are born with special brains","No. What’s unusual about a prodigy is their interest, and the practice it leads to","No. Prodigies are just lucky"],"correct":1,"answer":"<p>A prodigy’s brain isn’t what’s unusual. What’s unusual is their interests. A five-year-old obsessed with chess instead of Pokémon is rare, and that obsession leads to thousands of hours of chess while other children are building different skills.</p><p>That’s why prodigies seem miraculous compared with other five-year-olds, but not compared with people who’ve had the same amount of practice.</p>"},{"ask":"The Special Brain Story says that genius requires a special brain, and that most people don’t have what it takes. Think about what Einstein, Newton, Darwin, and Dickinson had in common. Where did their genius come from?","choices":["Their genius came from special brains, and the unusual paths were a side effect","Their genius came from unusual learning paths, built by the same learning process everyone has","Their genius came from copious amounts of ginkgo biloba"],"correct":1,"answer":"<p>Their genius came from where their curiosity led them. The learning process that built your everyday skills is the same one that built Einstein’s discoveries. What made his work uncommon was the path his curiosity took, and the unique set of skills that path built.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

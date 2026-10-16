@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Goldilocks Zone &mdash; The Map</title>
-<meta name="description" content="Learning happens at a specific level of hard. Too easy and there is nothing to learn from. Too hard and there is no clear signal about what to fix. The zon">
+<meta name="description" content="Learning happens in a specific range of difficulty: hard enough that you fail some of the time, and easy enough that you succeed most of the time. The book">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#c0503f" href="index.html#line-machinery">The Machinery Line</a></div>
     <h1 class="station">The Goldilocks Zone</h1>
-    <p class="lead">Learning happens at a specific level of hard. Too easy and there is nothing to learn from. Too hard and there is no clear signal about what to fix. The zone in between, where you succeed most of the time but miss often enough to get corrected, is where the building actually happens.</p>
+    <p class="lead">Learning happens in a specific range of difficulty: hard enough that you fail some of the time, and easy enough that you succeed most of the time. The book calls this the Goldilocks Zone. Practice there should feel challenging, but attainable.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">enables</span><a class="frag-target" href="progressive-composition.html">Progressive Composition</a><span class="frag-open">+</span></summary><div class="frag-why">Each layer of a skill gets built inside this zone, or it does not get built well.</div></details><details class="frag-edge"><summary><span class="frag-rel">where it works</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">This is the setting the learning engine runs best at.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">enables</span><a class="frag-target" href="progressive-composition.html">Progressive Composition</a><span class="frag-open">+</span></summary><div class="frag-why">Each new piece of a skill gets built through practice in this zone.</div></details><details class="frag-edge"><summary><span class="frag-rel">where it works</span><a class="frag-target" href="the-genius.html">The Genius</a><span class="frag-open">+</span></summary><div class="frag-why">The Genius learns fastest in this zone.</div></details>
       </div>
     </div>
-    <div class="book">The book treats the Goldilocks Zone as the most directly usable idea in the framework, the one you can act on tomorrow.</div>
-    <a class="next" href="implicit-learning.html"><div class="next-label">Next station</div><div class="next-name">Implicit Learning &rarr;</div><div class="next-reason">The engine can build things in this zone that you never notice you are learning at all. See how.</div></a>
+    <div class="book">The book describes how to find your Goldilocks Zone for any skill you want to learn.</div>
+    <a class="next" href="implicit-learning.html"><div class="next-label">Next station</div><div class="next-name">Implicit Learning &rarr;</div><div class="next-reason">What about learning that happens without you noticing?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"A lot of people would say: “The best practice is the practice that goes well. Getting things right means you are learning.” Does that hold up?","choices":["Sounds about right","I’m not sure","No, that’s off"],"answer":"<p>If you are getting nearly everything right, you have stopped learning and started performing. The miss is not a failure of practice, it is the signal that practice runs on. Learning lives at the edge where you are missing about one try in six.</p>"},{"chunk":"<p>The band that works sits around succeeding two times out of three up to about five times out of six. Below that, when almost everything is a struggle, there is too much going wrong to tell what to fix. Above it, when almost everything is easy, there is nothing to correct and the engine idles.</p><p class=\"lf-cite\">The 60 to 85 percent success band</p>"},{"chunk":"<p>Your brain has a built-in response that fires the instant you make an error, a little signal that says that one was wrong. That signal is not the problem, it is the point. It is the thing learning is made of, which is why practice with no misses in it builds so little.</p><p class=\"lf-cite\">The error-related negativity as a learning signal</p>"},{"chunk":"<p>Watch a toddler learning to walk. They are not practicing steps they have mastered and they are not attempting a marathon. They are working right at the edge of what they can do, falling often, adjusting every time. That edge is the zone, and they find it without being told.</p>"}];
+  var steps = [{"ask":"Lifting a 1-pound weight ten times won’t make your muscles grow. Neither will trying and failing to lift a 1,000-pound weight. So what kind of lifting will?","choices":["Lifting the 1-pound weight many more times","Lifting a weight you can manage five times, then struggling to lift it a sixth and seventh time","Trying the 1,000-pound weight every day until you can move it"],"correct":1,"answer":"<p>The weight you can lift five times and struggle with after that is the one that builds muscle. The struggle tells your body that you need strength you don’t have yet, so building more muscle is worth the resources.</p><p>The 1-pound weight sends no signal, because you can already lift it easily. The 1,000-pound weight is so far beyond what you can do that you can’t produce any useful effort against it.</p>"},{"ask":"Learning works the same way, except the brain is solving problems instead of lifting weights. If every problem you practice is one you can already solve, what happens in your brain?","choices":["Your skills keep growing at the same rate, because practice always helps","Very little changes, because your current skills are already enough","It starts building networks for harder problems"],"correct":1,"answer":"<p>Very little changes. If you can already solve every problem you practice, your brain gets little signal that your current skills aren’t enough, so it has little reason to build anything new. And if you can’t solve any of them, it has nothing to build on.</p><p>Learning happens when you can solve some of the problems but not all of them. The failures signal that change is needed, and the successes show your brain which patterns to keep. That’s the Goldilocks Zone.</p>"},{"ask":"Research on how people learn best has found a sweet spot for how often you should succeed while you practice. Based on what you’ve just seen, which range makes the most sense?","choices":["Close to 100 percent, so you learn to do it right","Between about 50 and 85 percent","Below 25 percent, so the practice stays challenging"],"correct":1,"answer":"<p>Between about 50 and 85 percent, which means succeeding most of the time, but not every time. That gives your brain enough errors to signal that change is needed, and enough successes to show which patterns should become permanent.</p><p>In the Goldilocks Zone, practice isn’t so easy that you’re bored, or so hard that you’re frustrated.</p><p class=\"lf-cite\">Wilson et al., 2019 (optimal success rate near 85 percent)</p>"},{"ask":"Suppose you find the Goldilocks Zone for a skill you’re learning and keep practicing there. A few weeks later, the same practice feels easy. What happened?","choices":["The practice somehow got easier on its own","You built the skills it was challenging you to build, so your Goldilocks Zone moved","You lost interest in it"],"correct":1,"answer":"<p>You built the skills the practice was challenging you to build, so your Goldilocks Zone moved. Problems that were once too hard become easy once the skills they need run automatically.</p><p>If you’re learning, your Goldilocks Zone is always moving. To keep growing, you have to keep making the practice harder as you improve.</p>"},{"ask":"Most of us feel good about practice that goes smoothly, where we get nearly everything right. Given the weights and the success rates, is that the kind of practice that builds skill?","choices":["Smooth practice builds skill, because getting things right means you’re learning","Smooth practice builds very little, because your brain gets little signal to change","Smooth practice builds skill in some areas and not others"],"correct":1,"answer":"<p>Practice that goes perfectly builds very little. The mistakes you make at the edge of your ability are the signal that tells your brain to build new networks.</p><p>Babies work this way without being told. When rolling over is in a baby’s Goldilocks Zone, the baby works at it relentlessly, failing again and again until it’s learned, and then moves on to the next skill.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

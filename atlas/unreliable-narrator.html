@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Unreliable Narrator &mdash; The Map</title>
-<meta name="description" content="Memory is not a recording you play back. It is a story your brain rebuilds each time, filling gaps with what should have been there. This is usually good e">
+<meta name="description" content="The part of your brain that explains your choices often doesn’t have access to the real reasons for them. It produces a believable story, and you believe i">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#a34a72" href="index.html#line-impostor">The Impostor Line</a></div>
     <h1 class="station">The Unreliable Narrator</h1>
-    <p class="lead">Memory is not a recording you play back. It is a story your brain rebuilds each time, filling gaps with what should have been there. This is usually good enough, and it means you can remember things that never happened with complete confidence, including the story you tell about who you are.</p>
+    <p class="lead">The part of your brain that explains your choices often doesn’t have access to the real reasons for them. It produces a believable story, and you believe it too. The same narrator also tells you what you can and can’t do, and it’s just as unreliable about that.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">part of</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">Reconstructing a flattering or limiting past is one of the Impostor's core tools.</div></details><details class="frag-edge"><summary><span class="frag-rel">feeds</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">A rewritten memory of past failures is the raw material the Special Brain Story is built from.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">part of</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">The narrator’s confident, unreliable explanations are how the Impostor speaks.</div></details><details class="frag-edge"><summary><span class="frag-rel">feeds</span><a class="frag-target" href="special-brain-story.html">The Special Brain Story</a><span class="frag-open">+</span></summary><div class="frag-why">The narrator’s stories about what you can’t do support the Special Brain Story.</div></details>
       </div>
     </div>
-    <div class="book">The book uses the unreliable narrator to show that confidence is not evidence, and that the archive you trust is being edited.</div>
-    <a class="next" href="special-brain-story.html"><div class="next-label">Next station</div><div class="next-name">The Special Brain Story &rarr;</div><div class="next-reason">See what the narrator builds when it edits a whole life. This is its masterpiece.</div></a>
+    <div class="book">This station follows the book’s chapter “An Unreliable Narrator.”</div>
+    <a class="next" href="special-brain-story.html"><div class="next-label">Next station</div><div class="next-name">The Special Brain Story &rarr;</div><div class="next-reason">What is the most damaging story the narrator tells?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>Give people a themed list of words, say bed, rest, tired, dream, and later many will swear that sleep was on the list. It never was. Their brain reconstructed the theme so smoothly that it added the missing centerpiece and stamped it as a real memory, often with more confidence than the words that were actually there.</p><p class=\"lf-cite\">The DRM false-memory paradigm</p>"},{"chunk":"<p>The line I have always been bad at math runs on this exact machinery. It feels like a fact recalled from a lifetime of evidence. It is usually a story reconstructed from a few old moments, smoothed into a certainty that then goes looking for confirmation.</p>"}];
+  var steps = [{"chunk":"<p>Researchers reviewed more than a thousand parole decisions made by eight judges in Israel over ten months. The chance that a prisoner would be granted parole didn’t depend much on the severity of the crime or on the prisoner’s record.</p><p>It depended on how long it had been since the judge’s last meal break. Right after a break, prisoners had about a 65 percent chance of parole. By the end of a long session without one, that chance had fallen close to zero.</p><p class=\"lf-cite\">Danziger, Levav &amp; Avnaim-Pesso, 2011</p>"},{"ask":"If you had asked those judges why they made each decision, what do you think they would have said?","choices":["That they were hungry or tired","That each decision was based on the facts of the case","That they didn’t know"],"correct":1,"answer":"<p>They would have explained each decision using the facts of the case, and they would have believed it. Nothing in their explanations would have mentioned how long it had been since their last break.</p><p>Whatever was driving the pattern, whether hunger or mental fatigue, was outside their awareness, so it never appeared in their explanations.</p>"},{"ask":"In another study, people looked at one pair of photos after another and picked the face they found more attractive. Then the researcher secretly swapped the photos and asked them to explain their choice while showing them the face they had rejected. The switch was caught only about one time in four. The rest of the time, people explained in detail why they had chosen a face they hadn’t chosen, saying things like “she has kind eyes.” What does that tell you about where our explanations come from?","choices":["The people were lying to please the researcher","The part of the brain that explains our choices doesn’t know why we made them, so it builds a believable story","The people had poor eyesight"],"correct":1,"answer":"<p>It tells you that the part of the brain that explains our choices doesn’t have access to the real reasons. Its job is to produce an explanation that sounds right to other people, and it does that whether or not it knows the truth.</p><p>The made-up explanations were just as detailed and heartfelt as the ones people gave for their real choices. So feeling sure of our reasons tells us very little about whether they’re true.</p><p class=\"lf-cite\">Johansson, Hall et al., 2005</p>"},{"ask":"Dennis, the patient from the Capability-Accessibility Model station, insisted he couldn’t recognize written words after his stroke. His doctor handed him cards with the names of plants and animals and asked him to sort them into two piles with his left hand, as fast as he could. He sorted all but one correctly. The chance of doing that by guessing was less than 1 in 4,000. What does that tell you?","choices":["He had been pretending he couldn’t read","Part of his brain could still recognize the words, but the part that talks didn’t know it","He got lucky"],"correct":1,"answer":"<p>The right side of Dennis’s brain, which controls the left hand, was still receiving what his eyes saw, and it could read the words well enough to guide that hand. But that information never reached the part of his brain that talks. So he honestly believed he couldn’t do it, and he was as surprised by the result as everyone else in the room.</p><p>The narrator in your head can be wrong about what you’re capable of, not only about why you do things.</p>"},{"ask":"We tend to think that we know why we do what we do, and that we know what we’re capable of. What do the judges, the swapped photos, and Dennis say about that?","choices":["We know our own reasons and abilities, because we have direct access to them","The voice that explains us often doesn’t know the real reasons, or everything we can do","We know our reasons, except when the stakes are high"],"correct":1,"answer":"<p>The voice that explains you often doesn’t know the real causes. It tells a story about your choices and your abilities either way. The book calls that voice the Impostor.</p><p>Its stories about what you can’t do are no more reliable than its stories about why you picked a face.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();

@@ -146,10 +146,11 @@ const FOOTER = `
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>`;
@@ -167,19 +168,30 @@ function stationPage(s) {
   // and reader-driven. The claim becomes a bias-surfacing question; evidence
   // and stories become one-idea cards.
   const flowSteps = [];
-  if (s.claimsBlock) {
+  if (Array.isArray(s.flow) && s.flow.length) {
+    // Hand-authored generative sequence (JT's method, 2026-09-18): the
+    // reader reasons to the insight; the question comes before the
+    // knowledge and the belief to overturn comes last. Rendered verbatim.
+    s.flow.forEach(st => {
+      if (st.ask) flowSteps.push({ ask: st.ask, choices: st.choices, correct: st.correct,
+        answer: st.answer + (st.cite ? '<p class="lf-cite">' + esc(st.cite) + '</p>' : '') });
+      else flowSteps.push({ chunk: st.chunk + (st.cite ? '<p class="lf-cite">' + esc(st.cite) + '</p>' : '') });
+    });
+  } else if (s.claimsBlock) {
     flowSteps.push({
       ask: 'A lot of people would say: “' + s.claimsBlock.believe + '” Does that hold up?',
       choices: ['Sounds about right', 'I’m not sure', 'No, that’s off'],
       answer: '<p>' + s.claimsBlock.evidence + '</p>'
     });
   }
-  (s.evidence || []).forEach(e => {
-    flowSteps.push({ chunk: '<p>' + e.text + '</p>' + (e.cite ? '<p class="lf-cite">' + esc(e.cite) + '</p>' : '') });
-  });
-  (s.stories || []).forEach(st => {
-    flowSteps.push({ chunk: '<p>' + st.text + '</p>' });
-  });
+  if (!(Array.isArray(s.flow) && s.flow.length)) {
+    (s.evidence || []).forEach(e => {
+      flowSteps.push({ chunk: '<p>' + e.text + '</p>' + (e.cite ? '<p class="lf-cite">' + esc(e.cite) + '</p>' : '') });
+    });
+    (s.stories || []).forEach(st => {
+      flowSteps.push({ chunk: '<p>' + st.text + '</p>' });
+    });
+  }
   const walk = flowSteps.length
     ? `<button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>`
     : '';
@@ -187,7 +199,7 @@ function stationPage(s) {
   const feelit = (s.games && s.games.length) ? `
     <div class="sec">
       <div class="sec-label">Feel it</div>
-      ${s.games.map(g => `<a class="feelit" href="${esc(g.url)}"><div class="feelit-name">${esc(g.name)}</div><div class="feelit-blurb">${esc(g.blurb)}</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>`).join('')}
+      ${s.games.map(g => `<a class="feelit" data-game="${esc(g.url.replace(/^.*\//, "").replace(/\.html.*$/, ""))}" href="${esc(g.url)}"><div class="feelit-name">${esc(g.name)}</div><div class="feelit-blurb">${esc(g.blurb)}</div><div class="feelit-cue">Play &middot; about 2 min &rarr;</div></a>`).join('')}
     </div>` : '';
 
   const frag = (s.relations && s.relations.length) ? `
@@ -217,6 +229,7 @@ function stationPage(s) {
 <meta name="description" content="${esc(s.oneBreath.slice(0, 155))}">
 ${FONTS}
 <style>${CSS}</style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -373,7 +386,7 @@ function mapPage() {
       ly = above ? s.y - (RI + 10) : s.y + (RI + 18);
       anchor = 'middle';
     }
-    return `<g class="station" tabindex="0" role="link" data-id="${s.id}" data-name="${esc(s.name)}" data-breath="${esc(s.oneBreath)}" data-game="${hasGame ? esc(s.games[0].name) : ''}" data-gameurl="${hasGame ? esc(s.games[0].url) : ''}">
+    return `<g class="station" tabindex="0" role="link" data-id="${s.id}" data-name="${esc(s.name)}" data-breath="${esc(s.oneBreath)}">
       <circle cx="${s.x}" cy="${s.y}" r="26" fill="transparent"/>
       ${glyph}${tick}
       <text class="station-label" x="${lx}" y="${ly}" text-anchor="${anchor}">${esc(label)}</text>
@@ -472,11 +485,12 @@ ${FONTS}
   .lv-tick { font-family:var(--mono); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--red); border:1px solid var(--red); border-radius:2px; padding:1px 6px; }
   .note { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.7; margin-top:12px; line-height:1.6; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
   <header class="mast">
-    <a class="mast-home" href="../index.html">&larr; The book</a>
+    <a class="mast-home" href="../index.html">&larr; GeniusAndImpostor.com</a>
     <span class="mast-kicker">Genius &amp; Impostor</span>
   </header>
   <main class="shell-main">
@@ -545,7 +559,10 @@ ${FONTS}
     pvName.textContent = d.name;
     pvBreath.textContent = d.breath;
     pvEnter.setAttribute('href', id + '.html');
-    if (d.game){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
+    /* The play button only shows for a launched game (launched.js gates
+       static links on load; this one is set after, so it checks itself). */
+    var slug = d.game ? d.game.url.split('/').pop().split('.')[0] : null;
+    if (d.game && (!window.launched || window.launched(slug))){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
     else { pvPlay.hidden = true; }
     preview.classList.add('on');
     preview.scrollIntoView({behavior:'smooth', block:'nearest'});

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Routing Architecture &mdash; The Map</title>
-<meta name="description" content="Your brain runs in different modes, and each mode connects a different set of your skills. Focused work, mind-wandering, sleep, panic, each one opens some ">
+<meta name="description" content="Your brain operates in different modes, like focused work, mind-wandering, and sleep. Each mode changes which parts of the brain can communicate. The book ">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -83,6 +83,7 @@
   .foot-links a:hover { color:var(--red); }
   .foot-copy { font-family:var(--mono); font-size:11px; color:var(--muted); opacity:.5; margin-top:18px; }
 </style>
+  <script src="../launched.js"></script>
 </head>
 <body>
 <div class="shell">
@@ -93,18 +94,18 @@
   <main class="shell-main">
     <div class="linechips"><a class="linechip" style="background:#3a6ea5" href="index.html#line-access">The Access Line</a></div>
     <h1 class="station">Routing Architecture</h1>
-    <p class="lead">Your brain runs in different modes, and each mode connects a different set of your skills. Focused work, mind-wandering, sleep, panic, each one opens some routes and closes others. Change the mode and you change what you can reach, without changing a thing you know.</p>
+    <p class="lead">Your brain operates in different modes, like focused work, mind-wandering, and sleep. Each mode changes which parts of the brain can communicate. The book calls the pattern of connections in each mode its routing architecture. Changing modes changes what you can reach, without changing anything you know.</p>
     <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
     
     
     <div class="sec">
       <div class="sec-label">On the map</div>
       <div class="frag">
-        <details class="frag-edge"><summary><span class="frag-rel">half of</span><a class="frag-target" href="capability-accessibility-model.html">The Capability-Accessibility Model</a><span class="frag-open">+</span></summary><div class="frag-why">Routing is the R, the access half of the performance equation.</div></details><details class="frag-edge"><summary><span class="frag-rel">expands</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">Shifting your brain state is one of the two ways to reach more of what you can solve.</div></details><details class="frag-edge"><summary><span class="frag-rel">hijacked by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">The Impostor's main lever on performance is changing your routing through anxiety.</div></details>
+        <details class="frag-edge"><summary><span class="frag-rel">half of</span><a class="frag-target" href="capability-accessibility-model.html">The Capability-Accessibility Model</a><span class="frag-open">+</span></summary><div class="frag-why">Routing determines access, one of the two things that decide what you can do at a given moment.</div></details><details class="frag-edge"><summary><span class="frag-rel">expands</span><a class="frag-target" href="solution-space.html">Solution Space</a><span class="frag-open">+</span></summary><div class="frag-why">Learning expands your solution space, and shifting your brain’s mode lets you reach more of what’s already in it.</div></details><details class="frag-edge"><summary><span class="frag-rel">hijacked by</span><a class="frag-target" href="the-impostor.html">The Impostor</a><span class="frag-open">+</span></summary><div class="frag-why">Pressure and anxiety shift your routing in ways that block access to your skills.</div></details>
       </div>
     </div>
-    <div class="book">Routing is the idea that lets the book explain choking, insight, sleep, and savants with one mechanism instead of four.</div>
-    <a class="next" href="capability-accessibility-model.html"><div class="next-label">Next station</div><div class="next-name">The Capability-Accessibility Model &rarr;</div><div class="next-reason">You have the access half. Now see the whole equation it lives in.</div></a>
+    <div class="book">The book devotes two chapters to routing: how the brain shifts between modes, and how to shift modes on purpose.</div>
+    <a class="next" href="capability-accessibility-model.html"><div class="next-label">Next station</div><div class="next-name">The Capability-Accessibility Model &rarr;</div><div class="next-reason">What are the two things that determine what you can do at any moment?</div></a>
   </main>
   
   <footer class="foot">
@@ -112,10 +113,11 @@
     <div class="foot-links">
       <a href="../index.html">The Genius and the Impostor</a>
       <a href="index.html">The Map</a>
-      <a href="../ayumu-test.html">The Ayumu Test</a>
-      <a href="../diagnostic.html">The Genius Diagnostic</a>
-      <a href="../unstoppable-reader.html">The Unstoppable Reader</a>
-      <a href="../secret-grammar.html">The Secret Grammar</a>
+      <a data-game="ayumu-test" href="../ayumu-test.html">The Ayumu Test</a>
+      <a data-game="bottleneck" href="../bottleneck.html">The Bottleneck</a>
+      <a data-game="diagnostic" href="../diagnostic.html">The Genius Diagnostic</a>
+      <a data-game="unstoppable-reader" href="../unstoppable-reader.html">The Unstoppable Reader</a>
+      <a data-game="secret-grammar" href="../secret-grammar.html">The Secret Grammar</a>
     </div>
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>
@@ -123,7 +125,7 @@
 <script src="../learn-flow.js"></script>
 <script>
 (function () {
-  var steps = [{"chunk":"<p>The answer that would not come at your desk arrives in the shower. Nothing new was learned in between. A different brain state simply opened a route to skills that the focused state kept closed. This is routing, felt from the inside.</p><p class=\"lf-cite\">Insight during rest and mind-wandering</p>"},{"chunk":"<p>Under real pressure, an expert can lose access to skills they have owned for years. The knowledge is all still there, provably, the moment the pressure lifts. High arousal changed the routing and cut the line to the automatic machinery.</p><p class=\"lf-cite\">Choking under pressure (Beilock &amp; Carr, 2001)</p>"},{"chunk":"<p>The subway map again. Day service and night service run on the same tracks with the same trains, but a different set of stations is reachable depending on which schedule is live. Your skills are the stations. Your brain state is the schedule.</p>"}];
+  var steps = [{"chunk":"<p>For years, the chemist Dmitri Mendeleev tried to work out how the chemical elements were related. On long train rides, he wrote each element on a card and tried arranging the cards so that a pattern would appear. It never did.</p><p>According to the story he later told, he fell asleep at his desk one day after obsessing over the problem for days. In a dream, he saw a table where all the elements fell into place. When he woke up, he wrote it down. It became the periodic table.</p><p class=\"lf-cite\">Mendeleev, as told by Oliver Sacks</p>"},{"ask":"Mendeleev didn’t learn anything new while he was asleep. So how could his sleeping brain find something his waking brain couldn’t?","choices":["He was consciously working on the problem in his dream","Sleep let parts of his brain connect that couldn’t while he was awake","It was a lucky guess"],"correct":1,"answer":"<p>Sleep changed how information flowed through his brain. Mendeleev had spent years building the knowledge he needed. What he still needed was to connect that knowledge in a new way, and the pattern of brain activity during sleep made those connections possible. Sleep didn’t change what he knew. It changed what his brain could get to.</p><p>The book calls each of these patterns of brain activity a routing architecture. Each mode your brain operates in, from focused work to sleep, has its own routing architecture.</p>"},{"chunk":"<p>The book compares this to a subway system. During the day, one set of stations and tracks is open. At night, a different set opens, and you can reach places you couldn’t get to during the day.</p><p>Your brain works the same way. Focused work, mind-wandering, and sleep each open some routes between brain regions and close others. The knowledge in your brain stays the same. What changes is which parts of it can connect.</p>"},{"ask":"In one study, people spent a few minutes listing unusual uses for everyday objects, like a brick. Then they took a break. Some spent it on a demanding task, and others did an easy task that let their minds wander. When they came back to the same objects, the mind-wanderers came up with far more new uses. Why?","choices":["The easy task left them less tired","Mind-wandering put their brains in a mode that could reach different ideas","The easy task gave them more time to think about the objects"],"correct":1,"answer":"<p>Mind-wandering shifted their brains into a different mode, called the default mode, which has its own routing architecture. That mode connected ideas that stayed apart while they were focused.</p><p>It wasn’t rest alone. A third group that simply rested during the break didn’t improve. It’s the same reason a name you couldn’t remember comes to you later, once you’ve stopped trying.</p><p class=\"lf-cite\">Baird et al., 2012</p>"},{"ask":"An expert performer under intense pressure suddenly can’t do something they’ve done thousands of times. An hour later, the skill is back. Given what we’ve reviewed, what did the pressure do?","choices":["The pressure erased the skill for a while","The pressure shifted the brain into a mode that blocked access to the skill","The pressure revealed that the skill was never solid"],"correct":1,"answer":"<p>It shifted the brain into a different mode. Under pressure, the parts of the brain that monitor and judge you become more active, and they interfere with the expert networks that normally run the skill on their own.</p><p>This is the same thing that happens when your mind goes blank during a toast. The skill was in the performer’s brain the whole time, but the brain state they were in couldn’t reach it.</p><p class=\"lf-cite\">Choking under pressure (Beilock &amp; Carr, 2001)</p>"},{"ask":"We tend to think that if we can’t come up with something, we don’t really know it, and that the way to find an answer is to keep trying harder. Given Mendeleev and the mind-wanderers, is trying harder the way to find an answer?","choices":["Trying harder works. If you know something, enough effort will bring it out","Trying harder can keep you stuck. Sometimes stepping away is what makes the answer reachable","Trying harder works as long as you’ve studied enough"],"correct":1,"answer":"<p>Trying harder can keep you stuck. What you can do at any moment depends on what you’ve learned and on the mode your brain is in, because each mode gives you access to a different part of what you know. Trying harder keeps your brain in the focused mode. Stepping away, resting, or sleeping can shift it into a mode that reaches the answer.</p><p>Many of history’s most productive thinkers built mode shifts into their days. Charles Darwin spent a few focused hours at his desk each morning, then walked his gravel “thinking path.” Beethoven walked for hours in nature, where ideas for his compositions often came to him.</p>"}];
   var btn = document.getElementById('walk-btn');
   if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
 })();
