@@ -48,7 +48,8 @@
 
   /* hero (featured game) */
   .hero { margin-top:34px; border:1px solid var(--rule); border-radius:5px; background:#fff; overflow:hidden; }
-  .hero-vis { background:#fdfbf7; border-bottom:1px solid var(--rule); padding:22px 18px; }
+  .hero-vis { background:#fdfbf7; border-top:1px solid var(--rule); padding:22px 18px; }
+  .hero-desc { font-size:17px; line-height:1.55; color:var(--muted); margin-top:12px; max-width:52ch; }
   .hero-vis svg { display:block; width:100%; height:auto; }
   .hero-lower { padding:24px 28px 26px; border-left:4px solid var(--red); }
   .hero-kicker { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
@@ -123,13 +124,22 @@
   <!-- INTRO -->
   <section class="intro">
     <h1>Extraordinary minds are built from ordinary brains. <em>Including yours.</em></h1>
-    <p>The story you've been told about what you're capable of is wrong. That's what the book <a class="inline-link" href="book.html"><em>The Genius and the Impostor</em></a> is about. Here we dig deeper into the ideas from the book, so you can experience the evidence for yourself.</p>
+    <p>The story you've been told about what you're capable of is wrong. That's what <a class="inline-link" href="book.html"><em>The Genius and the Impostor</em></a>, the book by neurologist Josh Turknett, is about. Here we dig deeper into the ideas from the book, so you can experience the evidence for yourself.</p>
     <a class="btn-book" href="book.html"><img src="book-cover.webp" alt="">Get the book &rarr;</a>
   </section>
 
   <!-- HERO: featured game -->
   <section style="padding-top:8px;">
     <div class="hero">
+      <div class="hero-lower">
+        <div class="hero-kicker">Featured &middot; play now</div>
+        <div class="hero-title">Are you smarter than a chimp?</div>
+        <p class="hero-desc">Ayumu is a chimpanzee in Japan who can watch five numbers flash on a screen for a fifth of a second, then tap where each one was, in order from smallest to largest. Play his game and see how you compare. It takes about two minutes.</p>
+        <div class="hero-cta">
+          <a class="btn-play" href="ayumu-test.html">Take the Ayumu Test &rarr;</a>
+        </div>
+      </div>
+    </div>
       <div class="hero-vis">
         <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-label="Nine numbers flash on a grid, then vanish behind blank tiles.">
           <g font-family="'Space Mono', monospace" font-size="30" font-weight="700" text-anchor="middle">
@@ -165,14 +175,6 @@
           </g>
         </svg>
       </div>
-      <div class="hero-lower">
-        <div class="hero-kicker">Featured &middot; play now</div>
-        <div class="hero-title">Are you smarter than a chimp?</div>
-        <div class="hero-cta">
-          <a class="btn-play" href="ayumu-test.html">Take the Ayumu Test &rarr;</a>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ARCADE (hidden while only one game has launched; the hero already shows it) -->
@@ -284,8 +286,8 @@
         </svg>
       </div>
       <div class="mapdoor-cap">
-        <h2>Explore the ideas</h2>
-        <p>Every idea from the book, drawn as a map you can ride from one to the next.</p>
+        <h2>The Map</h2>
+        <p>Every big idea from the book, laid out like a subway map. Tap a station and answer a few short questions, and you'll figure out the idea for yourself before it's explained. Each station takes a few minutes.</p>
         <span class="mapdoor-go">Open The Map &rarr;</span>
       </div>
     </a>
@@ -297,7 +299,7 @@
       <img src="book-cover.webp" alt="The Genius and the Impostor book cover">
       <div class="book-txt">
         <h2>The whole story lives in the book.</h2>
-        <p>Extraordinary minds are built from ordinary brains. Everything here is one room in that idea, and the book is where it goes deep.</p>
+        <p>Each game and each station on the Map shows you one piece of the book's argument. The book lays out the whole argument, from how your brain built every skill you have to why we so often misjudge what we're capable of.</p>
         <a href="book.html">The Genius and the Impostor &rarr;</a>
       </div>
     </div>
