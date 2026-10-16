@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#4f7d3a" href="index.html#line-intelligence">The Intelligence Line</a></div>
     <h1 class="station">The Prediction Engine</h1>
     <p class="lead">Your brain doesn’t just take in what’s happening and then react to it. It constantly predicts what’s about to happen, based on everything it has learned, and checks those predictions against what actually happens. Much of what we call skill is prediction built through learning.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Read this sentence: “She opened her umbrella because it had started to ___.” Before you reached the blank, you probably already knew what word was coming. How could you know?","choices":["Because you had read that exact sentence before","Because your brain was predicting the next word, based on patterns it has learned","Because you read ahead to the end of the line"],"correct":1,"answer":"<p>Your brain was predicting the next word. It uses the patterns it has learned from years of reading and listening to prepare for what’s likely to come next.</p><p>That’s a big part of why reading and listening feel effortless, and why you can often finish someone else’s sentence.</p>"},{"ask":"Albert Pujols, one of the best hitters in baseball history, regularly hit fastballs thrown at over 90 miles per hour. In a 2004 exhibition, he faced the Olympic softball pitcher Jennie Finch, who throws underhand, and he couldn’t make contact. When researchers tested his reaction time, it was only a little above average for a college student. So what made him such a great hitter?","choices":["Faster reflexes than other people","Years of learning to predict where a pitch was going from the pitcher’s motion","Better eyesight"],"correct":1,"answer":"<p>Years of learning to predict. A fastball reaches the plate in about four-tenths of a second, too fast to wait and see where it’s going, so hitters start their swing based on what the pitcher’s body and the ball’s first few feet of flight tell them. Pujols had spent years building that prediction skill against baseball pitchers.</p><p>Finch’s underhand motion looked nothing like what he had trained on, so his predictions didn’t work, and his skill didn’t carry over. Much of what looks like fast reflexes is prediction built through learning, and it only works in the domain where it was built.</p><p class=\"lf-cite\">Pujols vs. Jennie Finch, 2004</p>"},{"ask":"You’re walking up a staircase in the dark, and you step for one more stair that isn’t there. What happens?","choices":["Nothing. You just keep walking","You feel a jolt, because your brain had predicted a step","You fall down"],"correct":1,"answer":"<p>You feel a jolt. Your brain had predicted another step and had already prepared your leg for it. When the prediction turns out to be wrong, your brain registers the error instantly.</p><p>Those errors are how your brain learns. Each time a prediction fails, your brain uses the difference between what it expected and what happened to improve the next prediction.</p>"},{"ask":"It feels as if your brain takes in the world first and then works out what it means. In the umbrella sentence, the pitch, and the missing stair, which came first?","choices":["Taking in the world came first, and working out what it meant came after","Prediction came first. Your brain prepared for what was likely before it happened","Prediction came first only for the expert hitter"],"correct":1,"answer":"<p>Prediction came first. Your brain is constantly predicting what’s about to happen, based on what it has learned, and correcting itself when it’s wrong. Understanding a sentence, hitting a ball, and climbing stairs all depend on predictions built through learning.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("prediction-engine", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

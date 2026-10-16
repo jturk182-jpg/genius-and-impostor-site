@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#b8843a" href="index.html#line-bias">The Bias Line</a></div>
     <h1 class="station">Effort Inversion</h1>
     <p class="lead">We watch somebody struggle and decide the task must be hard. We watch somebody breeze through it and decide it must be easy. But the reverse is almost always what’s actually true. Struggle is what beginning looks like and ease is what mastery looks like.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     <div class="sec">
       <div class="sec-label">Feel it</div>
@@ -128,11 +128,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Picture two jugglers. One keeps eight balls in the air without a miss. The other is struggling just to juggle two, dropping them frequently. Which one is doing the harder thing?","choices":["The sweating juggler is doing the harder thing, which you can see from her effort.","The juggler with eight balls is doing the harder thing","You cannot tell which juggler is doing the harder thing from the outside"],"correct":1,"answer":"<p>The one with eight balls is obviously performing the harder task, by a long shot. And nobody would claim otherwise.</p><p>Remember how obvious this answer felt.</p>"},{"ask":"An experienced doctor is consulted to see a patient and within 10 minutes has arrived at the correct diagnosis and course of treatment. A medical student examines the same patient for an hour. He thinks through the case for another 30 minutes, generates three possible diagnoses, and orders multiple tests to try to determine which it is. Upon completion of the tests, a correct diagnosis is made. Who displayed signs of greater intelligence - the experienced doctor or the medical student?","choices":["The student showed more intelligence because he did much more “thinking”","The experienced doctor is showing more intelligence because he solved the problem much more efficiently and effectively"],"correct":1,"answer":"<p>The experienced doctor. Intelligence is demonstrated by efficient and effective problem solving. Both brains were thinking through the case, but in one instance the thinking was performed by non-conscious, expert networks, and in the other instance it was performed by conscious, novice networks.</p>"},{"ask":"A locksmith opens your lock in thirty seconds and charges you sixty dollars. Another one sweats and fumbles for an hour and charges the same. Which one do most people feel got the fair deal?","choices":["The fast locksmith gave the fair deal. Thirty seconds of skill for sixty dollars is a bargain","The slow locksmith gave the fair deal. At least you watched him work for the money","Both locksmiths gave the same deal, because the price was the same"],"correct":1,"answer":"<p>Most people think the slow locksmith gave the better deal, and the fast one was a rip-off.</p><p>In fact, locksmiths report that their tips are better when it takes them longer.</p><p>When we can see expertise with our own eyes, as with the juggler, we can appreciate that making a complex task look easy is an illusion.</p><p>When we don’t see it, we assume that making something look easy means that it actually was.</p>"},{"ask":"What this reveals is that if a problem looks effortful to solve, we assume it must be a complex one. And if it looks easy, we assume it must be an easy one. Knowing what you now know, what’s the reality?","choices":["The belief is right. Effort is an accurate indicator of difficulty","The belief is backwards. Ease is the sign of mastery, and visible struggle is what a beginner looks like","Whether effort signals difficulty depends on the job"],"correct":1,"answer":"<p>Our intuitions here are wrong. Effortlessness is a sign of mastery, not simplicity.</p><p>Easy doesn't mean it’s simple, it means it can run without conscious control. We only get this right when the skill is one we can actually watch, like juggling, and we get it wrong just about everywhere else.</p><p>Michelangelo said it best: “If people knew how hard I worked to get my mastery, it wouldn’t seem so wonderful at all.”</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("effort-inversion", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

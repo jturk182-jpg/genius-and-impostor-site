@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#4f7d3a" href="index.html#line-intelligence">The Intelligence Line</a></div>
     <h1 class="station">Domain-Specific Intelligence</h1>
     <p class="lead">Intelligence is the ability to solve problems to reach your goals, and it’s always specific to the problems you’ve learned to solve. There’s no general quality that makes a person smart at everything, and no single scale that ranks people from least to most intelligent.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"A London cab driver and a tourist in a rental car both need to drive from Paddington Station to the Tower of London. The cab driver is there in half an hour. The tourist, working from a paper map, takes an hour and a half after several wrong turns. Both of them got there. Whose solution showed more intelligence?","choices":["Neither, since both of them reached the Tower","The cab driver’s, because it reached the goal far more efficiently","The tourist’s, because it took more thinking"],"correct":1,"answer":"<p>The cab driver’s. Both of them reached the goal, but the cab driver’s solution used far less time and effort. That’s what intelligence is: how well you solve problems to reach your goals. More effective and more efficient solutions demonstrate more intelligence.</p><p>And the cab driver built that intelligence. To get a license, London cab drivers spend three to four years learning the roughly 25,000 streets in the center of the city, a test known as the Knowledge.</p>"},{"ask":"Humans are far better than bats at sharing thoughts through spoken language. Bats are far better than humans at navigating a dark cave by echolocation. So which is more intelligent?","choices":["Humans, because language is the harder problem","Bats, because echolocation is the harder problem","Neither. Each is more intelligent at its own problems"],"correct":2,"answer":"<p>Neither. Humans are more intelligent at sharing thoughts, and bats are more intelligent at navigating in the dark. Intelligence isn’t one general quality that a person or a species has more or less of across the board.</p><p>Asking whether one species is more intelligent than another is like asking whether a submarine is better at “transportation” than a helicopter.</p>"},{"ask":"IQ reduces intelligence to a single number meant to rank everyone from least to most intelligent. Given the bats and the humans, what’s the problem with that?","choices":["There’s no problem. A single number is a fair summary","Intelligence depends on the problem being solved, so no single number can capture it","The number just needs to be measured more carefully"],"correct":1,"answer":"<p>The problem is that intelligence depends on the problem being solved, so it can’t be reduced to one score. An IQ score reflects how well someone solves the particular kinds of problems on the test, at the time they take it.</p><p>Humans are also the only animals who could score well on an IQ test, because we designed the test around the kinds of problems humans are good at. A bat would fail it, even though bats solve problems no human can.</p>"},{"ask":"We assume that someone brilliant in one field will be sharp in every field. In 1993, Michael Jordan, the best basketball player in the world, retired from basketball to play professional baseball. He spent the 1994 season in the minor leagues, batted .202, and never made it to the major leagues. Does brilliance carry over from one field to another?","choices":["Brilliance carries over. A brilliant person is sharp in every field","Brilliance stays in the field where it was built","Brilliance mostly carries over, with a few exceptions"],"correct":1,"answer":"<p>Brilliance stays in the field where it was built. Jordan brought speed, strength, and a lifetime of athletic training to baseball, and those helped. But hitting a baseball is its own problem, and the skills that solve it are built by years of hitting baseballs. Intelligence is always specific to a domain, and it’s built by learning in that domain. An expert in one field is a beginner in every field they haven’t studied.</p><p>That’s why we’re so often surprised when a brilliant scientist makes poor decisions about money, or a chess champion struggles to run their own life. Those cases are exactly what you’d expect when intelligence is built one domain at a time.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("domain-specific-intelligence", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

@@ -95,7 +95,7 @@
     <div class="linechips"><a class="linechip" style="background:#b8843a" href="index.html#line-bias">The Bias Line</a><a class="linechip" style="background:#a34a72" href="index.html#line-impostor">The Impostor Line</a></div>
     <h1 class="station">The Special Brain Story</h1>
     <p class="lead">The story says you were handed a certain kind of brain at birth, better or worse than the next person's, and that your job is to work out which one you got and stay in your lane. It's everywhere, it feels like plain common sense, and there has never been a shred of evidence for it.</p>
-    <button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>
+    <button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>
     
     
     <div class="sec">
@@ -124,11 +124,15 @@
   </footer>
 </div>
 <script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = [{"ask":"Nobody believes some people were issued a finer liver, a better heart, or a more gifted spleen. And yet, think about how we talk about brains. Which organ gets the story that some people got a better one?","choices":["Every organ gets that story, in different ways","Only the brain gets the story that some people got a better one","The heart and the brain get that story"],"correct":1,"answer":"<p>Only the brain.</p><p>Of every organ in your body, the brain is the one and only one we talk about this way. Nobody has ever been told they have a second-rate pancreas and should manage their expectations accordingly.</p>"},{"chunk":"<p>Based on what we know about biology, genetics, and evolution, we would expect all brains to be roughly the same. Just like our other organs. Our similarities are what make us members of the same species.</p><p>Nor do we have evidence to suggest otherwise. For example, after an exhaustive pathological analysis, Albert Einstein’s brain wasn’t found to have any special bits that would explain his genius. In fact, it was smaller than average.</p>"},{"ask":"So where did the story that brains are the exception come from, if not from looking at brains?","choices":["The special brain story came from the brain science of the 1900s","The special brain story came from before anyone could study the brain at all. We built the story first, then tried to confirm that bias","The special brain story came from IQ testing"],"correct":1,"answer":"<p>The story came long before anyone could look at a brain at all.</p><p>The idea that each head comes with a fixed ration of smart juice came long before we’d rigorously studied the brain. Now that we can look, we keep trying to make what we find fit that story.</p>"},{"ask":"But a story like that can stick around even if it’s not based on science. For example, suppose you believe you are not a math person. What do you do about math?","choices":["If you believe you are not a math person, you work harder at math","If you believe you are not a math person, you avoid math, and never do the training that would have built the skill","If you believe you are not a math person, nothing about your behavior changes"],"correct":1,"answer":"<p>If you think being good at math requires being born with a math brain, then the obvious conclusion when you struggle is that you didn’t get one. So you avoid it.</p><p>You don’t do the work that builds a math brain, and the missing skill looks like proof the story was right. The special brain story manufactures its own evidence. It explains every failure in advance, so nobody bothers to ask whether the teaching was any good, and the failures keep right on coming.</p><p class=\"lf-cite\">Fixed-mindset avoidance (Dweck)</p>"},{"ask":"So, what actually determines what our brains are capable of?","choices":["What determines it is the brain each person was issued","What determines it is our learning path","What determines it is luck"],"correct":1,"answer":"<p>Our learning path is what determines what our brains are capable of, because our capabilities are built through learning.</p>"}];
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open("special-brain-story", { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>
 </body>

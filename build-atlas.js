@@ -156,23 +156,14 @@ const FOOTER = `
     <div class="foot-copy">&copy; 2026 Josh Turknett</div>
   </footer>`;
 
-// ---- station page --------------------------------------------------------
-function stationPage(s) {
-  const stationLines = linesForStation(s);
-  const chips = stationLines.map(l =>
-    `<a class="linechip" style="background:${l.color}" href="index.html#line-${l.id}">${esc(l.name)}</a>`
-  ).join('');
-
-  // The teaching content (the claim, the evidence, the stories) is delivered
-  // as a reader-paced modal flow via learn-flow.js, not as static prose on the
-  // page, per the standing rule that learning content on this site is chunked
-  // and reader-driven. The claim becomes a bias-surfacing question; evidence
-  // and stories become one-idea cards.
+// ---- the cards for one station, shared by the Map, station pages and home --
+// JT, 2026-10-16: tapping a station opens its cards right away. The cards open
+// with the station's question (never the answer), run the hand-authored flow,
+// close on the station's one-line summary, then offer where to go next. One
+// builder feeds every page so the experience can't drift between them.
+function flowStepsFor(s) {
   const flowSteps = [];
   if (Array.isArray(s.flow) && s.flow.length) {
-    // Hand-authored generative sequence (JT's method, 2026-09-18): the
-    // reader reasons to the insight; the question comes before the
-    // knowledge and the belief to overturn comes last. Rendered verbatim.
     s.flow.forEach(st => {
       if (st.ask) flowSteps.push({ ask: st.ask, choices: st.choices, correct: st.correct,
         answer: st.answer + (st.cite ? '<p class="lf-cite">' + esc(st.cite) + '</p>' : '') });
@@ -189,12 +180,124 @@ function stationPage(s) {
     (s.evidence || []).forEach(e => {
       flowSteps.push({ chunk: '<p>' + e.text + '</p>' + (e.cite ? '<p class="lf-cite">' + esc(e.cite) + '</p>' : '') });
     });
-    (s.stories || []).forEach(st => {
-      flowSteps.push({ chunk: '<p>' + st.text + '</p>' });
-    });
+    (s.stories || []).forEach(st => { flowSteps.push({ chunk: '<p>' + st.text + '</p>' }); });
   }
+  return flowSteps;
+}
+
+function cardsFor(s) {
+  const lineNames = linesForStation(s).map(l => l.name).join(' · ');
+  const intro = { label: lineNames, chunk: '<h2 class="lf-station-name">' + esc(s.name) + '</h2>' +
+    (s.opener ? '<p class="lf-opener">' + esc(s.opener) + '</p>' : '') };
+  const closing = { label: 'What this station shows', chunk: '<p class="lf-takeaway">' + esc(s.oneBreath) + '</p>' +
+    (s.bookRef ? '<p class="lf-bookref">' + esc(s.bookRef) + '</p>' : '') };
+  return {
+    name: s.name,
+    steps: [intro].concat(flowStepsFor(s), [closing]),
+    next: s.next ? { id: s.next.target, name: byId[s.next.target].name, reason: s.next.reason } : null,
+    links: (s.relations || []).filter(r => !s.next || r.target !== s.next.target)
+      .map(r => ({ id: r.target, name: byId[r.target].name })),
+    game: (s.games && s.games[0]) ? { name: s.games[0].name, url: s.games[0].url } : null
+  };
+}
+
+// The runtime that every page loads (written to atlas/cards.js). `base` is the
+// path from the calling page to the atlas folder: '' inside atlas/, 'atlas/'
+// from the site root. Finished stations are remembered on this device.
+const CARDS_RUNTIME = `
+window.AtlasCards = (function () {
+  var DONE_KEY = 'gi.atlas.done';
+  function done() { try { return JSON.parse(localStorage.getItem(DONE_KEY) || '[]'); } catch (e) { return []; } }
+  function markDone(id) {
+    try { var d = done(); if (d.indexOf(id) < 0) { d.push(id); localStorage.setItem(DONE_KEY, JSON.stringify(d)); } } catch (e) {}
+    if (window.AtlasCards.onDone) window.AtlasCards.onDone(id);
+  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function injectStyles() {
+    if (document.getElementById('atlas-cards-styles')) return;
+    var el = document.createElement('style'); el.id = 'atlas-cards-styles';
+    el.textContent =
+      '.lf-station-name{font-family:var(--serif,Georgia,serif);font-size:clamp(26px,5vw,34px);line-height:1.2;font-weight:600;letter-spacing:-.01em;margin:0 0 16px;}' +
+      '.lf-opener{font-size:clamp(19px,3.6vw,22px);line-height:1.45;margin:0;}' +
+      '.lf-takeaway{font-size:clamp(18px,3.4vw,21px);line-height:1.5;}' +
+      '.lf-bookref{font-size:15px;font-style:italic;color:var(--muted,#666);line-height:1.55;margin-top:14px;}' +
+      '.ac-next{display:block;text-decoration:none;border:1px solid var(--rule,#e0dcd4);border-left:3px solid var(--red,#c44b3a);border-radius:4px;padding:16px 18px;margin:0 0 18px;background:#fff;}' +
+      '.ac-next:hover{background:#fdfbf7;}' +
+      '.ac-kicker{font-family:var(--mono,"Courier New",monospace);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted,#666);margin:0 0 8px;}' +
+      '.ac-next-name{font-size:21px;font-weight:600;color:var(--red,#c44b3a);margin:0 0 4px;}' +
+      '.ac-next-reason{font-size:16px;color:var(--muted,#666);line-height:1.5;margin:0;}' +
+      '.ac-links{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;}' +
+      '.ac-link{font-size:15px;text-decoration:none;border:1px solid var(--rule,#e0dcd4);border-radius:3px;padding:7px 12px;background:#fff;}' +
+      '.ac-link:hover{border-color:var(--red,#c44b3a);color:var(--red,#c44b3a);}' +
+      '.ac-map{font-family:var(--mono,"Courier New",monospace);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#666);text-decoration:none;}' +
+      '.ac-map:hover{color:var(--red,#c44b3a);}';
+    document.head.appendChild(el);
+  }
+  function stationHref(base, id) { return base + 'index.html#' + id; }
+  function nextCard(id, base) {
+    var c = window.ATLAS_CARDS[id], h = '';
+    if (c.next) {
+      h += '<a class="ac-next" data-station="' + c.next.id + '" href="' + stationHref(base, c.next.id) + '">' +
+        '<p class="ac-kicker">Next station</p><p class="ac-next-name">' + esc(c.next.name) + ' &rarr;</p>' +
+        '<p class="ac-next-reason">' + esc(c.next.reason) + '</p></a>';
+    }
+    if (c.links.length) {
+      h += '<p class="ac-kicker">Connected stations</p><div class="ac-links">' +
+        c.links.map(function (l) { return '<a class="ac-link" data-station="' + l.id + '" href="' + stationHref(base, l.id) + '">' + esc(l.name) + '</a>'; }).join('') + '</div>';
+    }
+    var slug = c.game ? c.game.url.split('/').pop().split('.')[0] : null;
+    if (c.game && window.launched && window.launched(slug)) {
+      h += '<p class="ac-kicker">A game that shows this idea</p><div class="ac-links"><a class="ac-link" href="' + base + c.game.url + '">Play ' + esc(c.game.name) + '</a></div>';
+    }
+    h += '<a class="ac-map" href="' + base + 'index.html">See the whole Map &rarr;</a>';
+    return { label: 'Where to next', chunk: h };
+  }
+  var current = null;
+  /* opts.base: path to the atlas folder. opts.inPlace: the page is the Map
+     itself, so station links open the next station's cards here instead of
+     loading a page. */
+  function open(id, opts) {
+    opts = opts || {};
+    var c = window.ATLAS_CARDS[id]; if (!c || !window.LearnFlow) return;
+    injectStyles();
+    if (current) { var prev = current; current = null; prev.close(); }
+    var base = opts.base || '';
+    /* card media paths are written relative to the atlas folder */
+    var steps = c.steps.map(function (s) {
+      if (!base) return s;
+      var f = function (h) { return h && h.replace(/src="media\\//g, 'src="' + base + 'media/'); };
+      return Object.assign({}, s, { chunk: f(s.chunk), answer: f(s.answer) });
+    }).concat([nextCard(id, base)]);
+    var handle = LearnFlow.open(steps, {
+      doneLabel: 'Done',
+      onComplete: function () { markDone(id); },
+      onClose: function () { if (current === handle) current = null; if (opts.onClose) opts.onClose(); }
+    });
+    current = handle;
+    var modals = document.querySelectorAll('.lf-modal'), modal = modals[modals.length - 1];
+    if (modal) modal.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a');
+      if (!a) return;
+      markDone(id);
+      var to = a.getAttribute('data-station');
+      if (to && opts.inPlace) { e.preventDefault(); open(to, opts); if (history.replaceState) history.replaceState(null, '', '#' + to); }
+    });
+    return handle;
+  }
+  return { open: open, done: done, markDone: markDone };
+})();
+`;
+
+// ---- station page --------------------------------------------------------
+function stationPage(s) {
+  const stationLines = linesForStation(s);
+  const chips = stationLines.map(l =>
+    `<a class="linechip" style="background:${l.color}" href="index.html#line-${l.id}">${esc(l.name)}</a>`
+  ).join('');
+
+  const flowSteps = flowStepsFor(s);
   const walk = flowSteps.length
-    ? `<button class="walk-btn" id="walk-btn" type="button">Walk me through it &rarr;</button>`
+    ? `<button class="walk-btn" id="walk-btn" type="button">Start this station &rarr;</button>`
     : '';
 
   const feelit = (s.games && s.games.length) ? `
@@ -251,11 +354,15 @@ ${FONTS}
   ${FOOTER}
 </div>
 ${flowSteps.length ? `<script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
 (function () {
-  var steps = ${JSON.stringify(flowSteps)};
+  /* The cards open as soon as the page loads (JT, 2026-10-16); the page
+     underneath stays for anyone who closes them, and for search engines. */
+  var open = function () { AtlasCards.open(${JSON.stringify(s.id)}, { base: '' }); };
   var btn = document.getElementById('walk-btn');
-  if (btn && window.LearnFlow) btn.addEventListener('click', function () { LearnFlow.open(steps, { doneLabel: 'Done' }); });
+  if (btn) btn.addEventListener('click', open);
+  open();
 })();
 </script>` : ''}
 </body>
@@ -400,7 +507,7 @@ function mapPage() {
 
   const routeCards = routes.map(rt => {
     const stops = rt.stations.map(sid => esc(byId[sid].name)).join(' &rarr; ');
-    return `<details class="route"><summary><span class="route-name">${esc(rt.name)}</span><span class="route-blurb">${esc(rt.blurb)}</span></summary><div class="route-stops">${stops}</div><a class="route-start" href="${rt.stations[0]}.html">Start riding &rarr;</a></details>`;
+    return `<details class="route"><summary><span class="route-name">${esc(rt.name)}</span><span class="route-blurb">${esc(rt.blurb)}</span></summary><div class="route-stops">${stops}</div><a class="route-start" data-station="${rt.stations[0]}" href="#${rt.stations[0]}">Start riding &rarr;</a></details>`;
   }).join('');
 
   // list view: lines as collapsible sections
@@ -408,7 +515,7 @@ function mapPage() {
     <details class="lv-line" open>
       <summary><span class="lv-swatch" style="background:${l.color}"></span><span class="lv-name">${esc(l.name)}</span><span class="lv-sub">${esc(l.subtitle)}</span></summary>
       <ol class="lv-stops">
-        ${l.stations.map(sid => { const t = byId[sid]; const g = (t.games && t.games.length); return `<li><a href="${t.id}.html"><span class="lv-stop-name">${esc(t.name)}</span>${g ? '<span class="lv-tick">play</span>' : ''}</a></li>`; }).join('')}
+        ${l.stations.map(sid => { const t = byId[sid]; const g = (t.games && t.games.length) ? t.games[0].url.split('/').pop().split('.')[0] : null; return `<li><a data-station="${t.id}" href="#${t.id}"><span class="lv-stop-name">${esc(t.name)}</span>${g ? `<span class="lv-tick" data-game="${g}">play</span>` : ''}</a></li>`; }).join('')}
       </ol>
     </details>`).join('');
 
@@ -439,21 +546,14 @@ ${FONTS}
   .station { cursor:pointer; }
   .station:hover .station-label, .station:focus .station-label { fill:var(--red); }
   .station:focus { outline:none; }
+  /* finished stations fill in */
+  .station.done circle:nth-of-type(2) { fill:var(--ink); }
+  .lv-done { font-family:var(--mono); font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); border:1px solid var(--rule); border-radius:2px; padding:1px 6px; margin-left:8px; }
   .mapline { transition:opacity .2s; }
   .map.dim .mapline { opacity:0.16; }
   .map.dim .mapline.lit { opacity:0.95; }
   .map.dim .station { opacity:0.35; }
   .map.dim .station.lit { opacity:1; }
-  /* preview card */
-  .preview { position:sticky; bottom:0; margin-top:14px; border:1px solid var(--rule); border-radius:4px; background:var(--parchment); padding:20px 22px; display:none; }
-  .preview.on { display:block; }
-  .preview-name { font-size:22px; font-weight:600; margin-bottom:6px; }
-  .preview-breath { font-size:16px; color:var(--muted); line-height:1.5; margin-bottom:16px; }
-  .preview-actions { display:flex; flex-wrap:wrap; gap:10px; }
-  .preview-btn { font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:9px 16px; border-radius:3px; }
-  .preview-enter { background:var(--ink); color:#fafaf8; }
-  .preview-play { background:var(--red); color:#fff; }
-  .preview-close { background:transparent; color:var(--muted); border:1px solid var(--rule); cursor:pointer; }
   /* legend */
   .legend { margin-top:34px; display:grid; grid-template-columns:1fr; gap:2px; }
   @media (min-width:600px){ .legend { grid-template-columns:1fr 1fr; gap:2px 28px; } }
@@ -497,7 +597,7 @@ ${FONTS}
   <main class="shell-main">
     <div class="atlas-hero">
       <h1 class="atlas-title">The Map</h1>
-      <p class="atlas-sub">A map of the ideas from the book. Each station is a concept, and each line is a route you can ride from one idea to the next. Tap a station to look inside.</p>
+      <p class="atlas-sub">A map of the ideas in The Genius and the Impostor. Each station is one idea, and each line is a route you can ride from one idea to the next. Tap a station to start.</p>
     </div>
 
     <div class="viewtoggle" role="tablist">
@@ -511,15 +611,6 @@ ${FONTS}
           ${polylines}
           ${nodes}
         </svg>
-      </div>
-      <div class="preview" id="preview">
-        <div class="preview-name" id="pv-name"></div>
-        <div class="preview-breath" id="pv-breath"></div>
-        <div class="preview-actions">
-          <a class="preview-btn preview-enter" id="pv-enter" href="#">Enter station &rarr;</a>
-          <a class="preview-btn preview-play" id="pv-play" href="#" hidden>Play the game</a>
-          <button class="preview-btn preview-close" id="pv-close" type="button">Close</button>
-        </div>
       </div>
       <p class="note">First-draft map. Every connection here is a claim about how the ideas relate, and the topology is still up for a vetting pass. The line re-routing toggle (focused service vs. rest service) is coming in a later version.</p>
 
@@ -535,6 +626,8 @@ ${FONTS}
   </main>
   ${FOOTER}
 </div>
+<script src="../learn-flow.js"></script>
+<script src="cards.js"></script>
 <script>
   var MAP = ${JSON.stringify(mapData)};
   var LINES = ${JSON.stringify(lines.map(l => ({ id: l.id, stations: l.stations })))};
@@ -551,29 +644,31 @@ ${FONTS}
   tabList.onclick = function(){ show('list'); };
   if (window.matchMedia('(max-width:600px)').matches) show('list');
 
-  // station preview
-  var preview = document.getElementById('preview');
-  var pvName = document.getElementById('pv-name'), pvBreath = document.getElementById('pv-breath');
-  var pvEnter = document.getElementById('pv-enter'), pvPlay = document.getElementById('pv-play');
-  function openStation(id){
-    var d = MAP[id]; if(!d) return;
-    pvName.textContent = d.name;
-    pvBreath.textContent = d.breath;
-    pvEnter.setAttribute('href', id + '.html');
-    /* The play button only shows for a launched game (launched.js gates
-       static links on load; this one is set after, so it checks itself). */
-    var slug = d.game ? d.game.url.split('/').pop().split('.')[0] : null;
-    if (d.game && (!window.launched || window.launched(slug))){ pvPlay.hidden = false; pvPlay.setAttribute('href', d.game.url); pvPlay.textContent = 'Play ' + d.game.name; }
-    else { pvPlay.hidden = true; }
-    preview.classList.add('on');
-    preview.scrollIntoView({behavior:'smooth', block:'nearest'});
-  }
-  document.getElementById('pv-close').onclick = function(){ preview.classList.remove('on'); undim(); };
+  // A station opens its cards right here (JT, 2026-10-16). Links inside the
+  // cards to other stations open those stations here too, and #station-id in
+  // the address opens one on arrival, so old and shared links still work.
+  function clearHash(){ if (history.replaceState) history.replaceState(null, '', location.pathname + location.search); }
+  function openStation(id){ if (window.ATLAS_CARDS && ATLAS_CARDS[id]) AtlasCards.open(id, { base: '', inPlace: true, onClose: clearHash }); }
   Array.prototype.forEach.call(document.querySelectorAll('.station'), function(g){
-    function act(){ openStation(g.getAttribute('data-id')); }
+    function act(){ var id = g.getAttribute('data-id'); if (history.replaceState) history.replaceState(null, '', '#' + id); openStation(id); }
     g.addEventListener('click', act);
     g.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } });
   });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-station]'), function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); var id = a.getAttribute('data-station'); if (history.replaceState) history.replaceState(null, '', '#' + id); openStation(id); });
+  });
+  function paintDone(){
+    var d = AtlasCards.done();
+    d.forEach(function(id){
+      var g = document.querySelector('.station[data-id="'+id+'"]'); if (g) g.classList.add('done');
+      Array.prototype.forEach.call(document.querySelectorAll('.lv-stops a[data-station="'+id+'"]'), function(a){ if (!a.querySelector('.lv-done')) a.querySelector('.lv-stop-name').insertAdjacentHTML('afterend', '<span class="lv-done">done</span>'); });
+    });
+  }
+  AtlasCards.onDone = paintDone;
+  paintDone();
+  var fromHash = (location.hash || '').replace('#', '');
+  if (fromHash && ATLAS_CARDS[fromHash]) openStation(fromHash);
+  window.addEventListener('hashchange', function(){ var id = (location.hash || '').replace('#',''); if (ATLAS_CARDS[id]) openStation(id); });
 
   // legend highlight a line
   var svg = document.querySelector('svg.map');
@@ -604,5 +699,8 @@ stationsData.forEach(s => {
   written++;
 });
 fs.writeFileSync(path.join(OUT, 'index.html'), mapPage());
+const cards = {};
+stationsData.forEach(s => { cards[s.id] = cardsFor(s); });
+fs.writeFileSync(path.join(OUT, 'cards.js'), '/* Generated by build-atlas.js. Do not edit. */\nwindow.ATLAS_CARDS = ' + JSON.stringify(cards) + ';\n' + CARDS_RUNTIME);
 written++;
 console.log(`Atlas built: ${written} pages (${stationsData.length} stations + map) into atlas/`);
