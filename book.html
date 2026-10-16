@@ -53,6 +53,25 @@
     }
 
     /* ===================== HERO ===================== */
+    /* The way back to the home page (it was missing, JT 2026-10-16). Sits
+       over the top of the hero so the hero layout is unchanged. */
+    .book-mast {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 5;
+      padding: 22px 24px;
+    }
+    .book-mast a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .book-mast a:hover { color: var(--red); }
+
     .hero {
       min-height: 100vh;
       min-height: 100dvh;
@@ -650,6 +669,8 @@
 </head>
 <body>
 
+<header class="book-mast"><a href="index.html">&larr; GeniusAndImpostor.com</a></header>
+
 <!-- ===================== HERO ===================== -->
 <section class="hero">
   <div class="hero-eyebrow">From the Field of Performance Neurology</div>
@@ -904,6 +925,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-links">
+      <a href="index.html">GeniusAndImpostor.com</a>
       <a href="https://performanceneurology.institute" target="_blank" rel="noopener">performanceneurology.institute</a>
       <a href="https://joshturknett.com" target="_blank" rel="noopener">joshturknett.com</a>
       <a href="https://instagram.com/brainjojosh" target="_blank" rel="noopener">@brainjojosh</a>
