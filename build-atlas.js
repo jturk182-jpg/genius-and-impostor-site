@@ -636,7 +636,6 @@ ${FONTS}
           ${nodes}
         </svg>
       </div>
-      <p class="note">First-draft map. Every connection here is a claim about how the ideas relate, and the topology is still up for a vetting pass. The line re-routing toggle (focused service vs. rest service) is coming in a later version.</p>
 
       <div class="legend">${legend}</div>
     </div>
