@@ -2990,6 +2990,11 @@ function paintTeamHuman(box, rec, stats, myAcc) {
     ? '<p class="t-body">Team Human is up to <strong>' + comma(stats.count) + ' member' + (stats.count === 1 ? '' : 's') +
       '</strong>, and the middle of the pack sits at <strong>' + pct(stats.median) + '%</strong>.</p>'
     : '<p class="t-body">Team Human is empty. You are the first one on the board.</p>';
+  /* Starter scores from team-human-seed.sql (JT, 2026-10-17): say so while any are left. */
+  const seeds = stats.seeds || 0;
+  if (seeds) h += '<p class="chart-note">' +
+    (seeds === stats.count ? 'All ' + seeds + ' are starter scores' : seeds + ' of them ' + (seeds === 1 ? 'is a starter score' : 'are starter scores')) +
+    ' based on the 2007 study. One comes off each time a real player joins.</p>';
 
   h += '<div class="chart-panel">' + teamHistSVG(stats, myAcc) + '</div>';
 
