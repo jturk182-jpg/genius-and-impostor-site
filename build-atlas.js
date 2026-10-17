@@ -289,6 +289,12 @@ window.AtlasCards = (function () {
 `;
 
 // ---- station page --------------------------------------------------------
+/* Cut a description at a word boundary for meta/preview tags. */
+function clip(text, max) {
+  if (text.length <= max) return text;
+  return text.slice(0, text.lastIndexOf(' ', max - 1)).replace(/[,;:.\s]+$/, '') + '…';
+}
+
 function stationPage(s) {
   const stationLines = linesForStation(s);
   const chips = stationLines.map(l =>
@@ -330,7 +336,16 @@ function stationPage(s) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>${esc(s.name)} &mdash; The Map</title>
-<meta name="description" content="${esc(s.oneBreath.slice(0, 155))}">
+<meta name="description" content="${esc(clip(s.oneBreath, 155))}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Genius and the Impostor">
+<meta property="og:title" content="${esc(s.name)} &mdash; The Map">
+<meta property="og:description" content="${esc(clip(s.oneBreath, 155))}">
+<meta property="og:url" content="https://geniusandimpostor.com/atlas/${s.id}.html">
+<meta property="og:image" content="https://geniusandimpostor.com/og/og-map.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 ${FONTS}
 <style>${CSS}</style>
   <script src="../launched.js"></script>
@@ -529,6 +544,15 @@ function mapPage() {
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Map &mdash; The Genius and the Impostor</title>
 <meta name="description" content="A map of the ideas from The Genius and the Impostor. Concepts are the stations, and each line is a route through them.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Genius and the Impostor">
+<meta property="og:title" content="The Map: The Genius and the Impostor">
+<meta property="og:description" content="A map of the ideas from The Genius and the Impostor. Concepts are the stations, and each line is a route through them.">
+<meta property="og:url" content="https://geniusandimpostor.com/atlas/">
+<meta property="og:image" content="https://geniusandimpostor.com/og/og-map.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 ${FONTS}
 <style>${CSS}
   .atlas-hero { padding:44px 0 8px; }
@@ -612,7 +636,6 @@ ${FONTS}
           ${nodes}
         </svg>
       </div>
-      <p class="note">First-draft map. Every connection here is a claim about how the ideas relate, and the topology is still up for a vetting pass. The line re-routing toggle (focused service vs. rest service) is coming in a later version.</p>
 
       <div class="legend">${legend}</div>
     </div>
