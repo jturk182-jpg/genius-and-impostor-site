@@ -3115,6 +3115,15 @@ function renderResults(opts) {
         '<button class="btn ghost" id="btn-flow-skip">Skip ahead to what just happened</button>' +
         '</div>';
     }
+    /* A second, quieter way in to the Training Room, right under the score gap
+       (JT, 2026-10-18). Practice is the walk's answer, so this doesn't say it. */
+    if (window.launched('ayumu-training')) {
+      html += '<p class="t-body" style="margin-top:32px;">' + (beatAyumu
+          ? '<strong>Want to see how far past him you can go?</strong>'
+          : '<strong>Want to close the gap with Ayumu?</strong>') +
+        ' This site has a Training Room where you can practice his game one step at a time.</p>' +
+        '<div class="btn-row"><a class="btn ghost" href="ayumu-training.html" id="btn-flow-training">Visit the Training Room</a></div>';
+    }
     el.innerHTML = html;
     renderTeamHuman(rec);
     const go = v => { const r = resultsFlow; resultsFlow = null; if (r) r(v); };

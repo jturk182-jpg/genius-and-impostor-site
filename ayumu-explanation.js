@@ -102,7 +102,13 @@ window.AyumuExplanation = (function () {
           'Humans are just bad with numbers'
         ],
         correct: 1,
-        answer: '<p>Ayumu has had lots of practice. By the time this study was published, Ayumu had played this game hundreds of times, and the people he was tested against had played it a handful of times. When other researchers later gave people a real chance to practice, their scores climbed toward his, and a couple of them caught him.</p><p><strong>If performance improves that much with training, it’s not something we were born with.</strong> But is it right to even consider this kind of test a measure of “intelligence”? For that, let’s look at the story of Ayumu’s mother, Ai.</p>' },
+        answer: '<p>Ayumu has had lots of practice. By the time this study was published, Ayumu had played this game hundreds of times, and the people he was tested against had played it a handful of times. When other researchers later gave people a real chance to practice, their scores climbed toward his, and a couple of them caught him.</p><p><strong>If performance improves that much with training, it’s not something we were born with.</strong> But is it right to even consider this kind of test a measure of “intelligence”? For that, let’s look at the story of Ayumu’s mother, Ai.</p>',
+        /* The Training Room offer sits on the card where people catch up to
+           Ayumu by practicing (JT, 2026-10-18): it was only on card 27 of 27. */
+        signupAfter: ctx.training ? 'a couple of them caught him.' : null,
+        signupLine: wonAny
+          ? '<strong>Want to see how far past him you can go?</strong> This site has a Training Room where you can practice his game one step at a time.'
+          : '<strong>Want to see how close you can get to Ayumu?</strong> This site has a Training Room where you can practice his game one step at a time.' },
 
       { beat: 'Like Ayumu, Ai had learned the order of the numerals, but years earlier she had also been taught what each one actually means as an amount, the way you know that a 7 means seven. <strong>And Ai was worse at this game than Ayumu.</strong>' },
 
@@ -197,7 +203,10 @@ window.AyumuExplanation = (function () {
       if (q.length > 2) chunksOf('<p>' + q.slice(0, -1).join(' ') + '</p>').forEach(function (c) { out.push({ beat: c }); });
       var ans = chunksOf(st.answer);
       out.push(Object.assign({}, st, { ask: q.length > 2 ? q[q.length - 1] : st.ask, answer: '<p>' + ans[0] + '</p>' }));
-      ans.slice(1).forEach(function (c) { out.push({ beat: c }); });
+      ans.slice(1).forEach(function (c) {
+        if (st.signupAfter && c.indexOf(st.signupAfter) >= 0) out.push({ beat: c + '\n\n' + st.signupLine, signup: true });
+        else out.push({ beat: c });
+      });
     });
     return out;
   }
