@@ -86,5 +86,16 @@ exports.handler = async (event) => {
     } catch (e) { /* ignore */ }
   }
 
+  /* And into ActiveCampaign, tagged ayumu-training-room (JT, 2026-10-18), via
+     the Institute's shared lead-capture endpoint. Best effort: never blocks sign-in. */
+  try {
+    const lc = await fetch(process.env.LEAD_CAPTURE_URL || 'https://performanceneurology.institute/api/lead-capture', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email, source: 'gi-training' })
+    });
+    if (!lc.ok) console.error('lead-capture returned', lc.status);
+  } catch (e) { console.error('lead-capture unreachable'); }
+
   return { statusCode: 200, headers: { 'cache-control': 'no-store' }, body: JSON.stringify({ ok: true }) };
 };
