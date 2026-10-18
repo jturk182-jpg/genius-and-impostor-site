@@ -1383,6 +1383,16 @@ const LOCAL_HOST = (function () {
          h === '::1' || h.endsWith('.local');
 })();
 const DEV = LOCAL_HOST && new URLSearchParams(location.search).has('dev');
+
+/* How far people get (2026-10-18): one beacon per screen, read back from the
+   Netlify function log. Sends only the step name. */
+function track(step) {
+  if (LOCAL_HOST) return;
+  try {
+    navigator.sendBeacon('/.netlify/functions/ayumu-step',
+      new Blob([JSON.stringify({ s: step })], { type: 'application/json' }));
+  } catch (e) {}
+}
 var SHARE_CARDS = false;   /* share cards off for launch (JT, 2026-10-16) */
 
 /* ================================================================
@@ -1501,6 +1511,7 @@ function unmountPlayInline() {
 }
 
 function showView(id) {
+  track('view:' + id.replace(/^view-/, ''));
   unmountPlayInline();
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const el = document.getElementById(id);
@@ -3493,6 +3504,7 @@ async function runReveal() {
 
     const step = steps[i];
     const last = i === total - 1;
+    if (!onAnswer) track('walk:' + (i + 1) + '-of-' + total + (step.signup ? '-signup' : ''));
 
     if (step.ask && !onAnswer) {
       const pick = await card({

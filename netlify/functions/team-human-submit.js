@@ -13,6 +13,9 @@ const MAX_TOKEN_AGE_MS = 3 * 60 * 60 * 1000;
 const RATE_LIMIT_PER_HOUR = 6;
 
 function bad(code, msg) {
+  /* Logged so the Netlify function log shows why rounds are turned away
+     (2026-10-18). The reason only; nothing about the player. */
+  console.log('reject ' + code + ': ' + msg);
   return { statusCode: code, body: JSON.stringify({ error: msg }) };
 }
 
@@ -60,8 +63,11 @@ exports.handler = async (event) => {
   const trials = validTries.length;
 
   if (trials !== a.trials || hits !== a.hits) return bad(400, 'log does not match totals');
-  /* The game runs 3 tries, extending to 10 the moment any try succeeds. */
-  if (!((trials === 3 && hits === 0) || (trials === 10 && hits >= 1))) {
+  /* Ten tries for everyone since 2026-08-09, so 0 out of 10 is a real round.
+     (This check still expected the old 3-then-extend shape until 2026-10-18,
+     which turned away every player who missed all ten.) 3-with-0 stays
+     valid for anyone running a cached copy of the old game. */
+  if (!(trials === 10 || (trials === 3 && hits === 0))) {
     return bad(400, 'impossible round shape');
   }
   const acc = Number(a.acc);
@@ -128,6 +134,7 @@ exports.handler = async (event) => {
   const priorCount = stats ? Math.max(0, stats.count - 1) : null;
   const ahead = priorCount ? belowN / priorCount : null;
 
+  console.log('accepted ' + hits + '/' + trials);
   return {
     statusCode: 200,
     headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },

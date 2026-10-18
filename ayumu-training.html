@@ -3073,5 +3073,8 @@ if (DEV) {
 
 boot();
 </script>
+<script>/* Step counter (2026-10-18): one beacon per visit, step name only. */
+try { if (!/^(localhost|127\.)/.test(location.hostname)) navigator.sendBeacon('/.netlify/functions/ayumu-step',
+  new Blob([JSON.stringify({ s: 'training:' + (/[?&]token=/.test(location.search) ? 'link' : 'load') })], { type: 'application/json' })); } catch (e) {}</script>
 </body>
 </html>
