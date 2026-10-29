@@ -8,11 +8,14 @@ exports.handler = async () => {
   if (!url || !key) {
     return { statusCode: 500, body: JSON.stringify({ error: 'not configured' }) };
   }
-  const r = await fetch(url + '/rest/v1/rpc/team_human_stats', {
+  const rpc = name => fetch(url + '/rest/v1/rpc/' + name, {
     method: 'POST',
     headers: { apikey: key, authorization: 'Bearer ' + key, 'content-type': 'application/json' },
     body: '{}'
   });
+  /* v2 buckets by whole-number hits; v1 is the fallback until v2 exists. */
+  let r = await rpc('team_human_stats_v2');
+  if (r.status === 404) r = await rpc('team_human_stats');
   if (!r.ok) return { statusCode: 502, body: JSON.stringify({ error: 'stats unavailable' }) };
   const stats = await r.json();
   return {

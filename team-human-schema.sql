@@ -40,3 +40,26 @@ as $$
     'buckets', (select json_agg(n order by bucket) from b)
   );
 $$;
+
+-- v2 (2026-10-29): bucket from hits/trials in whole numbers. acc is a
+-- float4, so 0.7 is stored as 0.6999999 and floor(acc * 10) put every 7/10
+-- in the 60% bar (the 70% bar was always empty) and every 9/10 in the 80%
+-- bar, while the page highlights the player's bar from exact math.
+-- team-human-stats calls v2 and falls back to v1 if v2 is missing.
+create or replace function team_human_stats_v2()
+returns json
+language sql
+stable
+as $$
+  with s as (select acc, least((hits * 10) / trials, 9) as bucket from flash_scores),
+  b as (
+    select gs as bucket,
+           (select count(*) from s where s.bucket = gs) as n
+    from generate_series(0, 9) gs
+  )
+  select json_build_object(
+    'count',   (select count(*) from s),
+    'median',  (select coalesce(percentile_cont(0.5) within group (order by acc), 0) from s),
+    'buckets', (select json_agg(n order by bucket) from b)
+  );
+$$;
